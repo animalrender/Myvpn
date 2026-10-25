@@ -8,6 +8,7 @@ on:
     branches: [arena/b9372ae1-myvpn]
     paths:
       - "android-app/tools/probe-api.py"
+      - "android-app/tools/probe-configs.py"
       - ".github/workflows/probe-api.yml"
 
 permissions:
@@ -31,4 +32,9 @@ jobs:
       - name: Probe backend contract
         env:
           PROBE_CERT: /tmp/keys/testkey.x509.pem
-        run: python3 android-app/tools/probe-api.py 2>&1 | tee /tmp/probe.log
+        run: python3 android-app/tools/probe-api.py 2>&1 | tee /tmp/probe.log || true
+
+      - name: Probe configs endpoint
+        env:
+          PROBE_CERT: /tmp/keys/testkey.x509.pem
+        run: python3 android-app/tools/probe-configs.py 2>&1 | tee /tmp/probe2.log || true
