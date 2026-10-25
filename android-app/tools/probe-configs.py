@@ -40,6 +40,7 @@ def headers(der, token="", enable_sign=True):
     h = {
         "Content-Type": "application/json",
         "Accept": "application/json",
+        "User-Agent": "Dalvik/2.1.0 (Linux; U; Android 13; Pixel 7 Build/TQ3A.230805.001)",
         "app_name": APP_NAME,
         "version_code": VERSION_CODE,
         "seen": "0",
