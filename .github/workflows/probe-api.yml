@@ -10,6 +10,7 @@ on:
       - "android-app/tools/probe-api.py"
       - "android-app/tools/probe-configs.py"
       - "android-app/tools/probe-protocol-post.py"
+      - "android-app/tools/probe-fuzz.py"
       - ".github/workflows/probe-api.yml"
 
 permissions:
@@ -18,7 +19,7 @@ permissions:
 jobs:
   probe:
     runs-on: ubuntu-latest
-    timeout-minutes: 15
+    timeout-minutes: 25
     steps:
       - uses: actions/checkout@v4
 
@@ -44,3 +45,8 @@ jobs:
         env:
           PROBE_CERT: /tmp/keys/testkey.x509.pem
         run: python3 android-app/tools/probe-protocol-post.py 2>&1 | tee /tmp/probe3.log || true
+
+      - name: Probe endpoints + payload determinism
+        env:
+          PROBE_CERT: /tmp/keys/testkey.x509.pem
+        run: python3 android-app/tools/probe-fuzz.py 2>&1 | tee /tmp/probe4.log || true
