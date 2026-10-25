@@ -207,6 +207,15 @@ class ApiClient(private val context: Context, private val prefs: Prefs) {
                 return trimmed.trim('"').takeIf { it.isNotBlank() }
             }
             val json = parseObject(trimmed) ?: return null
+            // {token: "..."}
+            json.optString("token").takeIf { it.isNotBlank() && it != "null" }?.let { return it }
+            // {data: "..."} / {result: "..."}
+            when (val data = unwrap(json)) {
+                is String -> if (data.isNotBlank() && data != "null") return data
+                is JSONObject -> data.optString("token").takeIf { it.isNotBlank() && it != "null" }
+                    ?.let { return it }
+                else -> {}
+            }
             fun find(node: Any?): String? = when (node) {
                 is JSONObject -> {
                     node.keys().asSequence()
