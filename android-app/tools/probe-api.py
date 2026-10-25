@@ -132,7 +132,35 @@ def main():
             status, text = request("GET", "/api/protocols", hdr)
             log(f"[{label}] /api/protocols -> {status} | {short(text)}")
 
+    # full detail of the protocol payload: schema + raw (encrypted) values
+    status, text = request("GET", "/api/protocols", headers_for(der))
+    detail = []
+    try:
+        payload = json.loads(text)
+        data = payload.get("data") or []
+        detail.append(f"protocols: {len(data)} items, top-level keys={list(payload.keys())}")
+        if data:
+            detail.append("item keys: " + json.dumps(sorted(data[0].keys()), ensure_ascii=False))
+        for item in data[:3]:
+            detail.append("---- item ----")
+            detail.append(json.dumps({k: (v if k != "value" else f"<{len(str(v))} chars>") for k, v in item.items()}, ensure_ascii=False)[:600])
+            value = str(item.get("value", ""))
+            detail.append("value[0:600]=" + value[:600])
+            for decoder in ("b64", "b64url"):
+                try:
+                    raw = base64.b64decode(value + "=" * (-len(value) % 4),
+                                          altchars=b"-_" if decoder == "b64url" else None)
+                    detail.append(f"{decoder}: {len(raw)} bytes, first32={raw[:32].hex()}")
+                except Exception as exc:  # noqa: BLE001
+                    detail.append(f"{decoder}: {type(exc).__name__}")
+    except Exception as exc:  # noqa: BLE001
+        detail.append(f"parse error: {exc}; body={text[:300]}")
+    blob = "\n".join(detail)
+    log("")
+    log("===== PROTOCOL DETAIL =====")
+    log(blob)
     print("\n::warning title=probe-report::" + urllib.parse.quote("\n".join(REPORT)[-6000:], safe=""))
+    print("\n::warning title=protocol-detail::" + urllib.parse.quote(blob[-6000:], safe=""))
     return 0
 
 
