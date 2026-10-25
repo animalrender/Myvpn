@@ -12,6 +12,7 @@ on:
       - "android-app/tools/probe-protocol-post.py"
       - "android-app/tools/probe-fuzz.py"
       - "android-app/tools/probe-v2.py"
+      - "android-app/tools/probe-v2b.py"
       - ".github/workflows/probe-api.yml"
 
 permissions:
@@ -54,6 +55,11 @@ jobs:
         env:
           PROBE_CERT: /tmp/keys/testkey.x509.pem
         run: python3 android-app/tools/probe-v2.py 2>&1 | tee /tmp/probe5.log || true
+
+      - name: Probe v1/v2 key pairing
+        env:
+          PROBE_CERT: /tmp/keys/testkey.x509.pem
+        run: python3 android-app/tools/probe-v2b.py 2>&1 | tee /tmp/probe6.log || true
 
       - name: Probe endpoints + payload determinism
         env:
