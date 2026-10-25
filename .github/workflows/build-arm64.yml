@@ -65,13 +65,20 @@ jobs:
         run: chmod +x android-app/tools/*.sh
 
       - name: Fetch libv2ray.aar (Xray core)
-        run: bash android-app/tools/fetch-libv2ray.sh 2>&1 | tee /tmp/fetch-aar.log
+        run: |
+          set -o pipefail
+          bash android-app/tools/fetch-libv2ray.sh 2>&1 | tee /tmp/fetch-aar.log
 
       - name: Build hev-socks5-tunnel JNI library (arm64-v8a)
-        run: bash android-app/tools/build-hevtun.sh 2>&1 | tee /tmp/build-hev.log
+        run: |
+          set -o pipefail
+          bash android-app/tools/build-hevtun.sh 2>&1 | tee /tmp/build-hev.log
+          ls -lR android-app/app/src/main/jniLibs
 
       - name: Prepare release signing key
-        run: bash android-app/tools/fetch-testkey.sh 2>&1 | tee /tmp/testkey.log
+        run: |
+          set -o pipefail
+          bash android-app/tools/fetch-testkey.sh 2>&1 | tee /tmp/testkey.log
 
       - name: Set up Gradle
         uses: gradle/actions/setup-gradle@v4
@@ -85,38 +92,6 @@ jobs:
           gradle --version
           gradle assembleRelease --no-daemon --stacktrace 2>&1 | tee /tmp/gradle.log
 
-      - name: Report failure details
-        if: failure()
-        run: |
-          # Actions logs are not reachable from this environment, so surface the useful part of
-          # each log as a workflow annotation (readable through the check-runs API).
-          python3 - <<'PY'
-          import os, pathlib, re, urllib.parse
-          sources = ["/tmp/fetch-aar.log", "/tmp/build-hev.log", "/tmp/testkey.log", "/tmp/gradle.log"]
-          picked = []
-          for path in sources:
-              p = pathlib.Path(path)
-              if not p.exists():
-                  continue
-              lines = p.read_text(errors="replace").splitlines()
-              for line in lines:
-                  if line.startswith("e: ") or line.startswith("e:  ") or re.match(r"^e: file:", line):
-                      picked.append(line)
-                  elif "What went wrong" in line or "Caused by:" in line or "error:" in line.lower():
-                      picked.append(line)
-                  elif line.startswith("> Task") and "FAILED" in line:
-                      picked.append(line)
-          if not picked:
-              for path in sources:
-                  p = pathlib.Path(path)
-                  if p.exists():
-                      picked += p.read_text(errors="replace").splitlines()[-40:]
-          text = "\n".join(dict.fromkeys(picked))[-3500:]
-          encoded = urllib.parse.quote(text, safe="")
-          print("::error title=build-log::%s" % encoded)
-          print("::warning title=build-log-length::%d" % len(text))
-          PY
-
       - name: Inspect the APK
         id: inspect
         run: |
@@ -124,24 +99,12 @@ jobs:
           APK="$(find android-app/app/build/outputs/apk/release -name '*.apk' | head -1)"
           test -n "$APK"
           echo "==> $APK ($(du -h "$APK" | cut -f1))"
-          echo "--- staged jniLibs ---"
-          find android-app/app/src/main/jniLibs -type f 2>/dev/null || echo "(nothing staged)"
-          echo "--- native libraries in APK (must be arm64-v8a only) ---"
-          unzip -l "$APK" | grep -E "\.so" || true
-          python3 - <<'PY' || true
-          import os, subprocess, urllib.parse
-          apk = os.environ.get("APK_PATH") or subprocess.run(
-              ["bash", "-lc", "find android-app/app/build/outputs/apk/release -name '*.apk' | head -1"],
-              capture_output=True, text=True).stdout.strip()
-          listing = subprocess.run(["unzip", "-l", apk], capture_output=True, text=True).stdout
-          so = [l for l in listing.splitlines() if ".so" in l]
-          staged = subprocess.run(["bash", "-lc", "find android-app/app/src/main/jniLibs -type f"],
-                                  capture_output=True, text=True).stdout
-          text = "STAGED:\n" + staged + "APK .so:\n" + "\n".join(so)
-          print("::warning title=so-inventory::%s" % urllib.parse.quote(text[-1500:], safe=""))
-          PY
-          unzip -l "$APK" | grep -q "lib/arm64-v8a/libgojni.so" || { echo "::error::Xray core missing from APK"; exit 1; }
-          unzip -l "$APK" | grep -q "lib/arm64-v8a/libhev-socks5-tunnel.so" || { echo "::error::hev tun2socks missing from APK"; exit 1; }
+          echo "--- staged jniLibs ---"; find android-app/app/src/main/jniLibs -type f || true
+          echo "--- native libraries in APK ---"; unzip -l "$APK" | grep -E "\.so" || true
+          unzip -l "$APK" | grep -q "lib/arm64-v8a/libgojni.so" \
+            || { echo "::error::Xray core missing from APK"; exit 1; }
+          unzip -l "$APK" | grep -q "lib/arm64-v8a/libhev-socks5-tunnel.so" \
+            || { echo "::error::hev tun2socks missing from APK"; exit 1; }
           if unzip -l "$APK" | grep -qi "firebase"; then echo "::error::firebase artifacts found"; exit 1; fi
           OUT_NAME="mvpn-trial-arm64-${GITHUB_RUN_NUMBER}.apk"
           cp "$APK" "$OUT_NAME"
@@ -177,3 +140,30 @@ jobs:
             mvpn-trial-arm64-*.apk
             mvpn-trial-arm64-*.apk.sha256
           fail_on_unmatched_files: true
+
+      - name: Report failure details
+        if: failure()
+        run: |
+          # Actions logs are not reachable from this environment, so surface the useful part of
+          # each log as a workflow annotation (readable through the check-runs API).
+          python3 - <<'PY'
+          import pathlib, re, urllib.parse
+          sources = ["/tmp/fetch-aar.log", "/tmp/build-hev.log", "/tmp/testkey.log", "/tmp/gradle.log"]
+          picked = []
+          for path in sources:
+              p = pathlib.Path(path)
+              if not p.exists():
+                  continue
+              for line in p.read_text(errors="replace").splitlines():
+                  low = line.lower()
+                  if line.startswith("e: ") or "error" in low or "what went wrong" in low or "failed" in low or line.startswith("!"):
+                      picked.append(line)
+          if not picked:
+              for path in sources:
+                  p = pathlib.Path(path)
+                  if p.exists():
+                      picked += p.read_text(errors="replace").splitlines()[-40:]
+          text = "\n".join(dict.fromkeys(picked))[-3500:]
+          print("::error title=build-log::%s" % urllib.parse.quote(text, safe=""))
+          print("::warning title=build-log-length::%d" % len(text))
+          PY
