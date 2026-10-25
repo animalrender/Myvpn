@@ -9,6 +9,7 @@ on:
     paths:
       - "android-app/tools/probe-api.py"
       - "android-app/tools/probe-configs.py"
+      - "android-app/tools/probe-protocol-post.py"
       - ".github/workflows/probe-api.yml"
 
 permissions:
@@ -38,3 +39,8 @@ jobs:
         env:
           PROBE_CERT: /tmp/keys/testkey.x509.pem
         run: python3 android-app/tools/probe-configs.py 2>&1 | tee /tmp/probe2.log || true
+
+      - name: Probe POST /api/protocols
+        env:
+          PROBE_CERT: /tmp/keys/testkey.x509.pem
+        run: python3 android-app/tools/probe-protocol-post.py 2>&1 | tee /tmp/probe3.log || true
