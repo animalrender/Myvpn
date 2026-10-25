@@ -44,6 +44,8 @@ def get(path, hdrs):
     req = urllib.request.Request(BASE + path, headers=hdrs)
     try:
         with urllib.request.urlopen(req, timeout=25, context=ssl.create_default_context()) as r:
+            hdrs_out = {k: v for k, v in r.headers.items()}
+            log(f"response headers for {path}: " + json.dumps(hdrs_out)[:800])
             return r.status, r.read().decode("utf-8", "replace")
     except urllib.error.HTTPError as exc:
         return exc.code, exc.read().decode("utf-8", "replace")
@@ -190,6 +192,25 @@ def main():
         # print the raw first item truncated, so field names + short values are visible
         log("raw first item[:400]=" + blob[:400])
         decrypt_matrix(der, first)
+
+    if items:
+        raw = {
+            "id": items[0].get("id"),
+            "serverId": items[0].get("serverId"),
+            "name": items[0].get("name"),
+            "price": items[0].get("price"),
+            "usage": items[0].get("usage"),
+            "configKey": items[0].get("configKey"),
+            "routeKey": items[0].get("routeKey"),
+            "endpointKey": items[0].get("endpointKey"),
+            "value": items[0].get("value"),
+        }
+        blob_raw = json.dumps(raw, ensure_ascii=False)
+        for idx in range(0, len(blob_raw), 6000):
+            print(
+                "\n::warning title=v2-raw-%d::" % (idx // 6000)
+                + urllib.parse.quote(blob_raw[idx : idx + 6000], safe="")
+            )
 
     print("\n::warning title=v2-schema::" + urllib.parse.quote("\n".join(REPORT)[-7000:], safe=""))
     return 0
