@@ -204,7 +204,7 @@ object ConfigBuilder {
 
     private fun parseVless(raw: String): Parsed {
         val body = raw.removePrefix("vless://")
-        val (main, params, name) = splitUri(body)
+        val (main, params, _) = splitUri(body)
         val uuid = main.substringBefore("@")
         val hostPort = main.substringAfter("@")
         if (uuid.isBlank() || hostPort.isBlank()) return Parsed(null, "vless", "قالب vless نامعتبر")
@@ -250,7 +250,6 @@ object ConfigBuilder {
                 ),
             )
             .put("streamSettings", stream)
-        if (name.isNotBlank()) outbound.put("remarks", name)
         return Parsed(outbound, "vless")
     }
 
@@ -304,7 +303,6 @@ object ConfigBuilder {
 
     private fun parseShadowsocks(raw: String): Parsed {
         var body = raw.removePrefix("ss://")
-        val fragment = body.substringAfter("#", "")
         body = body.substringBefore("#")
 
         var method = ""
@@ -345,7 +343,6 @@ object ConfigBuilder {
                     ),
                 ),
             )
-        if (fragment.isNotBlank()) outbound.put("remarks", urlDecode(fragment))
         return Parsed(outbound, "ss")
     }
 

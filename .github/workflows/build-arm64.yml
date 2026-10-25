@@ -106,6 +106,19 @@ jobs:
           unzip -l "$APK" | grep -q "lib/arm64-v8a/libhev-socks5-tunnel.so" \
             || { echo "::error::hev tun2socks missing from APK"; exit 1; }
           if unzip -l "$APK" | grep -qi "firebase"; then echo "::error::firebase artifacts found"; exit 1; fi
+
+          BT="$(ls -d "$ANDROID_HOME/build-tools/"* 2>/dev/null | sort -V | tail -1)"
+          echo "--- badging ---"
+          "$BT/aapt2" dump badging "$APK" 2>/dev/null | head -6 || true
+          echo "--- signature ---"
+          "$BT/apksigner" verify --print-certs "$APK" 2>/dev/null | tee /tmp/certs.txt || true
+          EXPECTED_CERT="a40da80a59d170caa950cf15c18c454d47a39b26989d8b640ecd745ba71bf5dc"
+          GOT_CERT="$(grep -i "certificate SHA-256 digest" /tmp/certs.txt | head -1 | sed 's/.*: *//' | tr 'A-Z' 'a-z')"
+          if [ "$GOT_CERT" = "$EXPECTED_CERT" ]; then
+            echo "==> signature matches the analysed APK (AOSP testkey): $GOT_CERT"
+          else
+            echo "::warning title=signing::APK certificate is '$GOT_CERT' (expected '$EXPECTED_CERT'); API headers may not match"
+          fi
           OUT_NAME="mvpn-trial-arm64-${GITHUB_RUN_NUMBER}.apk"
           cp "$APK" "$OUT_NAME"
           echo "apk=$OUT_NAME" >> "$GITHUB_OUTPUT"

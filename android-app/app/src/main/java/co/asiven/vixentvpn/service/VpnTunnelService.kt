@@ -144,9 +144,6 @@ class VpnTunnelService : VpnService() {
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.Q) {
             builder.setMetered(false)
         }
-        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
-            builder.setBlocking(false)
-        }
         builder.establish().also { AppLog.i("رابط TUN ساخته شد: ${it?.fd}") }
     } catch (t: Throwable) {
         AppLog.e("ساخت رابط TUN ناموفق", t)
