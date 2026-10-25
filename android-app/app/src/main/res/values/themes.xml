@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources xmlns:tools="http://schemas.android.com/tools">
+    <style name="Theme.MvpnTrial" parent="Theme.Material3.Dark.NoActionBar">
+        <item name="colorPrimary">@color/primary</item>
+        <item name="colorOnPrimary">#FF06111F</item>
+        <item name="colorPrimaryContainer">@color/primary_dark</item>
+        <item name="colorSecondary">@color/accent</item>
+        <item name="android:colorBackground">@color/bg</item>
+        <item name="colorSurface">@color/surface</item>
+        <item name="colorSurfaceVariant">@color/surface_alt</item>
+        <item name="android:statusBarColor">@color/bg</item>
+        <item name="android:navigationBarColor">@color/bg</item>
+        <item name="android:textColorPrimary">@color/text</item>
+        <item name="android:textColorSecondary">@color/text_dim</item>
+        <item name="materialButtonStyle">@style/Widget.MvpnTrial.Button</item>
+        <item name="android:windowLayoutInDisplayCutoutMode" tools:targetApi="27">shortEdges</item>
+    </style>
+
+    <style name="Widget.MvpnTrial.Button" parent="Widget.Material3.Button">
+        <item name="android:textAllCaps">false</item>
+        <item name="cornerRadius">14dp</item>
+    </style>
+
+    <style name="Text.Caption" parent="TextAppearance.Material3.BodySmall">
+        <item name="android:textColor">@color/text_dim</item>
+    </style>
+</resources>

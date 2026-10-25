@@ -1,0 +1,52 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="app_name">MVPN Trial</string>
+    <string name="title_main">MVPN Trial</string>
+    <string name="subtitle">نسخهٔ آزمایشی — بدون تبلیغ، بدون حساب، بدون خرید</string>
+
+    <string name="btn_fetch_all">دریافت و بازآوری همهٔ سرورها</string>
+    <string name="btn_ping_all">پینگ همه</string>
+    <string name="btn_raw_json">JSON خام</string>
+    <string name="btn_logs">لاگ‌ها</string>
+    <string name="btn_connect">اتصال</string>
+    <string name="btn_disconnect">قطع اتصال</string>
+    <string name="btn_ping">پینگ</string>
+    <string name="btn_details">جزئیات</string>
+    <string name="btn_close">بستن</string>
+    <string name="btn_copy">کپی</string>
+
+    <string name="status_idle">آماده — سروری انتخاب نشده</string>
+    <string name="status_selected">انتخاب‌شده: %1$s</string>
+    <string name="status_connecting">در حال اتصال…</string>
+    <string name="status_connected">متصل — %1$s (%2$s)</string>
+    <string name="status_disconnected">قطع شد</string>
+    <string name="status_error">خطا: %1$s</string>
+    <string name="status_fetching">در حال دریافت سرورها…</string>
+    <string name="status_servers">%1$d سرور (رایگان: %2$d / پولی: %3$d)</string>
+    <string name="status_empty">فهرست خالی است — دکمهٔ دریافت را بزنید</string>
+    <string name="status_pinging">%1$d/%2$d پینگ…</string>
+
+    <string name="ping_ms">%1$d ms</string>
+    <string name="ping_timeout">تایم‌اوت</string>
+    <string name="ping_none">—</string>
+
+    <string name="badge_free">رایگان</string>
+    <string name="badge_paid">پولی · %1$d الماس</string>
+    <string name="badge_unknown_price">قیمت نامشخص</string>
+    <string name="badge_usage">مصرف: %1$s</string>
+    <string name="badge_no_usage">بدون سابقهٔ مصرف</string>
+
+    <string name="mode_vpn">حالت VPN (کل دستگاه)</string>
+    <string name="mode_proxy">حالت پروکسی (فقط SOCKS/HTTP محلی)</string>
+    <string name="mode_toggle">تغییر حالت اتصال</string>
+
+    <string name="notif_channel">وضعیت تونل</string>
+    <string name="notif_title">MVPN Trial متصل است</string>
+    <string name="notif_text">%1$s</string>
+
+    <string name="dlg_details_title">جزئیات سرور</string>
+    <string name="dlg_raw_title">JSON خام پاسخ /api/protocols</string>
+    <string name="dlg_log_title">لاگ درخواست‌ها و هسته</string>
+    <string name="dlg_copied">در حافظه کپی شد</string>
+    <string name="vpn_permission_needed">برای حالت VPN باید اجازهٔ اتصال بدهید.</string>
+</resources>
