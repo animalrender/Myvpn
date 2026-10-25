@@ -110,7 +110,6 @@ jobs:
             || { echo "::error::Xray core missing from APK"; exit 1; }
           unzip -l "$APK" | grep -q "lib/arm64-v8a/libhev-socks5-tunnel.so" \
             || { echo "::error::hev tun2socks missing from APK"; exit 1; }
-          if unzip -l "$APK" | grep -qi "firebase"; then echo "::error::firebase artifacts found"; exit 1; fi
 
           BT="$(ls -d "$ANDROID_HOME/build-tools/"* 2>/dev/null | sort -V | tail -1)"
           echo "--- badging ---"
@@ -146,7 +145,7 @@ jobs:
           tag_name: trial-arm64-${{ github.run_number }}
           name: MVPN Trial — arm64 build ${{ github.run_number }}
           body: |
-            نسخهٔ آزمایشی MVPN Trial برای arm64-v8a — بدون تبلیغ، بدون حساب کاربری، بدون قفل قیمت، بدون Firebase.
+            نسخهٔ آزمایشی MVPN Trial برای arm64-v8a — بدون تبلیغ، بدون حساب کاربری، بدون قفل قیمت (Firebase طبق اپ اصلی).
 
             * هستهٔ Xray: `libgojni.so` از `libv2ray.aar` (AndroidLibXrayLite)
             * تونل TUN→SOCKS: `libhev-socks5-tunnel.so` (hev-socks5-tunnel 2.19.3، JNI)
@@ -165,23 +164,23 @@ jobs:
           # Actions logs are not reachable from this environment, so surface the useful part of
           # each log as a workflow annotation (readable through the check-runs API).
           python3 - <<'PY'
-          import pathlib, re, urllib.parse
+          import pathlib, urllib.parse
           sources = ["/tmp/fetch-aar.log", "/tmp/build-hev.log", "/tmp/testkey.log", "/tmp/gradle.log"]
-          picked = []
+          errs, tail = [], {}
           for path in sources:
               p = pathlib.Path(path)
               if not p.exists():
                   continue
-              for line in p.read_text(errors="replace").splitlines():
+              lines = p.read_text(errors="replace").splitlines()
+              tail[path] = lines[-60:]
+              for line in lines:
                   low = line.lower()
-                  if line.startswith("e: ") or "error" in low or "what went wrong" in low or "failed" in low or line.startswith("!"):
-                      picked.append(line)
-          if not picked:
-              for path in sources:
-                  p = pathlib.Path(path)
-                  if p.exists():
-                      picked += p.read_text(errors="replace").splitlines()[-40:]
-          text = "\n".join(dict.fromkeys(picked))[-3500:]
-          print("::error title=build-log::%s" % urllib.parse.quote(text, safe=""))
-          print("::warning title=build-log-length::%d" % len(text))
+                  if line.startswith("e: ") or " error:" in low or low.startswith("error:") \
+                     or "what went wrong" in low or "could not resolve" in low or line.startswith("! "):
+                      errs.append(line)
+          errs = list(dict.fromkeys(errs))
+          if errs:
+              print("::error title=kotlin-gradle-errors::%s" % urllib.parse.quote("\n".join(errs)[-6000:], safe=""))
+          flat = [l for chunk in tail.values() for l in chunk]
+          print("::warning title=log-tail::%s" % urllib.parse.quote("\n".join(flat)[-6000:], safe=""))
           PY

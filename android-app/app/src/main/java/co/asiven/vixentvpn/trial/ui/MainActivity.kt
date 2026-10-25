@@ -47,7 +47,8 @@ import org.json.JSONObject
  *   • a scrollable list where each row shows the original attributes as labels
  *   • per-row ping and a bulk "ping all" action
  *   • selection + connect through the real Xray/hev stack
- * No ads, no sign-in, no price gate, no Firebase.
+ * Every row can export its v2ray share link to the clipboard (v2rayNG compatible).
+ * No ads, no sign-in, no price gate.
  */
 class MainActivity : AppCompatActivity() {
 
@@ -106,6 +107,7 @@ class MainActivity : AppCompatActivity() {
             onSelect = { selectServer(it) },
             onPing = { pingSingle(it) },
             onDetails = { showDetails(it) },
+            onCopyLink = { copyShareLink(it) },
         )
         binding.serverList.layoutManager = LinearLayoutManager(this)
         binding.serverList.adapter = adapter
@@ -363,6 +365,19 @@ class MainActivity : AppCompatActivity() {
             .setPositiveButton(R.string.btn_close, null)
             .setNeutralButton(R.string.btn_copy) { _, _ -> copy(server.rawJson) }
             .show()
+    }
+
+    /** Copies this server as a v2ray share URI so it can be imported into any v2ray client. */
+    private fun copyShareLink(server: Server) {
+        val link = runCatching { ConfigBuilder.shareLink(server) }.getOrNull()
+        if (link.isNullOrBlank()) {
+            toast(getString(R.string.link_unavailable))
+            AppLog.w("لینک اشتراک برای ${server.name} قابل ساخت نیست (نوع: ${server.typeHint})")
+            return
+        }
+        copy(link)
+        toast(getString(R.string.link_copied, server.name))
+        AppLog.i("لینک v2ray برای ${server.name} کپی شد (${link.length} کاراکتر)")
     }
 
     private fun showText(title: String, text: String) {

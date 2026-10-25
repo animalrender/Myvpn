@@ -13,11 +13,15 @@ import co.asiven.vixentvpn.trial.databinding.ItemServerBinding
  * Flat, scrollable list of every server the backend returned — free **and** paid — with the
  * original attributes (type, price, usage, location) rendered as labels, exactly what the
  * trial build is supposed to expose instead of hiding paid rows behind a purchase gate.
+ *
+ * Every row can also export itself as a v2ray share link (copied to the clipboard), so the same
+ * server can be pasted into v2rayNG/nekobox and used outside this app.
  */
 class ServerAdapter(
     private val onSelect: (Server) -> Unit,
     private val onPing: (Server) -> Unit,
     private val onDetails: (Server) -> Unit,
+    private val onCopyLink: (Server) -> Unit,
 ) : RecyclerView.Adapter<ServerAdapter.Holder>() {
 
     private val items = mutableListOf<Server>()
@@ -132,6 +136,7 @@ class ServerAdapter(
             binding.root.setOnClickListener { onSelect(server) }
             binding.pingButton.setOnClickListener { onPing(server) }
             binding.detailsButton.setOnClickListener { onDetails(server) }
+            binding.copyLinkButton.setOnClickListener { onCopyLink(server) }
             binding.root.setOnLongClickListener {
                 onDetails(server)
                 true

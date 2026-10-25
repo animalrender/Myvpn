@@ -512,6 +512,124 @@ object ConfigBuilder {
         return stream
     }
 
+    // ------------------------------------------------------------------ share links
+
+    /**
+     * Rebuilds a v2rayNG-compatible share URI (`vmess://`, `vless://`, `trojan://`, `ss://`) for
+     * one server, so the row can be copied to the clipboard and imported into any v2ray client.
+     *
+     * When the backend already delivered a share URI it is returned verbatim; otherwise the URI is
+     * reconstructed from the Xray outbound that [parse] produced (so JSON configs stay exportable).
+     */
+    fun shareLink(server: Server): String? {
+        val raw = server.rawConfig.trim()
+        if (raw.isEmpty()) return null
+        if (!raw.startsWith("{")) return raw
+        val outbound = parseJson(raw).outbound ?: return null
+        return outboundToLink(outbound, server.name)
+    }
+
+    private fun outboundToLink(outbound: JSONObject, rawName: String): String? {
+        val name = encodeName(rawName)
+        val stream = outbound.optJSONObject("streamSettings")
+        val network = stream?.optString("network").orEmpty().ifBlank { "tcp" }
+        val security = stream?.optString("security").orEmpty().ifBlank { "none" }
+        val tls = stream?.optJSONObject("tlsSettings")
+        val reality = stream?.optJSONObject("realitySettings")
+        val ws = stream?.optJSONObject("wsSettings")
+        val grpc = stream?.optJSONObject("grpcSettings")
+        val tcp = stream?.optJSONObject("tcpSettings")?.optJSONObject("header")
+        val http = stream?.optJSONObject("httpSettings")
+
+        val params = linkedMapOf<String, String>()
+        if (network != "tcp") params["type"] = network
+        if (security != "none") params["security"] = security
+        (reality?.optString("serverName")?.ifBlank { null } ?: tls?.optString("serverName")?.ifBlank { null })
+            ?.let { params["sni"] = it }
+        tls?.optString("fingerprint")?.ifBlank { null }?.let { params["fp"] = it }
+        reality?.optString("fingerprint")?.ifBlank { null }?.let { params["fp"] = it }
+        reality?.optString("publicKey")?.ifBlank { null }?.let { params["pbk"] = it }
+        reality?.optString("shortId")?.ifBlank { null }?.let { params["sid"] = it }
+        reality?.optString("spiderX")?.ifBlank { null }?.let { params["spx"] = it }
+        tls?.optJSONArray("alpn")?.let { if (it.length() > 0) params["alpn"] = it.joinToString(",") }
+        ws?.optString("path")?.ifBlank { null }?.let { params["path"] = it }
+        ws?.optJSONObject("headers")?.optString("Host")?.ifBlank { null }?.let { params["host"] = it }
+        grpc?.optString("serviceName")?.ifBlank { null }?.let { params["serviceName"] = it }
+        http?.optString("path")?.ifBlank { null }?.let { params["path"] = it }
+        http?.optJSONArray("host")?.let { if (it.length() > 0) params["host"] = it.joinToString(",") }
+        tcp?.optString("request")?.ifBlank { null }?.let { params["headerType"] = "http" }
+        if (stream?.optBoolean("allowInsecure") == true) params["allowInsecure"] = "1"
+
+        val settings = outbound.optJSONObject("settings") ?: return null
+        return when (outbound.optString("protocol")) {
+            "vmess" -> {
+                val vnext = settings.optJSONArray("vnext")?.optJSONObject(0) ?: return null
+                val user = vnext.optJSONArray("users")?.optJSONObject(0) ?: return null
+                val json = JSONObject()
+                    .put("v", "2")
+                    .put("ps", rawName)
+                    .put("add", vnext.optString("address"))
+                    .put("port", vnext.optInt("port").toString())
+                    .put("id", user.optString("id"))
+                    .put("aid", user.optInt("alterId").toString())
+                    .put("scy", user.optString("security", "auto"))
+                    .put("net", network)
+                    .put("type", params["headerType"] ?: "none")
+                    .put("host", params["host"].orEmpty())
+                    .put("path", params["path"].orEmpty())
+                    .put("tls", if (security == "tls") "tls" else "")
+                    .put("sni", params["sni"].orEmpty())
+                    .put("alpn", params["alpn"].orEmpty())
+                    .put("fp", params["fp"].orEmpty())
+                "vmess://" + Base64.encodeToString(
+                    json.toString().toByteArray(Charsets.UTF_8),
+                    Base64.NO_WRAP or Base64.NO_PADDING,
+                )
+            }
+            "vless" -> {
+                val vnext = settings.optJSONArray("vnext")?.optJSONObject(0) ?: return null
+                val user = vnext.optJSONArray("users")?.optJSONObject(0) ?: return null
+                user.optString("flow").ifBlank { null }?.let { params["flow"] = it }
+                user.optString("encryption").ifBlank { null }?.let { params["encryption"] = it }
+                buildUri(
+                    "vless",
+                    "${user.optString("id")}@${vnext.optString("address")}:${vnext.optInt("port")}",
+                    params,
+                    name,
+                )
+            }
+            "trojan" -> {
+                val server = settings.optJSONArray("servers")?.optJSONObject(0) ?: return null
+                buildUri(
+                    "trojan",
+                    "${server.optString("password")}@${server.optString("address")}:${server.optInt("port")}",
+                    params,
+                    name,
+                )
+            }
+            "shadowsocks" -> {
+                val server = settings.optJSONArray("servers")?.optJSONObject(0) ?: return null
+                val user = "ss://" + Base64.encodeToString(
+                    "${server.optString("method")}:${server.optString("password")}".toByteArray(Charsets.UTF_8),
+                    Base64.NO_WRAP or Base64.NO_PADDING or Base64.URL_SAFE,
+                )
+                "$user@${server.optString("address")}:${server.optInt("port")}#$name"
+            }
+            else -> null
+        }
+    }
+
+    private fun buildUri(scheme: String, authority: String, params: Map<String, String>, name: String): String {
+        val query = params.entries
+            .filter { it.value.isNotBlank() }
+            .joinToString("&") { "${it.key}=${java.net.URLEncoder.encode(it.value, "UTF-8")}" }
+        val suffix = if (query.isBlank()) "" else "?$query"
+        return "$scheme://$authority$suffix#$name"
+    }
+
+    private fun encodeName(name: String): String =
+        runCatching { java.net.URLEncoder.encode(name, "UTF-8") }.getOrDefault("mvpn")
+
     fun decodeBase64(value: String): String? {
         val cleaned = value.trim().replace("\n", "").replace(" ", "")
         val candidates = listOf(

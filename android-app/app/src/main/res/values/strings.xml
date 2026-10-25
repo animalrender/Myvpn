@@ -12,6 +12,7 @@
     <string name="btn_disconnect">قطع اتصال</string>
     <string name="btn_ping">پینگ</string>
     <string name="btn_details">جزئیات</string>
+    <string name="btn_copy_link">لینک v2ray</string>
     <string name="btn_close">بستن</string>
     <string name="btn_copy">کپی</string>
 
@@ -48,5 +49,7 @@
     <string name="dlg_raw_title">JSON خام پاسخ /api/protocols</string>
     <string name="dlg_log_title">لاگ درخواست‌ها و هسته</string>
     <string name="dlg_copied">در حافظه کپی شد</string>
+    <string name="link_copied">لینک v2ray سرور %1$s کپی شد</string>
+    <string name="link_unavailable">این سرور لینک قابل کپی ندارد</string>
     <string name="vpn_permission_needed">برای حالت VPN باید اجازهٔ اتصال بدهید.</string>
 </resources>
