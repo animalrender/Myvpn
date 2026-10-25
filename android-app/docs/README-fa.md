@@ -25,8 +25,14 @@
 
 ## ۱) نصب و اجرای سریع
 
-1. از صفحهٔ [Releases](https://github.com/animalrender/Myvpn/releases) آخرین فایل
+1. از صفحهٔ [Releases](https://github.com/animalrender/Myvpn/releases) آخرین نسخه
+   (`trial-arm64-<شمارهٔ اجرا>`، همیشه بالاترین شماره در بالای صفحه) فایل
    `mvpn-trial-arm64-*.apk` را دانلود کنید (به همراه فایل `.sha256`).
+
+   ```bash
+   gh release list                                   # فهرست نسخه‌ها
+   gh release download trial-arm64-<N>               # دانلود APK + sha256
+   ```
 2. روی گوشی اندروید ۷ (API 24) به بالا و **arm64-v8a** نصب کنید:
    ```bash
    adb install -r mvpn-trial-arm64-XX.apk

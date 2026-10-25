@@ -551,12 +551,12 @@ object ConfigBuilder {
         reality?.optString("publicKey")?.ifBlank { null }?.let { params["pbk"] = it }
         reality?.optString("shortId")?.ifBlank { null }?.let { params["sid"] = it }
         reality?.optString("spiderX")?.ifBlank { null }?.let { params["spx"] = it }
-        tls?.optJSONArray("alpn")?.let { if (it.length() > 0) params["alpn"] = it.joinToString(",") }
+        tls?.optJSONArray("alpn")?.let { array -> joinArray(array).takeIf { it.isNotBlank() }?.let { params["alpn"] = it } }
         ws?.optString("path")?.ifBlank { null }?.let { params["path"] = it }
         ws?.optJSONObject("headers")?.optString("Host")?.ifBlank { null }?.let { params["host"] = it }
         grpc?.optString("serviceName")?.ifBlank { null }?.let { params["serviceName"] = it }
         http?.optString("path")?.ifBlank { null }?.let { params["path"] = it }
-        http?.optJSONArray("host")?.let { if (it.length() > 0) params["host"] = it.joinToString(",") }
+        http?.optJSONArray("host")?.let { array -> joinArray(array).takeIf { it.isNotBlank() }?.let { params["host"] = it } }
         tcp?.optString("request")?.ifBlank { null }?.let { params["headerType"] = "http" }
         if (stream?.optBoolean("allowInsecure") == true) params["allowInsecure"] = "1"
 
@@ -618,6 +618,9 @@ object ConfigBuilder {
             else -> null
         }
     }
+
+    private fun joinArray(array: JSONArray): String =
+        (0 until array.length()).mapNotNull { array.optString(it).takeIf(String::isNotBlank) }.joinToString(",")
 
     private fun buildUri(scheme: String, authority: String, params: Map<String, String>, name: String): String {
         val query = params.entries
