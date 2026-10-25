@@ -3,6 +3,7 @@ import java.util.Properties
 plugins {
     id("com.android.application")
     id("org.jetbrains.kotlin.android")
+    id("com.google.gms.google-services")
 }
 
 // Signing material is injected by CI (see tools/fetch-testkey.sh); no key lives in the repo.
@@ -95,4 +96,7 @@ dependencies {
     implementation("androidx.constraintlayout:constraintlayout:2.1.4")
     implementation("androidx.lifecycle:lifecycle-runtime-ktx:2.8.4")
     implementation("org.jetbrains.kotlinx:kotlinx-coroutines-android:1.8.1")
+    // Firebase Messaging — the baseline app registers a push token and sends it with the
+    // token request; same project/app id (see app/google-services.json).
+    implementation("com.google.firebase:firebase-messaging:24.0.2")
 }

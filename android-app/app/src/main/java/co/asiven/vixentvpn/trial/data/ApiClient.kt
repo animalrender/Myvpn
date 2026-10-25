@@ -49,19 +49,22 @@ class ApiClient(private val context: Context, private val prefs: Prefs) {
 
     fun fetchToken(): String? {
         val deviceId = prefs.deviceId
+        val firebase = prefs.firebaseToken
+        // The original client uses GET (POST answers 405 on this backend); `firebase_token` rides
+        // along once Firebase has handed us one, exactly like the baseline MMKV value.
+        val firebaseQuery = if (firebase.isBlank()) "" else "&firebase_token=$firebase"
         val body = JSONObject().apply {
             put("deviceId", deviceId)
             put("device_id", deviceId)
             put("name", "${Build.MANUFACTURER} ${Build.MODEL}")
-            put("firebase_token", "")
+            put("firebase_token", firebase)
         }.toString()
 
         val attempts = listOf(
+            Attempt("GET", "/api/token?deviceId=$deviceId$firebaseQuery", null, hexUpper = false),
+            Attempt("GET", "/api/token/?deviceId=$deviceId$firebaseQuery", null, hexUpper = false),
             Attempt("POST", "/api/token", body, hexUpper = false),
             Attempt("POST", "/api/token/", body, hexUpper = false),
-            Attempt("GET", "/api/token?deviceId=$deviceId", null, hexUpper = false),
-            Attempt("POST", "/api/token", body, hexUpper = true),
-            Attempt("GET", "/api/token/?deviceId=$deviceId", null, hexUpper = true),
         )
         for (attempt in attempts) {
             val result = execute(attempt) ?: continue
@@ -71,9 +74,14 @@ class ApiClient(private val context: Context, private val prefs: Prefs) {
                 AppLog.i("token دریافت شد (${token.take(6)}…) از ${result.url}")
                 return token
             }
+            // `The app token is disabled` is a valid backend state, not a failure to retry.
+            if (result.body.contains("disabled", ignoreCase = true)) {
+                AppLog.i("توکن سمت سرور غیرفعال است؛ بدون توکن ادامه می‌دهیم")
+                return null
+            }
             AppLog.w("پاسخ توکن قابل تجزیه نبود: ${result.code} ${result.body.take(200)}")
         }
-        AppLog.e("دریافت توکن از همهٔ حالت‌ها شکست خورد")
+        AppLog.w("دریافت توکن انجام نشد؛ درخواست‌ها بدون هدر token ادامه می‌یابند")
         return null
     }
 

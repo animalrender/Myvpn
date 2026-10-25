@@ -125,6 +125,10 @@ class MainActivity : AppCompatActivity() {
                     showText(getString(R.string.dlg_log_title), AppLog.dump().ifBlank { "—" })
                     true
                 }
+                R.id.action_import_clipboard -> {
+                    importFromClipboard()
+                    true
+                }
                 R.id.action_toggle_mode -> {
                     toggleMode()
                     true
@@ -365,6 +369,36 @@ class MainActivity : AppCompatActivity() {
             .setPositiveButton(R.string.btn_close, null)
             .setNeutralButton(R.string.btn_copy) { _, _ -> copy(server.rawJson) }
             .show()
+    }
+
+    /**
+     * Imports a server from the clipboard (`vmess://`, `vless://`, `trojan://`, `ss://` or a full
+     * Xray JSON config). Useful when the backend hands out an encrypted blob: the tunnel stack is
+     * identical, so any working config can still be used, pinged and shared.
+     */
+    private fun importFromClipboard() {
+        val clipboard = getSystemService(ClipboardManager::class.java)
+        val text = clipboard?.primaryClip?.takeIf { it.itemCount > 0 }
+            ?.getItemAt(0)?.coerceToText(this)?.toString()?.trim().orEmpty()
+        if (text.isBlank()) {
+            toast(getString(R.string.import_empty))
+            return
+        }
+        val looksLikeConfig = text.startsWith("{") ||
+            listOf("vmess://", "vless://", "trojan://", "ss://", "socks://", "http://", "https://")
+                .any { text.startsWith(it, ignoreCase = true) }
+        if (!looksLikeConfig) {
+            toast(getString(R.string.import_invalid))
+            return
+        }
+        val server = ServerParser.fromRaw(text, servers.size)
+        servers.add(0, server)
+        prefs.selectedKey = server.key
+        adapter.submit(servers, prefs.selectedKey)
+        updateSummary()
+        binding.statusText.text = getString(R.string.status_selected, server.name)
+        toast(getString(R.string.import_ok, server.typeHint))
+        AppLog.i("کانفیگ دستی اضافه شد: ${server.typeHint} (${text.length} کاراکتر)")
     }
 
     /** Copies this server as a v2ray share URI so it can be imported into any v2ray client. */

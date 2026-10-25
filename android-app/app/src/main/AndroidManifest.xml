@@ -41,5 +41,21 @@
                 <action android:name="android.net.VpnService" />
             </intent-filter>
         </service>
+
+        <!-- Firebase Messaging (same Firebase project/app id as the analysed APK). -->
+        <service
+            android:name="co.asiven.vixentvpn.trial.push.TrialMessagingService"
+            android:exported="false">
+            <intent-filter>
+                <action android:name="com.google.firebase.MESSAGING_EVENT" />
+            </intent-filter>
+        </service>
+
+        <meta-data
+            android:name="com.google.firebase.messaging.default_notification_channel_id"
+            android:value="mvpn_tunnel" />
+        <meta-data
+            android:name="com.google.firebase.messaging.default_notification_icon"
+            android:resource="@drawable/ic_stat_tunnel" />
     </application>
 </manifest>

@@ -164,6 +164,41 @@ object ServerParser {
         return servers
     }
 
+    /** Builds a [Server] out of a pasted share link or JSON config (clipboard import). */
+    fun fromRaw(raw: String, index: Int): Server {
+        val trimmed = raw.trim()
+        val scheme = trimmed.substringBefore("://", "").lowercase()
+        val type = when (scheme) {
+            "vmess", "vless", "trojan", "ss" -> scheme
+            "socks", "socks5" -> "socks"
+            "http", "https" -> "http"
+            "" -> "json"
+            else -> scheme
+        }
+        val fallbackName = "کانفیگ دستی ${index + 1}"
+        val name = when {
+            trimmed.startsWith("{") -> runCatching { JSONObject(trimmed).optString("remarks") }
+                .getOrNull()?.takeIf { it.isNotBlank() } ?: fallbackName
+            trimmed.contains("#") -> runCatching {
+                java.net.URLDecoder.decode(trimmed.substringAfter("#"), "UTF-8")
+            }.getOrNull()?.takeIf { it.isNotBlank() } ?: fallbackName
+            else -> fallbackName
+        }
+        return Server(
+            key = "manual:${Integer.toHexString(trimmed.hashCode())}:$index",
+            protocolId = null,
+            serverId = null,
+            name = name,
+            flag = "📋",
+            typeHint = type,
+            price = null,
+            rawConfig = trimmed,
+            usage = null,
+            extra = mapOf("منبع" to "کلیپ‌بورد"),
+            rawJson = trimmed,
+        )
+    }
+
     private fun findArray(response: JSONObject): JSONArray? {
         response.optJSONArray("data")?.let { return it }
         response.optJSONArray("result")?.let { return it }

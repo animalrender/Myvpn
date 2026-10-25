@@ -13,6 +13,10 @@
     <string name="btn_ping">پینگ</string>
     <string name="btn_details">جزئیات</string>
     <string name="btn_copy_link">لینک v2ray</string>
+    <string name="btn_import">افزودن کانفیگ از کلیپ‌بورد</string>
+    <string name="import_empty">کلیپ‌بورد خالی است</string>
+    <string name="import_invalid">متن کلیپ‌بورد یک کانفیگ v2ray نیست</string>
+    <string name="import_ok">کانفیگ %1$s اضافه شد</string>
     <string name="btn_close">بستن</string>
     <string name="btn_copy">کپی</string>
 

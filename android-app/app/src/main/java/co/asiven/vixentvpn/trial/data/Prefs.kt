@@ -4,9 +4,9 @@ import android.content.Context
 import android.provider.Settings
 
 /**
- * Plain SharedPreferences store — intentional replacement for the original MMKV layer
- * (no MMKV/Firebase native code in the trial build). Key names follow the original app
- * so the semantics stay recognisable: token, deviceId, apiUrl, testUrl, pref_mode.
+ * Plain SharedPreferences store — intentional replacement for the original MMKV layer.
+ * Key names follow the original app so the semantics stay recognisable:
+ * token, firebase_token, deviceId, apiUrl, testUrl, pref_mode.
  */
 class Prefs(context: Context) {
 
@@ -20,6 +20,11 @@ class Prefs(context: Context) {
     var token: String
         get() = sp.getString(KEY_TOKEN, "").orEmpty()
         set(value) = sp.edit().putString(KEY_TOKEN, value).apply()
+
+    /** FCM registration token (`firebase_token` in the original MMKV store). */
+    var firebaseToken: String
+        get() = sp.getString(KEY_FIREBASE, "").orEmpty()
+        set(value) = sp.edit().putString(KEY_FIREBASE, value).apply()
 
     var apiUrl: String
         get() = sp.getString(KEY_API_URL, "").orEmpty()
@@ -53,6 +58,7 @@ class Prefs(context: Context) {
         const val MODE_VPN = "VPN"
         const val MODE_PROXY = "PROXY"
         private const val KEY_TOKEN = "token"
+        private const val KEY_FIREBASE = "firebase_token"
         private const val KEY_API_URL = "apiUrl"
         private const val KEY_TEST_URL = "testUrl"
         private const val KEY_MODE = "pref_mode"
