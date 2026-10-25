@@ -124,8 +124,22 @@ jobs:
           APK="$(find android-app/app/build/outputs/apk/release -name '*.apk' | head -1)"
           test -n "$APK"
           echo "==> $APK ($(du -h "$APK" | cut -f1))"
-          echo "--- native libraries (must be arm64-v8a only) ---"
-          unzip -l "$APK" | grep -E "lib/.*\.so" || true
+          echo "--- staged jniLibs ---"
+          find android-app/app/src/main/jniLibs -type f 2>/dev/null || echo "(nothing staged)"
+          echo "--- native libraries in APK (must be arm64-v8a only) ---"
+          unzip -l "$APK" | grep -E "\.so" || true
+          python3 - <<'PY' || true
+          import os, subprocess, urllib.parse
+          apk = os.environ.get("APK_PATH") or subprocess.run(
+              ["bash", "-lc", "find android-app/app/build/outputs/apk/release -name '*.apk' | head -1"],
+              capture_output=True, text=True).stdout.strip()
+          listing = subprocess.run(["unzip", "-l", apk], capture_output=True, text=True).stdout
+          so = [l for l in listing.splitlines() if ".so" in l]
+          staged = subprocess.run(["bash", "-lc", "find android-app/app/src/main/jniLibs -type f"],
+                                  capture_output=True, text=True).stdout
+          text = "STAGED:\n" + staged + "APK .so:\n" + "\n".join(so)
+          print("::warning title=so-inventory::%s" % urllib.parse.quote(text[-1500:], safe=""))
+          PY
           unzip -l "$APK" | grep -q "lib/arm64-v8a/libgojni.so" || { echo "::error::Xray core missing from APK"; exit 1; }
           unzip -l "$APK" | grep -q "lib/arm64-v8a/libhev-socks5-tunnel.so" || { echo "::error::hev tun2socks missing from APK"; exit 1; }
           if unzip -l "$APK" | grep -qi "firebase"; then echo "::error::firebase artifacts found"; exit 1; fi
