@@ -65,6 +65,82 @@ def shape(value, depth=0):
     return type(value).__name__
 
 
+def decrypt_matrix(der, item):
+    """Try to turn `value` back into a config with the per-item keys from /api/v2."""
+    import binascii
+
+    from Crypto.Cipher import AES  # pycryptodome is available on the runner
+
+    value = str(item.get("value") or "")
+    log(f"decrypt matrix: value len={len(value)}")
+    try:
+        ct = base64.b64decode(value + "=" * (-len(value) % 4))
+    except Exception as exc:  # noqa: BLE001
+        log(f"  base64 error {exc}")
+        return
+    log(f"  ct bytes={len(ct)} aligned16={len(ct) % 16 == 0}")
+
+    raw_keys = {}
+    for field in ("configKey", "routeKey", "endpointKey"):
+        hexv = str(item.get(field) or "")
+        if len(hexv) >= 32:
+            try:
+                raw_keys[field + ":hex"] = binascii.unhexlify(hexv)
+            except Exception:  # noqa: BLE001
+                pass
+            raw_keys[field + ":ascii"] = hexv.encode()
+            raw_keys[field + ":md5hex824"] = hashlib.md5(hexv.encode()).hexdigest()[8:24].encode()
+    keys = {}
+    for name, kb in raw_keys.items():
+        if len(kb) in (16, 24, 32):
+            keys[name] = kb
+    keys["md5(der)"] = hashlib.md5(der).digest()
+    keys["sha256(der)"] = hashlib.sha256(der).digest()
+
+    def describe(pt):
+        if pt[:2] == b"\x1f\x8b":
+            return "GZIP!"
+        try:
+            txt = pt.decode("utf-8")
+        except Exception:  # noqa: BLE001
+            return None
+        pr = sum(1 for ch in txt if ch.isprintable() or ch in "\n\t\r ")
+        if pr / max(1, len(txt)) > 0.92:
+            return "TEXT " + txt[:150].replace("\n", " ")
+        return None
+
+    hits = 0
+    for name, key in keys.items():
+        modes = {"ECB": None, "CBC0": b"\0" * 16, "CBCct": ct[:16], "CBCkey": key[:16]}
+        for mode, iv in modes.items():
+            try:
+                if mode == "ECB":
+                    pt = AES.new(key, AES.MODE_ECB).decrypt(ct)
+                else:
+                    pt = AES.new(key, AES.MODE_CBC, iv).decrypt(ct)
+            except Exception:  # noqa: BLE001
+                continue
+            res = describe(pt)
+            if res:
+                hits += 1
+                log(f"  HIT {name} {mode} -> {res}")
+        for mode in ("CTR", "CFB", "OFB"):
+            try:
+                if mode == "CTR":
+                    pt = AES.new(key, AES.MODE_CTR, nonce=b"", initial_value=int.from_bytes(ct[:16], "big")).decrypt(ct[16:])
+                elif mode == "CFB":
+                    pt = AES.new(key, AES.MODE_CFB, iv=ct[:16]).decrypt(ct[16:])
+                else:
+                    pt = AES.new(key, AES.MODE_OFB, iv=ct[:16]).decrypt(ct[16:])
+            except Exception:  # noqa: BLE001
+                continue
+            res = describe(pt)
+            if res:
+                hits += 1
+                log(f"  HIT {name} {mode}(iv=ct) -> {res}")
+    log(f"  hits={hits}")
+
+
 def main():
     pem = os.environ.get("PROBE_CERT", "testkey.x509.pem")
     if not os.path.exists(pem):
@@ -112,7 +188,8 @@ def main():
         for probe in ("vmess://", "vless://", "trojan://", "ss://", "hysteria", "outbounds", "inbounds"):
             log(f"first item contains {probe!r}: {probe in blob}")
         # print the raw first item truncated, so field names + short values are visible
-        log("raw first item[:1200]=" + blob[:1200])
+        log("raw first item[:400]=" + blob[:400])
+        decrypt_matrix(der, first)
 
     print("\n::warning title=v2-schema::" + urllib.parse.quote("\n".join(REPORT)[-7000:], safe=""))
     return 0
