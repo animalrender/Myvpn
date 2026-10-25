@@ -1,0 +1,6 @@
+examples/output/
+examples/demo.db
+examples/demo.db-wal
+examples/demo.db-shm
+node_modules/
+*.log
