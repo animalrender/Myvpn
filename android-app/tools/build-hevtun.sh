@@ -4,6 +4,10 @@
 #
 # Same approach as v2rayNG's compile-hevtun.sh: ndk-build over a temporary jni/ tree that
 # symlinks the hev source, with -DPKGNAME=<our java package>.
+#
+# NOTE: hev keeps lwip / yaml / hev-task-system / core as git submodules. The NDK build
+# needs them, so the source is cloned with --recurse-submodules (the release tarball does
+# NOT contain submodule contents and would fail with "missing dependencies").
 set -euo pipefail
 
 HEV_VERSION="${HEV_VERSION:-2.19.3}"
@@ -28,17 +32,22 @@ echo "==> NDK: $NDK_HOME"
 TMPDIR="$(mktemp -d)"
 trap 'rm -rf "$TMPDIR"' EXIT
 
-echo "==> fetching hev-socks5-tunnel $HEV_VERSION"
-TARBALL="$TMPDIR/hev.tar.gz"
-curl -fL --retry 5 --retry-delay 3 --retry-all-errors --connect-timeout 20 \
-  -o "$TARBALL" \
-  "https://github.com/heiher/hev-socks5-tunnel/archive/refs/tags/${HEV_VERSION}.tar.gz"
-tar -xzf "$TARBALL" -C "$TMPDIR"
-SRC_DIR="$(find "$TMPDIR" -maxdepth 1 -type d -name 'hev-socks5-tunnel-*' | head -1)"
-[[ -n "$SRC_DIR" ]] || { echo "!! unexpected tarball layout" >&2; exit 1; }
+echo "==> cloning hev-socks5-tunnel $HEV_VERSION (with submodules)"
+git clone --depth 1 --branch "$HEV_VERSION" \
+  --recurse-submodules --shallow-submodules \
+  https://github.com/heiher/hev-socks5-tunnel.git "$TMPDIR/hev" 2>&1 | tail -5
+git -C "$TMPDIR/hev" submodule status | tee /dev/stderr | head -10
+
+for required in \
+  "$TMPDIR/hev/src/core/include" \
+  "$TMPDIR/hev/third-part/yaml/include" \
+  "$TMPDIR/hev/third-part/lwip/src/include" \
+  "$TMPDIR/hev/third-part/hev-task-system/include"; do
+  [[ -e "$required" ]] || { echo "!! missing submodule content: $required" >&2; exit 1; }
+done
 
 mkdir -p "$TMPDIR/build/jni"
-ln -s "$SRC_DIR" "$TMPDIR/build/jni/hev-socks5-tunnel"
+ln -s "$TMPDIR/hev" "$TMPDIR/build/jni/hev-socks5-tunnel"
 echo 'include $(call all-subdir-makefiles)' > "$TMPDIR/build/jni/Android.mk"
 
 pushd "$TMPDIR/build" >/dev/null
@@ -54,7 +63,7 @@ pushd "$TMPDIR/build" >/dev/null
 popd >/dev/null
 
 LIB="$TMPDIR/libs/$ABI/libhev-socks5-tunnel.so"
-[[ -f "$LIB" ]] || { echo "!! build produced no library" >&2; exit 1; }
+[[ -f "$LIB" ]] || { echo "!! build produced no library"; ls -R "$TMPDIR/libs" || true; exit 1; }
 
 mkdir -p "$JNI_DIR/$ABI"
 cp "$LIB" "$JNI_DIR/$ABI/libhev-socks5-tunnel.so"
