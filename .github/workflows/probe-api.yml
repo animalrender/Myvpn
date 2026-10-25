@@ -1,0 +1,34 @@
+name: probe-api
+
+# Temporary diagnostic job: runs the exact header/param matrix against the backend from a
+# runner that has internet access, and reports every response as an annotation.
+on:
+  workflow_dispatch:
+  push:
+    branches: [arena/b9372ae1-myvpn]
+    paths:
+      - "android-app/tools/probe-api.py"
+      - ".github/workflows/probe-api.yml"
+
+permissions:
+  contents: read
+
+jobs:
+  probe:
+    runs-on: ubuntu-latest
+    timeout-minutes: 15
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Prepare AOSP testkey (same cert the APK is signed with)
+        run: |
+          set -euo pipefail
+          mkdir -p /tmp/keys
+          base="https://raw.githubusercontent.com/aosp-mirror/platform_build/master/target/product/security"
+          curl -fL --retry 3 -o /tmp/keys/testkey.x509.pem "$base/testkey.x509.pem"
+          openssl x509 -in /tmp/keys/testkey.x509.pem -noout -fingerprint -sha256
+
+      - name: Probe backend contract
+        env:
+          PROBE_CERT: /tmp/keys/testkey.x509.pem
+        run: python3 android-app/tools/probe-api.py 2>&1 | tee /tmp/probe.log
