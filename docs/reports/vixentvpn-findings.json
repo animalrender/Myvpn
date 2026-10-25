@@ -1,0 +1,192 @@
+{
+  "artifact": {
+    "name": "base.apk",
+    "bytes": 38559767,
+    "sha256": "d88660885b63c1c7bac59889f9a174b021a179781d183a43181199e6b001abb6",
+    "md5": "be8a3595026d704ae57219494a49d5ce"
+  },
+  "identity": {
+    "package": "co.asiven.vixentvpn",
+    "label": "Vixen VPN",
+    "versionName": "3.2.0",
+    "versionCode": 1004220,
+    "minSdk": 21,
+    "targetSdk": 34,
+    "compileSdk": 34,
+    "application_class": "com.v2ray.ang.AngApplication",
+    "launcher": "co.dev.ui.WelcomeActivity",
+    "dex_files": 3,
+    "classes_total": 21079,
+    "zip_entries": 1392,
+    "play_split_metadata": {
+      "splits": true,
+      "stamp": "STAMP_TYPE_DISTRIBUTION_APK",
+      "derived_apk_id": 3
+    }
+  },
+  "signing": {
+    "schemes": [
+      "v1",
+      "v2"
+    ],
+    "cert_sha256": "a40da80a59d170caa950cf15c18c454d47a39b26989d8b640ecd745ba71bf5dc",
+    "subject": "C=US, ST=California, L=Mountain View, O=Android, OU=Android, CN=Android, emailAddress=android@android.com",
+    "assessment": "AOSP test key - not the original developer key (repack indicator)"
+  },
+  "backend": {
+    "api_base": "https://managev1.xyz",
+    "api_base_evidence": {
+      "class": "Lk4/d;",
+      "method": "a()",
+      "cipher_default": "tyBT242ubuxXa/YbRfrkGQVlNflSzufT6Q7TJTa5t0M=",
+      "scheme": "AES/CBC/PKCS5Padding",
+      "key": "co.asiven.vixent (first 16 bytes of package name)",
+      "iv": "same as key"
+    },
+    "endpoints": [
+      {
+        "path": "/api/token",
+        "field": "k4.b.g",
+        "consumer": "WelcomeActivity.getToken()",
+        "model": "co.dev.models.Token"
+      },
+      {
+        "path": "/api/setting",
+        "field": "k4.b.h",
+        "consumer": "WelcomeActivity.getAppSetting()",
+        "model": "co.dev.models.Setting"
+      },
+      {
+        "path": "/api/protocols",
+        "field": "k4.b.d/e",
+        "consumer": "WelcomeActivity.getData()",
+        "model": "co.dev.models.Protocol"
+      },
+      {
+        "path": "/api/configs",
+        "field": "k4.b.f",
+        "consumer": "config delivery",
+        "model": "co.dev.models.Config"
+      }
+    ],
+    "headers": [
+      "Content-Type: application/json",
+      "app_name",
+      "version_code",
+      "admobSeen",
+      "token",
+      "sign",
+      "sha_hexadecimal",
+      "Authorization: bearer <token>",
+      "firebase_token"
+    ],
+    "request_signing": "Base64(MessageDigest.digest(PackageInfo.signatures[0]))",
+    "privacy_url": "https://sites.google.com/view/vixent/privacy",
+    "test_url": "https://www.gstatic.com/generate_204",
+    "remote_domain_switch": "WelcomeActivity.setDomain() -> k4.d.b() (MMKV apiUrl)"
+  },
+  "firebase": {
+    "project_id": "vixent-5ac3f",
+    "appspot": "vixent-5ac3f.appspot.com",
+    "app_id": "1:834191356570:android:9bb2699ab2eaac1c166523",
+    "google_api_key": "AIzaSyD9oHHJLnmn9uSU0ri5qyX7v9w71LZIQyY",
+    "admob_app_id": "ca-app-pub-3940256099942544~3347511713",
+    "admob_app_id_note": "official Google TEST AdMob app id",
+    "services": [
+      "FCM",
+      "Crashlytics",
+      "Analytics",
+      "Sessions",
+      "Remote Config",
+      "Installations"
+    ],
+    "remote_config_keys": [
+      "remote_config_api",
+      "reward_ad_off",
+      "reward_off_ad_in_hour",
+      "admob_reward_targets",
+      "admob_rewarded_interstitial_targets",
+      "mehmet_reward_targets",
+      "mehmet_interstitial_targets"
+    ]
+  },
+  "engine": {
+    "provider": "rea inspect-go-binary",
+    "evidence_subject_sha256": "f2d2f40fd4127bb9b5104404e053e9f9e22ae73542636ceebb4c830d1d4351fa",
+    "go_version": "go1.22.10",
+    "buildmode": "c-shared",
+    "goarch": "arm64",
+    "goos": "android",
+    "main_module": "gobind/gobind",
+    "replace_target": "C:\\Users\\Nevisa\\go\\src\\XrayLiteGithub1.8.26\\AndroidLibXrayLite",
+    "xray_core": "github.com/xtls/xray-core v0.0.0-20241218133935-cab2fdefd321",
+    "notable_deps": [
+      "github.com/xtls/reality",
+      "github.com/refraction-networking/utls v1.6.7",
+      "github.com/quic-go/quic-go v0.47.0",
+      "github.com/sagernet/sing v0.5.1",
+      "golang.zx2c4.com/wireguard",
+      "gvisor.dev/gvisor",
+      "google.golang.org/grpc"
+    ],
+    "native_libs": {
+      "libgojni.so": "Xray-core Go binding (28.7 MB arm64)",
+      "libtun2socks.so": "TUN->SOCKS bridge",
+      "libmmkv.so": "Tencent MMKV storage",
+      "libbarhopper_v3.so": "ML Kit barcode",
+      "libstub.so": "NP Manager dex2c stub (np/dcc/protect/EntryPoint)"
+    },
+    "local_ports": [
+      10808,
+      10809
+    ],
+    "geo_assets": {
+      "geoip.dat": 5527692,
+      "geosite.dat": 1686062
+    }
+  },
+  "protection": {
+    "packer": "NP Manager ApkDex2C 3.1.14 (ProtectTime 2025-01-01 16:34:56)",
+    "classes_with_native_methods": 1964,
+    "main_activity_native_methods": 149,
+    "signature_killer": "https://github.com/L-JINBIN/ApkSignatureKillerEx",
+    "telegram": "https://t.me/Vpn_Click",
+    "anti_analysis": [
+      "/system/bin/su",
+      "/sbin/su",
+      "test-keys",
+      "goldfish",
+      "/proc/self/maps",
+      "isRooted/isEmulator checks"
+    ],
+    "cleartext_traffic": false
+  },
+  "monetization": {
+    "model": "rewarded ads -> diamonds -> paid/fast servers; connection time limits",
+    "evidence": [
+      "co.dev.ui.ConnectedActivity.showRewarded/showRewardedInterstitial/showInterstitial/showNative",
+      "co.nevisa.commonlib.admob.*",
+      "co.nevisa.commonlib.fairbid.*",
+      "Setting.connectedActivityDuration",
+      "Setting.connectionTimeLimit",
+      "strings: 'Your diamonds are not enough to buy this server'"
+    ],
+    "ad_sdks": [
+      "AdMob/GMS Ads",
+      "Fyber FairBid",
+      "Inneractive",
+      "Digital Turbine Ignite",
+      "Flurry",
+      "Firebase Analytics"
+    ],
+    "stripped_sdks": [
+      "ByteDance Pangle (class descriptors remain as strings only)"
+    ]
+  },
+  "limitations": [
+    "static analysis only; app never executed",
+    "managev1.xyz not queried (host not reachable from the analysis sandbox)",
+    "dex2c-protected methods not recoverable without a native engine (Ghidra/Hopper)",
+    "REA inspect-binary-layout does not admit aarch64 (readelf used instead)"
+  ]
+}

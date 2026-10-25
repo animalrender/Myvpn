@@ -4,3 +4,4 @@ examples/demo.db-wal
 examples/demo.db-shm
 node_modules/
 *.log
+google_drive/
