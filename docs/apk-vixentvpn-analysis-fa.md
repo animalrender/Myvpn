@@ -404,3 +404,124 @@ import base64;from Crypto.Cipher import AES
 k=b'co.asiven.vixent'
 print(AES.new(k,AES.MODE_CBC,k).decrypt(base64.b64decode('tyBT242ubuxXa/YbRfrkGQVlNflSzufT6Q7TJTa5t0M=')))"
 ```
+
+---
+
+# پیوست A — عملکرد دقیق: جریان اتصال، مدل پریمیوم، تونل/پروکسی و سابسکریپشن
+
+با اینکه `MainActivity` با Dex2C به کد بومی منتقل شده، **نام متدها در DEX باقی مانده** و همین
+نام‌ها + مسیرهای کدِ محافظت‌نشده، جریان کار را کامل مشخص می‌کنند.
+
+## A.1 ترتیب دقیق اجرا
+
+```
+WelcomeActivity.onCreate
+ ├─ چک root/emulator/USB-debug   (MMKV: checkRoot, checkUsbDebugging, checkEmulator)
+ ├─ صفحه‌ی حریم خصوصی            (shownPrivacyScreen, accept_policy)
+ ├─ deviceId = ANDROID_ID        (MMKV: deviceId)
+ ├─ getToken()      → /api/token      → MMKV: token
+ ├─ getAppSetting() → /api/setting    → MMKV: connectionTimeLimit, connectedUntil,
+ │                                       connectionTimeInitValue, privacyUrl, apiUrl,
+ │                                       admobKeys, fairbidKeys, testUrl, …
+ ├─ GoogleSignIn (اختیاری) + FirebaseMessaging.getToken() → هدر firebase_token
+ └─ getData()       → /api/protocols  → فهرست Protocol
+        └─ AngConfigManager.importConfig(id, subId, ServerConfig, Protocol)
+           AngConfigManager.importBatchConfig(id, subId, Z, Protocol)
+              → MmkvManager.encodeServerConfig(...)   // ذخیره در استور v2rayNG
+                 (Protocol به‌عنوان customConfig داخل ServerConfig می‌نشیند)
+
+MainActivity
+ ├─ initData(list) → MainRecyclerAdapter (هر ردیف = یک ServerConfig + Protocol)
+ │     └─ updateRowUi(...)   ← price و usage هر سرور را می‌خواند (نمایش قیمت/وضعیت)
+ ├─ connectClick(view)
+ │     └─ i4.c.a(ServerConfig, callback) : Z    ← «دروازه‌ی» پریمیوم (پایین)
+ ├─ requestVpnPermission → V2RayVpnService (یا V2RayProxyOnlyService)
+ │     └─ V2RayServiceManager.startV2Ray / startV2rayPoint  → libgojni (Xray)
+ │        V2RayVpnService.setup() → runTun2socks() → sendFd() → vpnProtect()
+ ├─ initConnectionTimer / startConnectionTimer / calculateUsingTime
+ │     MMKV: connectedUntil, connectionTimeLimit, connectionTimeInitValue
+ ├─ connected(Z) → ConnectedActivity (progress + تبلیغ interstitial/native)
+ └─ حین اتصال: initAd, showInterstitial, showInterstitialReward, initSponsor,
+    initSocialMedia, checkPushUpdate (FCM), delayDisconnect, extendConnectionTime,
+    boostTimeIncentivePolicy, increaseServerUsage / decreaseServerUsage
+```
+
+## A.2 مدل «پریمیوم» — اکانت نیست، قفلِ هر سرور است
+
+`Li4/c;->a(ServerConfig config, callback) : boolean` — قلب منطق:
+
+```java
+Protocol p      = config.getCustomConfig();
+int price       = p.getPrice();          // قیمت سرور به «الماس»
+int serverId    = p.getServerId();
+String bought   = MMKV("boughtServers").getString(...); // شناسه‌های خریداری‌شده، جداشده با '-'
+int coins       = MMKV("coins").getInt(...);            // موجودی الماس
+// اگر سرور قبلاً خریداری نشده و coins < price  →  false + دیالوگ/ویدیوی جایزه‌ای
+// در غیر این صورت: coins -= price ; ذخیره coins ; افزودن serverId به boughtServers
+```
+
+نتیجه‌های مهم:
+
+* **هیچ بررسی حساب کاربری/پرمیوم سمت سرور دیده نمی‌شود**؛ وضعیت خرید در **MMKV محلی**
+  (`coins`, `boughtServers`) نگه داشته می‌شود. یعنی قفل، سمت کلاینت است.
+* علاوه بر قفل هر سرور، یک **سهمیه‌ی زمانی اتصال** هم هست: `connectionTimeLimit`,
+  `connectedUntil`, `connectionTimeInitValue`, `connectionTimeIncentivePolicy` +
+  `initConnectionTimer` / `remainingTimeToText` / `extendConnectionTime` /
+  `boostTimeIncentivePolicy(Z)` / `delayDisconnect(J)`.
+* الماس از کجا؟ `ConnectedActivity.showRewarded` / `showRewardedInterstitial` /
+  `MainRecyclerAdapter.getServerSideVerificationOptions()` (AdMob **SSV**) →
+  اعتبارسنجی سمت سرور تبلیغ و واریز الماس.
+* `increaseServerUsage()/decreaseServerUsage()` + خواندن `Protocol.usage` در
+  `updateRowUi` = شمارنده‌ی مصرف هر سرور (کنترل ظرفیت/سهمیه‌ی سرورهای رایگان).
+* `MainViewModel.connectAuto()` هم `price` و `serverId` را می‌خواند → اتصال خودکار
+  سرورهای پولی را رد می‌کند.
+
+> نکته‌ی رمزنگاری: در همین متدها رشته‌های `ScKit-<hash>` دیده می‌شود؛ اینها کلید
+> رمزنگاری رشته‌های NP Manager هستند، پس متن‌های UI این بخش‌ها در DEX خوانا نیستند
+> و در زمان اجرا رمزگشایی می‌شوند.
+
+## A.3 تونل است یا پروکسی؟ — هر دو
+
+| حالت | شاهد |
+| --- | --- |
+| **VPN / TUN (پیش‌فرض)** | `V2RayVpnService` با `BIND_VPN_SERVICE` + `setup()`, `runTun2socks()`, `sendFd()`, `vpnProtect()`, `libtun2socks.so` |
+| **فقط پروکسی (Proxy only)** | `V2RayProxyOnlyService` + کلید `pref_mode` با مقادیر `VPN` / `PROXY` |
+| **پورت‌های محلی** | `pref_socks_port` (10808), `pref_http_port` (10809) |
+| **اشتراک در LAN** | `pref_proxy_sharing_enabled` |
+| **per-app proxy** | `pref_per_app_proxy` + `assets/proxy_packagename.txt` |
+| **DNS** | `pref_vpn_dns`, `pref_fake_dns_enabled`, `pref_local_dns_enabled/port`, `pref_remote_dns`, `pref_domestic_dns` |
+| **ضد DPI** | `pref_fragment_enabled/packets/length/interval` + `pref_mux_*` |
+| **sniffing / routing** | `pref_sniffing_enabled`, `pref_routing_mode`, `pref_routing_domain_strategy` |
+
+یعنی دقیقاً مثل v2rayNG: در حالت VPN همه‌ی ترافیک دستگاه از Xray رد می‌شود (با
+tun2socks)، و در حالت پروکسی فقط یک SOCKS/HTTP محلی می‌دهد.
+
+## A.4 سابسکریپشن
+
+**داخل خود اپ (ورودی):** کامل موجود است —
+`MmkvManager.importUrlAsSubscription`, `decodeSubscriptions`, `removeSubscription`,
+`AngConfigManager.importSubscription`, `SubscriptionUpdater`,
+اکتیویتی‌های `SubSettingActivity` / `SubEditActivity`, و کلیدهای
+`pref_auto_update_subscription` + `pref_auto_update_interval`.
+پس می‌توانید لینک سابسکریپشن دلخواه (vmess/vless/trojan/ss) را داخل این اپ ایمپورت کنید.
+
+**خروجی (بردن سرورهای این اپ به کلاینت خودتان):** بله، با ابزارهای اشتراک‌گذاری
+v2rayNG که دست‌نخورده مانده‌اند:
+`shareConfig`, `share2Clipboard`, `share2QRCode`, `shareFullContent2Clipboard`,
+`shareNonCustomConfigsToClipboard`, `exportAllConfig`, `doShare`, `getShareUrl`
+→ لینک‌های استاندارد `vmess://` / `vless://` / `trojan://` تولید می‌شود که در هر
+کلاینت v2ray/Xray کار می‌کند.
+
+**برعکس (بک‌اند این اپ را به‌عنوان ساب در v2ray گذاشتن):** خیر —
+هیچ endpoint سابسکریپشنی وجود ندارد؛ API با `token` دستگاه + هدر `sign`
+(هش امضای APK) کار می‌کند و سرورها per-device هستند (`ProtocolUsage.DeviceId`).
+تنها راه انتقال، خروجی گرفتن تک‌تک/کلی سرورها از داخل اپ است.
+
+## A.5 سرور پرمیوم جداگانه؟
+
+نه — **یک فهرست واحد** (`/api/protocols`) با فیلد `price` برای هر سرور:
+
+* `price = 0` → سرور آزاد (با سهمیه‌ی زمانی/مصرف)
+* `price > 0` → قفل، خرید با الماس (ویدیوی جایزه‌ای)
+* سرورهای دیگر (sponsor / social / plans) از `/api/setting` می‌آیند، نه از یک
+  endpoint جداگانه‌ی «پریمیوم»
