@@ -9,7 +9,12 @@ on:
   push:
     branches: [arena/b9372ae1-myvpn]
     paths:
-      - "android-app/**"
+      # only rebuild for app code/tooling changes — docs and the report do not need an APK
+      - "android-app/app/**"
+      - "android-app/tools/**"
+      - "android-app/build.gradle.kts"
+      - "android-app/settings.gradle.kts"
+      - "android-app/gradle.properties"
       - ".github/workflows/build-arm64.yml"
   workflow_dispatch:
 

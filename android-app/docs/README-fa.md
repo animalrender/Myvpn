@@ -26,6 +26,22 @@
 
 ---
 
+## ۰. دریافت آخرین بیلد
+
+GitHub Actions با هر تغییر در کد اپ (`android-app/app/**` یا `android-app/tools/**`) یک
+بیلد تازه می‌سازد و در بخش Releases با تگ `trial-arm64-<شمارهٔ اجرا>` منتشر می‌کند:
+
+* صفحهٔ ریلیزها: <https://github.com/animalrender/Myvpn/releases>
+* فایل‌ها: `mvpn-trial-arm64-<N>.apk` و `mvpn-trial-arm64-<N>.apk.sha256`
+
+```bash
+gh release list                                   # دیدن آخرین تگ
+gh release download trial-arm64-<N> --pattern "*.apk"
+sha256sum -c mvpn-trial-arm64-<N>.apk.sha256      # بررسی سالم بودن فایل
+```
+
+---
+
 ## ۱. رابط کاربری — چه چیزی روی صفحه است
 
 ```
