@@ -13,6 +13,7 @@ on:
       - "android-app/tools/probe-fuzz.py"
       - "android-app/tools/probe-v2.py"
       - "android-app/tools/probe-v2b.py"
+      - "android-app/tools/probe-version-sweep.py"
       - ".github/workflows/probe-api.yml"
 
 permissions:
@@ -60,6 +61,11 @@ jobs:
         env:
           PROBE_CERT: /tmp/keys/testkey.x509.pem
         run: python3 android-app/tools/probe-v2b.py 2>&1 | tee /tmp/probe6.log || true
+
+      - name: Sweep client versions for a plaintext compatibility path
+        env:
+          PROBE_CERT: /tmp/keys/testkey.x509.pem
+        run: python3 android-app/tools/probe-version-sweep.py 2>&1 | tee /tmp/probe7.log || true
 
       - name: Probe endpoints + payload determinism
         env:
