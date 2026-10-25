@@ -88,20 +88,31 @@ jobs:
       - name: Report failure details
         if: failure()
         run: |
-          # Actions logs are not reachable from this environment, so surface the tail of each
-          # log as workflow annotations (readable through the check-runs API).
+          # Actions logs are not reachable from this environment, so surface the useful part of
+          # each log as a workflow annotation (readable through the check-runs API).
           python3 - <<'PY'
-          import os, pathlib, urllib.parse
-          chunks = []
-          for path in ["/tmp/fetch-aar.log", "/tmp/build-hev.log", "/tmp/testkey.log", "/tmp/gradle.log"]:
+          import os, pathlib, re, urllib.parse
+          sources = ["/tmp/fetch-aar.log", "/tmp/build-hev.log", "/tmp/testkey.log", "/tmp/gradle.log"]
+          picked = []
+          for path in sources:
               p = pathlib.Path(path)
-              if p.exists():
-                  tail = p.read_text(errors="replace").splitlines()[-60:]
-                  chunks.append("=== %s ===\n%s" % (path, "\n".join(tail)))
-          text = "\n".join(chunks) if chunks else "no captured logs"
-          encoded = urllib.parse.quote(text[-3500:], safe="")
-          with open(os.environ["GITHUB_STEP_SUMMARY"], "a") as fh:
-              fh.write("### failure log tail\n```\n%s\n```\n" % text[-3500:])
+              if not p.exists():
+                  continue
+              lines = p.read_text(errors="replace").splitlines()
+              for line in lines:
+                  if line.startswith("e: ") or line.startswith("e:  ") or re.match(r"^e: file:", line):
+                      picked.append(line)
+                  elif "What went wrong" in line or "Caused by:" in line or "error:" in line.lower():
+                      picked.append(line)
+                  elif line.startswith("> Task") and "FAILED" in line:
+                      picked.append(line)
+          if not picked:
+              for path in sources:
+                  p = pathlib.Path(path)
+                  if p.exists():
+                      picked += p.read_text(errors="replace").splitlines()[-40:]
+          text = "\n".join(dict.fromkeys(picked))[-3500:]
+          encoded = urllib.parse.quote(text, safe="")
           print("::error title=build-log::%s" % encoded)
           print("::warning title=build-log-length::%d" % len(text))
           PY

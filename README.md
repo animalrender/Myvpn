@@ -23,6 +23,21 @@ node tools/rea-mcp-bridge.mjs tools   # فهرست ابزارهای MCP
 | `examples/quickstart.sh` | جریان‌های تأییدشده: JS/Electron، ELF layout، ELF notes، SQLite، MCP |
 | `examples/reports/` | گزارش واقعی تحلیل اپ نمونه‌ی Electron |
 
+## MVPN Trial — کلاینت آزمایشی اندروید
+
+پوشه‌ی [`android-app/`](android-app/) یک اپ اندروید کامل است که همان بک‌اند، همان هدرها،
+همان امضا و همان هستهٔ Xray/hev اپ تحلیل‌شده را بازتولید می‌کند، اما **بدون تبلیغ، بدون
+حساب کاربری، بدون قفل قیمت و بدون Firebase** — با نمایش همهٔ سرورها (رایگان و پولی) و
+برچسب‌گذاری کامل هر سرور.
+
+```bash
+gh workflow run build-arm64.yml     # ساخت arm64 روی GitHub Actions
+gh release list                     # APK امضاشده در Releases (تگ trial-arm64-*)
+```
+
+* مستندات فارسی: [`android-app/docs/README-fa.md`](android-app/docs/README-fa.md)
+* تحلیل APK اصلی: [`docs/apk-vixentvpn-analysis-fa.md`](docs/apk-vixentvpn-analysis-fa.md)
+
 **وضعیت در این محیط:** REA `6.8.0` روی Node `26.12.1` · MCP سالم (`2025-11-25`, 229 tools, 6 prompts) ·
 provider فعال `pwntools-elf` · بدون Ghidra/IDA/Hopper/JADX (تحلیل بومی عمیق در این سندباکس غیرفعال است —
 دلیل و راه‌حل در بخش ۹ راهنما).
