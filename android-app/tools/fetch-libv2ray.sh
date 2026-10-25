@@ -20,8 +20,10 @@ for url in "${URLS[@]}"; do
   if curl -fL --retry 5 --retry-delay 3 --retry-all-errors --connect-timeout 20 -o "$DEST" "$url"; then
     if unzip -l "$DEST" >/dev/null 2>&1; then
       echo "==> ok: $(du -h "$DEST" | cut -f1)"
-      # sanity: the AAR must contain arm64 JNI code and the libv2ray classes
-      unzip -l "$DEST" | grep -q "lib/arm64-v8a/" || { echo "!! no arm64 JNI in AAR"; exit 1; }
+      # sanity: the AAR must contain arm64 JNI code (AARs keep natives under jni/) and the
+      # libv2ray classes
+      unzip -l "$DEST" | grep -Eq "(^| )(jni|lib)/arm64-v8a/" \
+        || { echo "!! no arm64 JNI in AAR"; unzip -l "$DEST" | head -30; exit 1; }
       unzip -l "$DEST" | grep -q "classes.jar" || { echo "!! no classes.jar in AAR"; exit 1; }
       unzip -p "$DEST" classes.jar > /tmp/libv2ray-classes.jar
       unzip -l /tmp/libv2ray-classes.jar | grep -q "libv2ray/Libv2ray.class" \
