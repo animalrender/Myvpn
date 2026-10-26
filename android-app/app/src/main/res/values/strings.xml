@@ -70,7 +70,7 @@
     <string name="link_unavailable">این سرور لینک قابل کپی ندارد</string>
     <string name="vpn_permission_needed">برای حالت VPN باید اجازهٔ اتصال بدهید.</string>
 
-    <!-- ---------------------------------------------------------------- redesigned UI -->
+    <!-- Redesigned UI strings -->
     <string name="menu_more">منوی بیشتر</string>
     <string name="hero_no_server">سروری انتخاب نشده</string>
     <string name="hero_no_server_hint">از فهرست پایین یک سرور را انتخاب کنید</string>
