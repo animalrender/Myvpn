@@ -324,8 +324,12 @@ def main(argv):
                 failures.append("import-second")
             else:
                 shot("06-second-imported")
-                label = tap_connect_button()
+                label = connect_button_text()
                 log(f"برچسب دکمهٔ اتصال در این حالت: `{label}`")
+                if label and label != "اتصال به سرور انتخابی":
+                    failures.append("switch-label")
+                label = tap_connect_button()
+                log(f"دکمهٔ زده‌شده: `{label}`")
                 if label:
                     log("درخواست تغییر سرور زده شد")
                 else:

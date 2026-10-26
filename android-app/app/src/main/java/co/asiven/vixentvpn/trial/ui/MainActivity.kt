@@ -479,7 +479,16 @@ class MainActivity : AppCompatActivity() {
             if (!running) binding.statusText.setText(R.string.status_idle)
             binding.selectedNameText.setText(R.string.hero_no_server)
             binding.selectedMetaText.setText(R.string.hero_no_server_hint)
-            binding.connectButton.setText(if (running) R.string.btn_disconnect else R.string.btn_connect)
+            // While a tunnel is up but the selected row is not in the current list (a link
+            // intent re-created the screen, a filter hides it), the button must still advertise
+            // the switch instead of pretending that pressing it only disconnects.
+            binding.connectButton.setText(
+                when {
+                    !running -> R.string.btn_connect
+                    connectedKey != null -> R.string.btn_connect_selected
+                    else -> R.string.btn_disconnect
+                },
+            )
             return
         }
         binding.connectButton.setText(
