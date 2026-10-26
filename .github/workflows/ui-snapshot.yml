@@ -63,6 +63,8 @@ jobs:
           echo "NDK_HOME=$NDK" | tee -a "$GITHUB_ENV"
           echo "ANDROID_NDK_LATEST_HOME=$NDK" | tee -a "$GITHUB_ENV"
           test -x "$NDK/ndk-build"
+          echo "$ANDROID_HOME/platform-tools" >> "$GITHUB_PATH"
+          "$ANDROID_HOME/platform-tools/adb" version | head -1
           ls /dev/kvm && echo "KVM present" || echo "::warning title=ui-snapshot::/dev/kvm missing — the emulator may be very slow or fail to boot"
 
       - name: Environment check
@@ -80,6 +82,7 @@ jobs:
             echo "- user: $(id -un) / groups: $(id -Gn)"
             echo "- python: $(python3 --version 2>&1)"
             echo "- adb: $(adb version 2>&1 | head -1)"
+            echo "- avd images: $(ls "$ANDROID_HOME/system-images" 2>&1 | tr '\n' ' ')"
             echo "- runner: $(uname -a)"
           } > "$OUT/STATUS.md"
           cat "$OUT/STATUS.md"
@@ -117,7 +120,9 @@ jobs:
           profile: pixel_6
           disable-animations: true
           emulator-boot-timeout: 900
-          emulator-options: -no-snapshot -no-snapshot-save -no-boot-anim -no-audio -gpu swiftshader_indirect
+          # -no-window is mandatory on a headless runner; overriding emulator-options replaces the
+          # action defaults, so every option it relies on is listed here explicitly.
+          emulator-options: -no-window -no-snapshot -no-snapshot-save -no-boot-anim -no-audio -gpu swiftshader_indirect
           script: |
             set -uo pipefail
             OUT=android-app/docs/screenshots

@@ -140,6 +140,18 @@ def crash_check():
     return ok
 
 
+def write_status():
+    """Writes STEPS.txt after every action so a half-finished run still reports what it did."""
+    if OUT == ".":
+        return
+    try:
+        with open(os.path.join(OUT, "STEPS.txt"), "w", encoding="utf-8") as handle:
+            handle.write("\n".join(STEPS) + "\n")
+            handle.write("\nFAILURES:\n" + ("\n".join(FAILURES) if FAILURES else "none") + "\n")
+    except OSError:
+        pass
+
+
 def main(argv):
     global OUT
     if len(argv) < 2:
@@ -195,11 +207,9 @@ def main(argv):
             print(f"unknown step: {cmd}")
             FAILURES.append(f"unknown step {cmd}")
             index += 1
+        write_status()
 
-    summary = os.path.join(OUT, "STEPS.txt")
-    with open(summary, "w", encoding="utf-8") as handle:
-        handle.write("\n".join(STEPS) + "\n")
-        handle.write("\nFAILURES:\n" + ("\n".join(FAILURES) if FAILURES else "none") + "\n")
+    write_status()
     if FAILURES:
         print("::error title=ui-snapshot::" + " | ".join(FAILURES)[:900])
         return 1
