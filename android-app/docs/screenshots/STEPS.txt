@@ -1,29 +1,27 @@
-shot 00-start (49070 bytes)
+shot 00-start (53122 bytes)
 wait-text 'MVPN': found
-shot 01-home (49070 bytes)
+shot 01-home (53103 bytes)
 wait-text 'رایگان': found
-shot 02-list-loaded (49070 bytes)
+shot 02-list-loaded (53103 bytes)
 tap-text 'پینگ': ok
-shot 03-single-ping (48045 bytes)
+shot 03-single-ping (52068 bytes)
 tap-text 'پینگ همه': ok
-shot 04-ping-all (48032 bytes)
+shot 04-ping-all (52229 bytes)
 tap-desc 'جزئیات': NOT FOUND
-shot 05-server-sheet (48032 bytes)
-tap-text 'پولی': NOT FOUND
-shot 06-filter-paid (206335 bytes)
-tap-text 'همه': NOT FOUND
-tap-class 'EditText': NOT FOUND
-type 'Messages'
-shot 07-search (158286 bytes)
-tap-desc 'منوی بیشتر': NOT FOUND
-shot 08-menu (204642 bytes)
-shot 09-scrolled (204642 bytes)
-shot 10-scrolled-more (204642 bytes)
+shot 05-server-sheet (52229 bytes)
+ensure-foreground (sleep): ok
+tap-text 'پولی': ok
+shot 06-filter-paid (46609 bytes)
+tap-text 'همه': ok
+tap-class 'EditText': ok
+type 'United'
+shot 07-search (52483 bytes)
+ensure-foreground (sleep): ok
+tap-desc 'منوی بیشتر': ok
+shot 08-menu (51090 bytes)
+shot 09-scrolled (52131 bytes)
+shot 10-scrolled-more (52131 bytes)
 crash-check: pid=yes, fatal lines=0
 
 FAILURES:
 content-desc 'جزئیات' not found
-text 'پولی' not found
-text 'همه' not found
-no view of class EditText
-content-desc 'منوی بیشتر' not found
