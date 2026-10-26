@@ -10,17 +10,18 @@
 
 ### 📦 خروجی آمادهٔ تست
 
-* ریلیز: **[trial-9](https://github.com/animalrender/Myvpn/releases/tag/trial-9)** — **دو APK**:
-  * `mvpn-trial-arm64-9.apk` — گوشی/تبلت (`arm64-v8a`)
-  * `mvpn-trial-x86_64-9.apk` — شبیه‌ساز/کروم‌بوک (`x86_64`)
+* ریلیز: **[trial-34](https://github.com/animalrender/Myvpn/releases/tag/trial-34)** — **دو APK**:
+  * `mvpn-trial-arm64-34.apk` — گوشی/تبلت (`arm64-v8a`)
+  * `mvpn-trial-x86_64-34.apk` — شبیه‌ساز/کروم‌بوک (`x86_64`)
   * هر دو با فایل `.sha256`
 * امضا: AOSP testkey با `SHA-256 = a40da80a59d170caa950cf15c18c454d47a39b26989d8b640ecd745ba71bf5dc`
   — **همان گواهی نسخهٔ اصلی**، تا هدرهای `sign` و `sha_hexadecimal` بایت‌به‌بایت درست باشند.
-* نصب: `adb install -r mvpn-trial-arm64-9.apk`
-  (چون `applicationId` همان `co.asiven.vixentvpn` است، اگر نسخهٔ اصلی نصب است باید حذف شود.)
+* نصب: `adb install -r mvpn-trial-arm64-34.apk`
+  **کنار نسخهٔ اصلی** نصب می‌شود — `applicationId` این نسخه `co.asiven.vixentvpn.trial` است،
+  پس لازم نیست اپ اصلی را حذف کنید (هدر `app_name` برای بک‌اند همان `co.asiven.vixentvpn` می‌ماند).
 
 ```bash
-gh release download trial-9
+gh release download trial-34
 sha256sum -c mvpn-trial-arm64-9.apk.sha256
 ```
 
@@ -35,6 +36,9 @@ sha256sum -c mvpn-trial-arm64-9.apk.sha256
 | **پینگ تک‌سرور و پینگ گروهی (۴ هم‌زمان)** | ✅ با `Libv2ray.measureOutboundDelay` | `ui/MainActivity.kt` |
 | **اتصال با همان هسته** (`libv2ray.aar` = همان خانوادهٔ `libgojni.so`) + `hev-socks5-tunnel` به‌جای `libtun2socks.so` | ✅ حالت `VPN` (TUN) و `PROXY` (SOCKS 10808/HTTP 10809) | `core/XrayCore.kt`، `service/*` |
 | **کپی لینک v2ray هر سرور** برای استفاده در v2rayNG/nekobox | ✅ `vmess://`/`vless://`/`trojan://`/`ss://` | `ConfigBuilder.shareLink` |
+| **کپی همهٔ لینک‌ها با یک لمس** در سه گروه: همه / فقط پینگ‌داده‌ها / فقط بی‌پینگ‌ها (هر خط یک لینک، آمادهٔ «Import config from clipboard») | ✅ | منوی سه‌نقطه → «کپی همهٔ لینک‌های v2ray» |
+| **مرتب‌سازی فهرست**: الفبا، پینگ، قیمت، شناسه — هر کدام صعودی/نزولی (ردیف‌های بدون پینگ همیشه آخر) | ✅ | دکمهٔ مرتب‌سازی کنار نوار خلاصه |
+| **نصب کنار اپ اصلی** (`applicationId = co.asiven.vixentvpn.trial`) با همان امضا و همان هدر `app_name` | ✅ | `app/build.gradle.kts` + `BuildConfig.HEADER_APP_NAME` |
 | **افزودن کانفیگ از کلیپ‌بورد** (لینک یا JSON) | ✅ | منوی سرصفحه |
 | **Firebase مطابق اپ اصلی** (Messaging، ذخیرهٔ `firebase_token`، ارسال آن با درخواست توکن) | ✅ `google-services.json` از مقادیر واقعی منابع APK | `push/TrialMessagingService.kt` |
 | **UI بازطراحی‌شده** (تم تیرهٔ Material3، RTL، کارت وضعیت، برچسب‌ها، انیمیشن وضعیت اتصال) | ✅ | `res/` |
