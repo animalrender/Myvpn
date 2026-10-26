@@ -425,19 +425,21 @@ class MainActivity : AppCompatActivity() {
             shown.isFree -> getString(R.string.badge_free)
             else -> getString(R.string.badge_paid, shown.price)
         }
-        val location = shown.flag.ifBlank { "—" }
         val ping = when {
             shown.pingState == PingState.OK -> getString(R.string.ping_ms, shown.pingMs)
             shown.pingState == PingState.RUNNING -> "…"
             shown.pingState == PingState.FAILED -> getString(R.string.ping_timeout)
-            else -> getString(R.string.ping_none)
+            else -> null
         }
-        binding.selectedMetaText.text = getString(
-            R.string.hero_meta,
-            shown.typeHint.ifBlank { "?" },
-            price,
-            "$location · $ping",
-        )
+        val type = when (shown.typeHint.lowercase()) {
+            "enc" -> getString(R.string.type_opaque)
+            "" -> getString(R.string.type_unknown)
+            else -> shown.typeHint
+        }
+        // Only the labels that actually carry a value, so the hero never shows stray dashes.
+        binding.selectedMetaText.text = listOfNotNull(
+            type, price, shown.flag.takeIf { it.isNotBlank() }, ping,
+        ).joinToString(" · ")
         binding.connectButton.setText(if (running) R.string.btn_disconnect else R.string.btn_connect)
     }
 
@@ -512,8 +514,17 @@ class MainActivity : AppCompatActivity() {
 
         view.findViewById<TextView>(R.id.sheetFlag).text = server.displayFlag
         view.findViewById<TextView>(R.id.sheetName).text = server.name
-        view.findViewById<TextView>(R.id.sheetType).text = server.typeHint.ifBlank { "?" }
-        view.findViewById<TextView>(R.id.sheetLocation).text = server.flag.ifBlank { "—" }
+        view.findViewById<TextView>(R.id.sheetType).text = when (server.typeHint.lowercase()) {
+            "enc" -> getString(R.string.type_opaque)
+            "" -> getString(R.string.type_unknown)
+            else -> server.typeHint
+        }
+        val locationView = view.findViewById<TextView>(R.id.sheetLocation)
+        if (server.flag.isBlank()) {
+            locationView.visibility = View.GONE
+        } else {
+            locationView.text = server.flag
+        }
         val priceView = view.findViewById<TextView>(R.id.sheetPrice)
         priceView.text = when {
             server.price == null -> getString(R.string.badge_unknown_price)

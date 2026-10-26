@@ -135,7 +135,12 @@ class ServerAdapter(
                 ContextCompat.getColor(context, if (server.isFree) R.color.free else R.color.paid),
             )
 
-            binding.locationBadge.text = server.flag.ifBlank { "—" }
+            if (server.flag.isBlank()) {
+                binding.locationBadge.visibility = View.GONE
+            } else {
+                binding.locationBadge.text = server.flag
+                binding.locationBadge.visibility = View.VISIBLE
+            }
 
             binding.pingButton.isEnabled = !server.isOpaquePayload
             binding.pingButton.alpha = if (server.isOpaquePayload) 0.4f else 1f
