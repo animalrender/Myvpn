@@ -95,7 +95,13 @@ class MainActivity : AppCompatActivity() {
         override fun onReceive(context: Context?, intent: Intent?) {
             if (intent?.action != VpnTunnelService.ACTION_STATE) return
             tunnelRunning = intent.getBooleanExtra(VpnTunnelService.EXTRA_RUNNING, false)
-            if (!tunnelRunning) connectedKey = null
+            if (tunnelRunning) {
+                // The service is the owner of the live server; adopt its key when this instance
+                // does not know it yet (screen re-created, permission dialog round-trip).
+                if (connectedKey.isNullOrBlank()) connectedKey = prefs.connectedKey.ifBlank { null }
+            } else {
+                connectedKey = null
+            }
             val text = intent.getStringExtra(VpnTunnelService.EXTRA_TEXT).orEmpty()
             binding.statusText.text = text
             // The label is owned by updateHero(): it also distinguishes "disconnect" from

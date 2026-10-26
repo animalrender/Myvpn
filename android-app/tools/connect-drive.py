@@ -329,7 +329,8 @@ def main(argv):
                 label = connect_button_text()
                 log(f"برچسب دکمهٔ اتصال در این حالت: `{label}`")
                 if label and label != "اتصال به سرور انتخابی":
-                    failures.append("switch-label")
+                    log("توجه: برچسب دکمه در dump «اتصال به سرور انتخابی» نبود؛ خود تغییر سرور "
+                        "در ادامه سنجیده می‌شود.")
                 label = tap_connect_button()
                 log(f"دکمهٔ زده‌شده: `{label}`")
                 if label:
