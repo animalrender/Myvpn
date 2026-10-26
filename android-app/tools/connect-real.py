@@ -148,36 +148,48 @@ def accept_vpn_dialog():
     return False
 
 
+def unescape(text):
+    """uiautomator escapes emoji as numeric entities; turn them back into readable flags."""
+    return re.sub(r"&#(\d+);", lambda m: chr(int(m.group(1))), text or "")
+
+
 def rows():
-    """Server rows currently painted in the list: (name, ping badge, bounds)."""
+    """Server rows painted in the list: name, ping badge, and the bounds to tap."""
     xml = dump_xml()
-    found = []
-    for node in nodes(xml):
-        rid = node.get("resource-id") or ""
-        if not rid.endswith("nameText"):
+    entries = []
+    cards = [n for n in nodes(xml) if (n.get("resource-id") or "").endswith("nameText")]
+    pings = [n for n in nodes(xml) if (n.get("resource-id") or "").endswith("pingText")]
+    for card in cards:
+        raw = (card.get("text") or "").strip()
+        if not raw:
             continue
-        label = (node.get("text") or "").strip()
-        if not label:
-            continue
-        bounds = node.get("bounds")
-        # the ping badge lives in the same card; take the nearest pingText below it
-        ping = ""
-        ping_bounds = None
-        for other in nodes(xml):
-            if (other.get("resource-id") or "").endswith("pingText"):
-                if same_card(bounds, other.get("bounds")):
-                    ping = (other.get("text") or "").strip()
-                    ping_bounds = other.get("bounds")
-                    break
-        found.append({"name": label, "ping": ping, "bounds": bounds, "ping_bounds": ping_bounds})
-    return found
+        anchor = center(card.get("bounds"))
+        best, best_dy = None, 10 ** 6
+        for ping in pings:
+            point = center(ping.get("bounds"))
+            if not anchor or not point:
+                continue
+            if abs(point[0] - anchor[0]) < 560 and -200 < point[1] - anchor[1] < 240:
+                if abs(point[1] - anchor[1]) < best_dy:
+                    best, best_dy = ping, abs(point[1] - anchor[1])
+        entries.append({
+            "name": unescape(raw),
+            "raw": raw,
+            "ping": (best.get("text") or "").strip() if best else "",
+            "bounds": card.get("bounds"),
+        })
+    return entries
 
 
-def same_card(a, b):
-    ca, cb = center(a), center(b)
-    if not ca or not cb:
-        return False
-    return abs(ca[0] - cb[0]) < 560 and 0 <= cb[1] - ca[1] < 200
+def find_row(name, ping=None):
+    """The painted row matching a name (and, when several rows share a name, its ping badge)."""
+    for row in rows():
+        if row["name"] != name and row["raw"] != name:
+            continue
+        if ping is not None and row["ping"] != ping:
+            continue
+        return row
+    return None
 
 
 def ping_ms(text):
@@ -252,32 +264,28 @@ def tun_up():
     return "inet " in (shell("ip -4 addr show tun0").stdout or "")
 
 
-def row_bounds(name):
-    for node in nodes(dump_xml()):
-        if not (node.get("resource-id") or "").endswith("nameText"):
-            continue
-        if (node.get("text") or "").strip() == name:
-            return node.get("bounds")
-    return None
+def row_bounds(name, ping=None):
+    row = find_row(name, ping)
+    return row["bounds"] if row else None
 
 
-def bring_into_view(name):
-    """Scrolls the list until the named row is comfortably inside the viewport."""
-    for _ in range(14):
-        bounds = row_bounds(name)
+def bring_into_view(name, ping=None):
+    """Scrolls the list until the wanted row is comfortably inside the viewport."""
+    for _ in range(16):
+        bounds = row_bounds(name, ping)
         point = center(bounds) if bounds else None
-        if point and 260 <= point[1] <= 1900:
+        if point and 300 <= point[1] <= 1850:
             return bounds
-        if point and point[1] < 260:
-            shell("input swipe 540 700 540 1500 300")   # pull the list down
+        if point and point[1] < 300:
+            shell("input swipe 540 600 540 1500 300")   # pull the list down
         else:
-            shell("input swipe 540 1700 540 800 300")   # push the list up
+            shell("input swipe 540 1750 540 700 300")   # push the list up
         time.sleep(1.5)
-    return row_bounds(name)
+    return row_bounds(name, ping)
 
 
 def connect_row(row, index):
-    landed = bring_into_view(row["name"])
+    landed = bring_into_view(row["name"], row.get("ping"))
     if not landed:
         log(f"**ردیف «{row['name']}» در فهرست پیدا نشد**")
         return False
@@ -352,26 +360,48 @@ def main(argv):
     log("نمونهٔ برچسب ردیف‌ها: " + "، ".join(f"`{r['name']}`" for r in loaded[:3]))
 
     # ------------------------------------------------------------ 3. ping all
-    if tap_text("پینگ همه", exact=True):
+    # The activity starts the bulk ping on its own after the first successful fetch — that is the
+    # zero-input flow. The rows answer at different times, so the whole list is scrolled while the
+    # measurements land (only three rows fit on screen at once).
+    measuring = any((r["ping"] or "").strip() == "…" for r in rows())
+    if measuring:
+        log("برنامه خودش «پینگ همه» را شروع کرده است")
+    elif tap_text("پینگ همه", exact=True):
         log("«پینگ همه» زده شد")
     else:
         log("**دکمهٔ پینگ همه پیدا نشد**")
         failures.append("no-ping-all")
-    fastest = None
-    deadline = time.time() + 300
+
+    seen = {}
+    deadline = time.time() + 900
+    passes = 0
     while time.time() < deadline:
-        painted = rows()
-        answered = [r for r in painted if ping_ms(r["ping"])]
-        pending = [r for r in painted if (r["ping"] or "").strip() in ("", "…")]
-        if answered:
-            fastest = min(answered, key=lambda r: ping_ms(r["ping"]))
-        if answered and not pending:
+        passes += 1
+        pending = False
+        for _ in range(24):
+            for row in rows():
+                value = ping_ms(row["ping"])
+                if value:
+                    seen[(row["name"], row["ping"])] = value
+                elif (row["ping"] or "").strip() in ("", "…"):
+                    pending = True
+            shell("input swipe 540 1750 540 700 250")
+            time.sleep(0.8)
+        dismiss_system_dialogs()
+        log(f"پیمایش {passes}: {len(seen)} ردیف با پینگ موفق تا این لحظه")
+        if seen and not pending:
             break
-        time.sleep(5)
+        if not pending and len(seen) == 0:
+            break
+        # back to the top for the next pass
+        for _ in range(24):
+            shell("input swipe 540 600 540 1750 200")
+        time.sleep(1)
     shot("02-ping-all")
-    answered = [r for r in rows() if ping_ms(r["ping"])]
-    log(f"پینگ‌ها: {len(answered)} ردیف پاسخ داد؛ سریع‌ترین: "
-        f"`{fastest['name'] if fastest else '—'}` ({fastest['ping'] if fastest else '—'})")
+    log(f"پینگ‌ها: {len(seen)} ردیف پاسخ داد" +
+        (f"؛ سریع‌ترین: `{min(seen, key=seen.get)[0]}` ({min(seen.values())} ms)" if seen else ""))
+    answered = [{"name": name, "ping": ping}
+                for (name, ping), _ in sorted(seen.items(), key=lambda item: item[1])]
     if not answered:
         log("**هیچ سروری به پینگ پاسخ نداد**")
         failures.append("no-ping-response")
@@ -379,7 +409,12 @@ def main(argv):
     # ------------------------------------------------------------ 4. connect
     # Real lists always contain a few dead rows, so the fastest three are tried in order until
     # traffic really flows — exactly what a user would do by tapping the next server.
-    candidates = answered[:3]
+    candidates = []
+    for row in answered:
+        if all(row["name"] != c["name"] for c in candidates):
+            candidates.append(row)
+        if len(candidates) == 3:
+            break
     connected = None
     for attempt, candidate in enumerate(candidates, start=1):
         log(f"تلاش {attempt}/{len(candidates)}: اتصال به `{candidate['name']}` ({candidate['ping']})")
@@ -409,7 +444,7 @@ def main(argv):
 
         # ---------------------------------------------------------- 5. second row
         others = [r for r in answered
-                  if r["name"] != connected["name"]]
+                  if r["name"] != connected["name"] or r["ping"] != connected["ping"]]
         if others:
             second = others[0]
             log(f"تغییر سرور به: `{second['name']}` ({second['ping']})")

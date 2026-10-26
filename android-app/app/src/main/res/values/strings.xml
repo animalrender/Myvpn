@@ -102,4 +102,9 @@
     <string name="toast_select_first">اول یک سرور انتخاب کنید</string>
     <string name="sheet_opaque">این سرور مقدار اتصال رمزنگاری‌شده دارد؛ اتصال و پینگ روی آن ممکن نیست، اما برچسب‌ها و لینک/JSON در دسترس‌اند.</string>
     <string name="toast_fastest_selected">سریع‌ترین سرور انتخاب شد: %1$s (%2$d ms)</string>
+    <string name="badge_unsupported">هستهٔ Xray این پروتکل را اجرا نمی‌کند</string>
+    <string name="msg_unsupported">این ردیف با هستهٔ Xray قابل اتصال نیست</string>
+    <string name="dlg_unsupported_title">قابل اتصال نیست</string>
+    <string name="dlg_unsupported_body">سرور «%1$s» از پروتکل %2$s استفاده می‌کند که هستهٔ Xray (libv2ray) آن را اجرا نمی‌کند. این ردیف مثل اپ اصلی در فهرست هست و برچسبش دیده می‌شود، اما با این هسته وصل نمی‌شود.</string>
+    <string name="sheet_unsupported">پروتکل %1$s توسط این هسته اجرا نمی‌شود</string>
 </resources>

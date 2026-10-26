@@ -302,6 +302,9 @@ class MainActivity : AppCompatActivity() {
                 binding.statusText.text = getString(R.string.status_selected, selectedServer()?.name.orEmpty())
                 paintStatusDot()
                 updateSummary()
+                // Zero-input flow: as soon as the list is there, measure it and let the fastest
+                // answering row become the selection — the user only has to press «اتصال».
+                if (!tunnelRunning && servers.any { it.isDialable }) pingAll()
             }
         }
     }
@@ -322,7 +325,7 @@ class MainActivity : AppCompatActivity() {
      * ping, else the quickest row at all, else the first readable row.
      */
     private fun pickBestOrNull(): Server? {
-        val usable = servers.filterNot { it.isOpaquePayload }
+        val usable = servers.filter { it.isDialable }
         return usable.filter { it.pingState == PingState.OK && it.pingMs > 0 }.minByOrNull { it.pingMs }
             ?: usable.firstOrNull()
     }
@@ -338,8 +341,8 @@ class MainActivity : AppCompatActivity() {
     // ---------------------------------------------------------------- ping
 
     private fun pingSingle(server: Server) {
-        if (server.isOpaquePayload) {
-            toast(getString(R.string.msg_no_ping_opaque))
+        if (!server.isDialable) {
+            toast(getString(R.string.msg_unsupported))
             return
         }
         server.pingState = PingState.RUNNING
@@ -361,9 +364,9 @@ class MainActivity : AppCompatActivity() {
             toast(getString(R.string.status_empty))
             return
         }
-        val measurable = servers.filterNot { it.isOpaquePayload }
+        val measurable = servers.filter { it.isDialable }
         if (measurable.isEmpty()) {
-            toast(getString(R.string.msg_no_ping_opaque))
+            toast(getString(R.string.msg_unsupported))
             return
         }
         pingJob?.cancel()
@@ -454,8 +457,8 @@ class MainActivity : AppCompatActivity() {
     }
 
     private fun connectTo(server: Server) {
-        if (server.isOpaquePayload) {
-            showText(getString(R.string.dlg_opaque_title), getString(R.string.dlg_opaque_body))
+        if (!server.isDialable) {
+            showText(getString(R.string.dlg_unsupported_title), getString(R.string.dlg_unsupported_body, server.name, server.typeHint))
             return
         }
         selectServer(server)
@@ -550,7 +553,7 @@ class MainActivity : AppCompatActivity() {
         }
         // Only the labels that actually carry a value, so the hero never shows stray dashes.
         binding.selectedMetaText.text = listOfNotNull(
-            type, price, shown.flag.takeIf { it.isNotBlank() }, ping,
+            ping, type, shown.flag.takeIf { it.isNotBlank() }, price,
         ).joinToString(" · ")
         binding.connectButton.setText(if (running) R.string.btn_disconnect else R.string.btn_connect)
     }
@@ -629,9 +632,9 @@ class MainActivity : AppCompatActivity() {
         }
         view.findViewById<TextView>(R.id.sheetUsage).text =
             server.usage?.summary().orEmpty().ifBlank { getString(R.string.badge_no_usage) }
-        if (server.isOpaquePayload) {
+        if (!server.isDialable) {
             val state = view.findViewById<TextView>(R.id.sheetState)
-            state.setText(R.string.sheet_opaque)
+            state.text = getString(R.string.sheet_unsupported, server.typeHint)
             state.visibility = View.VISIBLE
         }
 
@@ -858,7 +861,7 @@ class MainActivity : AppCompatActivity() {
     }
 
     companion object {
-        private const val PING_CONCURRENCY = 4
+        private const val PING_CONCURRENCY = 8
         private const val RECONNECT_DELAY_MS = 700L
     }
 }

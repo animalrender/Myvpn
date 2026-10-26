@@ -77,6 +77,22 @@ object PayloadCipher {
         return scheme.isNotEmpty() && scheme.all { it.isLetterOrDigit() || it == '+' || it == '-' || it == '.' }
     }
 
+    /**
+     * Protocols the bundled core (`libv2ray.aar` → xray-core) can dial. A row whose payload
+     * names anything else (`hysteria`, `tuic`, …) is listed and labelled, but never pretends to
+     * connect.
+     */
+    private val CORE_PROTOCOLS = setOf(
+        "vmess", "vless", "trojan", "ss", "shadowsocks", "socks", "socks5", "http", "freedom",
+    )
+
+    /** True when [typeHint] (the label shown on the row, e.g. `vless · reality`) is dialable. */
+    fun isDialable(typeHint: String): Boolean {
+        val head = typeHint.substringBefore(" · ").trim().lowercase()
+        if (head.isBlank() || head == "enc" || head == "?") return false
+        return head in CORE_PROTOCOLS
+    }
+
     /** True when the text looks like an encrypted blob (used only for diagnostics/UI labels). */
     fun looksEncrypted(text: String): Boolean {
         val raw = text.trim()

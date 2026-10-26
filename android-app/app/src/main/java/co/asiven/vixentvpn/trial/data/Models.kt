@@ -34,6 +34,9 @@ data class Server(
 
     val isFree: Boolean get() = (price ?: 0) <= 0
     val hasConfig: Boolean get() = rawConfig.isNotBlank()
+
+    /** The bundled core can dial this row (protocol is supported and the payload decrypted). */
+    val isDialable: Boolean get() = !isOpaquePayload && PayloadCipher.isDialable(typeHint)
     val displayFlag: String get() = flag.ifBlank { "🌐" }
 
     /**

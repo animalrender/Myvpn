@@ -70,7 +70,7 @@ class ServerAdapter(
                     FilterMode.ALL -> true
                     FilterMode.FREE -> server.isFree
                     FilterMode.PAID -> !server.isFree
-                    FilterMode.READY -> !server.isOpaquePayload
+                    FilterMode.READY -> server.isDialable
                 }
                 matchesText && matchesMode
             },
@@ -142,13 +142,13 @@ class ServerAdapter(
                 binding.locationBadge.visibility = View.VISIBLE
             }
 
-            binding.pingButton.isEnabled = !server.isOpaquePayload
-            binding.pingButton.alpha = if (server.isOpaquePayload) 0.4f else 1f
+            binding.pingButton.isEnabled = server.isDialable
+            binding.pingButton.alpha = if (server.isDialable) 1f else 0.4f
 
             val usageSummary = server.usage?.summary().orEmpty()
             binding.usageText.text = when {
                 usageSummary.isNotBlank() -> usageSummary
-                server.isOpaquePayload -> context.getString(R.string.badge_encrypted_payload)
+                !server.isDialable -> context.getString(R.string.badge_unsupported)
                 else -> context.getString(R.string.badge_no_usage)
             }
 
