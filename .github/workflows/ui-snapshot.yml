@@ -295,7 +295,7 @@ jobs:
           if git diff --cached --quiet; then
             echo "no screenshot changes"
           else
-            git commit -m "chore(ui): screenshots from run ${{ github.run_number }}"
+            git commit -m "chore(ui): screenshots from run ${{ github.run_number }} [skip ci]"
           for attempt in 1 2 3 4 5; do
             if git pull --rebase --autostash --quiet origin "${{ github.ref_name }}" && git push --quiet; then
               echo "pushed on attempt $attempt"

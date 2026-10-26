@@ -199,7 +199,7 @@ jobs:
           git config user.email "297053741+arena-agent@users.noreply.github.com"
           git add android-app/docs/e2e-real
           if git diff --cached --quiet; then echo "no changes"; else
-            git commit -m "test(real): zero-input backend verification from run ${{ github.run_number }}"
+            git commit -m "test(real): zero-input backend verification from run ${{ github.run_number }} [skip ci]"
           for attempt in 1 2 3 4 5; do
             if git pull --rebase --autostash --quiet origin "${{ github.ref_name }}" && git push --quiet; then
               echo "pushed on attempt $attempt"
