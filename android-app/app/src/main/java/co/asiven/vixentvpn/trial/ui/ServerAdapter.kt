@@ -113,17 +113,27 @@ class ServerAdapter(
             SortField.NAME, SortField.ORIGINAL -> { _ -> 0 }
         }
         val byValue: Comparator<Server> = when (field) {
-            SortField.PING -> if (ascending) compareBy { it.pingMs } else compareByDescending { it.pingMs }
-            SortField.PRICE -> if (ascending) compareBy { it.price ?: 0 } else compareByDescending { it.price ?: 0 }
-            SortField.ID -> if (ascending) compareBy { it.protocolId ?: 0 } else compareByDescending { it.protocolId ?: 0 }
-            SortField.NAME -> if (ascending) compareBy { it.sortableName.lowercase() }
-                else compareByDescending { it.sortableName.lowercase() }
-            SortField.ORIGINAL -> compareBy { 0 }
+            SortField.PING ->
+                if (ascending) compareBy<Server> { it.pingMs } else compareByDescending<Server> { it.pingMs }
+            SortField.PRICE -> {
+                val price: (Server) -> Int = { it.price ?: 0 }
+                if (ascending) compareBy(price) else compareByDescending(price)
+            }
+            SortField.ID -> {
+                val id: (Server) -> Int = { it.protocolId ?: 0 }
+                if (ascending) compareBy(id) else compareByDescending(id)
+            }
+            SortField.NAME -> {
+                val name: (Server) -> String = { it.sortableName.lowercase() }
+                if (ascending) compareBy(name) else compareByDescending(name)
+            }
+            SortField.ORIGINAL -> compareBy<Server> { 0 }
         }
-        return compareBy { missing(it) }
+        val tieBreak: (Server) -> String = { it.sortableName.lowercase() }
+        return compareBy(missing)
             .then(byValue)
             // stable tie-break, so equal keys do not shuffle on every refresh
-            .thenBy { it.sortableName.lowercase() }
+            .thenBy(tieBreak)
     }
 
     fun setSelected(key: String?) {

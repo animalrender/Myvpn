@@ -130,6 +130,13 @@ jobs:
           BT="$(ls -d "$ANDROID_HOME/build-tools/"* 2>/dev/null | sort -V | tail -1)"
           echo "--- badging ---"
           "$BT/aapt2" dump badging "$APK" 2>/dev/null | head -6 || true
+          # This build must coexist with the original app: its own id, but the original app_name
+          # header (checked by the UI, not here). A wrong id would silently replace the original.
+          "$BT/aapt2" dump badging "$APK" 2>/dev/null | grep -q "package: name='co.asiven.vixentvpn.trial'" \
+            || { echo "::error::the APK does not declare co.asiven.vixentvpn.trial"; exit 1; }
+          "$BT/aapt2" dump badging "$APK" 2>/dev/null | grep -q "versionCode='1004221'" \
+            || { echo "::error::unexpected versionCode"; exit 1; }
+          echo "==> package id / versionCode are the trial ones (installs next to the original app)"
           echo "--- signature ---"
           "$BT/apksigner" verify --print-certs "$APK" 2>/dev/null | tee /tmp/certs.txt || true
           EXPECTED_CERT="a40da80a59d170caa950cf15c18c454d47a39b26989d8b640ecd745ba71bf5dc"
