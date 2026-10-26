@@ -237,10 +237,10 @@ jobs:
             shot 05-server-sheet \
             back \
             sleep 2 \
-            tap-text "پولی" \
+            tap-text-exact "پولی" \
             sleep 3 \
             shot 06-filter-paid \
-            tap-text "همه" \
+            tap-text-exact "همه" \
             sleep 2 \
             tap-class "EditText" \
             sleep 1 \
