@@ -1,5 +1,6 @@
 package co.asiven.vixentvpn.trial.data
 
+import co.asiven.vixentvpn.trial.core.PayloadCipher
 import org.json.JSONArray
 import org.json.JSONObject
 
@@ -271,6 +272,12 @@ object ServerParser {
                 }
             }
         }
+
+        // The backend ships `value` encrypted (AES-128-CBC, key = "key_<row id>"); the plaintext is
+        // either a share link or a full Xray config. This is what makes the trial build dial every
+        // row on its own instead of asking the user for a config.
+        val decrypted = PayloadCipher.unwrap(rawConfig, protocolId)
+        if (decrypted != rawConfig) rawConfig = decrypted
 
         val name = pick(NAME_KEYS).scalarString()?.takeIf { it.isNotBlank() } ?: "سرور ${index + 1}"
         val flag = pick(FLAG_KEYS).scalarString().orEmpty()

@@ -10,6 +10,7 @@ on:
     paths:
       - "android-app/tools/probe-legacy.py"
       - "android-app/tools/probe-v3.py"
+      - "android-app/tools/probe-decrypt.py"
       - ".github/workflows/probe-legacy.yml"
 
 permissions:
@@ -45,6 +46,15 @@ jobs:
           set -uo pipefail
           python3 android-app/tools/probe-v3.py 2>&1 | tee /tmp/v3.log || true
           cp /tmp/v3.log android-app/docs/probe-rows/endpoint-shapes.txt
+
+      - name: Verify value decryption for every row
+        env:
+          PROBE_CERT: /tmp/keys/testkey.x509.pem
+        run: |
+          set -uo pipefail
+          python3 -m pip install --quiet cryptography
+          python3 android-app/tools/probe-decrypt.py 2>&1 | tee /tmp/dec.log || true
+          cp /tmp/dec.log android-app/docs/probe-rows/decrypt-coverage.txt
 
       - name: Commit the log
         run: |
