@@ -1,9 +1,9 @@
-# connect-test — run 8
+# connect-test — run 9
 
 - branch: arena/b9372ae1-myvpn
-- sha: 519d1bb339da800179cfdf772d76235e01dcefc1
-- started: 2026-10-26T05:32:46Z
-- kvm: crw-rw-rw- 1 root kvm 10, 232 Oct 26 05:27 /dev/kvm
+- sha: 978fac006367d5a446c3eadef23d5e32cfd8a68c
+- started: 2026-10-26T05:46:39Z
+- kvm: crw-rw-rw- 1 root kvm 10, 232 Oct 26 05:42 /dev/kvm
 - booted: 1
 - apk: android-app/app/build/outputs/apk/release/app-release.apk
 Performing Streamed Install
@@ -12,95 +12,95 @@ Starting: Intent { cmp=co.asiven.vixentvpn/.trial.ui.MainActivity }
 Status: ok
 LaunchState: COLD
 Activity: co.asiven.vixentvpn/.trial.ui.MainActivity
-TotalTime: 3927
-WaitTime: 3943
+TotalTime: 3207
+WaitTime: 3216
 Complete
 
-- connect-drive exit: 1
+- connect-drive exit: 0
 
 ## Xray server access log
 ```
-2026/10/26 05:34:24.327034 from 127.0.0.1:38528 accepted tcp:www.gstatic.com:443
-2026/10/26 05:34:24.510780 from 127.0.0.1:38540 accepted udp:142.251.152.120:443
-2026/10/26 05:34:24.510799 from 127.0.0.1:38542 accepted tcp:www.gstatic.com:443
-2026/10/26 05:34:28.192404 from 127.0.0.1:33678 accepted tcp:www.gstatic.com:443
-2026/10/26 05:34:30.259119 from 127.0.0.1:33692 accepted tcp:mtalk.google.com:5228
-2026/10/26 05:34:31.302856 from 127.0.0.1:33708 accepted tcp:www.gstatic.com:443
-2026/10/26 05:34:31.830293 from 127.0.0.1:33724 accepted tcp:www.gstatic.com:443
-2026/10/26 05:34:32.407209 from 127.0.0.1:33738 accepted tcp:dl.google.com:443
-2026/10/26 05:34:32.955224 from 127.0.0.1:33746 accepted tcp:dl.google.com:443
-2026/10/26 05:34:35.291715 from 127.0.0.1:33762 accepted tcp:www.gstatic.com:443
-2026/10/26 05:34:39.339158 from 127.0.0.1:36278 accepted tcp:www.gstatic.com:443
-2026/10/26 05:34:39.407393 from 127.0.0.1:36288 accepted tcp:www.gstatic.com:443
-2026/10/26 05:34:40.383384 from 127.0.0.1:36300 accepted tcp:www.gstatic.com:443
-2026/10/26 05:34:40.510947 from 127.0.0.1:36314 accepted tcp:www.gstatic.com:443
-2026/10/26 05:34:40.907870 from 127.0.0.1:36330 accepted tcp:www.gstatic.com:443
-2026/10/26 05:34:41.139801 from 127.0.0.1:36340 accepted tcp:www.gstatic.com:443
-2026/10/26 05:34:41.423966 from 127.0.0.1:36344 accepted tcp:www.gstatic.com:443
-2026/10/26 05:34:41.470681 from 127.0.0.1:36354 accepted tcp:www.gstatic.com:443
-2026/10/26 05:34:41.511038 from 127.0.0.1:36370 accepted tcp:www.gstatic.com:443
-2026/10/26 05:34:41.851779 from 127.0.0.1:36378 accepted tcp:www.gstatic.com:443
-2026/10/26 05:34:49.247939 from 127.0.0.1:59974 accepted tcp:android.googleapis.com:443
-2026/10/26 05:34:50.939179 from 127.0.0.1:59982 accepted tcp:android.googleapis.com:443
-2026/10/26 05:34:50.942978 from 127.0.0.1:59992 accepted udp:172.217.118.4:443
-2026/10/26 05:34:51.503772 from 127.0.0.1:59998 accepted udp:172.217.118.4:443
-2026/10/26 05:34:52.103605 from 127.0.0.1:60010 accepted tcp:mtalk.google.com:5228
-2026/10/26 05:34:53.078708 from 127.0.0.1:60022 accepted tcp:pagead2.googlesyndication.com:443
-2026/10/26 05:34:54.362742 from 127.0.0.1:60028 accepted tcp:android.googleapis.com:443
-2026/10/26 05:34:55.166696 from 127.0.0.1:60036 accepted tcp:voilatile-pa.googleapis.com:443
-2026/10/26 05:35:03.901365 from 127.0.0.1:45436 accepted tcp:dl.google.com:443
-2026/10/26 05:35:08.166839 from 127.0.0.1:53552 accepted tcp:android.googleapis.com:443
-2026/10/26 05:35:09.819371 from 127.0.0.1:53556 accepted udp:172.217.114.4:443
-2026/10/26 05:35:11.047387 from 127.0.0.1:53560 accepted tcp:www.googleapis.com:443
-2026/10/26 05:35:12.523685 from 127.0.0.1:59508 accepted udp:8.8.8.8:53
-2026/10/26 05:35:12.524989 from 127.0.0.1:59514 accepted tcp:8.8.8.8:853
-2026/10/26 05:35:12.547650 from 127.0.0.1:59522 accepted udp:8.8.8.8:443
-2026/10/26 05:35:13.274135 from 127.0.0.1:59532 accepted tcp:alt8-mtalk.google.com:5228
-2026/10/26 05:35:14.692946 from 127.0.0.1:59542 accepted tcp:www.gstatic.com:80
-2026/10/26 05:35:15.678751 from 127.0.0.1:59546 accepted tcp:www.googleapis.com:443
-2026/10/26 05:35:19.050668 from 127.0.0.1:40390 accepted tcp:rcs-acs-tmo-us.jibe.google.com:443
-2026/10/26 05:35:19.639133 from 127.0.0.1:40400 accepted udp:172.217.112.4:443
+2026/10/26 05:48:20.941808 from 127.0.0.1:52586 accepted tcp:www.gstatic.com:443
+2026/10/26 05:48:21.131005 from 127.0.0.1:52600 accepted tcp:www.gstatic.com:443
+2026/10/26 05:48:21.159644 from 127.0.0.1:52608 accepted tcp:www.gstatic.com:443
+2026/10/26 05:48:21.807845 from 127.0.0.1:52614 accepted tcp:dl.google.com:443
+2026/10/26 05:48:22.032171 from 127.0.0.1:52616 accepted tcp:www.gstatic.com:443
+2026/10/26 05:48:22.447130 from 127.0.0.1:52628 accepted tcp:dl.google.com:443
+2026/10/26 05:48:26.046390 from 127.0.0.1:52634 accepted tcp:www.gstatic.com:443
+2026/10/26 05:48:26.750550 from 127.0.0.1:52644 accepted tcp:android.googleapis.com:443
+2026/10/26 05:48:30.207538 from 127.0.0.1:49962 accepted tcp:www.gstatic.com:443
+2026/10/26 05:48:30.263329 from 127.0.0.1:49978 accepted tcp:www.gstatic.com:443
+2026/10/26 05:48:30.406474 from 127.0.0.1:49984 accepted tcp:www.gstatic.com:443
+2026/10/26 05:48:30.811457 from 127.0.0.1:50000 accepted tcp:www.gstatic.com:443
+2026/10/26 05:48:30.842863 from 127.0.0.1:50008 accepted tcp:www.gstatic.com:443
+2026/10/26 05:48:30.916668 from 127.0.0.1:50012 accepted tcp:www.gstatic.com:443
+2026/10/26 05:48:31.247340 from 127.0.0.1:50018 accepted tcp:www.gstatic.com:443
+2026/10/26 05:48:31.366827 from 127.0.0.1:50028 accepted tcp:www.gstatic.com:443
+2026/10/26 05:48:31.455188 from 127.0.0.1:50044 accepted tcp:www.gstatic.com:443
+2026/10/26 05:48:34.942784 from 127.0.0.1:50048 accepted tcp:rcs-acs-tmo-us.jibe.google.com:443
+2026/10/26 05:48:35.782792 from 127.0.0.1:50054 accepted tcp:mtalk.google.com:5228
+2026/10/26 05:48:36.318922 from 127.0.0.1:50070 accepted tcp:pagead2.googlesyndication.com:443
+2026/10/26 05:48:37.051010 from 127.0.0.1:50072 accepted tcp:android.googleapis.com:443
+2026/10/26 05:48:37.858738 from 127.0.0.1:50088 accepted tcp:voilatile-pa.googleapis.com:443
+2026/10/26 05:48:43.610806 from 127.0.0.1:52294 accepted tcp:android.googleapis.com:443
+2026/10/26 05:48:44.530796 from 127.0.0.1:52302 accepted tcp:www.googleapis.com:443
+2026/10/26 05:48:46.987173 from 127.0.0.1:52310 accepted tcp:dl.google.com:443
+2026/10/26 05:48:57.466988 from 127.0.0.1:42816 accepted tcp:www.googleapis.com:443
+2026/10/26 05:48:59.091916 from 127.0.0.1:42832 accepted tcp:android.googleapis.com:443
+2026/10/26 05:49:01.415010 from 127.0.0.1:58450 accepted tcp:android.googleapis.com:443
+2026/10/26 05:49:03.079091 from 127.0.0.1:58462 accepted udp:172.217.119.4:443
+2026/10/26 05:49:04.731697 from 127.0.0.1:58472 accepted udp:172.217.117.4:443
+2026/10/26 05:49:06.731901 from 127.0.0.1:39484 accepted udp:8.8.8.8:443
+2026/10/26 05:49:06.846970 from 127.0.0.1:39490 accepted tcp:1.1.1.1:853
+2026/10/26 05:49:06.852751 from 127.0.0.1:39506 accepted tcp:8.8.8.8:853
+2026/10/26 05:49:07.203433 from 127.0.0.1:39512 accepted udp:8.8.8.8:443
+2026/10/26 05:49:07.208370 from 127.0.0.1:39514 accepted udp:8.8.8.8:53
+2026/10/26 05:49:07.217526 from 127.0.0.1:39526 accepted udp:1.1.1.1:53
+2026/10/26 05:49:09.558646 from 127.0.0.1:39538 accepted tcp:www.gstatic.com:80
+2026/10/26 05:49:12.855476 from 127.0.0.1:43138 accepted udp:172.217.112.4:443
+2026/10/26 05:49:13.563729 from 127.0.0.1:43150 rejected  proxy/vmess/encoding: failed to read request header > websocket: close 1000 (normal)
+2026/10/26 05:49:13.566410 from 127.0.0.1:43160 accepted udp:172.217.117.4:443
 ```
 ## Xray server error log
 ```
-2026/10/26 05:35:11.047185 [Info] [1927076157] proxy/vless/inbound: firstLen = 558
-2026/10/26 05:35:11.047219 [Info] [1927076157] proxy/vless/inbound: received request for tcp:www.googleapis.com:443
-2026/10/26 05:35:11.047380 [Info] [1927076157] app/dispatcher: default route for tcp:www.googleapis.com:443
-2026/10/26 05:35:11.048736 [Info] [1927076157] transport/internet/tcp: dialing TCP to tcp:www.googleapis.com:443
-2026/10/26 05:35:11.054881 [Info] [1927076157] proxy/freedom: connection opened to tcp:www.googleapis.com:443, local endpoint 10.1.0.229:56726, remote endpoint 172.217.114.4:443
-2026/10/26 05:35:12.523238 [Info] [2184607114] proxy/vmess/inbound: received request for udp:8.8.8.8:53
-2026/10/26 05:35:12.523528 [Info] [2184607114] app/dispatcher: default route for udp:8.8.8.8:53
-2026/10/26 05:35:12.523875 [Info] [2184607114] proxy/freedom: connection opened to udp:8.8.8.8:53, local endpoint [::]:53247, remote endpoint 8.8.8.8:53
-2026/10/26 05:35:12.524816 [Info] [4202963239] proxy/vmess/inbound: received request for tcp:8.8.8.8:853
-2026/10/26 05:35:12.525108 [Info] [4202963239] app/dispatcher: default route for tcp:8.8.8.8:853
-2026/10/26 05:35:12.525131 [Info] [4202963239] transport/internet/tcp: dialing TCP to tcp:8.8.8.8:853
-2026/10/26 05:35:12.528057 [Info] [4202963239] proxy/freedom: connection opened to tcp:8.8.8.8:853, local endpoint 10.1.0.229:37382, remote endpoint 8.8.8.8:853
-2026/10/26 05:35:12.547444 [Info] [1822990434] proxy/vmess/inbound: received request for udp:8.8.8.8:443
-2026/10/26 05:35:12.547630 [Info] [1822990434] app/dispatcher: default route for udp:8.8.8.8:443
-2026/10/26 05:35:12.547643 [Info] [1822990434] proxy/freedom: connection opened to udp:8.8.8.8:443, local endpoint [::]:38351, remote endpoint 8.8.8.8:443
-2026/10/26 05:35:13.273994 [Info] [2162230557] proxy/vmess/inbound: received request for tcp:alt8-mtalk.google.com:5228
-2026/10/26 05:35:13.274026 [Info] [2162230557] app/dispatcher: default route for tcp:alt8-mtalk.google.com:5228
-2026/10/26 05:35:13.350853 [Info] [2162230557] transport/internet/tcp: dialing TCP to tcp:alt8-mtalk.google.com:5228
-2026/10/26 05:35:13.470607 [Info] [2162230557] proxy/freedom: connection opened to tcp:alt8-mtalk.google.com:5228, local endpoint 10.1.0.229:58742, remote endpoint 142.250.102.188:5228
-2026/10/26 05:35:14.692986 [Info] [786270676] proxy/vmess/inbound: received request for tcp:www.gstatic.com:80
-2026/10/26 05:35:14.693007 [Info] [786270676] app/dispatcher: default route for tcp:www.gstatic.com:80
-2026/10/26 05:35:14.693713 [Info] [786270676] transport/internet/tcp: dialing TCP to tcp:www.gstatic.com:80
-2026/10/26 05:35:14.698082 [Info] [786270676] proxy/freedom: connection opened to tcp:www.gstatic.com:80, local endpoint 10.1.0.229:43654, remote endpoint 142.250.189.99:80
-2026/10/26 05:35:15.678626 [Info] [8087714] proxy/vmess/inbound: received request for tcp:www.googleapis.com:443
-2026/10/26 05:35:15.678748 [Info] [8087714] app/dispatcher: default route for tcp:www.googleapis.com:443
-2026/10/26 05:35:15.679646 [Info] [8087714] transport/internet/tcp: dialing TCP to tcp:www.googleapis.com:443
-2026/10/26 05:35:15.683204 [Info] [8087714] proxy/freedom: connection opened to tcp:www.googleapis.com:443, local endpoint 10.1.0.229:54006, remote endpoint 172.217.113.4:443
-2026/10/26 05:35:19.050590 [Info] [326175413] proxy/vmess/inbound: received request for tcp:rcs-acs-tmo-us.jibe.google.com:443
-2026/10/26 05:35:19.050620 [Info] [326175413] app/dispatcher: default route for tcp:rcs-acs-tmo-us.jibe.google.com:443
-2026/10/26 05:35:19.092842 [Info] [326175413] transport/internet/tcp: dialing TCP to tcp:rcs-acs-tmo-us.jibe.google.com:443
-2026/10/26 05:35:19.095639 [Info] [326175413] proxy/freedom: connection opened to tcp:rcs-acs-tmo-us.jibe.google.com:443, local endpoint 10.1.0.229:38656, remote endpoint 216.239.36.155:443
-2026/10/26 05:35:19.638924 [Info] [2534080905] proxy/vmess/inbound: received request for udp:172.217.112.4:443
-2026/10/26 05:35:19.639110 [Info] [2534080905] app/dispatcher: default route for udp:172.217.112.4:443
-2026/10/26 05:35:19.639126 [Info] [2534080905] proxy/freedom: connection opened to udp:172.217.112.4:443, local endpoint [::]:39601, remote endpoint 172.217.112.4:443
-2026/10/26 05:35:20.179786 [Info] [2184607114] app/proxyman/inbound: connection ends > proxy/vmess/inbound: connection ends > proxy/vmess/inbound: failed to transfer request > websocket: close 1000 (normal)
-2026/10/26 05:35:20.231382 [Info] [1822990434] app/proxyman/inbound: connection ends > proxy/vmess/inbound: connection ends > proxy/vmess/inbound: failed to transfer request > websocket: close 1000 (normal)
-2026/10/26 05:35:20.231513 [Info] [2534080905] app/proxyman/inbound: connection ends > proxy/vmess/inbound: connection ends > proxy/vmess/inbound: failed to transfer request > websocket: close 1000 (normal)
-2026/10/26 05:35:21.231554 [Info] [2162230557] app/proxyman/inbound: connection ends > proxy/vmess/inbound: connection ends > context canceled
-2026/10/26 05:35:21.231584 [Info] [8087714] app/proxyman/inbound: connection ends > proxy/vmess/inbound: connection ends > context canceled
-2026/10/26 05:35:21.231629 [Info] [326175413] app/proxyman/inbound: connection ends > proxy/vmess/inbound: connection ends > context canceled
+2026/10/26 05:49:04.731672 [Info] [1533074343] proxy/vless/inbound: received request for udp:172.217.117.4:443
+2026/10/26 05:49:04.731680 [Info] [1533074343] app/dispatcher: default route for udp:172.217.117.4:443
+2026/10/26 05:49:04.731688 [Info] [1533074343] proxy/freedom: connection opened to udp:172.217.117.4:443, local endpoint [::]:43164, remote endpoint 172.217.117.4:443
+2026/10/26 05:49:06.731486 [Info] [3432982289] proxy/vmess/inbound: received request for udp:8.8.8.8:443
+2026/10/26 05:49:06.731625 [Info] [3432982289] app/dispatcher: default route for udp:8.8.8.8:443
+2026/10/26 05:49:06.731962 [Info] [3432982289] proxy/freedom: connection opened to udp:8.8.8.8:443, local endpoint [::]:44049, remote endpoint 8.8.8.8:443
+2026/10/26 05:49:06.846820 [Info] [1960237334] proxy/vmess/inbound: received request for tcp:1.1.1.1:853
+2026/10/26 05:49:06.847014 [Info] [1960237334] app/dispatcher: default route for tcp:1.1.1.1:853
+2026/10/26 05:49:06.847045 [Info] [1960237334] transport/internet/tcp: dialing TCP to tcp:1.1.1.1:853
+2026/10/26 05:49:06.848645 [Info] [1960237334] proxy/freedom: connection opened to tcp:1.1.1.1:853, local endpoint 10.1.0.180:58962, remote endpoint 1.1.1.1:853
+2026/10/26 05:49:06.852616 [Info] [859487141] proxy/vmess/inbound: received request for tcp:8.8.8.8:853
+2026/10/26 05:49:06.852769 [Info] [859487141] app/dispatcher: default route for tcp:8.8.8.8:853
+2026/10/26 05:49:06.852779 [Info] [859487141] transport/internet/tcp: dialing TCP to tcp:8.8.8.8:853
+2026/10/26 05:49:06.855237 [Info] [859487141] proxy/freedom: connection opened to tcp:8.8.8.8:853, local endpoint 10.1.0.180:35838, remote endpoint 8.8.8.8:853
+2026/10/26 05:49:07.203303 [Info] [2708999005] proxy/vmess/inbound: received request for udp:8.8.8.8:443
+2026/10/26 05:49:07.203396 [Info] [2708999005] app/dispatcher: default route for udp:8.8.8.8:443
+2026/10/26 05:49:07.203453 [Info] [2708999005] proxy/freedom: connection opened to udp:8.8.8.8:443, local endpoint [::]:40427, remote endpoint 8.8.8.8:443
+2026/10/26 05:49:07.208229 [Info] [2721463695] proxy/vmess/inbound: received request for udp:8.8.8.8:53
+2026/10/26 05:49:07.208352 [Info] [2721463695] app/dispatcher: default route for udp:8.8.8.8:53
+2026/10/26 05:49:07.208363 [Info] [2721463695] proxy/freedom: connection opened to udp:8.8.8.8:53, local endpoint [::]:46161, remote endpoint 8.8.8.8:53
+2026/10/26 05:49:07.217419 [Info] [4217789102] proxy/vmess/inbound: received request for udp:1.1.1.1:53
+2026/10/26 05:49:07.217552 [Info] [4217789102] app/dispatcher: default route for udp:1.1.1.1:53
+2026/10/26 05:49:07.217561 [Info] [4217789102] proxy/freedom: connection opened to udp:1.1.1.1:53, local endpoint [::]:36567, remote endpoint 1.1.1.1:53
+2026/10/26 05:49:09.558503 [Info] [1245728596] proxy/vmess/inbound: received request for tcp:www.gstatic.com:80
+2026/10/26 05:49:09.558601 [Info] [1245728596] app/dispatcher: default route for tcp:www.gstatic.com:80
+2026/10/26 05:49:09.559826 [Info] [1245728596] transport/internet/tcp: dialing TCP to tcp:www.gstatic.com:80
+2026/10/26 05:49:09.562704 [Info] [1245728596] proxy/freedom: connection opened to tcp:www.gstatic.com:80, local endpoint 10.1.0.180:56674, remote endpoint 142.251.150.120:80
+2026/10/26 05:49:12.855356 [Info] [182296954] proxy/vmess/inbound: received request for udp:172.217.112.4:443
+2026/10/26 05:49:12.855390 [Info] [182296954] app/dispatcher: default route for udp:172.217.112.4:443
+2026/10/26 05:49:12.855499 [Info] [182296954] proxy/freedom: connection opened to udp:172.217.112.4:443, local endpoint [::]:42021, remote endpoint 172.217.112.4:443
+2026/10/26 05:49:13.563734 [Info] [2500874725] app/proxyman/inbound: connection ends > proxy/vmess/inbound: invalid request from 127.0.0.1:43150 > proxy/vmess/encoding: failed to read request header > websocket: close 1000 (normal)
+2026/10/26 05:49:13.566228 [Info] [3851910830] proxy/vmess/inbound: received request for udp:172.217.117.4:443
+2026/10/26 05:49:13.566388 [Info] [3851910830] app/dispatcher: default route for udp:172.217.117.4:443
+2026/10/26 05:49:13.566402 [Info] [3851910830] proxy/freedom: connection opened to udp:172.217.117.4:443, local endpoint [::]:52021, remote endpoint 172.217.117.4:443
+2026/10/26 05:49:14.650400 [Info] [2708999005] app/proxyman/inbound: connection ends > proxy/vmess/inbound: connection ends > proxy/vmess/inbound: failed to transfer request > websocket: close 1000 (normal)
+2026/10/26 05:49:14.650556 [Info] [3432982289] app/proxyman/inbound: connection ends > proxy/vmess/inbound: connection ends > proxy/vmess/inbound: failed to transfer request > websocket: close 1000 (normal)
+2026/10/26 05:49:14.655607 [Info] [182296954] app/proxyman/inbound: connection ends > proxy/vmess/inbound: connection ends > proxy/vmess/inbound: failed to transfer request > websocket: close 1000 (normal)
+2026/10/26 05:49:14.655894 [Info] [2721463695] app/proxyman/inbound: connection ends > proxy/vmess/inbound: connection ends > proxy/vmess/inbound: failed to transfer request > websocket: close 1000 (normal)
+2026/10/26 05:49:14.655903 [Info] [4217789102] app/proxyman/inbound: connection ends > proxy/vmess/inbound: connection ends > proxy/vmess/inbound: failed to transfer request > websocket: close 1000 (normal)
+2026/10/26 05:49:14.656791 [Info] [3851910830] app/proxyman/inbound: connection ends > proxy/vmess/inbound: connection ends > proxy/vmess/inbound: failed to transfer request > websocket: close 1000 (normal)
 ```
