@@ -40,6 +40,12 @@ SHOTS = []
 def log(message):
     print(message, flush=True)
     REPORT.append(f"- {message}")
+    # Written immediately, so a crash or a CI timeout still leaves the steps that did happen.
+    try:
+        with open(os.path.join(OUT, "CONNECT-REAL.md"), "w", encoding="utf-8") as handle:
+            handle.write(render_report(None))
+    except OSError:
+        pass
 
 
 def shot(name):
@@ -313,6 +319,18 @@ def connect_row(row, index):
     return False
 
 
+def hero_name():
+    """The server the activity currently has selected (it auto-picks the fastest after a ping)."""
+    node = find(rid="selectedNameText")
+    text = unescape((node or {}).get("text") or "")
+    return text.replace("\u200f", "").strip()
+
+
+def bulk_ping_finished():
+    out = adb("logcat", "-d", "-s", "MvpnTrial:V", timeout=120).stdout or ""
+    return "پینگ همهٔ" in out
+
+
 def main(argv):
     global OUT, PROBE_URL
     if len(argv) < 1:
@@ -360,80 +378,43 @@ def main(argv):
     log("نمونهٔ برچسب ردیف‌ها: " + "، ".join(f"`{r['name']}`" for r in loaded[:3]))
 
     # ------------------------------------------------------------ 3. ping all
-    # The activity starts the bulk ping on its own after the first successful fetch — that is the
-    # zero-input flow. The rows answer at different times, so the whole list is scrolled while the
-    # measurements land (only three rows fit on screen at once).
-    measuring = any((r["ping"] or "").strip() == "…" for r in rows())
-    if measuring:
-        log("برنامه خودش «پینگ همه» را شروع کرده است")
-    elif tap_text("پینگ همه", exact=True):
-        log("«پینگ همه» زده شد")
-    else:
-        log("**دکمهٔ پینگ همه پیدا نشد**")
-        failures.append("no-ping-all")
-
-    seen = {}
-    deadline = time.time() + 900
-    passes = 0
-    while time.time() < deadline:
-        passes += 1
-        pending = False
-        for _ in range(24):
-            for row in rows():
-                value = ping_ms(row["ping"])
-                if value:
-                    seen[(row["name"], row["ping"])] = value
-                elif (row["ping"] or "").strip() in ("", "…"):
-                    pending = True
-            shell("input swipe 540 1750 540 700 250")
-            time.sleep(0.8)
+    # Zero-input flow: the activity starts the bulk ping by itself once the list is loaded and
+    # then selects the fastest row that answered — the driver only has to wait for that.
+    pressed = False
+    if not bulk_ping_finished() and not any((r["ping"] or "").strip() == "…" for r in rows()):
+        pressed = tap_text("پینگ همه", exact=True)
+        log(f"دکمهٔ «پینگ همه» زده شد: {'بله' if pressed else 'خیر'}")
+    deadline = time.time() + 600
+    while time.time() < deadline and not bulk_ping_finished():
         dismiss_system_dialogs()
-        log(f"پیمایش {passes}: {len(seen)} ردیف با پینگ موفق تا این لحظه")
-        if seen and not pending:
-            break
-        if not pending and len(seen) == 0:
-            break
-        # back to the top for the next pass
-        for _ in range(24):
-            shell("input swipe 540 600 540 1750 200")
-        time.sleep(1)
+        time.sleep(10)
+    finished = bulk_ping_finished()
     shot("02-ping-all")
-    log(f"پینگ‌ها: {len(seen)} ردیف پاسخ داد" +
-        (f"؛ سریع‌ترین: `{min(seen, key=seen.get)[0]}` ({min(seen.values())} ms)" if seen else ""))
-    answered = [{"name": name, "ping": ping}
-                for (name, ping), _ in sorted(seen.items(), key=lambda item: item[1])]
-    if not answered:
-        log("**هیچ سروری به پینگ پاسخ نداد**")
-        failures.append("no-ping-response")
+    log(f"پایان پینگ همه: {'بله' if finished else 'خیر (مهلت تمام شد)'}")
+    chosen = hero_name()
+    log(f"سروری که برنامه خودش انتخاب کرد: `{chosen or '—'}`")
+    if not finished:
+        failures.append("ping-all-timeout")
+    if not chosen:
+        log("**برنامه هیچ سروری را انتخاب نکرد؛ ادامهٔ آزمون ممکن نیست**")
+        failures.append("no-selection")
 
     # ------------------------------------------------------------ 4. connect
-    # Real lists always contain a few dead rows, so the fastest three are tried in order until
-    # traffic really flows — exactly what a user would do by tapping the next server.
-    candidates = []
-    for row in answered:
-        if all(row["name"] != c["name"] for c in candidates):
-            candidates.append(row)
-        if len(candidates) == 3:
-            break
     connected = None
-    for attempt, candidate in enumerate(candidates, start=1):
-        log(f"تلاش {attempt}/{len(candidates)}: اتصال به `{candidate['name']}` ({candidate['ping']})")
-        if not connect_row(candidate, f"0{2 + attempt}"):
-            failures.append(f"not-connected-{attempt}")
-            continue
-        time.sleep(5)
-        up = tun_up()
-        log(f"رابط tun0: {'موجود' if up else 'موجود نیست'}")
-        code = probe()
-        log(f"درخواست از داخل تونل: HTTP {code or 'بدون پاسخ'}")
-        if up and code in ("204", "200"):
-            connected = candidate
-            break
-        log("ترافیک از این ردیف عبور نکرد؛ قطع و آزمون ردیف بعدی")
-        tap_rid("connectButton")
-        time.sleep(8)
-    if not connected:
-        failures.append("no-server-passed-traffic")
+    if chosen:
+        log(f"اتصال به سرور انتخاب‌شده: `{chosen}`")
+        if not connect_row({"name": chosen, "ping": None}, "03"):
+            failures.append("not-connected")
+        else:
+            time.sleep(5)
+            up = tun_up()
+            log(f"رابط tun0: {'موجود' if up else 'موجود نیست'}")
+            code = probe()
+            log(f"درخواست از داخل تونل: HTTP {code or 'بدون پاسخ'}")
+            if up and code in ("204", "200"):
+                connected = chosen
+            else:
+                failures.append("no-traffic")
 
     if connected:
         ip, country, isp = exit_ip()
@@ -443,12 +424,22 @@ def main(argv):
             failures.append("exit-ip-unchanged")
 
         # ---------------------------------------------------------- 5. second row
-        others = [r for r in answered
-                  if r["name"] != connected["name"] or r["ping"] != connected["ping"]]
+        candidates = [r for r in rows() if ping_ms(r["ping"])]
+        others = [r for r in candidates if r["name"] != connected]
         if others:
             second = others[0]
             log(f"تغییر سرور به: `{second['name']}` ({second['ping']})")
-            if connect_row(second, "05"):
+            if connect_row(second, "04"):
+                label = connect_button_text()
+                log(f"برچسب دکمه پس از انتخاب سرور دوم: `{label}`")
+                if label == "اتصال به سرور انتخابی":
+                    tap_rid("connectButton")
+                    time.sleep(8)
+                accept_vpn_dialog()
+                for _ in range(30):
+                    if find(text="متصل", exact=False):
+                        break
+                    time.sleep(2)
                 code2 = probe()
                 log(f"درخواست پس از تغییر سرور: HTTP {code2 or 'بدون پاسخ'}")
                 if code2 not in ("204", "200"):
@@ -456,12 +447,12 @@ def main(argv):
             else:
                 failures.append("switch-failed")
         else:
-            log("ردیف دومی برای آزمون تغییر سرور در فهرست دیده نشد")
+            log("ردیف دومی با پینگ موفق در صفحهٔ فعلی دیده نشد")
 
         # ---------------------------------------------------------- 6. teardown
         if tap_rid("connectButton"):
             time.sleep(10)
-            shot("06-disconnected")
+            shot("05-disconnected")
             log(f"پس از قطع اتصال: tun0 {'هنوز موجود است' if tun_up() else 'حذف شد'}")
             if tun_up():
                 failures.append("tun-not-removed")
@@ -473,30 +464,63 @@ def main(argv):
     return 1 if failures else 0
 
 
+def render_report(failures, baseline_ip=None, fastest=None):
+    lines = ["# آزمون اتصال واقعی به بک‌اند اصلی (بدون هیچ ورودی کاربر)", ""]
+    lines.append(f"- زمان: {time.strftime('%Y-%m-%dT%H:%M:%SZ', time.gmtime())}")
+    lines.append(f"- آدرس آزمون: `{PROBE_URL}`")
+    if baseline_ip:
+        lines.append(f"- IP خروج پیش از اتصال: `{baseline_ip}`")
+    if fastest:
+        lines.append(f"- سرور متصل‌شده: `{fastest}`")
+    lines.append("")
+    lines.append("## گام‌ها")
+    lines.append("")
+    lines.extend(REPORT)
+    lines.append("")
+    lines.append("## تصاویر")
+    lines.append("")
+    for name in SHOTS:
+        lines.append(f"![{name}]({name}.png)")
+        lines.append("")
+    lines.append("## نتیجه")
+    lines.append("")
+    if failures is None:
+        lines.append("در حال اجرا…")
+    elif failures:
+        lines.append("**ناموفق**: " + ", ".join(failures))
+    else:
+        lines.append("**موفق** — برنامه بدون هیچ ورودی کاربر، فهرست را از بک‌اند گرفت، "
+                     "مقدار رمزشدهٔ هر ردیف را خودش باز کرد، سریع‌ترین سرور را خودش انتخاب کرد، "
+                     "وصل شد، ترافیک از تونل عبور کرد، سرور عوض شد و اتصال تمیز قطع شد.")
+    return "\n".join(lines) + "\n"
+
+
 def write_report(failures, baseline_ip, fastest):
     logcat = adb("logcat", "-d", "-s", "MvpnTrial:V", timeout=180).stdout or ""
     with open(os.path.join(OUT, "logcat.txt"), "w", encoding="utf-8") as handle:
         handle.write(logcat)
     with open(os.path.join(OUT, "CONNECT-REAL.md"), "w", encoding="utf-8") as handle:
-        handle.write("# آزمون اتصال واقعی به بک‌اند اصلی (بدون هیچ ورودی کاربر)\n\n")
-        handle.write(f"- زمان: {time.strftime('%Y-%m-%dT%H:%M:%SZ', time.gmtime())}\n")
-        handle.write(f"- آدرس آزمون: `{PROBE_URL}`\n")
-        handle.write(f"- IP خروج پیش از اتصال: `{baseline_ip}`\n")
-        if fastest:
-            handle.write(f"- سروری که انتخاب شد: `{fastest['name']}` ({fastest['ping']})\n")
-        handle.write("\n## گام‌ها\n\n" + "\n".join(REPORT) + "\n\n")
-        handle.write("## تصاویر\n\n")
-        for name in SHOTS:
-            handle.write(f"![{name}]({name}.png)\n\n")
-        handle.write("## نتیجه\n\n")
-        if failures:
-            handle.write("**ناموفق**: " + ", ".join(failures) + "\n")
-        else:
-            handle.write("**موفق** — برنامه بدون هیچ ورودی کاربر، فهرست را از بک‌اند گرفت، "
-                         "مقدار رمز‌شدهٔ هر ردیف را خودش باز کرد، به سرور وصل شد، ترافیک از "
-                         "تونل عبور کرد، سرور عوض شد و اتصال تمیز قطع شد.\n")
+        handle.write(render_report(failures, baseline_ip, fastest))
     print("\n".join(REPORT), flush=True)
 
 
+def run(argv):
+    try:
+        return main(argv)
+    except Exception as error:  # noqa: BLE001 — the report must exist even when the driver breaks
+        import traceback
+        detail = traceback.format_exc()
+        print(detail, flush=True)
+        log(f"**خطای غیرمنتظره در درایور آزمون**: `{type(error).__name__}: {error}`")
+        try:
+            with open(os.path.join(OUT, "CONNECT-REAL.md"), "w", encoding="utf-8") as handle:
+                handle.write(render_report(["driver-crash", type(error).__name__]))
+            with open(os.path.join(OUT, "driver-error.txt"), "w", encoding="utf-8") as handle:
+                handle.write(detail)
+        except OSError:
+            pass
+        return 1
+
+
 if __name__ == "__main__":
-    sys.exit(main(sys.argv[1:]))
+    sys.exit(run(sys.argv[1:]))
