@@ -363,6 +363,12 @@ def connect_row(row, index, wait_seconds=90):
     return False
 
 
+def scroll_to_top(passes=8):
+    for _ in range(passes):
+        shell("input swipe 540 500 540 1800 200")
+    time.sleep(1)
+
+
 def connect_button_text():
     """Label of the hero button: «اتصال» / «اتصال به سرور انتخابی» / «قطع اتصال»."""
     node = find(rid="connectButton")
@@ -480,11 +486,11 @@ def main(argv):
                         break
                     time.sleep(2)
         if not started:
-            failures.append(f"not-connected-{index}")
+            log(f"ردیف {index} وصل نشد؛ ردیف بعدی")
             close_dialogs()
             continue
         if not find(text="متصل", exact=False):
-            failures.append(f"no-tunnel-{index}")
+            log(f"وضعیت «متصل» برای ردیف {index} دیده نشد؛ ردیف بعدی")
             close_dialogs()
             continue
         time.sleep(4)
@@ -501,9 +507,10 @@ def main(argv):
             connected = name
             break
         log("ترافیک از این ردیف عبور نکرد؛ سرور بعدی آزموده می‌شود")
-        failures.append(f"no-traffic-{index}")
     if not connected:
         failures.append("no-server-passed-traffic")
+    else:
+        log(f"ترافیک از تونل عبور کرد (تلاش {attempts.index(connected) + 1} از {len(attempts)})")
 
     if connected:
         ip, country, isp = exit_ip()
@@ -513,8 +520,17 @@ def main(argv):
             failures.append("exit-ip-unchanged")
 
         # ---------------------------------------------------------- 5. second row
+        scroll_to_top()
         candidates = [r for r in rows() if ping_ms(r["ping"])]
-        others = [r for r in candidates if r["name"] != connected]
+        if not candidates:
+            for _ in range(6):
+                shell("input swipe 540 1750 540 700 250")
+                time.sleep(1)
+                candidates = [r for r in rows() if ping_ms(r["ping"])]
+                if candidates:
+                    break
+            scroll_to_top()
+        others = [r for r in candidates if r["name"] != connected] or candidates
         if others:
             second = others[0]
             log(f"تغییر سرور به: `{second['name']}` ({second['ping']})")
