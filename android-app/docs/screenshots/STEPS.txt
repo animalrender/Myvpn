@@ -1,0 +1,23 @@
+shot 00-start (47613 bytes)
+wait-text 'MVPN': found
+shot 01-home (47613 bytes)
+wait-text 'رایگان': found
+shot 02-list-loaded (47613 bytes)
+tap-text 'پینگ': ok
+shot 03-single-ping (46792 bytes)
+tap-text 'پینگ همه': ok
+shot 04-ping-all (46765 bytes)
+tap-desc 'جزئیات': ok
+shot 05-server-sheet (44359 bytes)
+tap-text 'پولی': ok
+shot 06-filter-paid (35127 bytes)
+tap-text 'همه': ok
+type 'enc'
+shot 07-search (35927 bytes)
+tap-desc 'منوی بیشتر': NOT FOUND
+shot 08-menu (206231 bytes)
+crash-check: pid=yes, fatal lines=57
+
+FAILURES:
+content-desc 'منوی بیشتر' not found
+crash in logcat: 10-26 02:05:51.643   947   947 I AndroidRuntime: VM exiting with result code 0, cleanup skipped.
