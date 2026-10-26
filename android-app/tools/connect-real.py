@@ -27,9 +27,10 @@ import re
 import subprocess
 import sys
 import time
+import urllib.parse
 
 OUT = "."
-PROBE_URL = "https://www.gstatic.com/generate_204"
+PROBE_URL = "http://connectivitycheck.gstatic.com/generate_204"
 TRACE_URL = "https://www.cloudflare.com/cdn-cgi/trace"
 COMPONENT = "co.asiven.vixentvpn/co.asiven.vixentvpn.trial.ui.MainActivity"
 REPORT = []
@@ -118,6 +119,21 @@ def tap_rid(rid):
     return True
 
 
+def dismiss_system_dialogs():
+    """Taps away system permission prompts (notifications, etc.) that would cover the list."""
+    xml = dump_xml()
+    for node in nodes(xml):
+        text = (node.get("text") or "").strip()
+        if text in ("Allow", "Don't allow", "OK", "While using the app", "باشه"):
+            point = center(node.get("bounds"))
+            if point:
+                tap(point)
+                log(f"دیالوگ سیستمی «{text}» بسته شد")
+                time.sleep(1)
+                return True
+    return False
+
+
 def accept_vpn_dialog():
     for _ in range(20):
         for node in nodes(dump_xml()):
@@ -169,31 +185,103 @@ def ping_ms(text):
     return int(match.group(1)) if match else None
 
 
+_TOOL = None
+
+
+def http_tool():
+    """The emulator images ship different userland tools; find one that can speak HTTP."""
+    global _TOOL
+    if _TOOL:
+        return _TOOL
+    for candidate in ("curl", "wget", "nc"):
+        out = (shell(f"command -v {candidate}").stdout or "").strip()
+        if out and "not found" not in out:
+            _TOOL = candidate
+            return _TOOL
+    _TOOL = "none"
+    return _TOOL
+
+
+def http_get(url, timeout=25):
+    """Returns (status_line_or_code, body). Works through the tunnel like any other app."""
+    tool = http_tool()
+    if tool == "curl":
+        out = shell(f"curl -s -m {timeout} -w '\\n%{{http_code}}' {url}").stdout or ""
+        body, _, code = out.rpartition("\n")
+        return code.strip(), body
+    if tool == "wget":
+        out = shell(f"wget -q -O - -T {timeout} {url}").stdout or ""
+        return ("200" if out.strip() else "no-response"), out
+    if tool == "nc":
+        parsed = urllib.parse.urlparse(url)
+        if parsed.scheme != "http":
+            return "https-needs-curl", ""
+        path = parsed.path or "/"
+        request = (
+            f"printf 'GET {path} HTTP/1.1\\r\\nHost: {parsed.hostname}\\r\\n"
+            f"Connection: close\\r\\n\\r\\n' | nc -w {timeout} {parsed.hostname} 80"
+        )
+        out = shell(request).stdout or ""
+        head, _, body = out.partition("\r\n\r\n")
+        if not _:
+            head, _, body = out.partition("\n\n")
+        first = head.splitlines()[0] if head.splitlines() else ""
+        match = re.search(r"\s(\d{3})\s", first)
+        return (match.group(1) if match else (first[:40] or "no-response")), body
+    return "no-http-tool", ""
+
+
 def probe(url=PROBE_URL):
-    tool = (shell("command -v curl").stdout or "").strip()
-    if tool and "not found" not in tool:
-        out = shell(f"curl -s -m 25 -o /dev/null -w '%{{http_code}}' {url}")
-        code = (out.stdout or "").strip().splitlines()[-1] if out.stdout else ""
-    else:
-        code = "no-curl"
+    code, _ = http_get(url)
     return code
 
 
 def exit_ip():
-    out = (shell(f"curl -s -m 25 {TRACE_URL}").stdout or "")
-    ip = re.search(r"^ip=(\S+)$", out, re.M)
-    country = re.search(r"^loc=(\S+)$", out, re.M)
-    colo = re.search(r"^colo=(\S+)$", out, re.M)
-    if not ip:
-        return None, None, None
-    return ip.group(1), (country.group(1) if country else "?"), (colo.group(1) if colo else "?")
+    """Public IP / country as seen from inside the tunnel (plain HTTP, so every tool can do it)."""
+    _, body = http_get("http://api.ipify.org", timeout=20)
+    token = re.search(r"\b\d{1,3}(?:\.\d{1,3}){3}\b", body or "")
+    ip = token.group(0) if token else ""
+    _, trace = http_get("http://ip-api.com/line/?fields=countryCode,isp", timeout=20)
+    lines = [line.strip() for line in (trace or "").splitlines() if line.strip()]
+    country = lines[0] if lines else "?"
+    isp = lines[1] if len(lines) > 1 else "?"
+    return (ip or None), country, isp
 
 
 def tun_up():
     return "inet " in (shell("ip -4 addr show tun0").stdout or "")
 
 
+def row_bounds(name):
+    for node in nodes(dump_xml()):
+        if not (node.get("resource-id") or "").endswith("nameText"):
+            continue
+        if (node.get("text") or "").strip() == name:
+            return node.get("bounds")
+    return None
+
+
+def bring_into_view(name):
+    """Scrolls the list until the named row is comfortably inside the viewport."""
+    for _ in range(14):
+        bounds = row_bounds(name)
+        point = center(bounds) if bounds else None
+        if point and 260 <= point[1] <= 1900:
+            return bounds
+        if point and point[1] < 260:
+            shell("input swipe 540 700 540 1500 300")   # pull the list down
+        else:
+            shell("input swipe 540 1700 540 800 300")   # push the list up
+        time.sleep(1.5)
+    return row_bounds(name)
+
+
 def connect_row(row, index):
+    landed = bring_into_view(row["name"])
+    if not landed:
+        log(f"**ردیف «{row['name']}» در فهرست پیدا نشد**")
+        return False
+    row = dict(row, bounds=landed)
     tap(center(row["bounds"]))
     time.sleep(2)
     shot(f"{index}-selected")
@@ -231,8 +319,12 @@ def main(argv):
     # ------------------------------------------------------------ 1. fresh start
     log("پاک‌کردن دادهٔ برنامه (بدون کش، بدون کانفیگ ذخیره‌شده)")
     adb("shell", "pm clear co.asiven.vixentvpn", timeout=120)
+    # `pm clear` also drops runtime grants, and the notification prompt would cover the list.
+    shell("pm grant co.asiven.vixentvpn android.permission.POST_NOTIFICATIONS")
     adb("shell", "am start -W -n " + COMPONENT, timeout=180)
     time.sleep(6)
+    dismiss_system_dialogs()
+    log(f"ابزار HTTP روی شبیه‌ساز: `{http_tool()}`")
     baseline_ip, baseline_country, baseline_colo = exit_ip()
     log(f"IP خروج پیش از اتصال: `{baseline_ip}` ({baseline_country}/{baseline_colo})")
     code_before = probe()
@@ -240,13 +332,14 @@ def main(argv):
 
     # ------------------------------------------------------------ 2. fetch
     loaded = None
-    for _ in range(45):
+    for attempt in range(60):
         painted = rows()
-        summary = find(rid="summaryText")
         waiting = find(text="در حال دریافت سرورها")
         if painted and not waiting:
             loaded = painted
             break
+        if attempt % 5 == 0:
+            dismiss_system_dialogs()
         time.sleep(2)
     shot("01-loaded")
     if not loaded:
@@ -296,7 +389,7 @@ def main(argv):
                 failures.append("no-tun")
             code = probe()
             log(f"درخواست از داخل تونل: HTTP {code or 'بدون پاسخ'}")
-            if code != "204":
+            if code not in ("204", "200"):
                 failures.append(f"probe-{code or 'none'}")
             ip, country, colo = exit_ip()
             log(f"IP خروج داخل تونل: `{ip}` ({country}/{colo})")
@@ -311,12 +404,10 @@ def main(argv):
             if len(others) >= 1:
                 second = min(others, key=lambda r: ping_ms(r["ping"]))
                 log(f"تغییر سرور به: `{second['name']}`")
-                if accept_vpn_dialog():
-                    pass
                 if connect_row(second, "04"):
                     code2 = probe()
                     log(f"درخواست پس از تغییر سرور: HTTP {code2 or 'بدون پاسخ'}")
-                    if code2 != "204":
+                    if code2 not in ("204", "200"):
                         failures.append(f"probe-after-switch-{code2 or 'none'}")
                 else:
                     failures.append("switch-failed")

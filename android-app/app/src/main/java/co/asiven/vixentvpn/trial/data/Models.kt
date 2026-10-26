@@ -318,15 +318,48 @@ object ServerParser {
         return null
     }
 
+    /**
+     * Label shown on the row / in the hero: the dialled protocol plus the transport it rides on
+     * (`vless · ws`, `trojan · grpc`, `vless · reality`), derived from the decrypted config so the
+     * list is honest about what each row actually is.
+     */
     private fun detectType(rawConfig: String, declared: String?): String {
-        val fromConfig = Regex("^([a-zA-Z0-9+.-]+)://").find(rawConfig.trim())?.groupValues?.get(1)
-        if (!fromConfig.isNullOrBlank()) return fromConfig.lowercase()
         val trimmed = rawConfig.trim()
-        if (trimmed.startsWith("{")) {
-            runCatching { JSONObject(trimmed).optString("protocol") }
-                .getOrNull()?.takeIf { it.isNotBlank() }?.let { return it.lowercase() }
+        if (trimmed.isEmpty()) return "?"
+
+        // Share link: scheme://…?type=ws&security=reality#remark
+        val scheme = Regex("^([a-zA-Z0-9+.-]+)://").find(trimmed)?.groupValues?.get(1)?.lowercase()
+        if (scheme != null) {
+            val query = trimmed.substringAfter('?', "").substringBefore('#')
+            fun param(name: String): String? = Regex("(?:^|&)" + name + "=([a-zA-Z0-9_-]+)", RegexOption.IGNORE_CASE)
+                .find(query)?.groupValues?.get(1)?.lowercase()
+            val transport = param("type") ?: param("net")
+            val security = param("security")
+            val tls = param("tls")?.takeIf { it == "tls" }
+            val tail = listOfNotNull(
+                transport?.takeIf { it.isNotBlank() && it != "tcp" && it != "raw" },
+                security?.takeIf { it == "reality" } ?: tls,
+            )
+            return (listOf(scheme) + tail).joinToString(" · ")
         }
-        if (rawConfig.startsWith("ScKit-")) return "enc"
+
+        // Ready-made Xray config: read the first outbound, like the core will.
+        if (trimmed.startsWith("{")) {
+            val obj = runCatching { JSONObject(trimmed) }.getOrNull()
+            if (obj != null) {
+                val outbound = obj.optJSONArray("outbounds")?.optJSONObject(0)
+                val protocol = outbound?.optString("protocol")?.takeIf { it.isNotBlank() }
+                    ?: obj.optString("protocol").takeIf { it.isNotBlank() }
+                val stream = outbound?.optJSONObject("streamSettings")
+                val transport = stream?.optString("network")?.takeIf { it.isNotBlank() && it != "tcp" }
+                val security = stream?.optString("security")?.takeIf { it == "reality" || it == "tls" }
+                if (protocol != null) {
+                    return (listOf(protocol.lowercase()) + listOfNotNull(transport, security)).joinToString(" · ")
+                }
+            }
+        }
+
+        if (trimmed.startsWith("ScKit-")) return "enc"
         if (trimmed.length >= 24 && trimmed.all { it.isLetterOrDigit() || it == '+' || it == '/' || it == '=' }) {
             return "enc"
         }

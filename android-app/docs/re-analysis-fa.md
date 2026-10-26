@@ -179,42 +179,50 @@ python3 android-app/tools/dcc-native-map.py …/libstub.so --class com/v2ray/ang
 `com/v2ray/ang/ui/MainActivity` (**۱۴۹**)، `com/v2ray/ang/ui/MainActivity$initConnectionTimer$1` (۲)،
 `com/v2ray/ang/ui/j`، `h/n0` (۱۷)، `h/o` (۵)، `nd/h` (۱۵).
 
-### ۸-۴) اثبات اینکه `value` با این APK رمزگشایی نمی‌شود
+### ۸-۴) رمز `value` — حل شد (۲۰۲۶-۱۰-۲۶)
 
-۱. **مسیر داده در کد بومی**: `MainActivity.importBatchConfig(String,String,Protocol,Z)`
-   (آدرس `0x4f150`) دقیقاً همان منطق کاتلین را بازنویسی می‌کند: `value` **بدون تغییر** به
-   `AngConfigManager.importBatchConfig(name, value, isSub, protocol)` و سپس به
-   `appendCustomConfigServer(name, value, protocol)` می‌رود.
-۲. **شرط پذیرش**: `appendCustomConfigServer` با رشته‌های رمزگشایی‌شدهٔ ScKit بررسی می‌کند که
-   مقدار شامل `inbounds` / `outbounds` / `routing` باشد (یعنی JSON خام کانفیگ)؛ مقدار رمزشده
-   هرگز از این دروازه رد نمی‌شود.
-۳. **بدون رمزنگاری در کد بومی**: در `libstub.so` هیچ S-box ای‌ای‌اس، هیچ جدول MD5/SHA و هیچ
-   ارجاعی به `javax/crypto`/`java/security`/`Base64` وجود ندارد.
-۴. **بدون مسیر دیگر در dex**: تنها نقاط `Cipher.getInstance` در کل بسته عبارت‌اند از
-   ScKit (دو متد `decode`/`encode`)، `Lz/d;->v`/`Ll3/a;->m` (آدرس/کانفیگ، بخش ۸-۲) و
-   کلاس‌های داخلی Firebase؛ هیچ‌کدام به `value` دست نمی‌زنند. مسیر `value` فقط از
-   `Config`/`Protocol` (POJO خالص) می‌گذرد.
-۵. **رفتار زندهٔ سرور**: `value` **در هر درخواست تغییر می‌کند** و `configKey`/`routeKey`/`endpointKey`
-   هم هر بار تصادفی و با طول متغیر برمی‌گردند؛ پس کلید جلسه سمت سرور ساخته می‌شود و کلاینت باید
-   نسل بعدی باشد. آزمون ۹ حالت هدر (بدون امضا، امضای غلط، `seen=1`، بدون `app_name`،
-   نسخهٔ قدیمی، هدرهای telemetry، `Accept-Encoding: identity`) هیچ‌کدام `value` را به لینک/JSON
-   تبدیل نکرد؛ فقط حالت «بدون امضا» فهرست را **خالی** می‌کند (۱۰۵ ردیف → ۰).
-   شواهد خام: `android-app/docs/probe-rows/variants.json` + `v1.json` + `v2.json`.
-۶. **آزمون کلیدها**: بیش از ۱٫۶۰۰ تلاش *قطعی* (نه حدس) روی نمونه‌های واقعی انجام شد:
-   AES-CBC/ECB/CFB/OFB/CTR/GCM و ChaCha20، با کلیدهای داخل APK (نام بسته، کلیدهای ScKit) و
-   کلیدهای همان پاسخ (`configKey`/`routeKey`/`endpointKey` در دو شکل هگز و ASCII) و ترکیب‌های
-   XOR/SHA-256، همراه با بازکردن gzip/deflate — **صفر نتیجه**.
+پرسش «کلید `value` کجاست؟» پاسخ داده شد: **کلید در APK نیست و لازم هم نیست**، چون خود قاعده
+عمومی است و از شناسهٔ ردیف ساخته می‌شود:
+
+```
+key = ("key_<id>" + 0x00 تا ۱۶ بایت)      IV = key
+value (base64) --AES/CBC/PKCS5Padding--> لینک اشتراک یا JSON کامل Xray
+```
+
+`id` همان فیلد `id` هر ردیف است (منفی هم می‌شود: `key_-16068`). کشف این قاعده از خود APK نبود،
+بلکه از کد عمومی پنل مدیریت همین خانوادهٔ سرویس (`vefghmhassan/vpn-pannel`،
+`internal/utils/tools.go` → `DecryptValue`) به دست آمد و سپس روی دادهٔ زنده **آزمایش و تأیید** شد.
+
+شواهد (CI، پاسخ زندهٔ `/api/v2/protocols`، `tools/probe-decrypt.py`، خروجی در
+`docs/probe-rows/decrypt-coverage.txt`):
+
+```
+rows: 105
+scheme counts: {'json': 6, 'vless': 98, 'trojan': 1}
+failures: 0
+decrypt-coverage: 100.00%
+```
+
+همچنین معلوم شد آن تصور قبلی که «`value` در هر درخواست عوض می‌شود» غلط بود؛ blob هر ردیف ثابت
+است و فقط **ترتیب ردیف‌ها** در پاسخ جابه‌جا می‌شود.
+
+مسیرهای بسته‌ای که به این نتیجه رساندند (به‌ترتیب):
+
+۱. **کد بومی**: `MainActivity.importBatchConfig(String,String,Protocol,Z)` (آدرس `0x4f150`)
+   مقدار `value` را **بدون تغییر** به `AngConfigManager.importBatchConfig` می‌دهد؛
+   `appendCustomConfigServer` هم فقط JSON خام (شامل `inbounds`/`outbounds`/`routing`) را می‌پذیرد.
+   یعنی رمزگشایی در کد بومی این APK انجام نمی‌شود (و `Protocol.getValue` فقط یک خواندن فیلد است).
+۲. **اندپوینت دیگر**: `tools/probe-v3.py` سی‌ویک شکل URL را آزمود (`/api/protocols/<id>`,
+   `/api/configs?...`، `/api/endpoint/<key>`، `/api/decode`، POST های مربوطه و…) — همه `404`/`405`.
+۳. **نسخهٔ کلاینت**: `tools/probe-legacy.py` هفت `version_code` را آزمود؛ همه همان blob رمزشده.
+۴. **جست‌وجوی کد عمومی**: دامنهٔ `managev1.xyz` → پنل `vefghmhassan/vpn-pannel` → `DecryptValue`.
 
 ### ۸-۵) نتیجه‌گیری
 
-- کلیدهای موجود در `base.apk` **کامل استخراج شدند**: کلید رشته‌ها (`ScKit-…` + قاعدهٔ
+- کلیدهای موجود در `base.apk` کامل استخراج شدند: کلید رشته‌ها (`ScKit-…` + قاعدهٔ
   MD5[8:24])، کلید آدرس API (نام بسته، AES-CBC با key=IV) و کلید امضا
-  (`Base64(MD5(certDER))` → `6JsVjkvPmI69CeuD9TeOhw==`).
-- کلید رمزگشایی فیلد `value` **در این بسته نیست**؛ نه در dex و نه در کد بومی. بنابراین
-  **نسخهٔ اصلی هم با همین فید نمی‌تواند متصل شود** — که با رفتار مشاهده‌شده
-  («پینگ همه → هیچ‌کدام وصل نمی‌شود → مکث») و با پیام خود فروشنده («این نسخه از کار افتاده»)
-  هم‌خوان است؛ ضمناً فایل اشتراک داخلی اپ
-  (`raw.githubusercontent.com/1401vpnclick/Vixen-VPN-2.9.3/…/3.2.0 .txt`) فقط یک نقطه («.») است.
-- کاری که نسخهٔ آزمایشی انجام می‌دهد، سقف امکان‌پذیر با این APK است: نمایش کامل ۱۰۵ سرور با
-  برچسب‌ها، ساخت/کپی لینک اشتراک هر ردیف، و اتصال واقعی با کانفیگ معتبر (که در CI با
-  سرور واقعی Xray و عبور ترافیک از تونل اثبات شده است).
+  (`Base64(MD5(certDER))` → `6JsVjkvPmI69CeuD9TeOhw==`). اما کلید `value` در بسته نیست،
+  چون **کلید ثابت نیست**: از `id` ردیف ساخته می‌شود.
+- با این کشف، نسخهٔ آزمایشی دقیقاً مثل اپ اصلی رفتار می‌کند: فهرست را خودش می‌گیرد، `value` را
+  خودش باز می‌کند و وصل می‌شود؛ کاربر هیچ لینک/کانفیگی وارد نمی‌کند.
+- جزئیات کامل قاعده، شواهد و کد: [`value-decrypt-fa.md`](value-decrypt-fa.md).

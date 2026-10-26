@@ -25,20 +25,36 @@ object ConfigBuilder {
 
     // ------------------------------------------------------------------ public
 
+    /**
+     * Outbound protocols this core can actually dial. Everything else (`hysteria`, `tuic`, …) can
+     * appear in a decrypted payload but would only make the tunnel fail, so those rows say so
+     * instead of pretending to connect.
+     */
+    private val SUPPORTED = setOf(
+        "vmess", "vless", "trojan", "shadowsocks", "ss", "socks", "socks5", "http", "freedom",
+    )
+
     fun parse(server: Server): Parsed {
         val raw = server.rawConfig.trim()
         if (raw.isEmpty()) return Parsed(null, server.typeHint, "سرور هیچ مقدار اتصالی ندارد")
-        if (raw.startsWith("{")) return parseJson(raw)
-        val scheme = raw.substringBefore("://", "").lowercase()
-        return when (scheme) {
-            "vmess" -> parseVmess(raw)
-            "vless" -> parseVless(raw)
-            "trojan" -> parseTrojan(raw)
-            "ss" -> parseShadowsocks(raw)
-            "socks", "socks5" -> parseSocks(raw)
-            "http" -> parseHttpProxy(raw)
-            else -> Parsed(null, scheme.ifBlank { server.typeHint }, "پروتکل پشتیبانی‌نشده: $scheme")
+        val parsed = if (raw.startsWith("{")) {
+            parseJson(raw)
+        } else {
+            val scheme = raw.substringBefore("://", "").lowercase()
+            when (scheme) {
+                "vmess" -> parseVmess(raw)
+                "vless" -> parseVless(raw)
+                "trojan" -> parseTrojan(raw)
+                "ss" -> parseShadowsocks(raw)
+                "socks", "socks5" -> parseSocks(raw)
+                "http" -> parseHttpProxy(raw)
+                else -> Parsed(null, scheme.ifBlank { server.typeHint }, "پروتکل پشتیبانی‌نشده: $scheme")
+            }
         }
+        if (parsed.outbound != null && parsed.kind.lowercase() !in SUPPORTED) {
+            return Parsed(null, parsed.kind, "هستهٔ Xray پروتکل ${parsed.kind} را اجرا نمی‌کند")
+        }
+        return parsed
     }
 
     /** Full runtime config: local SOCKS+HTTP inbounds, the server outbound, direct/block. */

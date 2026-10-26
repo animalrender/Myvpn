@@ -156,7 +156,7 @@ jobs:
           timeout 30 adb shell pm grant co.asiven.vixentvpn android.permission.POST_NOTIFICATIONS >/dev/null 2>&1 || true
           EXIT=0
           timeout 2400 python3 android-app/tools/connect-real.py "$OUT" \
-            "https://www.gstatic.com/generate_204" || EXIT=$?
+            "http://connectivitycheck.gstatic.com/generate_204" || EXIT=$?
           echo "" >> "$OUT/STATUS.md"
           echo "- e2e exit: $EXIT" >> "$OUT/STATUS.md"
           exit $EXIT

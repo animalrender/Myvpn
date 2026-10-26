@@ -22,8 +22,8 @@
     <string name="import_sub_failed">دریافت اشتراک ناموفق بود</string>
     <string name="import_sub_empty">در پاسخ اشتراک، لینک v2ray پیدا نشد</string>
     <string name="import_sub_ok">%1$d سرور از اشتراک اضافه شد</string>
-    <string name="badge_encrypted_payload">مقدار اتصال رمزنگاری‌شده است — فقط برچسب‌ها قابل مشاهده‌اند</string>
-    <string name="msg_no_ping_opaque">این سرور مقدار اتصال قابل‌خواندن ندارد؛ پینگ ممکن نیست</string>
+    <string name="badge_encrypted_payload">مقدار اتصال این ردیف باز نشد</string>
+    <string name="msg_no_ping_opaque">مقدار اتصال این ردیف باز نشد؛ پینگ ممکن نیست</string>
     <string name="dlg_opaque_title">این سرور کانفیگ قابل‌خواندن ندارد</string>
     <string name="dlg_opaque_body">بک‌اند مقدار اتصال (value) را رمزنگاری‌شده برمی‌گرداند (base64 با آنتروپی بالا) و کلید رمزگشایی فقط داخل کد native اپ اصلی است. برای اتصال از «افزودن اشتراک» یا «افزودن کانفیگ از کلیپ‌بورد» استفاده کنید؛ همهٔ امکانات (پینگ، اتصال، کپی لینک) روی آن‌ها کامل کار می‌کند.</string>
     <string name="dlg_self_test_title">گزارش تست API</string>
@@ -101,4 +101,5 @@
     <string name="status_selected_short">انتخاب‌شده</string>
     <string name="toast_select_first">اول یک سرور انتخاب کنید</string>
     <string name="sheet_opaque">این سرور مقدار اتصال رمزنگاری‌شده دارد؛ اتصال و پینگ روی آن ممکن نیست، اما برچسب‌ها و لینک/JSON در دسترس‌اند.</string>
+    <string name="toast_fastest_selected">سریع‌ترین سرور انتخاب شد: %1$s (%2$d ms)</string>
 </resources>

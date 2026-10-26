@@ -136,7 +136,6 @@ class MainActivity : AppCompatActivity() {
         binding.pingAllButton.setOnClickListener { pingAll() }
         binding.connectButton.setOnClickListener { toggleConnection() }
         binding.menuButton.setOnClickListener { showOverflow(it) }
-        binding.opaqueBannerAction.setOnClickListener { promptAddSource() }
         binding.searchInput.doAfterTextChanged { applyFilter() }
         binding.filterChips.setOnCheckedChangeListener { _, checkedId ->
             filterMode = when (checkedId) {
@@ -318,6 +317,16 @@ class MainActivity : AppCompatActivity() {
 
     private fun selectedServer(): Server? = servers.firstOrNull { it.key == prefs.selectedKey }
 
+    /**
+     * Fallback for «اتصال» when no row was selected yet: the quickest row that answered the last
+     * ping, else the quickest row at all, else the first readable row.
+     */
+    private fun pickBestOrNull(): Server? {
+        val usable = servers.filterNot { it.isOpaquePayload }
+        return usable.filter { it.pingState == PingState.OK && it.pingMs > 0 }.minByOrNull { it.pingMs }
+            ?: usable.firstOrNull()
+    }
+
     private fun applyFilter() {
         adapter.setFilter(binding.searchInput.text?.toString().orEmpty(), filterMode)
         // Re-applied on every list rebuild: the live server keeps its "connected" marker even
@@ -383,9 +392,18 @@ class MainActivity : AppCompatActivity() {
                 }.awaitAll()
             }
             setProgress(false)
+            // The fastest row that actually answered becomes the selection, so the next tap on
+            // «اتصال» is enough — the app never asks the user to pick a server by hand.
+            val fastest = targets
+                .filter { it.pingState == PingState.OK && it.pingMs > 0 }
+                .minByOrNull { it.pingMs }
+            if (fastest != null && selectedServer()?.pingState != PingState.OK) {
+                selectServer(fastest)
+                toast(getString(R.string.toast_fastest_selected, fastest.name, fastest.pingMs))
+            }
             updateHero()
             updateSummary()
-            AppLog.i("پینگ همهٔ $total سرور انجام شد")
+            AppLog.i("پینگ همهٔ $total سرور انجام شد؛ سریع‌ترین: ${fastest?.name ?: "—"}")
         }
     }
 
@@ -428,7 +446,7 @@ class MainActivity : AppCompatActivity() {
             VpnTunnelService.stop(this)
             return
         }
-        val server = selectedServer() ?: run {
+        val server = selectedServer() ?: pickBestOrNull() ?: run {
             toast(getString(R.string.toast_select_first))
             return
         }
@@ -548,39 +566,8 @@ class MainActivity : AppCompatActivity() {
             ColorStateList.valueOf(ContextCompat.getColor(this, color))
     }
 
-    /** Explains the one situation the vendor backend creates: rows whose `value` is encrypted. */
-    private fun updateOpaqueBanner() {
-        val total = servers.size
-        val opaque = servers.count { it.isOpaquePayload }
-        when {
-            total == 0 -> binding.opaqueBanner.visibility = View.GONE
-            opaque == total -> {
-                binding.opaqueBannerText.setText(R.string.banner_all_opaque)
-                binding.opaqueBanner.visibility = View.VISIBLE
-            }
-            opaque > 0 -> {
-                binding.opaqueBannerText.text = getString(R.string.banner_some_opaque, opaque, total)
-                binding.opaqueBanner.visibility = View.VISIBLE
-            }
-            else -> binding.opaqueBanner.visibility = View.GONE
-        }
-    }
-
-    /** Chooser behind the banner: clipboard config or subscription link. */
-    private fun promptAddSource() {
-        AlertDialog.Builder(this)
-            .setTitle(R.string.dlg_add_title)
-            .setItems(
-                arrayOf(getString(R.string.dlg_add_clipboard), getString(R.string.dlg_add_sub)),
-            ) { _, which ->
-                if (which == 0) importFromClipboard() else promptSubscription()
-            }
-            .setNegativeButton(R.string.btn_close, null)
-            .show()
-    }
 
     private fun updateSummary() {
-        updateOpaqueBanner()
         val total = servers.size
         val visible = adapter.visibleCount()
         binding.emptyText.setText(R.string.empty_filter)
