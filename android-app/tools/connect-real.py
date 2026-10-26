@@ -322,6 +322,12 @@ def connect_row(row, index):
     return False
 
 
+def connect_button_text():
+    """Label of the hero button: «اتصال» / «اتصال به سرور انتخابی» / «قطع اتصال»."""
+    node = find(rid="connectButton")
+    return (node.get("text") or "").strip() if node else None
+
+
 def hero_name():
     """The server the activity currently has selected (it auto-picks the fastest after a ping)."""
     node = find(rid="selectedNameText")
@@ -435,9 +441,9 @@ def main(argv):
             if connect_row(second, "04"):
                 label = connect_button_text()
                 log(f"برچسب دکمه پس از انتخاب سرور دوم: `{label}`")
-                if label == "اتصال به سرور انتخابی":
+                if label and label != "قطع اتصال":
                     tap_rid("connectButton")
-                    time.sleep(8)
+                    time.sleep(10)
                 accept_vpn_dialog()
                 for _ in range(30):
                     if find(text="متصل", exact=False):
