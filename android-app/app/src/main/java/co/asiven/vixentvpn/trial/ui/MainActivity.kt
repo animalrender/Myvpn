@@ -489,6 +489,10 @@ class MainActivity : AppCompatActivity() {
                     else -> R.string.btn_disconnect
                 },
             )
+            AppLog.d(
+                "hero(no row): running=$running connected=${connectedKey ?: "-"} " +
+                    "pressed=${binding.connectButton.text}",
+            )
             return
         }
         binding.connectButton.setText(
@@ -498,6 +502,11 @@ class MainActivity : AppCompatActivity() {
                 else -> R.string.btn_disconnect
             },
         )
+        AppLog.d(
+            "hero: running=$running connected=${connectedKey ?: "-"} shown=${shown.key} " +
+                "pressed=${binding.connectButton.text}",
+        )
+
         binding.selectedNameText.text = "${shown.displayFlag}  ${shown.name}"
         val price = when {
             shown.price == null -> getString(R.string.badge_unknown_price)

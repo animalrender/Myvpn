@@ -324,6 +324,8 @@ def main(argv):
                 failures.append("import-second")
             else:
                 shot("06-second-imported")
+                with open(os.path.join(OUT, "before-switch.xml"), "w", encoding="utf-8") as handle:
+                    handle.write(dump_xml())
                 label = connect_button_text()
                 log(f"برچسب دکمهٔ اتصال در این حالت: `{label}`")
                 if label and label != "اتصال به سرور انتخابی":
