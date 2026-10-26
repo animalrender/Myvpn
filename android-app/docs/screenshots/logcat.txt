@@ -1,22 +1,10 @@
 --------- beginning of main
-10-26 02:06:09.192  3332  3332 I MvpnTrial: MVPN Trial 3.2.0-trial (co.asiven.vixentvpn) راه‌اندازی شد
-10-26 02:06:09.340  3332  3332 I MvpnTrial: هستهٔ Xray آماده شد: Lib v40, Xray-core v26.10.21
-10-26 02:06:10.299  3332  3426 D MvpnTrial: GET https://managev1.xyz/api/token?deviceId=404f578d309cc104 → 200 (66 بایت)
-10-26 02:06:10.617  3332  3426 I MvpnTrial: توکن سمت سرور غیرفعال است؛ بدون هدر token ادامه می‌دهیم
-10-26 02:06:10.776  3332  3426 D MvpnTrial: GET https://managev1.xyz/api/setting → 200 (44 بایت)
-10-26 02:06:10.779  3332  3426 I MvpnTrial: setting خالی است (data=null) — پیش‌فرض‌های برنامه استفاده می‌شوند
-10-26 02:06:11.275  3332  3426 D MvpnTrial: GET https://managev1.xyz/api/protocols → 200 (104682 بایت)
-10-26 02:06:11.426  3332  3426 I MvpnTrial: 105 سرور از /api/protocols دریافت شد
-10-26 02:06:11.547  3332  3427 D MvpnTrial: GET https://managev1.xyz/api/token?deviceId=404f578d309cc104 → 200 (66 بایت)
-10-26 02:06:11.555  3332  3427 I MvpnTrial: توکن سمت سرور غیرفعال است؛ بدون هدر token ادامه می‌دهیم
-10-26 02:06:11.717  3332  3427 D MvpnTrial: GET https://managev1.xyz/api/setting → 200 (44 بایت)
-10-26 02:06:11.717  3332  3427 I MvpnTrial: setting خالی است (data=null) — پیش‌فرض‌های برنامه استفاده می‌شوند
-10-26 02:06:11.970  3332  3427 D MvpnTrial: GET https://managev1.xyz/api/protocols → 200 (104682 بایت)
-10-26 02:06:12.071  3332  3427 I MvpnTrial: 105 سرور از /api/protocols دریافت شد
-10-26 02:06:13.135  3332  3332 W MvpnTrial: دریافت توکن Firebase ناموفق: java.util.concurrent.ExecutionException: java.io.IOException: AUTHENTICATION_FAILED
-10-26 02:07:21.242  3332  3427 D MvpnTrial: GET https://managev1.xyz/api/token?deviceId=404f578d309cc104 → 200 (66 بایت)
-10-26 02:07:21.250  3332  3427 I MvpnTrial: توکن سمت سرور غیرفعال است؛ بدون هدر token ادامه می‌دهیم
-10-26 02:07:21.389  3332  3427 D MvpnTrial: GET https://managev1.xyz/api/setting → 200 (44 بایت)
-10-26 02:07:21.390  3332  3427 I MvpnTrial: setting خالی است (data=null) — پیش‌فرض‌های برنامه استفاده می‌شوند
-10-26 02:07:21.768  3332  3427 D MvpnTrial: GET https://managev1.xyz/api/protocols → 200 (72541 بایت)
-10-26 02:07:21.820  3332  3427 I MvpnTrial: 105 سرور از /api/protocols دریافت شد
+10-26 02:36:10.051  3228  3228 I MvpnTrial: MVPN Trial 3.2.0-trial (co.asiven.vixentvpn) راه‌اندازی شد
+10-26 02:36:10.114  3228  3228 I MvpnTrial: هستهٔ Xray آماده شد: Lib v40, Xray-core v26.10.21
+10-26 02:36:12.021  3228  3369 D MvpnTrial: GET https://managev1.xyz/api/token?deviceId=48f96ed42ac242d6 → 200 (66 بایت)
+10-26 02:36:12.023  3228  3369 I MvpnTrial: توکن سمت سرور غیرفعال است؛ بدون هدر token ادامه می‌دهیم
+10-26 02:36:12.193  3228  3369 D MvpnTrial: GET https://managev1.xyz/api/setting → 200 (44 بایت)
+10-26 02:36:12.193  3228  3369 I MvpnTrial: setting خالی است (data=null) — پیش‌فرض‌های برنامه استفاده می‌شوند
+10-26 02:36:12.606  3228  3369 D MvpnTrial: GET https://managev1.xyz/api/protocols → 200 (77913 بایت)
+10-26 02:36:12.837  3228  3369 I MvpnTrial: 105 سرور از /api/protocols دریافت شد
+10-26 02:36:13.583  3228  3228 W MvpnTrial: دریافت توکن Firebase ناموفق: java.util.concurrent.ExecutionException: java.io.IOException: AUTHENTICATION_FAILED
