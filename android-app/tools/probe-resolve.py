@@ -182,14 +182,27 @@ def main():
     else:
         log("== still no endpoint that returns a usable config")
 
-    # GitHub drops a single annotation whose message is too long, so the report is published in
-    # chunks of ~3500 characters with distinct titles.
-    body = "\n".join(REPORT)
-    chunks = [body[i:i + 3500] for i in range(0, len(body), 3500)] or [""]
-    for index, chunk in enumerate(chunks, start=1):
-        print("::notice title=probe-resolve-%d/%d::%s" % (index, len(chunks), urllib.parse.quote(chunk, safe="")))
     return 0
 
 
+def publish():
+    """GitHub drops a single annotation whose message is too long, so the report goes out in
+    chunks of ~3500 characters with distinct titles. Called even when a phase raised."""
+    body = "\n".join(REPORT) or "(the script produced no output)"
+    chunks = [body[i:i + 3500] for i in range(0, len(body), 3500)]
+    for index, chunk in enumerate(chunks, start=1):
+        print("::notice title=probe-resolve-%d-%d::%s" % (index, len(chunks), urllib.parse.quote(chunk, safe="")), flush=True)
+
+
 if __name__ == "__main__":
-    sys.exit(main())
+    CODE = 0
+    try:
+        CODE = main()
+    except Exception as problem:  # noqa: BLE001
+        import traceback
+        log("!! probe raised: %r" % (problem,))
+        log(traceback.format_exc()[-1500:])
+        CODE = 1
+    finally:
+        publish()
+    sys.exit(CODE)
