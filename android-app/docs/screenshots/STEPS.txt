@@ -1,27 +1,26 @@
-shot 00-start (53122 bytes)
+shot 00-start (251923 bytes)
 wait-text 'MVPN': found
-shot 01-home (53103 bytes)
+shot 01-home (253595 bytes)
 wait-text 'رایگان': found
-shot 02-list-loaded (53103 bytes)
+shot 02-list-loaded (251923 bytes)
 tap-text 'پینگ': ok
-shot 03-single-ping (52068 bytes)
+shot 03-single-ping (224582 bytes)
 tap-text 'پینگ همه': ok
-shot 04-ping-all (52229 bytes)
-tap-desc 'جزئیات': NOT FOUND
-shot 05-server-sheet (52229 bytes)
-ensure-foreground (sleep): ok
+shot 04-ping-all (224636 bytes)
+tap-desc 'جزئیات': ok
+shot 05-server-sheet (227971 bytes)
 tap-text 'پولی': ok
-shot 06-filter-paid (46609 bytes)
+shot 06-filter-paid (173897 bytes)
 tap-text 'همه': ok
 tap-class 'EditText': ok
-type 'United'
-shot 07-search (52483 bytes)
+type 'Finland'
+shot 07-search (212921 bytes)
 ensure-foreground (sleep): ok
 tap-desc 'منوی بیشتر': ok
-shot 08-menu (51090 bytes)
-shot 09-scrolled (52131 bytes)
-shot 10-scrolled-more (52131 bytes)
+shot 08-menu (255484 bytes)
+shot 09-scrolled (251215 bytes)
+shot 10-scrolled-more (248045 bytes)
 crash-check: pid=yes, fatal lines=0
 
 FAILURES:
-content-desc 'جزئیات' not found
+none

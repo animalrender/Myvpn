@@ -1,12 +1,11 @@
 --------- beginning of main
-10-26 02:47:05.142  3329  3329 I MvpnTrial: MVPN Trial 3.2.0-trial (co.asiven.vixentvpn) راه‌اندازی شد
-10-26 02:47:05.367  3329  3329 I MvpnTrial: هستهٔ Xray آماده شد: Lib v40, Xray-core v26.10.21
-10-26 02:47:06.770  3329  3459 D MvpnTrial: GET https://managev1.xyz/api/token?deviceId=91e1c41af3c08aa5 → 200 (66 بایت)
-10-26 02:47:06.864  3329  3459 I MvpnTrial: توکن سمت سرور غیرفعال است؛ بدون هدر token ادامه می‌دهیم
-10-26 02:47:07.146  3329  3459 D MvpnTrial: GET https://managev1.xyz/api/setting → 200 (44 بایت)
-10-26 02:47:07.146  3329  3459 I MvpnTrial: setting خالی است (data=null) — پیش‌فرض‌های برنامه استفاده می‌شوند
-10-26 02:47:07.518  3329  3459 D MvpnTrial: GET https://managev1.xyz/api/protocols → 200 (54089 بایت)
-10-26 02:47:07.750  3329  3459 I MvpnTrial: 105 سرور از /api/protocols دریافت شد
-10-26 02:47:09.033  3329  3329 W MvpnTrial: دریافت توکن Firebase ناموفق: java.util.concurrent.ExecutionException: java.io.IOException: AUTHENTICATION_FAILED
-10-26 02:48:10.516  3329  3329 I MvpnTrial: 105 سرور از کش بارگذاری شد
-10-26 02:48:39.632  3329  3329 I MvpnTrial: 105 سرور از کش بارگذاری شد
+10-26 02:56:36.090  3306  3306 I MvpnTrial: MVPN Trial 3.2.0-trial (co.asiven.vixentvpn) راه‌اندازی شد
+10-26 02:56:36.249  3306  3306 I MvpnTrial: هستهٔ Xray آماده شد: Lib v40, Xray-core v26.10.21
+10-26 02:56:37.792  3306  3414 D MvpnTrial: GET https://managev1.xyz/api/token?deviceId=36c0df1d334f98d0 → 200 (66 بایت)
+10-26 02:56:37.800  3306  3414 I MvpnTrial: توکن سمت سرور غیرفعال است؛ بدون هدر token ادامه می‌دهیم
+10-26 02:56:37.993  3306  3414 D MvpnTrial: GET https://managev1.xyz/api/setting → 200 (44 بایت)
+10-26 02:56:37.997  3306  3414 I MvpnTrial: setting خالی است (data=null) — پیش‌فرض‌های برنامه استفاده می‌شوند
+10-26 02:56:38.687  3306  3414 D MvpnTrial: GET https://managev1.xyz/api/protocols → 200 (111685 بایت)
+10-26 02:56:39.545  3306  3414 I MvpnTrial: 105 سرور از /api/protocols دریافت شد
+10-26 02:56:41.373  3306  3306 W MvpnTrial: دریافت توکن Firebase ناموفق: java.util.concurrent.ExecutionException: java.io.IOException: AUTHENTICATION_FAILED
+10-26 02:58:14.291  3306  3306 I MvpnTrial: 105 سرور از کش بارگذاری شد
