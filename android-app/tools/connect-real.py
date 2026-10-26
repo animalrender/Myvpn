@@ -450,6 +450,16 @@ def hero_name():
     return text.replace("\u200f", "").strip()
 
 
+def hero_meta():
+    node = find(rid="selectedMetaText")
+    return unescape((node or {}).get("text") or "").strip()
+
+
+def hero_ping():
+    match = re.search(r"(\d+)\s*ms", hero_meta())
+    return match.group(0) if match else None
+
+
 def bulk_ping_finished():
     out = adb("logcat", "-d", "-s", "MvpnTrial:V", timeout=120).stdout or ""
     return "پینگ همهٔ" in out
@@ -527,7 +537,9 @@ def main(argv):
     shot("02-ping-all")
     log(f"پایان پینگ همه: {'بله' if finished else 'خیر (مهلت تمام شد)'}")
     chosen = hero_name()
-    log(f"سروری که برنامه خودش انتخاب کرد: `{chosen or '—'}`")
+    chosen_ping = hero_ping()
+    log(f"سروری که برنامه خودش انتخاب کرد: `{chosen or '—'}`" +
+        (f" (پینگ {chosen_ping})" if chosen_ping else ""))
     if not finished:
         failures.append("ping-all-timeout")
     if not chosen:
@@ -540,21 +552,22 @@ def main(argv):
     # retried with the next measured rows, exactly like a user would tap the next server.
     attempts = []
     if chosen:
-        attempts.append(chosen)
+        attempts.append({"name": chosen, "ping": chosen_ping})
     for row in rows():
-        if ping_ms(row["ping"]) and row["name"] not in attempts:
-            attempts.append(row["name"])
+        if ping_ms(row["ping"]) and all(row["name"] != a["name"] or row["ping"] != a["ping"]
+                                       for a in attempts):
+            attempts.append({"name": row["name"], "ping": row["ping"]})
         if len(attempts) == 4:
             break
 
     connected = None
-    for index, name in enumerate(attempts, start=1):
+    for index, candidate in enumerate(attempts, start=1):
         if index == 1:
-            log(f"اتصال به سرور انتخاب‌شده: `{name}`")
-            started = connect_row({"name": name, "ping": None}, "03")
+            log(f"اتصال به سرور انتخاب‌شده: `{candidate['name']}`")
+            started = connect_row(candidate, "03")
         else:
-            log(f"تلاش {index}: اتصال به `{name}`")
-            started = connect_row({"name": name, "ping": None}, f"0{2 + index}")
+            log(f"تلاش {index}: اتصال به `{candidate['name']}` ({candidate['ping']})")
+            started = connect_row(candidate, f"0{2 + index}")
             label = connect_button_text()
             if label and label != "قطع اتصال":
                 tap_rid("connectButton")
@@ -583,13 +596,12 @@ def main(argv):
                 break
             time.sleep(5)
         if up and traffic_ok(code):
-            connected = name
+            connected = candidate["name"]
+            log(f"ترافیک از تونل عبور کرد (تلاش {index} از {len(attempts)})")
             break
         log("ترافیک از این ردیف عبور نکرد؛ سرور بعدی آزموده می‌شود")
     if not connected:
         failures.append("no-server-passed-traffic")
-    else:
-        log(f"ترافیک از تونل عبور کرد (تلاش {attempts.index(connected) + 1} از {len(attempts)})")
 
     if connected:
         ip, country, isp = exit_ip()
