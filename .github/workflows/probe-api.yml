@@ -15,6 +15,7 @@ on:
       - "android-app/tools/probe-v2.py"
       - "android-app/tools/probe-v2b.py"
       - "android-app/tools/probe-version-sweep.py"
+      - "android-app/tools/probe-decode.py"
       - ".github/workflows/probe-api.yml"
 
 permissions:
@@ -44,6 +45,11 @@ jobs:
         env:
           PROBE_CERT: /tmp/keys/testkey.x509.pem
         run: python3 android-app/tools/probe-api.py 2>&1 | tee /tmp/probe.log || true
+
+      - name: Probe the "resolve this server" endpoints
+        env:
+          PROBE_CERT: /tmp/keys/testkey.x509.pem
+        run: python3 android-app/tools/probe-decode.py 2>&1 | tee /tmp/probe-decode.log || true
 
       - name: Probe configs endpoint
         env:

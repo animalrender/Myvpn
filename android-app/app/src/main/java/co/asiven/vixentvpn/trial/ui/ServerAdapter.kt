@@ -120,7 +120,11 @@ class ServerAdapter(
             binding.flagText.text = server.displayFlag
             binding.nameText.text = server.name
 
-            binding.typeBadge.text = server.typeHint.ifBlank { "?" }
+            binding.typeBadge.text = when (server.typeHint.lowercase()) {
+                "enc" -> context.getString(R.string.type_opaque)
+                "" -> context.getString(R.string.type_unknown)
+                else -> server.typeHint
+            }
 
             binding.priceBadge.text = when {
                 server.price == null -> context.getString(R.string.badge_unknown_price)

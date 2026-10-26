@@ -84,6 +84,17 @@ def tap_desc(target):
     return False
 
 
+def tap_class(class_name):
+    """Taps the first node whose class ends with `class_name` (e.g. EditText)."""
+    for node in nodes(dump_xml()):
+        if (node.get("class") or "").endswith(class_name):
+            point = center(node.get("bounds"))
+            if point:
+                shell(f"input tap {point[0]} {point[1]}")
+                return True
+    return False
+
+
 def shot(name):
     path = os.path.join(OUT, name + ".png")
     with open(path, "wb") as handle:
@@ -111,25 +122,35 @@ def wait_text(target, seconds=90):
 
 
 def type_from_list():
-    """Types the first ASCII word of a server name — proves the search box filters the list."""
-    skip = re.compile(r"(MVPN|VPN|^[0-9:/.]+$|^—$|^…$)")
+    """Types the longest ASCII word visible on screen — for this backend that is a country name
+    ("Finland"), which proves the search box really filters the list. Chrome words that are part of
+    the app itself are ignored."""
+    skip = {"MVPN", "Trial", "VPN", "JSON", "Android", "enc", "v2ray"}
+    candidates = []
     for node in nodes(dump_xml()):
-        text = (node.get("text") or "").strip()
-        token = text.split(" ")[0]
-        if 3 <= len(token) <= 18 and re.fullmatch(r"[A-Za-z0-9][A-Za-z0-9._-]{2,17}", token) and not skip.search(token):
-            shell(f'input text "{token}"')
-            print(f"type: '{token}'")
-            STEPS.append(f"type '{token}'")
-            return True
-    print("type: nothing suitable found")
-    STEPS.append("type: skipped (no ASCII server name)")
-    return False
+        for token in re.split(r"[\s\u200c/·]+", (node.get("text") or "").strip()):
+            if 3 <= len(token) <= 20 and re.fullmatch(r"[A-Za-z][A-Za-z0-9._-]{2,19}", token) and token not in skip:
+                candidates.append(token)
+    if not candidates:
+        print("type: nothing suitable found")
+        STEPS.append("type: skipped (no ASCII server name on screen)")
+        return False
+    token = max(candidates, key=len)
+    shell(f'input text "{token}"')
+    print(f"type: '{token}'")
+    STEPS.append(f"type '{token}'")
+    return True
 
 
 def crash_check():
     pid = shell("pidof co.asiven.vixentvpn").stdout.strip()
     crash = adb("logcat", "-d", "-b", "crash").stdout or ""
-    fata = [line for line in adb("logcat", "-d").stdout.splitlines() if "FATAL EXCEPTION" in line or "AndroidRuntime: " in line]
+    # Only a fatal exception raised by our own package counts; AndroidRuntime lines from other
+    # processes (and "VM exiting" noise) are not a crash of this app.
+    fata = [
+        line for line in adb("logcat", "-d").stdout.splitlines()
+        if "FATAL EXCEPTION" in line or ("co.asiven.vixentvpn" in line and "Process:" in line and "died" in line)
+    ]
     ok = bool(pid) and not crash.strip() and not fata
     print(f"crash-check: pid={'yes' if pid else 'no'} crash_buffer={len(crash)} fatal_lines={len(fata)}")
     STEPS.append(f"crash-check: pid={'yes' if pid else 'no'}, fatal lines={len(fata)}")
@@ -185,6 +206,13 @@ def main(argv):
             STEPS.append(f"tap-desc '{rest[index + 1]}': {'ok' if ok else 'NOT FOUND'}")
             if not ok:
                 FAILURES.append(f"content-desc '{rest[index + 1]}' not found")
+            index += 2
+        elif cmd == "tap-class":
+            ok = tap_class(rest[index + 1])
+            print(f"tap-class '{rest[index + 1]}': {'ok' if ok else 'NOT FOUND'}")
+            STEPS.append(f"tap-class '{rest[index + 1]}': {'ok' if ok else 'NOT FOUND'}")
+            if not ok:
+                FAILURES.append(f"no view of class {rest[index + 1]}")
             index += 2
         elif cmd == "type-from-list":
             type_from_list(); index += 1

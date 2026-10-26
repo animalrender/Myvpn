@@ -71,6 +71,14 @@
     <string name="vpn_permission_needed">برای حالت VPN باید اجازهٔ اتصال بدهید.</string>
 
     <!-- Redesigned UI strings -->
+    <string name="type_opaque">مقدار رمزی</string>
+    <string name="type_unknown">نامشخص</string>
+    <string name="banner_all_opaque">همهٔ سرورهای این فهرست مقدار اتصال رمزنگاری‌شده دارند، پس با یک ضربه قابل اتصال نیستند. برچسب‌ها، کپی لینک و کپی JSON کامل کار می‌کند؛ برای اتصال، یک کانفیگ یا لینک اشتراک اضافه کنید.</string>
+    <string name="banner_add">افزودن کانفیگ / اشتراک</string>
+    <string name="dlg_add_title">کانفیگ را از کجا اضافه کنیم؟</string>
+    <string name="dlg_add_clipboard">از کلیپ‌بورد (لینک یا JSON)</string>
+    <string name="dlg_add_sub">از لینک اشتراک (sub)</string>
+    <string name="banner_some_opaque">%1$d سرور از %2$d مقدار اتصال رمزنگاری‌شده دارند (قابل مشاهده و کپی، غیرقابل اتصال).</string>
     <string name="menu_more">منوی بیشتر</string>
     <string name="hero_no_server">سروری انتخاب نشده</string>
     <string name="hero_no_server_hint">از فهرست پایین یک سرور را انتخاب کنید</string>

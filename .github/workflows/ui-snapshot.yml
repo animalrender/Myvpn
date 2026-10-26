@@ -227,15 +227,26 @@ jobs:
             shot 06-filter-paid \
             tap-text "همه" \
             sleep 2 \
+            tap-class "EditText" \
+            sleep 1 \
             type-from-list \
             sleep 3 \
             shot 07-search \
+            back \
+            sleep 1 \
             back \
             sleep 1 \
             tap-desc "منوی بیشتر" \
             sleep 2 \
             shot 08-menu \
             back \
+            sleep 1 \
+            swipe-up \
+            sleep 1 \
+            shot 09-scrolled \
+            swipe-up \
+            sleep 1 \
+            shot 10-scrolled-more \
             crash-check || EXIT=$?
           echo "- ui-drive exit: $EXIT" >> "$STATUS"
           echo "- pid: $(timeout 30 adb shell pidof co.asiven.vixentvpn 2>&1 | tr -d '\r' || true)" >> "$STATUS"

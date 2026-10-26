@@ -127,6 +127,7 @@ class MainActivity : AppCompatActivity() {
         binding.pingAllButton.setOnClickListener { pingAll() }
         binding.connectButton.setOnClickListener { toggleConnection() }
         binding.menuButton.setOnClickListener { showOverflow(it) }
+        binding.opaqueBannerAction.setOnClickListener { promptAddSource() }
         binding.searchInput.doAfterTextChanged { applyFilter() }
         binding.filterChips.setOnCheckedChangeListener { _, checkedId ->
             filterMode = when (checkedId) {
@@ -141,6 +142,7 @@ class MainActivity : AppCompatActivity() {
         paintStatusDot()
         updateModeLabel()
         updateHero()
+        updateSummary()
         loadCached()
         askNotificationPermissionIfNeeded()
         if (servers.isEmpty()) refreshAll()
@@ -450,7 +452,39 @@ class MainActivity : AppCompatActivity() {
             ColorStateList.valueOf(ContextCompat.getColor(this, color))
     }
 
+    /** Explains the one situation the vendor backend creates: rows whose `value` is encrypted. */
+    private fun updateOpaqueBanner() {
+        val total = servers.size
+        val opaque = servers.count { it.isOpaquePayload }
+        when {
+            total == 0 -> binding.opaqueBanner.visibility = View.GONE
+            opaque == total -> {
+                binding.opaqueBannerText.setText(R.string.banner_all_opaque)
+                binding.opaqueBanner.visibility = View.VISIBLE
+            }
+            opaque > 0 -> {
+                binding.opaqueBannerText.text = getString(R.string.banner_some_opaque, opaque, total)
+                binding.opaqueBanner.visibility = View.VISIBLE
+            }
+            else -> binding.opaqueBanner.visibility = View.GONE
+        }
+    }
+
+    /** Chooser behind the banner: clipboard config or subscription link. */
+    private fun promptAddSource() {
+        AlertDialog.Builder(this)
+            .setTitle(R.string.dlg_add_title)
+            .setItems(
+                arrayOf(getString(R.string.dlg_add_clipboard), getString(R.string.dlg_add_sub)),
+            ) { _, which ->
+                if (which == 0) importFromClipboard() else promptSubscription()
+            }
+            .setNegativeButton(R.string.btn_close, null)
+            .show()
+    }
+
     private fun updateSummary() {
+        updateOpaqueBanner()
         val total = servers.size
         val visible = adapter.visibleCount()
         if (total == 0) {
