@@ -239,6 +239,7 @@ def main(argv):
         PROBE_URL = argv[4]
     os.makedirs(OUT, exist_ok=True)
     failures = []
+    connected_ok = False
 
     # ---------------------------------------------------------------- 1. import
     log(f"ورود کانفیگ با intent: `{VLESS_URI[:60]}…`")
@@ -270,6 +271,7 @@ def main(argv):
         else:
             log("**دیالوگ مجوز VPN دیده نشد (احتمالاً از قبل تأیید شده بود)**")
         connected = wait_for(text="متصل", seconds=90)
+        connected_ok = connected is not None
         shot("03-connected")
         if connected:
             log("وضعیت «متصل» در برنامه دیده شد")
@@ -281,17 +283,18 @@ def main(argv):
         tun = shell("ip -4 addr show tun0")
         tun_out = (tun.stdout or "").strip()
         log(f"رابط tun0 در دستگاه: {'موجود' if 'inet ' in tun_out else 'موجود نیست'}")
-        if "inet " not in tun_out:
+        if connected_ok and "inet " not in tun_out:
             failures.append("no-tun")
 
         # ------------------------------------------------------------ 3. tunnel
         code, accepted, _ = probe_from_shell("HTTPS")
-        if code != "204":
-            failures.append(f"probe-http-{code or 'none'}")
-        if not accepted:
-            failures.append("server-never-saw-traffic")
+        if connected_ok:
+            if code != "204":
+                failures.append(f"probe-http-{code or 'none'}")
+            if not accepted:
+                failures.append("server-never-saw-traffic")
         code2, accepted2, _ = probe_from_shell("HTTP", "http://connectivitycheck.gstatic.com/generate_204")
-        if code2 != "204" and code != "204":
+        if connected_ok and code2 != "204" and code != "204":
             failures.append("probe-http-plain")
 
         # a second, independent probe through a different host
@@ -299,37 +302,38 @@ def main(argv):
         shot("04-traffic")
 
         # ------------------------------------------------------------ 4. stability
-        log("اجرای «پینگ همه» روی اتصال برقرار")
+        # The original APK re-selects the "best" server when a bulk ping finishes, which silently
+        # drops the live connection. The trial client must not do that.
+        log("اجرای «پینگ همه» و بررسی اینکه سرور متصل عوض نشود")
         if tap_text("پینگ همه", exact=True):
             time.sleep(25)
         shot("05-ping-all")
-        still = find(text=SERVER_NAME)
-        status_node = None
+        status_text = ""
         for node in nodes(dump_xml()):
-            if (node.get("text") or "").startswith(("متصل", "انتخاب‌شده", "در حال")):
-                status_node = node
+            text = (node.get("text") or "")
+            if text.startswith(("متصل", "انتخاب‌شده", "در حال", "خطا")):
+                status_text = text
                 break
-        status_text = (status_node or {}).get("text", "")
         log(f"وضعیت بعد از پینگ همه: `{status_text}`")
-        if status_text.startswith("انتخاب‌شده") or not status_text:
-            log("**پس از پینگ همه، اتصال/انتخاب عوض شد (همان نقص اپ اصلی)**")
+        if connected_ok and not status_text.startswith("متصل"):
+            log("**پس از پینگ همه، اتصال عوض شد (همان نقص اپ اصلی)**")
             failures.append("selection-changed-after-ping-all")
-        if still is None:
-            log("**ردیف سرور متصل بعد از پینگ همه ناپدید شد**")
+        if find(text=SERVER_NAME) is None:
+            log("**ردیف سرور بعد از پینگ همه ناپدید شد**")
             failures.append("row-vanished")
 
         # ------------------------------------------------------------ 5. teardown
-        if tap_text("قطع اتصال", exact=True):
-            time.sleep(6)
-            shot("06-disconnected")
-            off = find(text="قطع", exact=False)
-            tun_after = shell("ip -4 addr show tun0").stdout or ""
-            log(f"پس از قطع: tun0 {'هنوز موجود است' if 'inet ' in tun_after else 'حذف شد'}")
-            if "inet " in tun_after:
-                failures.append("tun-not-removed")
-        else:
-            log("**دکمهٔ قطع اتصال پیدا نشد**")
-            failures.append("disconnect-button")
+        if connected_ok:
+            if tap_text("قطع اتصال", exact=True):
+                time.sleep(6)
+                shot("06-disconnected")
+                tun_after = shell("ip -4 addr show tun0").stdout or ""
+                log(f"پس از قطع: tun0 {'هنوز موجود است' if 'inet ' in tun_after else 'حذف شد'}")
+                if "inet " in tun_after:
+                    failures.append("tun-not-removed")
+            else:
+                log("**دکمهٔ قطع اتصال پیدا نشد**")
+                failures.append("disconnect-button")
 
     # ---------------------------------------------------------------- report
     with open(os.path.join(OUT, "logcat.txt"), "w", encoding="utf-8") as handle:

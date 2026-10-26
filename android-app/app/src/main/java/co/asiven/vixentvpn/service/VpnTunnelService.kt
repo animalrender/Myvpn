@@ -57,11 +57,15 @@ class VpnTunnelService : VpnService() {
             return START_NOT_STICKY
         }
 
-        val serverJson = intent?.getStringExtra(EXTRA_SERVER)
+        val rawConfig = intent?.getStringExtra(EXTRA_SERVER).orEmpty()
+        val displayName = intent?.getStringExtra(EXTRA_NAME).orEmpty()
         val mode = intent?.getStringExtra(EXTRA_MODE) ?: prefs?.mode ?: Prefs.MODE_VPN
         startForeground(NOTIF_ID, buildNotification(getString(R.string.status_connecting)))
 
-        val server = serverJson?.let { raw -> parseServer(raw) }
+        // The config travels as the raw share link / JSON config itself: `Server.rawJson` is the
+        // same text for imported rows but NOT for rows parsed from `/api/protocols`, and sending
+        // the wrong one made the service start without a server at all.
+        val server = parseServer(rawConfig, displayName)
         if (server == null) {
             AppLog.e("سروری برای اتصال ارسال نشده است")
             publish(false, getString(R.string.status_error, "سروری انتخاب نشده"))
@@ -244,15 +248,26 @@ class VpnTunnelService : VpnService() {
         }
     }
 
-    private fun parseServer(raw: String): Server? = runCatching {
-        ServerParser.fromJson(JSONObject(raw), 0)
-    }.getOrNull()
+    private fun parseServer(rawConfig: String, displayName: String): Server? {
+        if (rawConfig.isBlank()) return null
+        return runCatching {
+            val trimmed = rawConfig.trim()
+            val parsed = if (trimmed.startsWith("{")) {
+                ServerParser.fromJson(JSONObject(trimmed), 0).takeIf { it.rawConfig.isNotBlank() }
+                    ?: ServerParser.fromRaw(trimmed, 0)
+            } else {
+                ServerParser.fromRaw(trimmed, 0)
+            }
+            if (displayName.isBlank()) parsed else parsed.copy(name = displayName)
+        }.getOrNull()
+    }
 
     companion object {
         const val ACTION_START = "co.asiven.vixentvpn.trial.START"
         const val ACTION_STOP = "co.asiven.vixentvpn.trial.STOP"
         const val ACTION_STATE = "co.asiven.vixentvpn.trial.STATE"
-        const val EXTRA_SERVER = "server_json"
+        const val EXTRA_SERVER = "server_config"
+        const val EXTRA_NAME = "server_name"
         const val EXTRA_MODE = "mode"
         const val EXTRA_RUNNING = "running"
         const val EXTRA_TEXT = "text"
@@ -265,7 +280,8 @@ class VpnTunnelService : VpnService() {
         fun start(context: Context, server: Server, mode: String) {
             val intent = Intent(context, VpnTunnelService::class.java)
                 .setAction(ACTION_START)
-                .putExtra(EXTRA_SERVER, server.rawJson)
+                .putExtra(EXTRA_SERVER, server.rawConfig.ifBlank { server.rawJson })
+                .putExtra(EXTRA_NAME, server.name)
                 .putExtra(EXTRA_MODE, mode)
             if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
                 context.startForegroundService(intent)

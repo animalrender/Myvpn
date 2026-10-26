@@ -31,7 +31,7 @@ node tools/rea-mcp-bridge.mjs tools   # فهرست ابزارهای MCP
 پینگ تک/گروهی، انتخاب سرور، کپی لینک v2ray هر سرور و Firebase مطابق اپ اصلی.
 
 ```bash
-gh workflow run build-arm64.yml     # ساخت arm64 روی GitHub Actions
+gh workflow run build-apks.yml      # ساخت arm64 + x86_64 روی GitHub Actions
 gh release list                     # APK امضاشده در Releases (تگ trial-arm64-*)
 ```
 

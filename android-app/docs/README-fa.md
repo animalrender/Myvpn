@@ -28,14 +28,20 @@
 ## ۱) نصب و اجرای سریع
 
 1. از صفحهٔ [Releases](https://github.com/animalrender/Myvpn/releases) آخرین نسخه
-   (`trial-arm64-<شمارهٔ اجرا>`، همیشه بالاترین شماره در بالای صفحه) فایل
-   `mvpn-trial-arm64-*.apk` را دانلود کنید (به همراه فایل `.sha256`).
+   (`trial-<شمارهٔ اجرا>`، همیشه بالاترین شماره در بالای صفحه) را دانلود کنید. هر انتشار
+   **دو APK** دارد (به همراه فایل‌های `.sha256`):
+
+   | فایل | معماری | برای |
+   | --- | --- | --- |
+   | `mvpn-trial-arm64-*.apk` | `arm64-v8a` | گوشی/تبلت اندرویدی |
+   | `mvpn-trial-x86_64-*.apk` | `x86_64` | شبیه‌ساز اندروید (AVD)، کروم‌بوک |
 
    ```bash
    gh release list                                   # فهرست نسخه‌ها
-   gh release download trial-arm64-<N>               # دانلود APK + sha256
+   gh release download trial-<N>                      # دانلود هر دو APK + sha256
    ```
-2. روی گوشی اندروید ۷ (API 24) به بالا و **arm64-v8a** نصب کنید:
+2. روی گوشی اندروید ۷ (API 24) به بالا و **arm64-v8a** نصب کنید (روی شبیه‌ساز، فایل
+   `x86_64` را نصب کنید):
    ```bash
    adb install -r mvpn-trial-arm64-XX.apk
    ```
@@ -78,6 +84,12 @@ apksigner verify --print-certs mvpn-trial-arm64-XX.apk    # گواهی: AOSP tes
 - **افزودن اشتراک (لینک `sub`)** و **افزودن کانفیگ از کلیپ‌بورد** از منوی سه‌نقطه — مسیر
   کلاینت‌محور که مستقل از پاسخ بک‌اند کار می‌کند (پشتیبانی از base64 اشتراک و لینک‌های
   `vmess/vless/trojan/ss/socks/hysteria/hy2`).
+- **پذیرش لینک اشتراک از سیستم** (مثل v2rayNG): لمس یک لینک `vless://`/`vmess://`/`trojan://`/
+  `ss://` در مرورگر یا پیام‌رسان، یا «اشتراک‌گذاری» متن کانفیگ به این اپ، آن را مستقیم اضافه
+  می‌کند. لینک `http(s)` هم به‌عنوان آدرس اشتراک دریافت می‌شود.
+- **بدون جابه‌جایی خودکار سرور**: «پینگ همه» فقط تأخیرها را به‌روز می‌کند و سرور انتخاب‌شده یا
+  اتصال فعلی را تغییر نمی‌دهد (رفتار ناخواستهٔ اپ اصلی اینجا وجود ندارد و در ورک‌فلوی
+  `connect-test` هر بار سنجیده می‌شود).
 - **تست API و هدرها** در منو: یک گزارش زنده از وضعیت هر اندپوینت، هدرهای امضا و توکن — برای
   عیب‌یابی همان خطای «Internal server error».
 - **دو حالت اتصال**: `VPN` (TUN + hev) و `PROXY` (فقط SOCKS 10808 / HTTP 10809 روی localhost).
@@ -132,12 +144,13 @@ apksigner verify --print-certs mvpn-trial-arm64-XX.apk    # گواهی: AOSP tes
 
 ## ۴) ساخت با GitHub Actions
 
-تنها مسیر ساخت، ورک‌فلوی [`.github/workflows/build-arm64.yml`](../../.github/workflows/build-arm64.yml) است:
+تنها مسیر ساخت، ورک‌فلوی [`.github/workflows/build-apks.yml`](../../.github/workflows/build-apks.yml) است
+(ماتریس دو معماری، یک انتشار برای هر دو):
 
 ```bash
-gh workflow run build-arm64.yml
+gh workflow run build-apks.yml
 gh run watch
-gh release list                     # تگ: trial-arm64-<شمارهٔ اجرا>
+gh release list                     # تگ: trial-<شمارهٔ اجرا>
 ```
 
 ورک‌فلو در همان runner:
@@ -149,9 +162,9 @@ gh release list                     # تگ: trial-arm64-<شمارهٔ اجرا>
    `TProxyService` (پسوند `.so` در `app/src/main/jniLibs/arm64-v8a/`).
 3. `tools/fetch-testkey.sh` — ساخت `signing/keystore.p12` از AOSP testkey تا **گواهی امضای APK
    همان گواهی اپ اصلی باشد** (هدرهای `sign`/`sha_hexadecimal` باید تطبیق داشته باشند).
-4. `gradle assembleRelease` ← بررسی وجود هر دو `.so` در APK، چاپ `aapt2 badging`،
-   `apksigner verify --print-certs` و ساخت `.sha256`.
-5. انتشار Release با نام `trial-arm64-<run_number>`.
+4. `gradle assembleRelease -PtargetAbi=<abi>` ← بررسی وجود هر دو `.so` در APK، رد کردن هر
+   معماری اضافی، چاپ `aapt2 badging`، `apksigner verify --print-certs` و ساخت `.sha256`.
+5. جاب `release` هر دو APK را برمی‌دارد و یک Release با تگ `trial-<run_number>` می‌سازد.
 
 ### بررسی رابط کاربری روی شبیه‌ساز (`ui-snapshot`)
 
@@ -167,6 +180,30 @@ git push origin arena/b9372ae1-myvpn
 ```
 
 خروجی هر مرحله در `screenshots/STEPS.txt` و در annotationهای همان job (`ui-snapshot`) هم هست.
+
+### آزمون واقعی اتصال (`connect-test`)
+
+ورک‌فلوی [`.github/workflows/connect-test.yml`](../../.github/workflows/connect-test.yml) فقط
+رابط کاربری را نمی‌بیند؛ **تونل را واقعاً بالا می‌آورد**:
+
+1. یک سرور واقعی **Xray** (VLESS/TCP) روی همان runner بالا می‌آید (پورت `10086`).
+2. شبیه‌ساز API 34 با APK `x86_64` نصب می‌شود.
+3. کانفیگ با intent وارد اپ می‌شود:
+   `adb shell am start -a android.intent.action.VIEW -d "vless://…@10.0.2.2:10086…" -n co.asiven.vixentvpn/…MainActivity`
+   (اپ مثل v2rayNG لینک‌های `vless://`/`vmess://`/`trojan://`/`ss://` را می‌پذیرد).
+4. ردیف اضافه‌شده انتخاب و «اتصال» زده می‌شود، دیالوگ مجوز VPN تأیید می‌شود.
+5. ترافیک از پوستهٔ ادمین داخل TUN فرستاده می‌شود (`curl`/`nc`) و بعد **لاگ access سرور Xray**
+   بررسی می‌شود؛ اگر درخواست در لاگ سرور باشد، یعنی بایت‌ها واقعاً از تونل گذشته‌اند.
+6. در حال اتصال «پینگ همه» اجرا می‌شود و بررسی می‌شود سرور متصل **عوض نشود**
+   (همان نقص «پینگ همه → مکث → پرش به سرور دیگر» در اپ اصلی).
+7. در پایان «قطع اتصال» زده می‌شود و حذف شدن `tun0` بررسی می‌شود.
+
+خروجی در `android-app/docs/connect-test/` (`CONNECT.md` + PNG + لاگ‌ها) کامیت می‌شود. تریگر:
+
+```bash
+git commit --allow-empty -m "chore: tunnel check [net]"
+git push origin arena/b9372ae1-myvpn
+```
 
 ساخت دستی روی ماشین خودتان (نیاز به JDK 17، Android SDK 35، NDK):
 
