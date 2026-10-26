@@ -189,7 +189,7 @@ class ApiClient(private val context: Context, private val prefs: Prefs) {
             val r = request("GET", path)
             val items = runCatching { (parseObject(r.body)?.opt("data") as? org.json.JSONArray)?.length() }.getOrNull()
             sb.appendLine("$path")
-            sb.appendLine("  HTTP ${r.code} · ${r.body.length()}B · ok=${r.ok}${items?.let { " · items=$it" } ?: ""}")
+            sb.appendLine("  HTTP ${r.code} · ${r.body.length}B · ok=${r.ok}${items?.let { " · items=$it" } ?: ""}")
             sb.appendLine("  ${r.body.take(220).replace("\n", " ")}")
         }
         return sb.toString()
