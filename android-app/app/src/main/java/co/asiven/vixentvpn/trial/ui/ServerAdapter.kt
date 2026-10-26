@@ -99,21 +99,31 @@ class ServerAdapter(
      * (in both directions), which is what makes the «بدون پینگ» bucket usable.
      */
     private fun comparatorFor(field: SortField, ascending: Boolean): Comparator<Server> {
-        val base: Comparator<Server> = when (field) {
-            SortField.ORIGINAL -> Comparator { a, b -> all.indexOf(a) - all.indexOf(b) }
-            SortField.NAME -> compareBy { it.sortableName.lowercase() }
-            SortField.PING -> Comparator { a, b ->
-                val pa = if (a.pingState == PingState.OK && a.pingMs > 0) a.pingMs else Long.MAX_VALUE
-                val pb = if (b.pingState == PingState.OK && b.pingMs > 0) b.pingMs else Long.MAX_VALUE
-                pa.compareTo(pb)
-            }
-            SortField.PRICE -> compareBy { it.price ?: Int.MAX_VALUE }
-            SortField.ID -> compareBy { it.protocolId ?: Int.MAX_VALUE }
+        if (field == SortField.ORIGINAL) {
+            return if (ascending) Comparator { a, b -> all.indexOf(a) - all.indexOf(b) }
+            else Comparator { a, b -> all.indexOf(b) - all.indexOf(a) }
         }
-        val directed = if (ascending) base else base.reversed()
-        if (field == SortField.ORIGINAL) return directed
-        // Stable tie-break, so equal keys do not shuffle on every refresh.
-        return directed.thenBy { it.sortableName.lowercase() }
+        // Rows without a value for the current key (no ping yet, unknown price, no id) are pushed
+        // to the bottom in *both* directions — otherwise flipping the arrow would surface exactly
+        // the rows the user is not interested in.
+        val missing: (Server) -> Int = when (field) {
+            SortField.PING -> { server -> if (server.pingState == PingState.OK && server.pingMs > 0) 0 else 1 }
+            SortField.PRICE -> { server -> if (server.price != null) 0 else 1 }
+            SortField.ID -> { server -> if (server.protocolId != null) 0 else 1 }
+            SortField.NAME, SortField.ORIGINAL -> { _ -> 0 }
+        }
+        val byValue: Comparator<Server> = when (field) {
+            SortField.PING -> if (ascending) compareBy { it.pingMs } else compareByDescending { it.pingMs }
+            SortField.PRICE -> if (ascending) compareBy { it.price ?: 0 } else compareByDescending { it.price ?: 0 }
+            SortField.ID -> if (ascending) compareBy { it.protocolId ?: 0 } else compareByDescending { it.protocolId ?: 0 }
+            SortField.NAME -> if (ascending) compareBy { it.sortableName.lowercase() }
+                else compareByDescending { it.sortableName.lowercase() }
+            SortField.ORIGINAL -> compareBy { 0 }
+        }
+        return compareBy { missing(it) }
+            .then(byValue)
+            // stable tie-break, so equal keys do not shuffle on every refresh
+            .thenBy { it.sortableName.lowercase() }
     }
 
     fun setSelected(key: String?) {
