@@ -1,33 +1,40 @@
 --------- beginning of main
-10-26 04:15:53.356  3412  3412 I MvpnTrial: MVPN Trial 3.2.0-trial (co.asiven.vixentvpn) راه‌اندازی شد
-10-26 04:15:54.045  3412  3412 I MvpnTrial: هستهٔ Xray آماده شد: Lib v40, Xray-core v26.10.21
-10-26 04:15:55.245  3412  3575 D MvpnTrial: GET https://managev1.xyz/api/token?deviceId=60e82fb50750af9d → 200 (66 بایت)
-10-26 04:15:55.249  3412  3575 I MvpnTrial: توکن سمت سرور غیرفعال است؛ بدون هدر token ادامه می‌دهیم
-10-26 04:15:56.051  3412  3575 D MvpnTrial: GET https://managev1.xyz/api/setting → 200 (44 بایت)
-10-26 04:15:56.199  3412  3575 I MvpnTrial: setting خالی است (data=null) — پیش‌فرض‌های برنامه استفاده می‌شوند
-10-26 04:15:56.708  3412  3575 D MvpnTrial: GET https://managev1.xyz/api/protocols → 200 (61290 بایت)
-10-26 04:15:56.755  3412  3575 I MvpnTrial: 105 سرور از /api/protocols دریافت شد
-10-26 04:15:56.841  3412  3412 W MvpnTrial: دریافت توکن Firebase ناموفق: java.util.concurrent.ExecutionException: java.io.IOException: AUTHENTICATION_FAILED
-10-26 04:16:05.576  3412  3412 I MvpnTrial: 105 سرور از کش بارگذاری شد
-10-26 04:16:05.651  3412  3412 I MvpnTrial: کانفیگ دستی اضافه شد: vless (125 کاراکتر)
-10-26 04:16:14.094  3412  3412 I MvpnTrial: سرور انتخاب شد: CI-Local-A (price=null, type=vless)
-10-26 04:16:20.868  3412  3412 I MvpnTrial: VpnTunnelService ایجاد شد
-10-26 04:16:21.040  3412  3575 I MvpnTrial: پیکربندی هسته آماده شد (vless) برای CI-Local-A
-10-26 04:16:21.112  3412  3575 I MvpnTrial: رابط TUN ساخته شد: 122
-10-26 04:16:21.252  3412  3575 I MvpnTrial: CoreCallback: startup
-10-26 04:16:21.252  3412  3575 D MvpnTrial: CoreCallback: 0 Started successfully, running
-10-26 04:16:21.252  3412  3575 I MvpnTrial: هستهٔ Xray شروع شد (tunFd=122، running=true)
-10-26 04:16:21.254  3412  3575 I MvpnTrial: hev: شروع (fd=122، socks=10808، mtu=1500)
-10-26 04:16:21.317  3412  3575 I MvpnTrial: اتصال برقرار شد: متصل — CI-Local-A (VPN)
-10-26 04:16:40.772  3412  3575 D MvpnTrial: پینگ CI-Local-A: 10 ms
-10-26 04:16:40.778  3412  3412 I MvpnTrial: پینگ همهٔ 1 سرور انجام شد
-10-26 04:17:07.838  3412  3412 I MvpnTrial: 105 سرور از کش بارگذاری شد
-10-26 04:17:07.877  3412  3412 I MvpnTrial: کانفیگ دستی اضافه شد: vmess (252 کاراکتر)
-10-26 04:17:17.117  3412  3412 I MvpnTrial: سرور انتخاب شد: CI-Local-B (price=null, type=vmess)
-10-26 04:17:17.171  3412  3575 I MvpnTrial: پیکربندی هسته آماده شد (vmess) برای CI-Local-B
-10-26 04:17:17.332  3412  3575 I MvpnTrial: رابط TUN ساخته شد: 106
-10-26 04:17:17.332  3412  3575 W MvpnTrial: هسته در حال اجراست؛ درخواست شروع نادیده گرفته شد
-10-26 04:17:17.334  3412  3575 I MvpnTrial: hev: شروع (fd=106، socks=10808، mtu=1500)
-10-26 04:17:17.360  3412  3575 I MvpnTrial: hev: متوقف شد
-10-26 04:17:17.365  3412  3575 I MvpnTrial: CoreCallback: shutdown
-10-26 04:17:17.366  3412  3575 D MvpnTrial: CoreCallback: 0 Core stopped
+10-26 04:29:31.159  3014  3014 I MvpnTrial: MVPN Trial 3.2.0-trial (co.asiven.vixentvpn) راه‌اندازی شد
+10-26 04:29:31.445  3014  3014 I MvpnTrial: هستهٔ Xray آماده شد: Lib v40, Xray-core v26.10.21
+10-26 04:29:33.249  3014  3163 D MvpnTrial: GET https://managev1.xyz/api/token?deviceId=f9e962a719e2097a → 200 (66 بایت)
+10-26 04:29:33.249  3014  3163 I MvpnTrial: توکن سمت سرور غیرفعال است؛ بدون هدر token ادامه می‌دهیم
+10-26 04:29:34.003  3014  3163 D MvpnTrial: GET https://managev1.xyz/api/setting → 200 (44 بایت)
+10-26 04:29:34.003  3014  3163 I MvpnTrial: setting خالی است (data=null) — پیش‌فرض‌های برنامه استفاده می‌شوند
+10-26 04:29:35.333  3014  3163 D MvpnTrial: GET https://managev1.xyz/api/protocols → 200 (57124 بایت)
+10-26 04:29:35.445  3014  3163 I MvpnTrial: 105 سرور از /api/protocols دریافت شد
+10-26 04:29:36.582  3014  3014 W MvpnTrial: دریافت توکن Firebase ناموفق: java.util.concurrent.ExecutionException: java.io.IOException: AUTHENTICATION_FAILED
+10-26 04:29:43.513  3014  3014 I MvpnTrial: 105 سرور از کش بارگذاری شد
+10-26 04:29:43.543  3014  3014 I MvpnTrial: کانفیگ دستی اضافه شد: vless (125 کاراکتر)
+10-26 04:29:53.432  3014  3014 I MvpnTrial: سرور انتخاب شد: CI-Local-A (price=null, type=vless)
+10-26 04:30:00.186  3014  3014 I MvpnTrial: VpnTunnelService ایجاد شد
+10-26 04:30:00.193  3014  3163 I MvpnTrial: پیکربندی هسته آماده شد (vless) برای CI-Local-A
+10-26 04:30:00.702  3014  3163 I MvpnTrial: رابط TUN ساخته شد: 130
+10-26 04:30:00.893  3014  3163 I MvpnTrial: CoreCallback: startup
+10-26 04:30:00.893  3014  3163 D MvpnTrial: CoreCallback: 0 Started successfully, running
+10-26 04:30:00.893  3014  3163 I MvpnTrial: هستهٔ Xray شروع شد (tunFd=130، running=true)
+10-26 04:30:00.893  3014  3163 I MvpnTrial: hev: شروع (fd=130، socks=10808، mtu=1500)
+10-26 04:30:00.898  3014  3163 I MvpnTrial: اتصال برقرار شد: متصل — CI-Local-A (VPN)
+10-26 04:30:20.924  3014  3163 D MvpnTrial: پینگ CI-Local-A: 5 ms
+10-26 04:30:20.936  3014  3014 I MvpnTrial: پینگ همهٔ 1 سرور انجام شد
+10-26 04:30:48.191  3014  3014 I MvpnTrial: 105 سرور از کش بارگذاری شد
+10-26 04:30:48.216  3014  3014 I MvpnTrial: کانفیگ دستی اضافه شد: vmess (252 کاراکتر)
+10-26 04:31:02.235  3014  3014 I MvpnTrial: سرور انتخاب شد: CI-Local-B (price=null, type=vmess)
+10-26 04:31:02.308  3014  3014 I MvpnTrial: hev: متوقف شد
+10-26 04:31:02.319  3014  3014 I MvpnTrial: CoreCallback: shutdown
+10-26 04:31:02.319  3014  3014 D MvpnTrial: CoreCallback: 0 Core stopped
+10-26 04:31:02.944  3014  3014 I MvpnTrial: VpnTunnelService ایجاد شد
+10-26 04:31:02.947  3014  3163 I MvpnTrial: پیکربندی هسته آماده شد (vmess) برای CI-Local-B
+10-26 04:31:02.961  3014  3163 I MvpnTrial: رابط TUN ساخته شد: 127
+10-26 04:31:03.053  3014  3163 I MvpnTrial: CoreCallback: startup
+10-26 04:31:03.053  3014  3163 D MvpnTrial: CoreCallback: 0 Started successfully, running
+10-26 04:31:03.053  3014  3163 I MvpnTrial: هستهٔ Xray شروع شد (tunFd=127، running=true)
+10-26 04:31:03.054  3014  3163 I MvpnTrial: hev: شروع (fd=127، socks=10808، mtu=1500)
+10-26 04:31:03.073  3014  3163 I MvpnTrial: اتصال برقرار شد: متصل — CI-Local-B (VPN)
+10-26 04:31:11.335  3014  3014 I MvpnTrial: hev: متوقف شد
+10-26 04:31:11.336  3014  3014 I MvpnTrial: CoreCallback: shutdown
+10-26 04:31:11.336  3014  3014 D MvpnTrial: CoreCallback: 0 Core stopped
