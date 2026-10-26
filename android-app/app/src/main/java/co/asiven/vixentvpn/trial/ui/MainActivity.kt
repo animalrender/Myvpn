@@ -102,7 +102,7 @@ class MainActivity : AppCompatActivity() {
                 if (tunnelRunning) R.string.btn_disconnect else R.string.btn_connect,
             )
             paintStatusDot()
-            adapter.setConnectedKey(if (tunnelRunning) prefs.selectedKey else null)
+            adapter.setConnectedKey(if (tunnelRunning) connectedKey else null)
             updateHero()
             updateSummary()
         }
@@ -143,6 +143,10 @@ class MainActivity : AppCompatActivity() {
             applyFilter()
         }
 
+        // A tunnel may already be running (the service outlives this activity, and a link
+        // intent can create a new instance), so the initial state comes from the prefs.
+        tunnelRunning = prefs.tunnelRunning
+        connectedKey = prefs.connectedKey.ifBlank { null }
         paintStatusDot()
         updateModeLabel()
         updateHero()
@@ -305,6 +309,9 @@ class MainActivity : AppCompatActivity() {
 
     private fun applyFilter() {
         adapter.setFilter(binding.searchInput.text?.toString().orEmpty(), filterMode)
+        // Re-applied on every list rebuild: the live server keeps its "connected" marker even
+        // when the user filters or refreshes the list.
+        adapter.setConnectedKey(if (tunnelRunning) connectedKey else null)
         updateSummary()
     }
 
@@ -449,6 +456,7 @@ class MainActivity : AppCompatActivity() {
 
     private fun launchTunnel(server: Server) {
         connectedKey = server.key
+        prefs.connectedKey = server.key
         runCatching { VpnTunnelService.start(this, server, prefs.mode) }
             .onFailure {
                 AppLog.e("شروع سرویس تونل ناموفق", it)

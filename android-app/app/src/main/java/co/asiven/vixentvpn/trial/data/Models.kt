@@ -214,7 +214,10 @@ object ServerParser {
             else -> fallbackName
         }
         return Server(
-            key = "manual:${Integer.toHexString(trimmed.hashCode())}:$index",
+            // No index in the key: the same config imported twice (or handed to the tunnel
+            // service) must map to the same server, otherwise the "currently connected" check
+            // cannot recognise it.
+            key = "manual:${Integer.toHexString(trimmed.hashCode())}",
             protocolId = null,
             serverId = null,
             name = name,

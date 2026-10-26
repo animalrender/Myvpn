@@ -42,6 +42,7 @@ class VpnTunnelService : VpnService() {
     private var tunInterface: ParcelFileDescriptor? = null
     private var tProxy: HevTunnel? = null
     private var prefs: Prefs? = null
+    private var activeKey: String = ""
 
     override fun onCreate() {
         super.onCreate()
@@ -66,6 +67,7 @@ class VpnTunnelService : VpnService() {
         // same text for imported rows but NOT for rows parsed from `/api/protocols`, and sending
         // the wrong one made the service start without a server at all.
         val server = parseServer(rawConfig, displayName)
+        activeKey = server?.key.orEmpty()
         if (server == null) {
             AppLog.e("سروری برای اتصال ارسال نشده است")
             publish(false, getString(R.string.status_error, "سروری انتخاب نشده"))
@@ -126,6 +128,7 @@ class VpnTunnelService : VpnService() {
                 getString(R.string.status_connected, server.name, "PROXY ${ConfigBuilder.SOCKS_PORT}/${ConfigBuilder.HTTP_PORT}")
             }
             updateNotification(text)
+            prefs?.connectedKey = activeKey
             publish(true, text)
             AppLog.i("اتصال برقرار شد: $text")
         } catch (t: Throwable) {
@@ -201,6 +204,10 @@ class VpnTunnelService : VpnService() {
     // ------------------------------------------------------------------ state / notification
 
     private fun publish(running: Boolean, text: String) {
+        // Mirrored into the prefs as well: broadcast is only received by activities that are
+        // currently started, and the tunnel outlives them.
+        prefs?.tunnelRunning = running
+        if (!running) prefs?.connectedKey = ""
         val intent = Intent(ACTION_STATE).setPackage(packageName)
             .putExtra(EXTRA_RUNNING, running)
             .putExtra(EXTRA_TEXT, text)
