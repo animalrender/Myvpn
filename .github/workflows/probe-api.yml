@@ -8,6 +8,7 @@ on:
     branches: [arena/b9372ae1-myvpn]
     paths:
       - "android-app/tools/probe-api.py"
+      - "android-app/tools/probe-header-bisect.py"
       - "android-app/tools/probe-configs.py"
       - "android-app/tools/probe-protocol-post.py"
       - "android-app/tools/probe-fuzz.py"
@@ -33,6 +34,11 @@ jobs:
           base="https://raw.githubusercontent.com/aosp-mirror/platform_build/master/target/product/security"
           curl -fL --retry 3 -o /tmp/keys/testkey.x509.pem "$base/testkey.x509.pem"
           openssl x509 -in /tmp/keys/testkey.x509.pem -noout -fingerprint -sha256
+
+      - name: Bisect the wrong header (device failure repro)
+        env:
+          PROBE_CERT: /tmp/keys/testkey.x509.pem
+        run: python3 android-app/tools/probe-header-bisect.py 2>&1 | tee /tmp/probe0.log || true
 
       - name: Probe backend contract
         env:
