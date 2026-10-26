@@ -189,8 +189,11 @@ def rows():
 
 def find_row(name, ping=None):
     """The painted row matching a name (and, when several rows share a name, its ping badge)."""
+    target = name.replace("🌐", "").strip()
     for row in rows():
-        if row["name"] != name and row["raw"] != name:
+        # the hero prints "<flag>  <name>" while the row prints just "<name>"
+        if not (row["name"] == name or row["raw"] == name
+                or row["name"] == target or target.endswith(row["name"])):
             continue
         if ping is not None and row["ping"] != ping:
             continue
@@ -459,7 +462,7 @@ def main(argv):
         else:
             failures.append("no-disconnect")
 
-    write_report(failures, baseline_ip, connected or fastest)
+    write_report(failures, baseline_ip, connected)
     print("FAILURES:" + ",".join(failures) if failures else "ALL OK", flush=True)
     return 1 if failures else 0
 
