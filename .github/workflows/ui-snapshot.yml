@@ -131,7 +131,18 @@ jobs:
           export ANDROID_AVD_HOME="$HOME/.android/avd"
           mkdir -p "$ANDROID_AVD_HOME"
           echo "ANDROID_AVD_HOME=$ANDROID_AVD_HOME" >> "$GITHUB_ENV"
-          CREATE="$(echo no | "$AVDMANAGER" create avd -n mvpn -k "system-images;android-34;google_apis;x86_64" --force 2>&1)"
+          CREATE="$(echo no | "$AVDMANAGER" create avd -n mvpn -k "system-images;android-34;google_apis;x86_64" -d pixel_6 --force 2>&1)"
+          # The AVD manager ignores the device profile often enough that the screen came out 320x640
+          # on the first runs; the geometry is therefore pinned explicitly.
+          CFG="$ANDROID_AVD_HOME/mvpn.avd/config.ini"
+          if [ -f "$CFG" ]; then
+            sed -i '/hw.lcd.width/d;/hw.lcd.height/d;/hw.lcd.density/d;/skin.name/d;/skin.path/d' "$CFG"
+            {
+              echo "hw.lcd.width=1080"
+              echo "hw.lcd.height=2280"
+              echo "hw.lcd.density=440"
+            } >> "$CFG"
+          fi
           # /dev/kvm is root:kvm 660 and the runner user is not in the kvm group; without access the
           # emulator falls back to software emulation and never finishes booting.
           sudo chmod 666 /dev/kvm || true
@@ -159,7 +170,8 @@ jobs:
           export ANDROID_AVD_HOME="${ANDROID_AVD_HOME:-$HOME/.android/avd}"
           nohup "$ANDROID_HOME/emulator/emulator" -avd mvpn \
             -no-window -no-audio -no-boot-anim -no-snapshot -no-snapshot-save \
-            -gpu swiftshader_indirect -accel on -port 5554 > /tmp/emulator.log 2>&1 &
+            -gpu swiftshader_indirect -accel on -port 5554 \
+            -skin 1080x2280 > /tmp/emulator.log 2>&1 &
           adb start-server >/dev/null 2>&1 || true
           BOOTED=0
           SECONDS_WAITED=0
@@ -191,6 +203,9 @@ jobs:
             echo "::error title=ui-snapshot::the emulator did not boot (see STATUS.md)"
             exit 1
           fi
+          adb shell wm size >> "$STATUS" 2>&1 || true
+          adb shell wm density >> "$STATUS" 2>&1 || true
+          adb shell settings put system screen_off_timeout 2147483647 >/dev/null 2>&1 || true
           timeout 60 adb shell settings put global window_animation_scale 0 || true
           timeout 60 adb shell settings put global transition_animation_scale 0 || true
           timeout 60 adb shell settings put global animator_duration_scale 0 || true

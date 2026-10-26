@@ -115,6 +115,26 @@ def tap_desc(target):
     return False
 
 
+def screen_size():
+    """Reads the real resolution instead of assuming 1080x1920 (the AVD may be 320x640)."""
+    out = shell("wm size", timeout=45).stdout or ""
+    match = re.search(r"(\d+)x(\d+)", out)
+    if match:
+        return int(match.group(1)), int(match.group(2))
+    return 1080, 1920
+
+
+def swipe(up=True):
+    width, height = screen_size()
+    x = width // 2
+    if up:
+        start, end = int(height * 0.80), int(height * 0.30)
+    else:
+        start, end = int(height * 0.30), int(height * 0.80)
+    shell(f"input swipe {x} {start} {x} {end} 350")
+    time.sleep(1)
+
+
 def tap_class(class_name):
     """Taps the first node whose class ends with `class_name` (e.g. EditText)."""
     for node in nodes(dump_xml()):
@@ -255,7 +275,9 @@ def main(argv):
         elif cmd == "back":
             shell("input keyevent 4"); time.sleep(1); index += 1
         elif cmd == "swipe-up":
-            shell("input swipe 540 1600 540 500 300"); time.sleep(1); index += 1
+            swipe(True); index += 1
+        elif cmd == "swipe-down":
+            swipe(False); index += 1
         elif cmd == "crash-check":
             crash_check(); index += 1
         elif cmd == "dump":
