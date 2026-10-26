@@ -1,21 +1,1277 @@
 --------- beginning of main
-10-26 10:18:38.494  3576  3576 I MvpnTrial: MVPN Trial 3.2.0-trial (co.asiven.vixentvpn) راه‌اندازی شد
-10-26 10:18:38.653  3576  3576 I MvpnTrial: هستهٔ Xray آماده شد: Lib v40, Xray-core v26.10.21
-10-26 10:18:38.939  3576  3576 D MvpnTrial: hero(no row): running=false connected=- pressed=اتصال
-10-26 10:18:39.003  3576  3576 D MvpnTrial: hero(no row): running=false connected=- pressed=اتصال
-10-26 10:18:39.092  3576  3576 D MvpnTrial: hero(no row): running=false connected=- pressed=اتصال
-10-26 10:18:39.093  3576  3576 D MvpnTrial: hero(no row): running=false connected=- pressed=اتصال
-10-26 10:18:39.713  3576  3691 D MvpnTrial: GET https://managev1.xyz/api/token?deviceId=25c25c4e0eb0cab3 → 200 (66 بایت)
-10-26 10:18:39.713  3576  3691 I MvpnTrial: توکن سمت سرور غیرفعال است؛ بدون هدر token ادامه می‌دهیم
-10-26 10:18:39.803  3576  3692 D MvpnTrial: GET https://managev1.xyz/api/token?deviceId=25c25c4e0eb0cab3 → 200 (66 بایت)
-10-26 10:18:39.803  3576  3692 I MvpnTrial: توکن سمت سرور غیرفعال است؛ بدون هدر token ادامه می‌دهیم
-10-26 10:18:39.884  3576  3691 D MvpnTrial: GET https://managev1.xyz/api/setting → 200 (44 بایت)
-10-26 10:18:39.885  3576  3691 I MvpnTrial: setting خالی است (data=null) — پیش‌فرض‌های برنامه استفاده می‌شوند
-10-26 10:18:39.965  3576  3692 D MvpnTrial: GET https://managev1.xyz/api/setting → 200 (44 بایت)
-10-26 10:18:39.970  3576  3692 I MvpnTrial: setting خالی است (data=null) — پیش‌فرض‌های برنامه استفاده می‌شوند
-10-26 10:18:40.461  3576  3691 D MvpnTrial: GET https://managev1.xyz/api/protocols → 200 (87123 بایت)
-10-26 10:18:40.549  3576  3692 D MvpnTrial: GET https://managev1.xyz/api/protocols → 200 (87123 بایت)
-10-26 10:18:40.720  3576  3691 I MvpnTrial: 105 سرور از /api/protocols دریافت شد
-10-26 10:18:41.436  3576  3692 I MvpnTrial: 105 سرور از /api/protocols دریافت شد
-10-26 10:18:41.462  3576  3576 D MvpnTrial: hero: running=false connected=- shown=-118949-466-931889960 pressed=اتصال
-10-26 10:18:42.574  3576  3576 W MvpnTrial: دریافت توکن Firebase ناموفق: java.util.concurrent.ExecutionException: java.io.IOException: AUTHENTICATION_FAILED
+10-26 10:37:05.680  3217  3217 I MvpnTrial: MVPN Trial 3.2.0-trial (co.asiven.vixentvpn) راه‌اندازی شد
+10-26 10:37:05.932  3217  3217 I MvpnTrial: هستهٔ Xray آماده شد: Lib v40, Xray-core v26.10.21
+10-26 10:37:06.286  3217  3217 D MvpnTrial: hero(no row): running=false connected=- pressed=اتصال
+10-26 10:37:06.296  3217  3217 D MvpnTrial: hero(no row): running=false connected=- pressed=اتصال
+10-26 10:37:07.040  3217  3327 D MvpnTrial: GET https://managev1.xyz/api/token?deviceId=e21cc9dee13a9a5a → 200 (66 بایت)
+10-26 10:37:07.093  3217  3327 I MvpnTrial: توکن سمت سرور غیرفعال است؛ بدون هدر token ادامه می‌دهیم
+10-26 10:37:07.332  3217  3327 D MvpnTrial: GET https://managev1.xyz/api/setting → 200 (44 بایت)
+10-26 10:37:07.333  3217  3327 I MvpnTrial: setting خالی است (data=null) — پیش‌فرض‌های برنامه استفاده می‌شوند
+10-26 10:37:07.882  3217  3327 D MvpnTrial: GET https://managev1.xyz/api/protocols → 200 (82271 بایت)
+10-26 10:37:08.698  3217  3327 I MvpnTrial: 105 سرور از /api/protocols دریافت شد
+10-26 10:37:08.759  3217  3217 D MvpnTrial: hero: running=false connected=- shown=-42791-466-931889960 pressed=اتصال
+10-26 10:37:13.539  3217  3217 W MvpnTrial: دریافت توکن Firebase ناموفق: java.util.concurrent.ExecutionException: java.io.IOException: AUTHENTICATION_FAILED
+10-26 10:37:28.431  3217  3327 W MvpnTrial: پینگ 🇦🇺 Australia ممکن نیست: هستهٔ Xray پروتکل hysteria را اجرا نمی‌کند
+10-26 10:37:28.504  3217  3326 W MvpnTrial: پینگ 🇫🇷 France ممکن نیست: هستهٔ Xray پروتکل hysteria را اجرا نمی‌کند
+10-26 10:37:28.808  3217  3328 E MvpnTrial: سنجش تأخیر ناموفق
+10-26 10:37:28.808  3217  3328 E MvpnTrial: go.Universe$proxyerror: config load error: infra/conf/serial: failed to parse json config > infra/conf: failed to build outbound config with tag proxy > infra/conf: vless without TLS or other encryption is prohibited unless the server address is a private IP or domain
+10-26 10:37:28.808  3217  3328 E MvpnTrial: 	at libv2ray.Libv2ray.measureOutboundDelay(Native Method)
+10-26 10:37:28.808  3217  3328 E MvpnTrial: 	at co.asiven.vixentvpn.trial.core.XrayCore.measureDelay(XrayCore.kt:81)
+10-26 10:37:28.808  3217  3328 E MvpnTrial: 	at co.asiven.vixentvpn.trial.ui.MainActivity.measure(MainActivity.kt:417)
+10-26 10:37:28.808  3217  3328 E MvpnTrial: 	at co.asiven.vixentvpn.trial.ui.MainActivity.access$measure(MainActivity.kt:61)
+10-26 10:37:28.808  3217  3328 E MvpnTrial: 	at co.asiven.vixentvpn.trial.ui.MainActivity$pingAll$2$1$1$1.invokeSuspend(MainActivity.kt:382)
+10-26 10:37:28.808  3217  3328 E MvpnTrial: 	at kotlin.coroutines.jvm.internal.BaseContinuationImpl.resumeWith(ContinuationImpl.kt:33)
+10-26 10:37:28.808  3217  3328 E MvpnTrial: 	at kotlinx.coroutines.DispatchedTask.run(DispatchedTask.kt:104)
+10-26 10:37:28.808  3217  3328 E MvpnTrial: 	at kotlinx.coroutines.internal.LimitedDispatcher$Worker.run(LimitedDispatcher.kt:111)
+10-26 10:37:28.808  3217  3328 E MvpnTrial: 	at kotlinx.coroutines.scheduling.TaskImpl.run(Tasks.kt:99)
+10-26 10:37:28.808  3217  3328 E MvpnTrial: 	at kotlinx.coroutines.scheduling.CoroutineScheduler.runSafely(CoroutineScheduler.kt:584)
+10-26 10:37:28.808  3217  3328 E MvpnTrial: 	at kotlinx.coroutines.scheduling.CoroutineScheduler$Worker.executeTask(CoroutineScheduler.kt:811)
+10-26 10:37:28.808  3217  3328 E MvpnTrial: 	at kotlinx.coroutines.scheduling.CoroutineScheduler$Worker.runWorker(CoroutineScheduler.kt:715)
+10-26 10:37:28.808  3217  3328 E MvpnTrial: 	at kotlinx.coroutines.scheduling.CoroutineScheduler$Worker.run(CoroutineScheduler.kt:702)
+10-26 10:37:28.842  3217  4769 E MvpnTrial: سنجش تأخیر ناموفق
+10-26 10:37:28.842  3217  4769 E MvpnTrial: go.Universe$proxyerror: config load error: infra/conf/serial: failed to parse json config > infra/conf: failed to build outbound config with tag proxy > infra/conf: vless without TLS or other encryption is prohibited unless the server address is a private IP or domain
+10-26 10:37:28.842  3217  4769 E MvpnTrial: 	at libv2ray.Libv2ray.measureOutboundDelay(Native Method)
+10-26 10:37:28.842  3217  4769 E MvpnTrial: 	at co.asiven.vixentvpn.trial.core.XrayCore.measureDelay(XrayCore.kt:81)
+10-26 10:37:28.842  3217  4769 E MvpnTrial: 	at co.asiven.vixentvpn.trial.ui.MainActivity.measure(MainActivity.kt:417)
+10-26 10:37:28.842  3217  4769 E MvpnTrial: 	at co.asiven.vixentvpn.trial.ui.MainActivity.access$measure(MainActivity.kt:61)
+10-26 10:37:28.842  3217  4769 E MvpnTrial: 	at co.asiven.vixentvpn.trial.ui.MainActivity$pingAll$2$1$1$1.invokeSuspend(MainActivity.kt:382)
+10-26 10:37:28.842  3217  4769 E MvpnTrial: 	at kotlin.coroutines.jvm.internal.BaseContinuationImpl.resumeWith(ContinuationImpl.kt:33)
+10-26 10:37:28.842  3217  4769 E MvpnTrial: 	at kotlinx.coroutines.DispatchedTask.run(DispatchedTask.kt:104)
+10-26 10:37:28.842  3217  4769 E MvpnTrial: 	at kotlinx.coroutines.internal.LimitedDispatcher$Worker.run(LimitedDispatcher.kt:111)
+10-26 10:37:28.842  3217  4769 E MvpnTrial: 	at kotlinx.coroutines.scheduling.TaskImpl.run(Tasks.kt:99)
+10-26 10:37:28.842  3217  4769 E MvpnTrial: 	at kotlinx.coroutines.scheduling.CoroutineScheduler.runSafely(CoroutineScheduler.kt:584)
+10-26 10:37:28.842  3217  4769 E MvpnTrial: 	at kotlinx.coroutines.scheduling.CoroutineScheduler$Worker.executeTask(CoroutineScheduler.kt:811)
+10-26 10:37:28.842  3217  4769 E MvpnTrial: 	at kotlinx.coroutines.scheduling.CoroutineScheduler$Worker.runWorker(CoroutineScheduler.kt:715)
+10-26 10:37:28.842  3217  4769 E MvpnTrial: 	at kotlinx.coroutines.scheduling.CoroutineScheduler$Worker.run(CoroutineScheduler.kt:702)
+10-26 10:37:28.870  3217  4769 D MvpnTrial: پینگ 🇬🇧 United Kingdom: -1 ms
+10-26 10:37:28.881  3217  4769 E MvpnTrial: سنجش تأخیر ناموفق
+10-26 10:37:28.881  3217  4769 E MvpnTrial: go.Universe$proxyerror: config load error: infra/conf/serial: failed to parse json config > infra/conf: failed to build outbound config with tag proxy > infra/conf: vless without TLS or other encryption is prohibited unless the server address is a private IP or domain
+10-26 10:37:28.881  3217  4769 E MvpnTrial: 	at libv2ray.Libv2ray.measureOutboundDelay(Native Method)
+10-26 10:37:28.881  3217  4769 E MvpnTrial: 	at co.asiven.vixentvpn.trial.core.XrayCore.measureDelay(XrayCore.kt:81)
+10-26 10:37:28.881  3217  4769 E MvpnTrial: 	at co.asiven.vixentvpn.trial.ui.MainActivity.measure(MainActivity.kt:417)
+10-26 10:37:28.881  3217  4769 E MvpnTrial: 	at co.asiven.vixentvpn.trial.ui.MainActivity.access$measure(MainActivity.kt:61)
+10-26 10:37:28.881  3217  4769 E MvpnTrial: 	at co.asiven.vixentvpn.trial.ui.MainActivity$pingAll$2$1$1$1.invokeSuspend(MainActivity.kt:382)
+10-26 10:37:28.881  3217  4769 E MvpnTrial: 	at kotlin.coroutines.jvm.internal.BaseContinuationImpl.resumeWith(ContinuationImpl.kt:33)
+10-26 10:37:28.881  3217  4769 E MvpnTrial: 	at kotlinx.coroutines.DispatchedTask.run(DispatchedTask.kt:104)
+10-26 10:37:28.881  3217  4769 E MvpnTrial: 	at kotlinx.coroutines.internal.LimitedDispatcher$Worker.run(LimitedDispatcher.kt:111)
+10-26 10:37:28.881  3217  4769 E MvpnTrial: 	at kotlinx.coroutines.scheduling.TaskImpl.run(Tasks.kt:99)
+10-26 10:37:28.881  3217  4769 E MvpnTrial: 	at kotlinx.coroutines.scheduling.CoroutineScheduler.runSafely(CoroutineScheduler.kt:584)
+10-26 10:37:28.881  3217  4769 E MvpnTrial: 	at kotlinx.coroutines.scheduling.CoroutineScheduler$Worker.executeTask(CoroutineScheduler.kt:811)
+10-26 10:37:28.881  3217  4769 E MvpnTrial: 	at kotlinx.coroutines.scheduling.CoroutineScheduler$Worker.runWorker(CoroutineScheduler.kt:715)
+10-26 10:37:28.881  3217  4769 E MvpnTrial: 	at kotlinx.coroutines.scheduling.CoroutineScheduler$Worker.run(CoroutineScheduler.kt:702)
+10-26 10:37:28.882  3217  4769 D MvpnTrial: پینگ 🇦🇺 Australia: -1 ms
+10-26 10:37:28.901  3217  4769 E MvpnTrial: سنجش تأخیر ناموفق
+10-26 10:37:28.901  3217  4769 E MvpnTrial: go.Universe$proxyerror: config load error: infra/conf/serial: failed to parse json config > infra/conf: failed to build outbound config with tag proxy > infra/conf: vless without TLS or other encryption is prohibited unless the server address is a private IP or domain
+10-26 10:37:28.901  3217  4769 E MvpnTrial: 	at libv2ray.Libv2ray.measureOutboundDelay(Native Method)
+10-26 10:37:28.901  3217  4769 E MvpnTrial: 	at co.asiven.vixentvpn.trial.core.XrayCore.measureDelay(XrayCore.kt:81)
+10-26 10:37:28.901  3217  4769 E MvpnTrial: 	at co.asiven.vixentvpn.trial.ui.MainActivity.measure(MainActivity.kt:417)
+10-26 10:37:28.901  3217  4769 E MvpnTrial: 	at co.asiven.vixentvpn.trial.ui.MainActivity.access$measure(MainActivity.kt:61)
+10-26 10:37:28.901  3217  4769 E MvpnTrial: 	at co.asiven.vixentvpn.trial.ui.MainActivity$pingAll$2$1$1$1.invokeSuspend(MainActivity.kt:382)
+10-26 10:37:28.901  3217  4769 E MvpnTrial: 	at kotlin.coroutines.jvm.internal.BaseContinuationImpl.resumeWith(ContinuationImpl.kt:33)
+10-26 10:37:28.901  3217  4769 E MvpnTrial: 	at kotlinx.coroutines.DispatchedTask.run(DispatchedTask.kt:104)
+10-26 10:37:28.901  3217  4769 E MvpnTrial: 	at kotlinx.coroutines.internal.LimitedDispatcher$Worker.run(LimitedDispatcher.kt:111)
+10-26 10:37:28.901  3217  4769 E MvpnTrial: 	at kotlinx.coroutines.scheduling.TaskImpl.run(Tasks.kt:99)
+10-26 10:37:28.901  3217  4769 E MvpnTrial: 	at kotlinx.coroutines.scheduling.CoroutineScheduler.runSafely(CoroutineScheduler.kt:584)
+10-26 10:37:28.901  3217  4769 E MvpnTrial: 	at kotlinx.coroutines.scheduling.CoroutineScheduler$Worker.executeTask(CoroutineScheduler.kt:811)
+10-26 10:37:28.901  3217  4769 E MvpnTrial: 	at kotlinx.coroutines.scheduling.CoroutineScheduler$Worker.runWorker(CoroutineScheduler.kt:715)
+10-26 10:37:28.901  3217  4769 E MvpnTrial: 	at kotlinx.coroutines.scheduling.CoroutineScheduler$Worker.run(CoroutineScheduler.kt:702)
+10-26 10:37:28.901  3217  4769 D MvpnTrial: پینگ 🇨🇦 Canada: -1 ms
+10-26 10:37:28.903  3217  3328 D MvpnTrial: پینگ 🇺🇸 United States: -1 ms
+10-26 10:37:28.936  3217  4769 E MvpnTrial: سنجش تأخیر ناموفق
+10-26 10:37:28.936  3217  4769 E MvpnTrial: go.Universe$proxyerror: config load error: infra/conf/serial: failed to parse json config > infra/conf: failed to build outbound config with tag proxy > infra/conf: vless without TLS or other encryption is prohibited unless the server address is a private IP or domain
+10-26 10:37:28.936  3217  4769 E MvpnTrial: 	at libv2ray.Libv2ray.measureOutboundDelay(Native Method)
+10-26 10:37:28.936  3217  4769 E MvpnTrial: 	at co.asiven.vixentvpn.trial.core.XrayCore.measureDelay(XrayCore.kt:81)
+10-26 10:37:28.936  3217  4769 E MvpnTrial: 	at co.asiven.vixentvpn.trial.ui.MainActivity.measure(MainActivity.kt:417)
+10-26 10:37:28.936  3217  4769 E MvpnTrial: 	at co.asiven.vixentvpn.trial.ui.MainActivity.access$measure(MainActivity.kt:61)
+10-26 10:37:28.936  3217  4769 E MvpnTrial: 	at co.asiven.vixentvpn.trial.ui.MainActivity$pingAll$2$1$1$1.invokeSuspend(MainActivity.kt:382)
+10-26 10:37:28.936  3217  4769 E MvpnTrial: 	at kotlin.coroutines.jvm.internal.BaseContinuationImpl.resumeWith(ContinuationImpl.kt:33)
+10-26 10:37:28.936  3217  4769 E MvpnTrial: 	at kotlinx.coroutines.DispatchedTask.run(DispatchedTask.kt:104)
+10-26 10:37:28.936  3217  4769 E MvpnTrial: 	at kotlinx.coroutines.internal.LimitedDispatcher$Worker.run(LimitedDispatcher.kt:111)
+10-26 10:37:28.936  3217  4769 E MvpnTrial: 	at kotlinx.coroutines.scheduling.TaskImpl.run(Tasks.kt:99)
+10-26 10:37:28.936  3217  4769 E MvpnTrial: 	at kotlinx.coroutines.scheduling.CoroutineScheduler.runSafely(CoroutineScheduler.kt:584)
+10-26 10:37:28.936  3217  4769 E MvpnTrial: 	at kotlinx.coroutines.scheduling.CoroutineScheduler$Worker.executeTask(CoroutineScheduler.kt:811)
+10-26 10:37:28.936  3217  4769 E MvpnTrial: 	at kotlinx.coroutines.scheduling.CoroutineScheduler$Worker.runWorker(CoroutineScheduler.kt:715)
+10-26 10:37:28.936  3217  4769 E MvpnTrial: 	at kotlinx.coroutines.scheduling.CoroutineScheduler$Worker.run(CoroutineScheduler.kt:702)
+10-26 10:37:28.982  3217  4811 E MvpnTrial: سنجش تأخیر ناموفق
+10-26 10:37:28.982  3217  4811 E MvpnTrial: go.Universe$proxyerror: config load error: infra/conf/serial: failed to parse json config > infra/conf: failed to build outbound config with tag proxy > infra/conf: vless without TLS or other encryption is prohibited unless the server address is a private IP or domain
+10-26 10:37:28.982  3217  4811 E MvpnTrial: 	at libv2ray.Libv2ray.measureOutboundDelay(Native Method)
+10-26 10:37:28.982  3217  4811 E MvpnTrial: 	at co.asiven.vixentvpn.trial.core.XrayCore.measureDelay(XrayCore.kt:81)
+10-26 10:37:28.982  3217  4811 E MvpnTrial: 	at co.asiven.vixentvpn.trial.ui.MainActivity.measure(MainActivity.kt:417)
+10-26 10:37:28.982  3217  4811 E MvpnTrial: 	at co.asiven.vixentvpn.trial.ui.MainActivity.access$measure(MainActivity.kt:61)
+10-26 10:37:28.982  3217  4811 E MvpnTrial: 	at co.asiven.vixentvpn.trial.ui.MainActivity$pingAll$2$1$1$1.invokeSuspend(MainActivity.kt:382)
+10-26 10:37:28.982  3217  4811 E MvpnTrial: 	at kotlin.coroutines.jvm.internal.BaseContinuationImpl.resumeWith(ContinuationImpl.kt:33)
+10-26 10:37:28.982  3217  4811 E MvpnTrial: 	at kotlinx.coroutines.DispatchedTask.run(DispatchedTask.kt:104)
+10-26 10:37:28.982  3217  4811 E MvpnTrial: 	at kotlinx.coroutines.internal.LimitedDispatcher$Worker.run(LimitedDispatcher.kt:111)
+10-26 10:37:28.982  3217  4811 E MvpnTrial: 	at kotlinx.coroutines.scheduling.TaskImpl.run(Tasks.kt:99)
+10-26 10:37:28.982  3217  4811 E MvpnTrial: 	at kotlinx.coroutines.scheduling.CoroutineScheduler.runSafely(CoroutineScheduler.kt:584)
+10-26 10:37:28.982  3217  4811 E MvpnTrial: 	at kotlinx.coroutines.scheduling.CoroutineScheduler$Worker.executeTask(CoroutineScheduler.kt:811)
+10-26 10:37:28.982  3217  4811 E MvpnTrial: 	at kotlinx.coroutines.scheduling.CoroutineScheduler$Worker.runWorker(CoroutineScheduler.kt:715)
+10-26 10:37:28.982  3217  4811 E MvpnTrial: 	at kotlinx.coroutines.scheduling.CoroutineScheduler$Worker.run(CoroutineScheduler.kt:702)
+10-26 10:37:29.000  3217  4769 D MvpnTrial: پینگ 🇸🇪 Sweden: -1 ms
+10-26 10:37:29.001  3217  4769 E MvpnTrial: سنجش تأخیر ناموفق
+10-26 10:37:29.001  3217  4769 E MvpnTrial: go.Universe$proxyerror: config load error: infra/conf/serial: failed to parse json config > infra/conf: failed to build outbound config with tag proxy > infra/conf: vless without TLS or other encryption is prohibited unless the server address is a private IP or domain
+10-26 10:37:29.001  3217  4769 E MvpnTrial: 	at libv2ray.Libv2ray.measureOutboundDelay(Native Method)
+10-26 10:37:29.001  3217  4769 E MvpnTrial: 	at co.asiven.vixentvpn.trial.core.XrayCore.measureDelay(XrayCore.kt:81)
+10-26 10:37:29.001  3217  4769 E MvpnTrial: 	at co.asiven.vixentvpn.trial.ui.MainActivity.measure(MainActivity.kt:417)
+10-26 10:37:29.001  3217  4769 E MvpnTrial: 	at co.asiven.vixentvpn.trial.ui.MainActivity.access$measure(MainActivity.kt:61)
+10-26 10:37:29.001  3217  4769 E MvpnTrial: 	at co.asiven.vixentvpn.trial.ui.MainActivity$pingAll$2$1$1$1.invokeSuspend(MainActivity.kt:382)
+10-26 10:37:29.001  3217  4769 E MvpnTrial: 	at kotlin.coroutines.jvm.internal.BaseContinuationImpl.resumeWith(ContinuationImpl.kt:33)
+10-26 10:37:29.001  3217  4769 E MvpnTrial: 	at kotlinx.coroutines.DispatchedTask.run(DispatchedTask.kt:104)
+10-26 10:37:29.001  3217  4769 E MvpnTrial: 	at kotlinx.coroutines.internal.LimitedDispatcher$Worker.run(LimitedDispatcher.kt:111)
+10-26 10:37:29.001  3217  4769 E MvpnTrial: 	at kotlinx.coroutines.scheduling.TaskImpl.run(Tasks.kt:99)
+10-26 10:37:29.001  3217  4769 E MvpnTrial: 	at kotlinx.coroutines.scheduling.CoroutineScheduler.runSafely(CoroutineScheduler.kt:584)
+10-26 10:37:29.001  3217  4769 E MvpnTrial: 	at kotlinx.coroutines.scheduling.CoroutineScheduler$Worker.executeTask(CoroutineScheduler.kt:811)
+10-26 10:37:29.001  3217  4769 E MvpnTrial: 	at kotlinx.coroutines.scheduling.CoroutineScheduler$Worker.runWorker(CoroutineScheduler.kt:715)
+10-26 10:37:29.001  3217  4769 E MvpnTrial: 	at kotlinx.coroutines.scheduling.CoroutineScheduler$Worker.run(CoroutineScheduler.kt:702)
+10-26 10:37:29.001  3217  4769 D MvpnTrial: پینگ 🇫🇷 France: -1 ms
+10-26 10:37:29.002  3217  4811 D MvpnTrial: پینگ 🇨🇦 Canada: -1 ms
+10-26 10:37:29.003  3217  4769 E MvpnTrial: سنجش تأخیر ناموفق
+10-26 10:37:29.003  3217  4769 E MvpnTrial: go.Universe$proxyerror: config load error: infra/conf/serial: failed to parse json config > infra/conf: failed to build outbound config with tag proxy > infra/conf: vless without TLS or other encryption is prohibited unless the server address is a private IP or domain
+10-26 10:37:29.003  3217  4769 E MvpnTrial: 	at libv2ray.Libv2ray.measureOutboundDelay(Native Method)
+10-26 10:37:29.003  3217  4769 E MvpnTrial: 	at co.asiven.vixentvpn.trial.core.XrayCore.measureDelay(XrayCore.kt:81)
+10-26 10:37:29.003  3217  4769 E MvpnTrial: 	at co.asiven.vixentvpn.trial.ui.MainActivity.measure(MainActivity.kt:417)
+10-26 10:37:29.003  3217  4769 E MvpnTrial: 	at co.asiven.vixentvpn.trial.ui.MainActivity.access$measure(MainActivity.kt:61)
+10-26 10:37:29.003  3217  4769 E MvpnTrial: 	at co.asiven.vixentvpn.trial.ui.MainActivity$pingAll$2$1$1$1.invokeSuspend(MainActivity.kt:382)
+10-26 10:37:29.003  3217  4769 E MvpnTrial: 	at kotlin.coroutines.jvm.internal.BaseContinuationImpl.resumeWith(ContinuationImpl.kt:33)
+10-26 10:37:29.003  3217  4769 E MvpnTrial: 	at kotlinx.coroutines.DispatchedTask.run(DispatchedTask.kt:104)
+10-26 10:37:29.003  3217  4769 E MvpnTrial: 	at kotlinx.coroutines.internal.LimitedDispatcher$Worker.run(LimitedDispatcher.kt:111)
+10-26 10:37:29.003  3217  4769 E MvpnTrial: 	at kotlinx.coroutines.scheduling.TaskImpl.run(Tasks.kt:99)
+10-26 10:37:29.003  3217  4769 E MvpnTrial: 	at kotlinx.coroutines.scheduling.CoroutineScheduler.runSafely(CoroutineScheduler.kt:584)
+10-26 10:37:29.003  3217  4769 E MvpnTrial: 	at kotlinx.coroutines.scheduling.CoroutineScheduler$Worker.executeTask(CoroutineScheduler.kt:811)
+10-26 10:37:29.003  3217  4769 E MvpnTrial: 	at kotlinx.coroutines.scheduling.CoroutineScheduler$Worker.runWorker(CoroutineScheduler.kt:715)
+10-26 10:37:29.003  3217  4769 E MvpnTrial: 	at kotlinx.coroutines.scheduling.CoroutineScheduler$Worker.run(CoroutineScheduler.kt:702)
+10-26 10:37:29.003  3217  4769 D MvpnTrial: پینگ 🇨🇦 Canada: -1 ms
+10-26 10:37:29.006  3217  3328 E MvpnTrial: سنجش تأخیر ناموفق
+10-26 10:37:29.006  3217  3328 E MvpnTrial: go.Universe$proxyerror: config load error: infra/conf/serial: failed to parse json config > infra/conf: failed to build outbound config with tag proxy > infra/conf: vless without TLS or other encryption is prohibited unless the server address is a private IP or domain
+10-26 10:37:29.006  3217  3328 E MvpnTrial: 	at libv2ray.Libv2ray.measureOutboundDelay(Native Method)
+10-26 10:37:29.006  3217  3328 E MvpnTrial: 	at co.asiven.vixentvpn.trial.core.XrayCore.measureDelay(XrayCore.kt:81)
+10-26 10:37:29.006  3217  3328 E MvpnTrial: 	at co.asiven.vixentvpn.trial.ui.MainActivity.measure(MainActivity.kt:417)
+10-26 10:37:29.006  3217  3328 E MvpnTrial: 	at co.asiven.vixentvpn.trial.ui.MainActivity.access$measure(MainActivity.kt:61)
+10-26 10:37:29.006  3217  3328 E MvpnTrial: 	at co.asiven.vixentvpn.trial.ui.MainActivity$pingAll$2$1$1$1.invokeSuspend(MainActivity.kt:382)
+10-26 10:37:29.006  3217  3328 E MvpnTrial: 	at kotlin.coroutines.jvm.internal.BaseContinuationImpl.resumeWith(ContinuationImpl.kt:33)
+10-26 10:37:29.006  3217  3328 E MvpnTrial: 	at kotlinx.coroutines.DispatchedTask.run(DispatchedTask.kt:104)
+10-26 10:37:29.006  3217  3328 E MvpnTrial: 	at kotlinx.coroutines.internal.LimitedDispatcher$Worker.run(LimitedDispatcher.kt:111)
+10-26 10:37:29.006  3217  3328 E MvpnTrial: 	at kotlinx.coroutines.scheduling.TaskImpl.run(Tasks.kt:99)
+10-26 10:37:29.006  3217  3328 E MvpnTrial: 	at kotlinx.coroutines.scheduling.CoroutineScheduler.runSafely(CoroutineScheduler.kt:584)
+10-26 10:37:29.006  3217  3328 E MvpnTrial: 	at kotlinx.coroutines.scheduling.CoroutineScheduler$Worker.executeTask(CoroutineScheduler.kt:811)
+10-26 10:37:29.006  3217  3328 E MvpnTrial: 	at kotlinx.coroutines.scheduling.CoroutineScheduler$Worker.runWorker(CoroutineScheduler.kt:715)
+10-26 10:37:29.006  3217  3328 E MvpnTrial: 	at kotlinx.coroutines.scheduling.CoroutineScheduler$Worker.run(CoroutineScheduler.kt:702)
+10-26 10:37:29.006  3217  3328 D MvpnTrial: پینگ 🇪🇸 Spain: -1 ms
+10-26 10:37:29.006  3217  3328 E MvpnTrial: سنجش تأخیر ناموفق
+10-26 10:37:29.006  3217  3328 E MvpnTrial: go.Universe$proxyerror: config load error: infra/conf/serial: failed to parse json config > infra/conf: failed to build outbound config with tag proxy > infra/conf: vless without TLS or other encryption is prohibited unless the server address is a private IP or domain
+10-26 10:37:29.006  3217  3328 E MvpnTrial: 	at libv2ray.Libv2ray.measureOutboundDelay(Native Method)
+10-26 10:37:29.006  3217  3328 E MvpnTrial: 	at co.asiven.vixentvpn.trial.core.XrayCore.measureDelay(XrayCore.kt:81)
+10-26 10:37:29.006  3217  3328 E MvpnTrial: 	at co.asiven.vixentvpn.trial.ui.MainActivity.measure(MainActivity.kt:417)
+10-26 10:37:29.006  3217  3328 E MvpnTrial: 	at co.asiven.vixentvpn.trial.ui.MainActivity.access$measure(MainActivity.kt:61)
+10-26 10:37:29.006  3217  3328 E MvpnTrial: 	at co.asiven.vixentvpn.trial.ui.MainActivity$pingAll$2$1$1$1.invokeSuspend(MainActivity.kt:382)
+10-26 10:37:29.006  3217  3328 E MvpnTrial: 	at kotlin.coroutines.jvm.internal.BaseContinuationImpl.resumeWith(ContinuationImpl.kt:33)
+10-26 10:37:29.006  3217  3328 E MvpnTrial: 	at kotlinx.coroutines.DispatchedTask.run(DispatchedTask.kt:104)
+10-26 10:37:29.006  3217  3328 E MvpnTrial: 	at kotlinx.coroutines.internal.LimitedDispatcher$Worker.run(LimitedDispatcher.kt:111)
+10-26 10:37:29.006  3217  3328 E MvpnTrial: 	at kotlinx.coroutines.scheduling.TaskImpl.run(Tasks.kt:99)
+10-26 10:37:29.006  3217  3328 E MvpnTrial: 	at kotlinx.coroutines.scheduling.CoroutineScheduler.runSafely(CoroutineScheduler.kt:584)
+10-26 10:37:29.006  3217  3328 E MvpnTrial: 	at kotlinx.coroutines.scheduling.CoroutineScheduler$Worker.executeTask(CoroutineScheduler.kt:811)
+10-26 10:37:29.006  3217  3328 E MvpnTrial: 	at kotlinx.coroutines.scheduling.CoroutineScheduler$Worker.runWorker(CoroutineScheduler.kt:715)
+10-26 10:37:29.006  3217  3328 E MvpnTrial: 	at kotlinx.coroutines.scheduling.CoroutineScheduler$Worker.run(CoroutineScheduler.kt:702)
+10-26 10:37:29.007  3217  3328 D MvpnTrial: پینگ 🇫🇷 France: -1 ms
+10-26 10:37:29.013  3217  4786 E MvpnTrial: سنجش تأخیر ناموفق
+10-26 10:37:29.013  3217  4786 E MvpnTrial: go.Universe$proxyerror: config load error: infra/conf/serial: failed to parse json config > infra/conf: failed to build outbound config with tag proxy > infra/conf: vless without TLS or other encryption is prohibited unless the server address is a private IP or domain
+10-26 10:37:29.013  3217  4786 E MvpnTrial: 	at libv2ray.Libv2ray.measureOutboundDelay(Native Method)
+10-26 10:37:29.013  3217  4786 E MvpnTrial: 	at co.asiven.vixentvpn.trial.core.XrayCore.measureDelay(XrayCore.kt:81)
+10-26 10:37:29.013  3217  4786 E MvpnTrial: 	at co.asiven.vixentvpn.trial.ui.MainActivity.measure(MainActivity.kt:417)
+10-26 10:37:29.013  3217  4786 E MvpnTrial: 	at co.asiven.vixentvpn.trial.ui.MainActivity.access$measure(MainActivity.kt:61)
+10-26 10:37:29.013  3217  4786 E MvpnTrial: 	at co.asiven.vixentvpn.trial.ui.MainActivity$pingAll$2$1$1$1.invokeSuspend(MainActivity.kt:382)
+10-26 10:37:29.013  3217  4786 E MvpnTrial: 	at kotlin.coroutines.jvm.internal.BaseContinuationImpl.resumeWith(ContinuationImpl.kt:33)
+10-26 10:37:29.013  3217  4786 E MvpnTrial: 	at kotlinx.coroutines.DispatchedTask.run(DispatchedTask.kt:104)
+10-26 10:37:29.013  3217  4786 E MvpnTrial: 	at kotlinx.coroutines.internal.LimitedDispatcher$Worker.run(LimitedDispatcher.kt:111)
+10-26 10:37:29.013  3217  4786 E MvpnTrial: 	at kotlinx.coroutines.scheduling.TaskImpl.run(Tasks.kt:99)
+10-26 10:37:29.013  3217  4786 E MvpnTrial: 	at kotlinx.coroutines.scheduling.CoroutineScheduler.runSafely(CoroutineScheduler.kt:584)
+10-26 10:37:29.013  3217  4786 E MvpnTrial: 	at kotlinx.coroutines.scheduling.CoroutineScheduler$Worker.executeTask(CoroutineScheduler.kt:811)
+10-26 10:37:29.013  3217  4786 E MvpnTrial: 	at kotlinx.coroutines.scheduling.CoroutineScheduler$Worker.runWorker(CoroutineScheduler.kt:715)
+10-26 10:37:29.013  3217  4786 E MvpnTrial: 	at kotlinx.coroutines.scheduling.CoroutineScheduler$Worker.run(CoroutineScheduler.kt:702)
+10-26 10:37:29.013  3217  4786 D MvpnTrial: پینگ 🇫🇷 France: -1 ms
+10-26 10:37:29.013  3217  4786 E MvpnTrial: سنجش تأخیر ناموفق
+10-26 10:37:29.013  3217  4786 E MvpnTrial: go.Universe$proxyerror: config load error: infra/conf/serial: failed to parse json config > infra/conf: failed to build outbound config with tag proxy > infra/conf: vless without TLS or other encryption is prohibited unless the server address is a private IP or domain
+10-26 10:37:29.013  3217  4786 E MvpnTrial: 	at libv2ray.Libv2ray.measureOutboundDelay(Native Method)
+10-26 10:37:29.013  3217  4786 E MvpnTrial: 	at co.asiven.vixentvpn.trial.core.XrayCore.measureDelay(XrayCore.kt:81)
+10-26 10:37:29.013  3217  4786 E MvpnTrial: 	at co.asiven.vixentvpn.trial.ui.MainActivity.measure(MainActivity.kt:417)
+10-26 10:37:29.013  3217  4786 E MvpnTrial: 	at co.asiven.vixentvpn.trial.ui.MainActivity.access$measure(MainActivity.kt:61)
+10-26 10:37:29.013  3217  4786 E MvpnTrial: 	at co.asiven.vixentvpn.trial.ui.MainActivity$pingAll$2$1$1$1.invokeSuspend(MainActivity.kt:382)
+10-26 10:37:29.013  3217  4786 E MvpnTrial: 	at kotlin.coroutines.jvm.internal.BaseContinuationImpl.resumeWith(ContinuationImpl.kt:33)
+10-26 10:37:29.013  3217  4786 E MvpnTrial: 	at kotlinx.coroutines.DispatchedTask.run(DispatchedTask.kt:104)
+10-26 10:37:29.013  3217  4786 E MvpnTrial: 	at kotlinx.coroutines.internal.LimitedDispatcher$Worker.run(LimitedDispatcher.kt:111)
+10-26 10:37:29.013  3217  4786 E MvpnTrial: 	at kotlinx.coroutines.scheduling.TaskImpl.run(Tasks.kt:99)
+10-26 10:37:29.013  3217  4786 E MvpnTrial: 	at kotlinx.coroutines.scheduling.CoroutineScheduler.runSafely(CoroutineScheduler.kt:584)
+10-26 10:37:29.013  3217  4786 E MvpnTrial: 	at kotlinx.coroutines.scheduling.CoroutineScheduler$Worker.executeTask(CoroutineScheduler.kt:811)
+10-26 10:37:29.013  3217  4786 E MvpnTrial: 	at kotlinx.coroutines.scheduling.CoroutineScheduler$Worker.runWorker(CoroutineScheduler.kt:715)
+10-26 10:37:29.013  3217  4786 E MvpnTrial: 	at kotlinx.coroutines.scheduling.CoroutineScheduler$Worker.run(CoroutineScheduler.kt:702)
+10-26 10:37:29.014  3217  4786 D MvpnTrial: پینگ 🇺🇸 United States: -1 ms
+10-26 10:37:29.014  3217  4786 E MvpnTrial: سنجش تأخیر ناموفق
+10-26 10:37:29.014  3217  4786 E MvpnTrial: go.Universe$proxyerror: config load error: infra/conf/serial: failed to parse json config > infra/conf: failed to build outbound config with tag proxy > infra/conf: vless without TLS or other encryption is prohibited unless the server address is a private IP or domain
+10-26 10:37:29.014  3217  4786 E MvpnTrial: 	at libv2ray.Libv2ray.measureOutboundDelay(Native Method)
+10-26 10:37:29.014  3217  4786 E MvpnTrial: 	at co.asiven.vixentvpn.trial.core.XrayCore.measureDelay(XrayCore.kt:81)
+10-26 10:37:29.014  3217  4786 E MvpnTrial: 	at co.asiven.vixentvpn.trial.ui.MainActivity.measure(MainActivity.kt:417)
+10-26 10:37:29.014  3217  4786 E MvpnTrial: 	at co.asiven.vixentvpn.trial.ui.MainActivity.access$measure(MainActivity.kt:61)
+10-26 10:37:29.014  3217  4786 E MvpnTrial: 	at co.asiven.vixentvpn.trial.ui.MainActivity$pingAll$2$1$1$1.invokeSuspend(MainActivity.kt:382)
+10-26 10:37:29.014  3217  4786 E MvpnTrial: 	at kotlin.coroutines.jvm.internal.BaseContinuationImpl.resumeWith(ContinuationImpl.kt:33)
+10-26 10:37:29.014  3217  4786 E MvpnTrial: 	at kotlinx.coroutines.DispatchedTask.run(DispatchedTask.kt:104)
+10-26 10:37:29.014  3217  4786 E MvpnTrial: 	at kotlinx.coroutines.internal.LimitedDispatcher$Worker.run(LimitedDispatcher.kt:111)
+10-26 10:37:29.014  3217  4786 E MvpnTrial: 	at kotlinx.coroutines.scheduling.TaskImpl.run(Tasks.kt:99)
+10-26 10:37:29.014  3217  4786 E MvpnTrial: 	at kotlinx.coroutines.scheduling.CoroutineScheduler.runSafely(CoroutineScheduler.kt:584)
+10-26 10:37:29.014  3217  4786 E MvpnTrial: 	at kotlinx.coroutines.scheduling.CoroutineScheduler$Worker.executeTask(CoroutineScheduler.kt:811)
+10-26 10:37:29.014  3217  4786 E MvpnTrial: 	at kotlinx.coroutines.scheduling.CoroutineScheduler$Worker.runWorker(CoroutineScheduler.kt:715)
+10-26 10:37:29.014  3217  4786 E MvpnTrial: 	at kotlinx.coroutines.scheduling.CoroutineScheduler$Worker.run(CoroutineScheduler.kt:702)
+10-26 10:37:29.014  3217  4786 D MvpnTrial: پینگ 🇸🇪 Sweden: -1 ms
+10-26 10:37:29.022  3217  4827 E MvpnTrial: سنجش تأخیر ناموفق
+10-26 10:37:29.022  3217  4827 E MvpnTrial: go.Universe$proxyerror: config load error: infra/conf/serial: failed to parse json config > infra/conf: failed to build outbound config with tag proxy > infra/conf: vless without TLS or other encryption is prohibited unless the server address is a private IP or domain
+10-26 10:37:29.022  3217  4827 E MvpnTrial: 	at libv2ray.Libv2ray.measureOutboundDelay(Native Method)
+10-26 10:37:29.022  3217  4827 E MvpnTrial: 	at co.asiven.vixentvpn.trial.core.XrayCore.measureDelay(XrayCore.kt:81)
+10-26 10:37:29.022  3217  4827 E MvpnTrial: 	at co.asiven.vixentvpn.trial.ui.MainActivity.measure(MainActivity.kt:417)
+10-26 10:37:29.022  3217  4827 E MvpnTrial: 	at co.asiven.vixentvpn.trial.ui.MainActivity.access$measure(MainActivity.kt:61)
+10-26 10:37:29.022  3217  4827 E MvpnTrial: 	at co.asiven.vixentvpn.trial.ui.MainActivity$pingAll$2$1$1$1.invokeSuspend(MainActivity.kt:382)
+10-26 10:37:29.022  3217  4827 E MvpnTrial: 	at kotlin.coroutines.jvm.internal.BaseContinuationImpl.resumeWith(ContinuationImpl.kt:33)
+10-26 10:37:29.022  3217  4827 E MvpnTrial: 	at kotlinx.coroutines.DispatchedTask.run(DispatchedTask.kt:104)
+10-26 10:37:29.022  3217  4827 E MvpnTrial: 	at kotlinx.coroutines.internal.LimitedDispatcher$Worker.run(LimitedDispatcher.kt:111)
+10-26 10:37:29.022  3217  4827 E MvpnTrial: 	at kotlinx.coroutines.scheduling.TaskImpl.run(Tasks.kt:99)
+10-26 10:37:29.022  3217  4827 E MvpnTrial: 	at kotlinx.coroutines.scheduling.CoroutineScheduler.runSafely(CoroutineScheduler.kt:584)
+10-26 10:37:29.022  3217  4827 E MvpnTrial: 	at kotlinx.coroutines.scheduling.CoroutineScheduler$Worker.executeTask(CoroutineScheduler.kt:811)
+10-26 10:37:29.022  3217  4827 E MvpnTrial: 	at kotlinx.coroutines.scheduling.CoroutineScheduler$Worker.runWorker(CoroutineScheduler.kt:715)
+10-26 10:37:29.022  3217  4827 E MvpnTrial: 	at kotlinx.coroutines.scheduling.CoroutineScheduler$Worker.run(CoroutineScheduler.kt:702)
+10-26 10:37:29.022  3217  4827 D MvpnTrial: پینگ 🇺🇸 United States: -1 ms
+10-26 10:37:29.023  3217  4827 E MvpnTrial: سنجش تأخیر ناموفق
+10-26 10:37:29.023  3217  4827 E MvpnTrial: go.Universe$proxyerror: config load error: infra/conf/serial: failed to parse json config > infra/conf: failed to build outbound config with tag proxy > infra/conf: vless without TLS or other encryption is prohibited unless the server address is a private IP or domain
+10-26 10:37:29.023  3217  4827 E MvpnTrial: 	at libv2ray.Libv2ray.measureOutboundDelay(Native Method)
+10-26 10:37:29.023  3217  4827 E MvpnTrial: 	at co.asiven.vixentvpn.trial.core.XrayCore.measureDelay(XrayCore.kt:81)
+10-26 10:37:29.023  3217  4827 E MvpnTrial: 	at co.asiven.vixentvpn.trial.ui.MainActivity.measure(MainActivity.kt:417)
+10-26 10:37:29.023  3217  4827 E MvpnTrial: 	at co.asiven.vixentvpn.trial.ui.MainActivity.access$measure(MainActivity.kt:61)
+10-26 10:37:29.023  3217  4827 E MvpnTrial: 	at co.asiven.vixentvpn.trial.ui.MainActivity$pingAll$2$1$1$1.invokeSuspend(MainActivity.kt:382)
+10-26 10:37:29.023  3217  4827 E MvpnTrial: 	at kotlin.coroutines.jvm.internal.BaseContinuationImpl.resumeWith(ContinuationImpl.kt:33)
+10-26 10:37:29.023  3217  4827 E MvpnTrial: 	at kotlinx.coroutines.DispatchedTask.run(DispatchedTask.kt:104)
+10-26 10:37:29.023  3217  4827 E MvpnTrial: 	at kotlinx.coroutines.internal.LimitedDispatcher$Worker.run(LimitedDispatcher.kt:111)
+10-26 10:37:29.023  3217  4827 E MvpnTrial: 	at kotlinx.coroutines.scheduling.TaskImpl.run(Tasks.kt:99)
+10-26 10:37:29.023  3217  4827 E MvpnTrial: 	at kotlinx.coroutines.scheduling.CoroutineScheduler.runSafely(CoroutineScheduler.kt:584)
+10-26 10:37:29.023  3217  4827 E MvpnTrial: 	at kotlinx.coroutines.scheduling.CoroutineScheduler$Worker.executeTask(CoroutineScheduler.kt:811)
+10-26 10:37:29.023  3217  4827 E MvpnTrial: 	at kotlinx.coroutines.scheduling.CoroutineScheduler$Worker.runWorker(CoroutineScheduler.kt:715)
+10-26 10:37:29.023  3217  4827 E MvpnTrial: 	at kotlinx.coroutines.scheduling.CoroutineScheduler$Worker.run(CoroutineScheduler.kt:702)
+10-26 10:37:29.024  3217  4827 D MvpnTrial: پینگ 🇪🇸 Spain: -1 ms
+10-26 10:37:29.025  3217  4827 E MvpnTrial: سنجش تأخیر ناموفق
+10-26 10:37:29.025  3217  4827 E MvpnTrial: go.Universe$proxyerror: config load error: infra/conf/serial: failed to parse json config > infra/conf: failed to build outbound config with tag proxy > infra/conf: vless without TLS or other encryption is prohibited unless the server address is a private IP or domain
+10-26 10:37:29.025  3217  4827 E MvpnTrial: 	at libv2ray.Libv2ray.measureOutboundDelay(Native Method)
+10-26 10:37:29.025  3217  4827 E MvpnTrial: 	at co.asiven.vixentvpn.trial.core.XrayCore.measureDelay(XrayCore.kt:81)
+10-26 10:37:29.025  3217  4827 E MvpnTrial: 	at co.asiven.vixentvpn.trial.ui.MainActivity.measure(MainActivity.kt:417)
+10-26 10:37:29.025  3217  4827 E MvpnTrial: 	at co.asiven.vixentvpn.trial.ui.MainActivity.access$measure(MainActivity.kt:61)
+10-26 10:37:29.025  3217  4827 E MvpnTrial: 	at co.asiven.vixentvpn.trial.ui.MainActivity$pingAll$2$1$1$1.invokeSuspend(MainActivity.kt:382)
+10-26 10:37:29.025  3217  4827 E MvpnTrial: 	at kotlin.coroutines.jvm.internal.BaseContinuationImpl.resumeWith(ContinuationImpl.kt:33)
+10-26 10:37:29.025  3217  4827 E MvpnTrial: 	at kotlinx.coroutines.DispatchedTask.run(DispatchedTask.kt:104)
+10-26 10:37:29.025  3217  4827 E MvpnTrial: 	at kotlinx.coroutines.internal.LimitedDispatcher$Worker.run(LimitedDispatcher.kt:111)
+10-26 10:37:29.025  3217  4827 E MvpnTrial: 	at kotlinx.coroutines.scheduling.TaskImpl.run(Tasks.kt:99)
+10-26 10:37:29.025  3217  4827 E MvpnTrial: 	at kotlinx.coroutines.scheduling.CoroutineScheduler.runSafely(CoroutineScheduler.kt:584)
+10-26 10:37:29.025  3217  4827 E MvpnTrial: 	at kotlinx.coroutines.scheduling.CoroutineScheduler$Worker.executeTask(CoroutineScheduler.kt:811)
+10-26 10:37:29.025  3217  4827 E MvpnTrial: 	at kotlinx.coroutines.scheduling.CoroutineScheduler$Worker.runWorker(CoroutineScheduler.kt:715)
+10-26 10:37:29.025  3217  4827 E MvpnTrial: 	at kotlinx.coroutines.scheduling.CoroutineScheduler$Worker.run(CoroutineScheduler.kt:702)
+10-26 10:37:29.026  3217  4827 D MvpnTrial: پینگ 🇸🇪 Sweden: -1 ms
+10-26 10:37:29.029  3217  4827 E MvpnTrial: سنجش تأخیر ناموفق
+10-26 10:37:29.029  3217  4827 E MvpnTrial: go.Universe$proxyerror: config load error: infra/conf/serial: failed to parse json config > infra/conf: failed to build outbound config with tag proxy > infra/conf: vless without TLS or other encryption is prohibited unless the server address is a private IP or domain
+10-26 10:37:29.029  3217  4827 E MvpnTrial: 	at libv2ray.Libv2ray.measureOutboundDelay(Native Method)
+10-26 10:37:29.029  3217  4827 E MvpnTrial: 	at co.asiven.vixentvpn.trial.core.XrayCore.measureDelay(XrayCore.kt:81)
+10-26 10:37:29.029  3217  4827 E MvpnTrial: 	at co.asiven.vixentvpn.trial.ui.MainActivity.measure(MainActivity.kt:417)
+10-26 10:37:29.029  3217  4827 E MvpnTrial: 	at co.asiven.vixentvpn.trial.ui.MainActivity.access$measure(MainActivity.kt:61)
+10-26 10:37:29.029  3217  4827 E MvpnTrial: 	at co.asiven.vixentvpn.trial.ui.MainActivity$pingAll$2$1$1$1.invokeSuspend(MainActivity.kt:382)
+10-26 10:37:29.029  3217  4827 E MvpnTrial: 	at kotlin.coroutines.jvm.internal.BaseContinuationImpl.resumeWith(ContinuationImpl.kt:33)
+10-26 10:37:29.029  3217  4827 E MvpnTrial: 	at kotlinx.coroutines.DispatchedTask.run(DispatchedTask.kt:104)
+10-26 10:37:29.029  3217  4827 E MvpnTrial: 	at kotlinx.coroutines.internal.LimitedDispatcher$Worker.run(LimitedDispatcher.kt:111)
+10-26 10:37:29.029  3217  4827 E MvpnTrial: 	at kotlinx.coroutines.scheduling.TaskImpl.run(Tasks.kt:99)
+10-26 10:37:29.029  3217  4827 E MvpnTrial: 	at kotlinx.coroutines.scheduling.CoroutineScheduler.runSafely(CoroutineScheduler.kt:584)
+10-26 10:37:29.029  3217  4827 E MvpnTrial: 	at kotlinx.coroutines.scheduling.CoroutineScheduler$Worker.executeTask(CoroutineScheduler.kt:811)
+10-26 10:37:29.029  3217  4827 E MvpnTrial: 	at kotlinx.coroutines.scheduling.CoroutineScheduler$Worker.runWorker(CoroutineScheduler.kt:715)
+10-26 10:37:29.029  3217  4827 E MvpnTrial: 	at kotlinx.coroutines.scheduling.CoroutineScheduler$Worker.run(CoroutineScheduler.kt:702)
+10-26 10:37:29.033  3217  4827 D MvpnTrial: پینگ 🇺🇸 United States: -1 ms
+10-26 10:37:29.048  3217  4812 E MvpnTrial: سنجش تأخیر ناموفق
+10-26 10:37:29.048  3217  4812 E MvpnTrial: go.Universe$proxyerror: config load error: infra/conf/serial: failed to parse json config > infra/conf: failed to build outbound config with tag proxy > infra/conf: vless without TLS or other encryption is prohibited unless the server address is a private IP or domain
+10-26 10:37:29.048  3217  4812 E MvpnTrial: 	at libv2ray.Libv2ray.measureOutboundDelay(Native Method)
+10-26 10:37:29.048  3217  4812 E MvpnTrial: 	at co.asiven.vixentvpn.trial.core.XrayCore.measureDelay(XrayCore.kt:81)
+10-26 10:37:29.048  3217  4812 E MvpnTrial: 	at co.asiven.vixentvpn.trial.ui.MainActivity.measure(MainActivity.kt:417)
+10-26 10:37:29.048  3217  4812 E MvpnTrial: 	at co.asiven.vixentvpn.trial.ui.MainActivity.access$measure(MainActivity.kt:61)
+10-26 10:37:29.048  3217  4812 E MvpnTrial: 	at co.asiven.vixentvpn.trial.ui.MainActivity$pingAll$2$1$1$1.invokeSuspend(MainActivity.kt:382)
+10-26 10:37:29.048  3217  4812 E MvpnTrial: 	at kotlin.coroutines.jvm.internal.BaseContinuationImpl.resumeWith(ContinuationImpl.kt:33)
+10-26 10:37:29.048  3217  4812 E MvpnTrial: 	at kotlinx.coroutines.DispatchedTask.run(DispatchedTask.kt:104)
+10-26 10:37:29.048  3217  4812 E MvpnTrial: 	at kotlinx.coroutines.internal.LimitedDispatcher$Worker.run(LimitedDispatcher.kt:111)
+10-26 10:37:29.048  3217  4812 E MvpnTrial: 	at kotlinx.coroutines.scheduling.TaskImpl.run(Tasks.kt:99)
+10-26 10:37:29.048  3217  4812 E MvpnTrial: 	at kotlinx.coroutines.scheduling.CoroutineScheduler.runSafely(CoroutineScheduler.kt:584)
+10-26 10:37:29.048  3217  4812 E MvpnTrial: 	at kotlinx.coroutines.scheduling.CoroutineScheduler$Worker.executeTask(CoroutineScheduler.kt:811)
+10-26 10:37:29.048  3217  4812 E MvpnTrial: 	at kotlinx.coroutines.scheduling.CoroutineScheduler$Worker.runWorker(CoroutineScheduler.kt:715)
+10-26 10:37:29.048  3217  4812 E MvpnTrial: 	at kotlinx.coroutines.scheduling.CoroutineScheduler$Worker.run(CoroutineScheduler.kt:702)
+10-26 10:37:29.048  3217  4812 D MvpnTrial: پینگ 🇫🇷 France: -1 ms
+10-26 10:37:29.049  3217  3328 E MvpnTrial: سنجش تأخیر ناموفق
+10-26 10:37:29.049  3217  3328 E MvpnTrial: go.Universe$proxyerror: config load error: infra/conf/serial: failed to parse json config > infra/conf: failed to build outbound config with tag proxy > infra/conf: vless without TLS or other encryption is prohibited unless the server address is a private IP or domain
+10-26 10:37:29.049  3217  3328 E MvpnTrial: 	at libv2ray.Libv2ray.measureOutboundDelay(Native Method)
+10-26 10:37:29.049  3217  3328 E MvpnTrial: 	at co.asiven.vixentvpn.trial.core.XrayCore.measureDelay(XrayCore.kt:81)
+10-26 10:37:29.049  3217  3328 E MvpnTrial: 	at co.asiven.vixentvpn.trial.ui.MainActivity.measure(MainActivity.kt:417)
+10-26 10:37:29.049  3217  3328 E MvpnTrial: 	at co.asiven.vixentvpn.trial.ui.MainActivity.access$measure(MainActivity.kt:61)
+10-26 10:37:29.049  3217  3328 E MvpnTrial: 	at co.asiven.vixentvpn.trial.ui.MainActivity$pingAll$2$1$1$1.invokeSuspend(MainActivity.kt:382)
+10-26 10:37:29.049  3217  3328 E MvpnTrial: 	at kotlin.coroutines.jvm.internal.BaseContinuationImpl.resumeWith(ContinuationImpl.kt:33)
+10-26 10:37:29.049  3217  3328 E MvpnTrial: 	at kotlinx.coroutines.DispatchedTask.run(DispatchedTask.kt:104)
+10-26 10:37:29.049  3217  3328 E MvpnTrial: 	at kotlinx.coroutines.internal.LimitedDispatcher$Worker.run(LimitedDispatcher.kt:111)
+10-26 10:37:29.049  3217  3328 E MvpnTrial: 	at kotlinx.coroutines.scheduling.TaskImpl.run(Tasks.kt:99)
+10-26 10:37:29.049  3217  3328 E MvpnTrial: 	at kotlinx.coroutines.scheduling.CoroutineScheduler.runSafely(CoroutineScheduler.kt:584)
+10-26 10:37:29.049  3217  3328 E MvpnTrial: 	at kotlinx.coroutines.scheduling.CoroutineScheduler$Worker.executeTask(CoroutineScheduler.kt:811)
+10-26 10:37:29.049  3217  3328 E MvpnTrial: 	at kotlinx.coroutines.scheduling.CoroutineScheduler$Worker.runWorker(CoroutineScheduler.kt:715)
+10-26 10:37:29.049  3217  3328 E MvpnTrial: 	at kotlinx.coroutines.scheduling.CoroutineScheduler$Worker.run(CoroutineScheduler.kt:702)
+10-26 10:37:29.051  3217  3328 D MvpnTrial: پینگ 🇺🇸 United States: -1 ms
+10-26 10:37:29.058  3217  4827 E MvpnTrial: سنجش تأخیر ناموفق
+10-26 10:37:29.058  3217  4827 E MvpnTrial: go.Universe$proxyerror: config load error: infra/conf/serial: failed to parse json config > infra/conf: failed to build outbound config with tag proxy > infra/conf: vless without TLS or other encryption is prohibited unless the server address is a private IP or domain
+10-26 10:37:29.058  3217  4827 E MvpnTrial: 	at libv2ray.Libv2ray.measureOutboundDelay(Native Method)
+10-26 10:37:29.058  3217  4827 E MvpnTrial: 	at co.asiven.vixentvpn.trial.core.XrayCore.measureDelay(XrayCore.kt:81)
+10-26 10:37:29.058  3217  4827 E MvpnTrial: 	at co.asiven.vixentvpn.trial.ui.MainActivity.measure(MainActivity.kt:417)
+10-26 10:37:29.058  3217  4827 E MvpnTrial: 	at co.asiven.vixentvpn.trial.ui.MainActivity.access$measure(MainActivity.kt:61)
+10-26 10:37:29.058  3217  4827 E MvpnTrial: 	at co.asiven.vixentvpn.trial.ui.MainActivity$pingAll$2$1$1$1.invokeSuspend(MainActivity.kt:382)
+10-26 10:37:29.058  3217  4827 E MvpnTrial: 	at kotlin.coroutines.jvm.internal.BaseContinuationImpl.resumeWith(ContinuationImpl.kt:33)
+10-26 10:37:29.058  3217  4827 E MvpnTrial: 	at kotlinx.coroutines.DispatchedTask.run(DispatchedTask.kt:104)
+10-26 10:37:29.058  3217  4827 E MvpnTrial: 	at kotlinx.coroutines.internal.LimitedDispatcher$Worker.run(LimitedDispatcher.kt:111)
+10-26 10:37:29.058  3217  4827 E MvpnTrial: 	at kotlinx.coroutines.scheduling.TaskImpl.run(Tasks.kt:99)
+10-26 10:37:29.058  3217  4827 E MvpnTrial: 	at kotlinx.coroutines.scheduling.CoroutineScheduler.runSafely(CoroutineScheduler.kt:584)
+10-26 10:37:29.058  3217  4827 E MvpnTrial: 	at kotlinx.coroutines.scheduling.CoroutineScheduler$Worker.executeTask(CoroutineScheduler.kt:811)
+10-26 10:37:29.058  3217  4827 E MvpnTrial: 	at kotlinx.coroutines.scheduling.CoroutineScheduler$Worker.runWorker(CoroutineScheduler.kt:715)
+10-26 10:37:29.058  3217  4827 E MvpnTrial: 	at kotlinx.coroutines.scheduling.CoroutineScheduler$Worker.run(CoroutineScheduler.kt:702)
+10-26 10:37:29.066  3217  4827 D MvpnTrial: پینگ 🇺🇸 United States: -1 ms
+10-26 10:37:29.757  3217  4822 D MvpnTrial: پینگ 🇺🇸 United States: 30 ms
+10-26 10:37:29.857  3217  4786 D MvpnTrial: پینگ 🇨🇦 Canada: 81 ms
+10-26 10:37:29.861  3217  4786 E MvpnTrial: سنجش تأخیر ناموفق
+10-26 10:37:29.861  3217  4786 E MvpnTrial: go.Universe$proxyerror: config load error: infra/conf/serial: failed to parse json config > infra/conf: failed to build outbound config with tag proxy > infra/conf: vless without TLS or other encryption is prohibited unless the server address is a private IP or domain
+10-26 10:37:29.861  3217  4786 E MvpnTrial: 	at libv2ray.Libv2ray.measureOutboundDelay(Native Method)
+10-26 10:37:29.861  3217  4786 E MvpnTrial: 	at co.asiven.vixentvpn.trial.core.XrayCore.measureDelay(XrayCore.kt:81)
+10-26 10:37:29.861  3217  4786 E MvpnTrial: 	at co.asiven.vixentvpn.trial.ui.MainActivity.measure(MainActivity.kt:417)
+10-26 10:37:29.861  3217  4786 E MvpnTrial: 	at co.asiven.vixentvpn.trial.ui.MainActivity.access$measure(MainActivity.kt:61)
+10-26 10:37:29.861  3217  4786 E MvpnTrial: 	at co.asiven.vixentvpn.trial.ui.MainActivity$pingAll$2$1$1$1.invokeSuspend(MainActivity.kt:382)
+10-26 10:37:29.861  3217  4786 E MvpnTrial: 	at kotlin.coroutines.jvm.internal.BaseContinuationImpl.resumeWith(ContinuationImpl.kt:33)
+10-26 10:37:29.861  3217  4786 E MvpnTrial: 	at kotlinx.coroutines.DispatchedTask.run(DispatchedTask.kt:104)
+10-26 10:37:29.861  3217  4786 E MvpnTrial: 	at kotlinx.coroutines.internal.LimitedDispatcher$Worker.run(LimitedDispatcher.kt:111)
+10-26 10:37:29.861  3217  4786 E MvpnTrial: 	at kotlinx.coroutines.scheduling.TaskImpl.run(Tasks.kt:99)
+10-26 10:37:29.861  3217  4786 E MvpnTrial: 	at kotlinx.coroutines.scheduling.CoroutineScheduler.runSafely(CoroutineScheduler.kt:584)
+10-26 10:37:29.861  3217  4786 E MvpnTrial: 	at kotlinx.coroutines.scheduling.CoroutineScheduler$Worker.executeTask(CoroutineScheduler.kt:811)
+10-26 10:37:29.861  3217  4786 E MvpnTrial: 	at kotlinx.coroutines.scheduling.CoroutineScheduler$Worker.runWorker(CoroutineScheduler.kt:715)
+10-26 10:37:29.861  3217  4786 E MvpnTrial: 	at kotlinx.coroutines.scheduling.CoroutineScheduler$Worker.run(CoroutineScheduler.kt:702)
+10-26 10:37:29.862  3217  4786 D MvpnTrial: پینگ 🇺🇸 United States: -1 ms
+10-26 10:37:29.864  3217  4786 E MvpnTrial: سنجش تأخیر ناموفق
+10-26 10:37:29.864  3217  4786 E MvpnTrial: go.Universe$proxyerror: config load error: infra/conf/serial: failed to parse json config > infra/conf: failed to build outbound config with tag proxy > infra/conf: vless without TLS or other encryption is prohibited unless the server address is a private IP or domain
+10-26 10:37:29.864  3217  4786 E MvpnTrial: 	at libv2ray.Libv2ray.measureOutboundDelay(Native Method)
+10-26 10:37:29.864  3217  4786 E MvpnTrial: 	at co.asiven.vixentvpn.trial.core.XrayCore.measureDelay(XrayCore.kt:81)
+10-26 10:37:29.864  3217  4786 E MvpnTrial: 	at co.asiven.vixentvpn.trial.ui.MainActivity.measure(MainActivity.kt:417)
+10-26 10:37:29.864  3217  4786 E MvpnTrial: 	at co.asiven.vixentvpn.trial.ui.MainActivity.access$measure(MainActivity.kt:61)
+10-26 10:37:29.864  3217  4786 E MvpnTrial: 	at co.asiven.vixentvpn.trial.ui.MainActivity$pingAll$2$1$1$1.invokeSuspend(MainActivity.kt:382)
+10-26 10:37:29.864  3217  4786 E MvpnTrial: 	at kotlin.coroutines.jvm.internal.BaseContinuationImpl.resumeWith(ContinuationImpl.kt:33)
+10-26 10:37:29.864  3217  4786 E MvpnTrial: 	at kotlinx.coroutines.DispatchedTask.run(DispatchedTask.kt:104)
+10-26 10:37:29.864  3217  4786 E MvpnTrial: 	at kotlinx.coroutines.internal.LimitedDispatcher$Worker.run(LimitedDispatcher.kt:111)
+10-26 10:37:29.864  3217  4786 E MvpnTrial: 	at kotlinx.coroutines.scheduling.TaskImpl.run(Tasks.kt:99)
+10-26 10:37:29.864  3217  4786 E MvpnTrial: 	at kotlinx.coroutines.scheduling.CoroutineScheduler.runSafely(CoroutineScheduler.kt:584)
+10-26 10:37:29.864  3217  4786 E MvpnTrial: 	at kotlinx.coroutines.scheduling.CoroutineScheduler$Worker.executeTask(CoroutineScheduler.kt:811)
+10-26 10:37:29.864  3217  4786 E MvpnTrial: 	at kotlinx.coroutines.scheduling.CoroutineScheduler$Worker.runWorker(CoroutineScheduler.kt:715)
+10-26 10:37:29.864  3217  4786 E MvpnTrial: 	at kotlinx.coroutines.scheduling.CoroutineScheduler$Worker.run(CoroutineScheduler.kt:702)
+10-26 10:37:29.871  3217  4786 D MvpnTrial: پینگ 🇺🇸 United States: -1 ms
+10-26 10:37:29.877  3217  3328 E MvpnTrial: سنجش تأخیر ناموفق
+10-26 10:37:29.877  3217  3328 E MvpnTrial: go.Universe$proxyerror: config load error: infra/conf/serial: failed to parse json config > infra/conf: failed to build outbound config with tag proxy > infra/conf: vless without TLS or other encryption is prohibited unless the server address is a private IP or domain
+10-26 10:37:29.877  3217  3328 E MvpnTrial: 	at libv2ray.Libv2ray.measureOutboundDelay(Native Method)
+10-26 10:37:29.877  3217  3328 E MvpnTrial: 	at co.asiven.vixentvpn.trial.core.XrayCore.measureDelay(XrayCore.kt:81)
+10-26 10:37:29.877  3217  3328 E MvpnTrial: 	at co.asiven.vixentvpn.trial.ui.MainActivity.measure(MainActivity.kt:417)
+10-26 10:37:29.877  3217  3328 E MvpnTrial: 	at co.asiven.vixentvpn.trial.ui.MainActivity.access$measure(MainActivity.kt:61)
+10-26 10:37:29.877  3217  3328 E MvpnTrial: 	at co.asiven.vixentvpn.trial.ui.MainActivity$pingAll$2$1$1$1.invokeSuspend(MainActivity.kt:382)
+10-26 10:37:29.877  3217  3328 E MvpnTrial: 	at kotlin.coroutines.jvm.internal.BaseContinuationImpl.resumeWith(ContinuationImpl.kt:33)
+10-26 10:37:29.877  3217  3328 E MvpnTrial: 	at kotlinx.coroutines.DispatchedTask.run(DispatchedTask.kt:104)
+10-26 10:37:29.877  3217  3328 E MvpnTrial: 	at kotlinx.coroutines.internal.LimitedDispatcher$Worker.run(LimitedDispatcher.kt:111)
+10-26 10:37:29.877  3217  3328 E MvpnTrial: 	at kotlinx.coroutines.scheduling.TaskImpl.run(Tasks.kt:99)
+10-26 10:37:29.877  3217  3328 E MvpnTrial: 	at kotlinx.coroutines.scheduling.CoroutineScheduler.runSafely(CoroutineScheduler.kt:584)
+10-26 10:37:29.877  3217  3328 E MvpnTrial: 	at kotlinx.coroutines.scheduling.CoroutineScheduler$Worker.executeTask(CoroutineScheduler.kt:811)
+10-26 10:37:29.877  3217  3328 E MvpnTrial: 	at kotlinx.coroutines.scheduling.CoroutineScheduler$Worker.runWorker(CoroutineScheduler.kt:715)
+10-26 10:37:29.877  3217  3328 E MvpnTrial: 	at kotlinx.coroutines.scheduling.CoroutineScheduler$Worker.run(CoroutineScheduler.kt:702)
+10-26 10:37:29.880  3217  3328 D MvpnTrial: پینگ 🇺🇸 United States: -1 ms
+10-26 10:37:30.021  3217  4769 D MvpnTrial: پینگ 🇺🇸 United States: 15 ms
+10-26 10:37:30.041  3217  4783 D MvpnTrial: پینگ 🇫🇷 France: 164 ms
+10-26 10:37:30.154  3217  4783 D MvpnTrial: پینگ 🇺🇸 United States: 11 ms
+10-26 10:37:30.159  3217  4783 E MvpnTrial: سنجش تأخیر ناموفق
+10-26 10:37:30.159  3217  4783 E MvpnTrial: go.Universe$proxyerror: config load error: infra/conf/serial: failed to parse json config > infra/conf: failed to build outbound config with tag proxy > infra/conf: vless without TLS or other encryption is prohibited unless the server address is a private IP or domain
+10-26 10:37:30.159  3217  4783 E MvpnTrial: 	at libv2ray.Libv2ray.measureOutboundDelay(Native Method)
+10-26 10:37:30.159  3217  4783 E MvpnTrial: 	at co.asiven.vixentvpn.trial.core.XrayCore.measureDelay(XrayCore.kt:81)
+10-26 10:37:30.159  3217  4783 E MvpnTrial: 	at co.asiven.vixentvpn.trial.ui.MainActivity.measure(MainActivity.kt:417)
+10-26 10:37:30.159  3217  4783 E MvpnTrial: 	at co.asiven.vixentvpn.trial.ui.MainActivity.access$measure(MainActivity.kt:61)
+10-26 10:37:30.159  3217  4783 E MvpnTrial: 	at co.asiven.vixentvpn.trial.ui.MainActivity$pingAll$2$1$1$1.invokeSuspend(MainActivity.kt:382)
+10-26 10:37:30.159  3217  4783 E MvpnTrial: 	at kotlin.coroutines.jvm.internal.BaseContinuationImpl.resumeWith(ContinuationImpl.kt:33)
+10-26 10:37:30.159  3217  4783 E MvpnTrial: 	at kotlinx.coroutines.DispatchedTask.run(DispatchedTask.kt:104)
+10-26 10:37:30.159  3217  4783 E MvpnTrial: 	at kotlinx.coroutines.internal.LimitedDispatcher$Worker.run(LimitedDispatcher.kt:111)
+10-26 10:37:30.159  3217  4783 E MvpnTrial: 	at kotlinx.coroutines.scheduling.TaskImpl.run(Tasks.kt:99)
+10-26 10:37:30.159  3217  4783 E MvpnTrial: 	at kotlinx.coroutines.scheduling.CoroutineScheduler.runSafely(CoroutineScheduler.kt:584)
+10-26 10:37:30.159  3217  4783 E MvpnTrial: 	at kotlinx.coroutines.scheduling.CoroutineScheduler$Worker.executeTask(CoroutineScheduler.kt:811)
+10-26 10:37:30.159  3217  4783 E MvpnTrial: 	at kotlinx.coroutines.scheduling.CoroutineScheduler$Worker.runWorker(CoroutineScheduler.kt:715)
+10-26 10:37:30.159  3217  4783 E MvpnTrial: 	at kotlinx.coroutines.scheduling.CoroutineScheduler$Worker.run(CoroutineScheduler.kt:702)
+10-26 10:37:30.161  3217  4783 D MvpnTrial: پینگ 🇺🇸 United States: -1 ms
+10-26 10:37:30.161  3217  4822 D MvpnTrial: پینگ 🇺🇸 United States: 65 ms
+10-26 10:37:30.289  3217  3328 D MvpnTrial: پینگ 🇺🇸 United States: 35 ms
+10-26 10:37:30.302  3217  3328 E MvpnTrial: سنجش تأخیر ناموفق
+10-26 10:37:30.302  3217  3328 E MvpnTrial: go.Universe$proxyerror: config load error: infra/conf/serial: failed to parse json config > infra/conf: failed to build outbound config with tag proxy > infra/conf: vless without TLS or other encryption is prohibited unless the server address is a private IP or domain
+10-26 10:37:30.302  3217  3328 E MvpnTrial: 	at libv2ray.Libv2ray.measureOutboundDelay(Native Method)
+10-26 10:37:30.302  3217  3328 E MvpnTrial: 	at co.asiven.vixentvpn.trial.core.XrayCore.measureDelay(XrayCore.kt:81)
+10-26 10:37:30.302  3217  3328 E MvpnTrial: 	at co.asiven.vixentvpn.trial.ui.MainActivity.measure(MainActivity.kt:417)
+10-26 10:37:30.302  3217  3328 E MvpnTrial: 	at co.asiven.vixentvpn.trial.ui.MainActivity.access$measure(MainActivity.kt:61)
+10-26 10:37:30.302  3217  3328 E MvpnTrial: 	at co.asiven.vixentvpn.trial.ui.MainActivity$pingAll$2$1$1$1.invokeSuspend(MainActivity.kt:382)
+10-26 10:37:30.302  3217  3328 E MvpnTrial: 	at kotlin.coroutines.jvm.internal.BaseContinuationImpl.resumeWith(ContinuationImpl.kt:33)
+10-26 10:37:30.302  3217  3328 E MvpnTrial: 	at kotlinx.coroutines.DispatchedTask.run(DispatchedTask.kt:104)
+10-26 10:37:30.302  3217  3328 E MvpnTrial: 	at kotlinx.coroutines.internal.LimitedDispatcher$Worker.run(LimitedDispatcher.kt:111)
+10-26 10:37:30.302  3217  3328 E MvpnTrial: 	at kotlinx.coroutines.scheduling.TaskImpl.run(Tasks.kt:99)
+10-26 10:37:30.302  3217  3328 E MvpnTrial: 	at kotlinx.coroutines.scheduling.CoroutineScheduler.runSafely(CoroutineScheduler.kt:584)
+10-26 10:37:30.302  3217  3328 E MvpnTrial: 	at kotlinx.coroutines.scheduling.CoroutineScheduler$Worker.executeTask(CoroutineScheduler.kt:811)
+10-26 10:37:30.302  3217  3328 E MvpnTrial: 	at kotlinx.coroutines.scheduling.CoroutineScheduler$Worker.runWorker(CoroutineScheduler.kt:715)
+10-26 10:37:30.302  3217  3328 E MvpnTrial: 	at kotlinx.coroutines.scheduling.CoroutineScheduler$Worker.run(CoroutineScheduler.kt:702)
+10-26 10:37:30.302  3217  3328 D MvpnTrial: پینگ 🇪🇸 Spain: -1 ms
+10-26 10:37:30.628  3217  4812 D MvpnTrial: پینگ 🇺🇸 United States: 67 ms
+10-26 10:37:30.630  3217  3328 E MvpnTrial: سنجش تأخیر ناموفق
+10-26 10:37:30.630  3217  3328 E MvpnTrial: go.Universe$proxyerror: config load error: infra/conf/serial: failed to parse json config > infra/conf: failed to build outbound config with tag proxy > infra/conf: vless without TLS or other encryption is prohibited unless the server address is a private IP or domain
+10-26 10:37:30.630  3217  3328 E MvpnTrial: 	at libv2ray.Libv2ray.measureOutboundDelay(Native Method)
+10-26 10:37:30.630  3217  3328 E MvpnTrial: 	at co.asiven.vixentvpn.trial.core.XrayCore.measureDelay(XrayCore.kt:81)
+10-26 10:37:30.630  3217  3328 E MvpnTrial: 	at co.asiven.vixentvpn.trial.ui.MainActivity.measure(MainActivity.kt:417)
+10-26 10:37:30.630  3217  3328 E MvpnTrial: 	at co.asiven.vixentvpn.trial.ui.MainActivity.access$measure(MainActivity.kt:61)
+10-26 10:37:30.630  3217  3328 E MvpnTrial: 	at co.asiven.vixentvpn.trial.ui.MainActivity$pingAll$2$1$1$1.invokeSuspend(MainActivity.kt:382)
+10-26 10:37:30.630  3217  3328 E MvpnTrial: 	at kotlin.coroutines.jvm.internal.BaseContinuationImpl.resumeWith(ContinuationImpl.kt:33)
+10-26 10:37:30.630  3217  3328 E MvpnTrial: 	at kotlinx.coroutines.DispatchedTask.run(DispatchedTask.kt:104)
+10-26 10:37:30.630  3217  3328 E MvpnTrial: 	at kotlinx.coroutines.internal.LimitedDispatcher$Worker.run(LimitedDispatcher.kt:111)
+10-26 10:37:30.630  3217  3328 E MvpnTrial: 	at kotlinx.coroutines.scheduling.TaskImpl.run(Tasks.kt:99)
+10-26 10:37:30.630  3217  3328 E MvpnTrial: 	at kotlinx.coroutines.scheduling.CoroutineScheduler.runSafely(CoroutineScheduler.kt:584)
+10-26 10:37:30.630  3217  3328 E MvpnTrial: 	at kotlinx.coroutines.scheduling.CoroutineScheduler$Worker.executeTask(CoroutineScheduler.kt:811)
+10-26 10:37:30.630  3217  3328 E MvpnTrial: 	at kotlinx.coroutines.scheduling.CoroutineScheduler$Worker.runWorker(CoroutineScheduler.kt:715)
+10-26 10:37:30.630  3217  3328 E MvpnTrial: 	at kotlinx.coroutines.scheduling.CoroutineScheduler$Worker.run(CoroutineScheduler.kt:702)
+10-26 10:37:30.631  3217  3328 D MvpnTrial: پینگ 🇺🇸 United States: -1 ms
+10-26 10:37:30.675  3217  4822 D MvpnTrial: پینگ 🇺🇸 United States: 78 ms
+10-26 10:37:30.867  3217  4783 D MvpnTrial: پینگ 🇺🇸 United States: 83 ms
+10-26 10:37:30.869  3217  4783 E MvpnTrial: سنجش تأخیر ناموفق
+10-26 10:37:30.869  3217  4783 E MvpnTrial: go.Universe$proxyerror: config load error: infra/conf/serial: failed to parse json config > infra/conf: failed to build outbound config with tag proxy > infra/conf: vless without TLS or other encryption is prohibited unless the server address is a private IP or domain
+10-26 10:37:30.869  3217  4783 E MvpnTrial: 	at libv2ray.Libv2ray.measureOutboundDelay(Native Method)
+10-26 10:37:30.869  3217  4783 E MvpnTrial: 	at co.asiven.vixentvpn.trial.core.XrayCore.measureDelay(XrayCore.kt:81)
+10-26 10:37:30.869  3217  4783 E MvpnTrial: 	at co.asiven.vixentvpn.trial.ui.MainActivity.measure(MainActivity.kt:417)
+10-26 10:37:30.869  3217  4783 E MvpnTrial: 	at co.asiven.vixentvpn.trial.ui.MainActivity.access$measure(MainActivity.kt:61)
+10-26 10:37:30.869  3217  4783 E MvpnTrial: 	at co.asiven.vixentvpn.trial.ui.MainActivity$pingAll$2$1$1$1.invokeSuspend(MainActivity.kt:382)
+10-26 10:37:30.869  3217  4783 E MvpnTrial: 	at kotlin.coroutines.jvm.internal.BaseContinuationImpl.resumeWith(ContinuationImpl.kt:33)
+10-26 10:37:30.869  3217  4783 E MvpnTrial: 	at kotlinx.coroutines.DispatchedTask.run(DispatchedTask.kt:104)
+10-26 10:37:30.869  3217  4783 E MvpnTrial: 	at kotlinx.coroutines.internal.LimitedDispatcher$Worker.run(LimitedDispatcher.kt:111)
+10-26 10:37:30.869  3217  4783 E MvpnTrial: 	at kotlinx.coroutines.scheduling.TaskImpl.run(Tasks.kt:99)
+10-26 10:37:30.869  3217  4783 E MvpnTrial: 	at kotlinx.coroutines.scheduling.CoroutineScheduler.runSafely(CoroutineScheduler.kt:584)
+10-26 10:37:30.869  3217  4783 E MvpnTrial: 	at kotlinx.coroutines.scheduling.CoroutineScheduler$Worker.executeTask(CoroutineScheduler.kt:811)
+10-26 10:37:30.869  3217  4783 E MvpnTrial: 	at kotlinx.coroutines.scheduling.CoroutineScheduler$Worker.runWorker(CoroutineScheduler.kt:715)
+10-26 10:37:30.869  3217  4783 E MvpnTrial: 	at kotlinx.coroutines.scheduling.CoroutineScheduler$Worker.run(CoroutineScheduler.kt:702)
+10-26 10:37:30.869  3217  4783 D MvpnTrial: پینگ 🇺🇸 United States: -1 ms
+10-26 10:37:30.972  3217  4812 D MvpnTrial: پینگ 🇺🇸 United States: 58 ms
+10-26 10:37:30.973  3217  4813 E MvpnTrial: سنجش تأخیر ناموفق
+10-26 10:37:30.973  3217  4813 E MvpnTrial: go.Universe$proxyerror: config load error: infra/conf/serial: failed to parse json config > infra/conf: failed to build outbound config with tag proxy > infra/conf: vless without TLS or other encryption is prohibited unless the server address is a private IP or domain
+10-26 10:37:30.973  3217  4813 E MvpnTrial: 	at libv2ray.Libv2ray.measureOutboundDelay(Native Method)
+10-26 10:37:30.973  3217  4813 E MvpnTrial: 	at co.asiven.vixentvpn.trial.core.XrayCore.measureDelay(XrayCore.kt:81)
+10-26 10:37:30.973  3217  4813 E MvpnTrial: 	at co.asiven.vixentvpn.trial.ui.MainActivity.measure(MainActivity.kt:417)
+10-26 10:37:30.973  3217  4813 E MvpnTrial: 	at co.asiven.vixentvpn.trial.ui.MainActivity.access$measure(MainActivity.kt:61)
+10-26 10:37:30.973  3217  4813 E MvpnTrial: 	at co.asiven.vixentvpn.trial.ui.MainActivity$pingAll$2$1$1$1.invokeSuspend(MainActivity.kt:382)
+10-26 10:37:30.973  3217  4813 E MvpnTrial: 	at kotlin.coroutines.jvm.internal.BaseContinuationImpl.resumeWith(ContinuationImpl.kt:33)
+10-26 10:37:30.973  3217  4813 E MvpnTrial: 	at kotlinx.coroutines.DispatchedTask.run(DispatchedTask.kt:104)
+10-26 10:37:30.973  3217  4813 E MvpnTrial: 	at kotlinx.coroutines.internal.LimitedDispatcher$Worker.run(LimitedDispatcher.kt:111)
+10-26 10:37:30.973  3217  4813 E MvpnTrial: 	at kotlinx.coroutines.scheduling.TaskImpl.run(Tasks.kt:99)
+10-26 10:37:30.973  3217  4813 E MvpnTrial: 	at kotlinx.coroutines.scheduling.CoroutineScheduler.runSafely(CoroutineScheduler.kt:584)
+10-26 10:37:30.973  3217  4813 E MvpnTrial: 	at kotlinx.coroutines.scheduling.CoroutineScheduler$Worker.executeTask(CoroutineScheduler.kt:811)
+10-26 10:37:30.973  3217  4813 E MvpnTrial: 	at kotlinx.coroutines.scheduling.CoroutineScheduler$Worker.runWorker(CoroutineScheduler.kt:715)
+10-26 10:37:30.973  3217  4813 E MvpnTrial: 	at kotlinx.coroutines.scheduling.CoroutineScheduler$Worker.run(CoroutineScheduler.kt:702)
+10-26 10:37:30.980  3217  4813 D MvpnTrial: پینگ 🇺🇸 United States: -1 ms
+10-26 10:37:30.992  3217  4812 E MvpnTrial: سنجش تأخیر ناموفق
+10-26 10:37:30.992  3217  4812 E MvpnTrial: go.Universe$proxyerror: config load error: infra/conf/serial: failed to parse json config > infra/conf: failed to build outbound config with tag proxy > infra/conf: vless without TLS or other encryption is prohibited unless the server address is a private IP or domain
+10-26 10:37:30.992  3217  4812 E MvpnTrial: 	at libv2ray.Libv2ray.measureOutboundDelay(Native Method)
+10-26 10:37:30.992  3217  4812 E MvpnTrial: 	at co.asiven.vixentvpn.trial.core.XrayCore.measureDelay(XrayCore.kt:81)
+10-26 10:37:30.992  3217  4812 E MvpnTrial: 	at co.asiven.vixentvpn.trial.ui.MainActivity.measure(MainActivity.kt:417)
+10-26 10:37:30.992  3217  4812 E MvpnTrial: 	at co.asiven.vixentvpn.trial.ui.MainActivity.access$measure(MainActivity.kt:61)
+10-26 10:37:30.992  3217  4812 E MvpnTrial: 	at co.asiven.vixentvpn.trial.ui.MainActivity$pingAll$2$1$1$1.invokeSuspend(MainActivity.kt:382)
+10-26 10:37:30.992  3217  4812 E MvpnTrial: 	at kotlin.coroutines.jvm.internal.BaseContinuationImpl.resumeWith(ContinuationImpl.kt:33)
+10-26 10:37:30.992  3217  4812 E MvpnTrial: 	at kotlinx.coroutines.DispatchedTask.run(DispatchedTask.kt:104)
+10-26 10:37:30.992  3217  4812 E MvpnTrial: 	at kotlinx.coroutines.internal.LimitedDispatcher$Worker.run(LimitedDispatcher.kt:111)
+10-26 10:37:30.992  3217  4812 E MvpnTrial: 	at kotlinx.coroutines.scheduling.TaskImpl.run(Tasks.kt:99)
+10-26 10:37:30.992  3217  4812 E MvpnTrial: 	at kotlinx.coroutines.scheduling.CoroutineScheduler.runSafely(CoroutineScheduler.kt:584)
+10-26 10:37:30.992  3217  4812 E MvpnTrial: 	at kotlinx.coroutines.scheduling.CoroutineScheduler$Worker.executeTask(CoroutineScheduler.kt:811)
+10-26 10:37:30.992  3217  4812 E MvpnTrial: 	at kotlinx.coroutines.scheduling.CoroutineScheduler$Worker.runWorker(CoroutineScheduler.kt:715)
+10-26 10:37:30.992  3217  4812 E MvpnTrial: 	at kotlinx.coroutines.scheduling.CoroutineScheduler$Worker.run(CoroutineScheduler.kt:702)
+10-26 10:37:30.992  3217  4812 D MvpnTrial: پینگ 🇺🇸 United States: -1 ms
+10-26 10:37:30.994  3217  4813 E MvpnTrial: سنجش تأخیر ناموفق
+10-26 10:37:30.994  3217  4813 E MvpnTrial: go.Universe$proxyerror: config load error: infra/conf/serial: failed to parse json config > infra/conf: failed to build outbound config with tag proxy > infra/conf: vless without TLS or other encryption is prohibited unless the server address is a private IP or domain
+10-26 10:37:30.994  3217  4813 E MvpnTrial: 	at libv2ray.Libv2ray.measureOutboundDelay(Native Method)
+10-26 10:37:30.994  3217  4813 E MvpnTrial: 	at co.asiven.vixentvpn.trial.core.XrayCore.measureDelay(XrayCore.kt:81)
+10-26 10:37:30.994  3217  4813 E MvpnTrial: 	at co.asiven.vixentvpn.trial.ui.MainActivity.measure(MainActivity.kt:417)
+10-26 10:37:30.994  3217  4813 E MvpnTrial: 	at co.asiven.vixentvpn.trial.ui.MainActivity.access$measure(MainActivity.kt:61)
+10-26 10:37:30.994  3217  4813 E MvpnTrial: 	at co.asiven.vixentvpn.trial.ui.MainActivity$pingAll$2$1$1$1.invokeSuspend(MainActivity.kt:382)
+10-26 10:37:30.994  3217  4813 E MvpnTrial: 	at kotlin.coroutines.jvm.internal.BaseContinuationImpl.resumeWith(ContinuationImpl.kt:33)
+10-26 10:37:30.994  3217  4813 E MvpnTrial: 	at kotlinx.coroutines.DispatchedTask.run(DispatchedTask.kt:104)
+10-26 10:37:30.994  3217  4813 E MvpnTrial: 	at kotlinx.coroutines.internal.LimitedDispatcher$Worker.run(LimitedDispatcher.kt:111)
+10-26 10:37:30.994  3217  4813 E MvpnTrial: 	at kotlinx.coroutines.scheduling.TaskImpl.run(Tasks.kt:99)
+10-26 10:37:30.994  3217  4813 E MvpnTrial: 	at kotlinx.coroutines.scheduling.CoroutineScheduler.runSafely(CoroutineScheduler.kt:584)
+10-26 10:37:30.994  3217  4813 E MvpnTrial: 	at kotlinx.coroutines.scheduling.CoroutineScheduler$Worker.executeTask(CoroutineScheduler.kt:811)
+10-26 10:37:30.994  3217  4813 E MvpnTrial: 	at kotlinx.coroutines.scheduling.CoroutineScheduler$Worker.runWorker(CoroutineScheduler.kt:715)
+10-26 10:37:30.994  3217  4813 E MvpnTrial: 	at kotlinx.coroutines.scheduling.CoroutineScheduler$Worker.run(CoroutineScheduler.kt:702)
+10-26 10:37:31.000  3217  4813 D MvpnTrial: پینگ 🇪🇸 Spain: -1 ms
+10-26 10:37:31.008  3217  4812 E MvpnTrial: سنجش تأخیر ناموفق
+10-26 10:37:31.008  3217  4812 E MvpnTrial: go.Universe$proxyerror: config load error: infra/conf/serial: failed to parse json config > infra/conf: failed to build outbound config with tag proxy > infra/conf: vless without TLS or other encryption is prohibited unless the server address is a private IP or domain
+10-26 10:37:31.008  3217  4812 E MvpnTrial: 	at libv2ray.Libv2ray.measureOutboundDelay(Native Method)
+10-26 10:37:31.008  3217  4812 E MvpnTrial: 	at co.asiven.vixentvpn.trial.core.XrayCore.measureDelay(XrayCore.kt:81)
+10-26 10:37:31.008  3217  4812 E MvpnTrial: 	at co.asiven.vixentvpn.trial.ui.MainActivity.measure(MainActivity.kt:417)
+10-26 10:37:31.008  3217  4812 E MvpnTrial: 	at co.asiven.vixentvpn.trial.ui.MainActivity.access$measure(MainActivity.kt:61)
+10-26 10:37:31.008  3217  4812 E MvpnTrial: 	at co.asiven.vixentvpn.trial.ui.MainActivity$pingAll$2$1$1$1.invokeSuspend(MainActivity.kt:382)
+10-26 10:37:31.008  3217  4812 E MvpnTrial: 	at kotlin.coroutines.jvm.internal.BaseContinuationImpl.resumeWith(ContinuationImpl.kt:33)
+10-26 10:37:31.008  3217  4812 E MvpnTrial: 	at kotlinx.coroutines.DispatchedTask.run(DispatchedTask.kt:104)
+10-26 10:37:31.008  3217  4812 E MvpnTrial: 	at kotlinx.coroutines.internal.LimitedDispatcher$Worker.run(LimitedDispatcher.kt:111)
+10-26 10:37:31.008  3217  4812 E MvpnTrial: 	at kotlinx.coroutines.scheduling.TaskImpl.run(Tasks.kt:99)
+10-26 10:37:31.008  3217  4812 E MvpnTrial: 	at kotlinx.coroutines.scheduling.CoroutineScheduler.runSafely(CoroutineScheduler.kt:584)
+10-26 10:37:31.008  3217  4812 E MvpnTrial: 	at kotlinx.coroutines.scheduling.CoroutineScheduler$Worker.executeTask(CoroutineScheduler.kt:811)
+10-26 10:37:31.008  3217  4812 E MvpnTrial: 	at kotlinx.coroutines.scheduling.CoroutineScheduler$Worker.runWorker(CoroutineScheduler.kt:715)
+10-26 10:37:31.008  3217  4812 E MvpnTrial: 	at kotlinx.coroutines.scheduling.CoroutineScheduler$Worker.run(CoroutineScheduler.kt:702)
+10-26 10:37:31.013  3217  4812 D MvpnTrial: پینگ 🇺🇸 United States: -1 ms
+10-26 10:37:31.019  3217  4813 E MvpnTrial: سنجش تأخیر ناموفق
+10-26 10:37:31.019  3217  4813 E MvpnTrial: go.Universe$proxyerror: config load error: infra/conf/serial: failed to parse json config > infra/conf: failed to build outbound config with tag proxy > infra/conf: vless without TLS or other encryption is prohibited unless the server address is a private IP or domain
+10-26 10:37:31.019  3217  4813 E MvpnTrial: 	at libv2ray.Libv2ray.measureOutboundDelay(Native Method)
+10-26 10:37:31.019  3217  4813 E MvpnTrial: 	at co.asiven.vixentvpn.trial.core.XrayCore.measureDelay(XrayCore.kt:81)
+10-26 10:37:31.019  3217  4813 E MvpnTrial: 	at co.asiven.vixentvpn.trial.ui.MainActivity.measure(MainActivity.kt:417)
+10-26 10:37:31.019  3217  4813 E MvpnTrial: 	at co.asiven.vixentvpn.trial.ui.MainActivity.access$measure(MainActivity.kt:61)
+10-26 10:37:31.019  3217  4813 E MvpnTrial: 	at co.asiven.vixentvpn.trial.ui.MainActivity$pingAll$2$1$1$1.invokeSuspend(MainActivity.kt:382)
+10-26 10:37:31.019  3217  4813 E MvpnTrial: 	at kotlin.coroutines.jvm.internal.BaseContinuationImpl.resumeWith(ContinuationImpl.kt:33)
+10-26 10:37:31.019  3217  4813 E MvpnTrial: 	at kotlinx.coroutines.DispatchedTask.run(DispatchedTask.kt:104)
+10-26 10:37:31.019  3217  4813 E MvpnTrial: 	at kotlinx.coroutines.internal.LimitedDispatcher$Worker.run(LimitedDispatcher.kt:111)
+10-26 10:37:31.019  3217  4813 E MvpnTrial: 	at kotlinx.coroutines.scheduling.TaskImpl.run(Tasks.kt:99)
+10-26 10:37:31.019  3217  4813 E MvpnTrial: 	at kotlinx.coroutines.scheduling.CoroutineScheduler.runSafely(CoroutineScheduler.kt:584)
+10-26 10:37:31.019  3217  4813 E MvpnTrial: 	at kotlinx.coroutines.scheduling.CoroutineScheduler$Worker.executeTask(CoroutineScheduler.kt:811)
+10-26 10:37:31.019  3217  4813 E MvpnTrial: 	at kotlinx.coroutines.scheduling.CoroutineScheduler$Worker.runWorker(CoroutineScheduler.kt:715)
+10-26 10:37:31.019  3217  4813 E MvpnTrial: 	at kotlinx.coroutines.scheduling.CoroutineScheduler$Worker.run(CoroutineScheduler.kt:702)
+10-26 10:37:31.019  3217  4813 D MvpnTrial: پینگ 🇦🇺 Australia: -1 ms
+10-26 10:37:31.027  3217  4822 E MvpnTrial: سنجش تأخیر ناموفق
+10-26 10:37:31.027  3217  4822 E MvpnTrial: go.Universe$proxyerror: config load error: infra/conf/serial: failed to parse json config > infra/conf: failed to build outbound config with tag proxy > infra/conf: vless without TLS or other encryption is prohibited unless the server address is a private IP or domain
+10-26 10:37:31.027  3217  4822 E MvpnTrial: 	at libv2ray.Libv2ray.measureOutboundDelay(Native Method)
+10-26 10:37:31.027  3217  4822 E MvpnTrial: 	at co.asiven.vixentvpn.trial.core.XrayCore.measureDelay(XrayCore.kt:81)
+10-26 10:37:31.027  3217  4822 E MvpnTrial: 	at co.asiven.vixentvpn.trial.ui.MainActivity.measure(MainActivity.kt:417)
+10-26 10:37:31.027  3217  4822 E MvpnTrial: 	at co.asiven.vixentvpn.trial.ui.MainActivity.access$measure(MainActivity.kt:61)
+10-26 10:37:31.027  3217  4822 E MvpnTrial: 	at co.asiven.vixentvpn.trial.ui.MainActivity$pingAll$2$1$1$1.invokeSuspend(MainActivity.kt:382)
+10-26 10:37:31.027  3217  4822 E MvpnTrial: 	at kotlin.coroutines.jvm.internal.BaseContinuationImpl.resumeWith(ContinuationImpl.kt:33)
+10-26 10:37:31.027  3217  4822 E MvpnTrial: 	at kotlinx.coroutines.DispatchedTask.run(DispatchedTask.kt:104)
+10-26 10:37:31.027  3217  4822 E MvpnTrial: 	at kotlinx.coroutines.internal.LimitedDispatcher$Worker.run(LimitedDispatcher.kt:111)
+10-26 10:37:31.027  3217  4822 E MvpnTrial: 	at kotlinx.coroutines.scheduling.TaskImpl.run(Tasks.kt:99)
+10-26 10:37:31.027  3217  4822 E MvpnTrial: 	at kotlinx.coroutines.scheduling.CoroutineScheduler.runSafely(CoroutineScheduler.kt:584)
+10-26 10:37:31.027  3217  4822 E MvpnTrial: 	at kotlinx.coroutines.scheduling.CoroutineScheduler$Worker.executeTask(CoroutineScheduler.kt:811)
+10-26 10:37:31.027  3217  4822 E MvpnTrial: 	at kotlinx.coroutines.scheduling.CoroutineScheduler$Worker.runWorker(CoroutineScheduler.kt:715)
+10-26 10:37:31.027  3217  4822 E MvpnTrial: 	at kotlinx.coroutines.scheduling.CoroutineScheduler$Worker.run(CoroutineScheduler.kt:702)
+10-26 10:37:31.028  3217  4822 D MvpnTrial: پینگ 🇺🇸 United States: -1 ms
+10-26 10:37:31.033  3217  4786 E MvpnTrial: سنجش تأخیر ناموفق
+10-26 10:37:31.033  3217  4786 E MvpnTrial: go.Universe$proxyerror: config load error: infra/conf/serial: failed to parse json config > infra/conf: failed to build outbound config with tag proxy > infra/conf: vless without TLS or other encryption is prohibited unless the server address is a private IP or domain
+10-26 10:37:31.033  3217  4786 E MvpnTrial: 	at libv2ray.Libv2ray.measureOutboundDelay(Native Method)
+10-26 10:37:31.033  3217  4786 E MvpnTrial: 	at co.asiven.vixentvpn.trial.core.XrayCore.measureDelay(XrayCore.kt:81)
+10-26 10:37:31.033  3217  4786 E MvpnTrial: 	at co.asiven.vixentvpn.trial.ui.MainActivity.measure(MainActivity.kt:417)
+10-26 10:37:31.033  3217  4786 E MvpnTrial: 	at co.asiven.vixentvpn.trial.ui.MainActivity.access$measure(MainActivity.kt:61)
+10-26 10:37:31.033  3217  4786 E MvpnTrial: 	at co.asiven.vixentvpn.trial.ui.MainActivity$pingAll$2$1$1$1.invokeSuspend(MainActivity.kt:382)
+10-26 10:37:31.033  3217  4786 E MvpnTrial: 	at kotlin.coroutines.jvm.internal.BaseContinuationImpl.resumeWith(ContinuationImpl.kt:33)
+10-26 10:37:31.033  3217  4786 E MvpnTrial: 	at kotlinx.coroutines.DispatchedTask.run(DispatchedTask.kt:104)
+10-26 10:37:31.033  3217  4786 E MvpnTrial: 	at kotlinx.coroutines.internal.LimitedDispatcher$Worker.run(LimitedDispatcher.kt:111)
+10-26 10:37:31.033  3217  4786 E MvpnTrial: 	at kotlinx.coroutines.scheduling.TaskImpl.run(Tasks.kt:99)
+10-26 10:37:31.033  3217  4786 E MvpnTrial: 	at kotlinx.coroutines.scheduling.CoroutineScheduler.runSafely(CoroutineScheduler.kt:584)
+10-26 10:37:31.033  3217  4786 E MvpnTrial: 	at kotlinx.coroutines.scheduling.CoroutineScheduler$Worker.executeTask(CoroutineScheduler.kt:811)
+10-26 10:37:31.033  3217  4786 E MvpnTrial: 	at kotlinx.coroutines.scheduling.CoroutineScheduler$Worker.runWorker(CoroutineScheduler.kt:715)
+10-26 10:37:31.033  3217  4786 E MvpnTrial: 	at kotlinx.coroutines.scheduling.CoroutineScheduler$Worker.run(CoroutineScheduler.kt:702)
+10-26 10:37:31.035  3217  4786 D MvpnTrial: پینگ 🇺🇸 United States: -1 ms
+10-26 10:37:31.049  3217  4786 E MvpnTrial: سنجش تأخیر ناموفق
+10-26 10:37:31.049  3217  4786 E MvpnTrial: go.Universe$proxyerror: config load error: infra/conf/serial: failed to parse json config > infra/conf: failed to build outbound config with tag proxy > infra/conf: vless without TLS or other encryption is prohibited unless the server address is a private IP or domain
+10-26 10:37:31.049  3217  4786 E MvpnTrial: 	at libv2ray.Libv2ray.measureOutboundDelay(Native Method)
+10-26 10:37:31.049  3217  4786 E MvpnTrial: 	at co.asiven.vixentvpn.trial.core.XrayCore.measureDelay(XrayCore.kt:81)
+10-26 10:37:31.049  3217  4786 E MvpnTrial: 	at co.asiven.vixentvpn.trial.ui.MainActivity.measure(MainActivity.kt:417)
+10-26 10:37:31.049  3217  4786 E MvpnTrial: 	at co.asiven.vixentvpn.trial.ui.MainActivity.access$measure(MainActivity.kt:61)
+10-26 10:37:31.049  3217  4786 E MvpnTrial: 	at co.asiven.vixentvpn.trial.ui.MainActivity$pingAll$2$1$1$1.invokeSuspend(MainActivity.kt:382)
+10-26 10:37:31.049  3217  4786 E MvpnTrial: 	at kotlin.coroutines.jvm.internal.BaseContinuationImpl.resumeWith(ContinuationImpl.kt:33)
+10-26 10:37:31.049  3217  4786 E MvpnTrial: 	at kotlinx.coroutines.DispatchedTask.run(DispatchedTask.kt:104)
+10-26 10:37:31.049  3217  4786 E MvpnTrial: 	at kotlinx.coroutines.internal.LimitedDispatcher$Worker.run(LimitedDispatcher.kt:111)
+10-26 10:37:31.049  3217  4786 E MvpnTrial: 	at kotlinx.coroutines.scheduling.TaskImpl.run(Tasks.kt:99)
+10-26 10:37:31.049  3217  4786 E MvpnTrial: 	at kotlinx.coroutines.scheduling.CoroutineScheduler.runSafely(CoroutineScheduler.kt:584)
+10-26 10:37:31.049  3217  4786 E MvpnTrial: 	at kotlinx.coroutines.scheduling.CoroutineScheduler$Worker.executeTask(CoroutineScheduler.kt:811)
+10-26 10:37:31.049  3217  4786 E MvpnTrial: 	at kotlinx.coroutines.scheduling.CoroutineScheduler$Worker.runWorker(CoroutineScheduler.kt:715)
+10-26 10:37:31.049  3217  4786 E MvpnTrial: 	at kotlinx.coroutines.scheduling.CoroutineScheduler$Worker.run(CoroutineScheduler.kt:702)
+10-26 10:37:31.050  3217  4786 D MvpnTrial: پینگ 🇪🇸 Spain: -1 ms
+10-26 10:37:31.067  3217  4822 E MvpnTrial: سنجش تأخیر ناموفق
+10-26 10:37:31.067  3217  4822 E MvpnTrial: go.Universe$proxyerror: config load error: infra/conf/serial: failed to parse json config > infra/conf: failed to build outbound config with tag proxy > infra/conf: vless without TLS or other encryption is prohibited unless the server address is a private IP or domain
+10-26 10:37:31.067  3217  4822 E MvpnTrial: 	at libv2ray.Libv2ray.measureOutboundDelay(Native Method)
+10-26 10:37:31.067  3217  4822 E MvpnTrial: 	at co.asiven.vixentvpn.trial.core.XrayCore.measureDelay(XrayCore.kt:81)
+10-26 10:37:31.067  3217  4822 E MvpnTrial: 	at co.asiven.vixentvpn.trial.ui.MainActivity.measure(MainActivity.kt:417)
+10-26 10:37:31.067  3217  4822 E MvpnTrial: 	at co.asiven.vixentvpn.trial.ui.MainActivity.access$measure(MainActivity.kt:61)
+10-26 10:37:31.067  3217  4822 E MvpnTrial: 	at co.asiven.vixentvpn.trial.ui.MainActivity$pingAll$2$1$1$1.invokeSuspend(MainActivity.kt:382)
+10-26 10:37:31.067  3217  4822 E MvpnTrial: 	at kotlin.coroutines.jvm.internal.BaseContinuationImpl.resumeWith(ContinuationImpl.kt:33)
+10-26 10:37:31.067  3217  4822 E MvpnTrial: 	at kotlinx.coroutines.DispatchedTask.run(DispatchedTask.kt:104)
+10-26 10:37:31.067  3217  4822 E MvpnTrial: 	at kotlinx.coroutines.internal.LimitedDispatcher$Worker.run(LimitedDispatcher.kt:111)
+10-26 10:37:31.067  3217  4822 E MvpnTrial: 	at kotlinx.coroutines.scheduling.TaskImpl.run(Tasks.kt:99)
+10-26 10:37:31.067  3217  4822 E MvpnTrial: 	at kotlinx.coroutines.scheduling.CoroutineScheduler.runSafely(CoroutineScheduler.kt:584)
+10-26 10:37:31.067  3217  4822 E MvpnTrial: 	at kotlinx.coroutines.scheduling.CoroutineScheduler$Worker.executeTask(CoroutineScheduler.kt:811)
+10-26 10:37:31.067  3217  4822 E MvpnTrial: 	at kotlinx.coroutines.scheduling.CoroutineScheduler$Worker.runWorker(CoroutineScheduler.kt:715)
+10-26 10:37:31.067  3217  4822 E MvpnTrial: 	at kotlinx.coroutines.scheduling.CoroutineScheduler$Worker.run(CoroutineScheduler.kt:702)
+10-26 10:37:31.068  3217  4822 D MvpnTrial: پینگ 🇫🇷 France: -1 ms
+10-26 10:37:31.074  3217  4813 E MvpnTrial: سنجش تأخیر ناموفق
+10-26 10:37:31.074  3217  4813 E MvpnTrial: go.Universe$proxyerror: config load error: infra/conf/serial: failed to parse json config > infra/conf: failed to build outbound config with tag proxy > infra/conf: vless without TLS or other encryption is prohibited unless the server address is a private IP or domain
+10-26 10:37:31.074  3217  4813 E MvpnTrial: 	at libv2ray.Libv2ray.measureOutboundDelay(Native Method)
+10-26 10:37:31.074  3217  4813 E MvpnTrial: 	at co.asiven.vixentvpn.trial.core.XrayCore.measureDelay(XrayCore.kt:81)
+10-26 10:37:31.074  3217  4813 E MvpnTrial: 	at co.asiven.vixentvpn.trial.ui.MainActivity.measure(MainActivity.kt:417)
+10-26 10:37:31.074  3217  4813 E MvpnTrial: 	at co.asiven.vixentvpn.trial.ui.MainActivity.access$measure(MainActivity.kt:61)
+10-26 10:37:31.074  3217  4813 E MvpnTrial: 	at co.asiven.vixentvpn.trial.ui.MainActivity$pingAll$2$1$1$1.invokeSuspend(MainActivity.kt:382)
+10-26 10:37:31.074  3217  4813 E MvpnTrial: 	at kotlin.coroutines.jvm.internal.BaseContinuationImpl.resumeWith(ContinuationImpl.kt:33)
+10-26 10:37:31.074  3217  4813 E MvpnTrial: 	at kotlinx.coroutines.DispatchedTask.run(DispatchedTask.kt:104)
+10-26 10:37:31.074  3217  4813 E MvpnTrial: 	at kotlinx.coroutines.internal.LimitedDispatcher$Worker.run(LimitedDispatcher.kt:111)
+10-26 10:37:31.074  3217  4813 E MvpnTrial: 	at kotlinx.coroutines.scheduling.TaskImpl.run(Tasks.kt:99)
+10-26 10:37:31.074  3217  4813 E MvpnTrial: 	at kotlinx.coroutines.scheduling.CoroutineScheduler.runSafely(CoroutineScheduler.kt:584)
+10-26 10:37:31.074  3217  4813 E MvpnTrial: 	at kotlinx.coroutines.scheduling.CoroutineScheduler$Worker.executeTask(CoroutineScheduler.kt:811)
+10-26 10:37:31.074  3217  4813 E MvpnTrial: 	at kotlinx.coroutines.scheduling.CoroutineScheduler$Worker.runWorker(CoroutineScheduler.kt:715)
+10-26 10:37:31.074  3217  4813 E MvpnTrial: 	at kotlinx.coroutines.scheduling.CoroutineScheduler$Worker.run(CoroutineScheduler.kt:702)
+10-26 10:37:31.074  3217  4813 D MvpnTrial: پینگ 🇨🇦 Canada: -1 ms
+10-26 10:37:31.094  3217  4813 E MvpnTrial: سنجش تأخیر ناموفق
+10-26 10:37:31.094  3217  4813 E MvpnTrial: go.Universe$proxyerror: config load error: infra/conf/serial: failed to parse json config > infra/conf: failed to build outbound config with tag proxy > infra/conf: vless without TLS or other encryption is prohibited unless the server address is a private IP or domain
+10-26 10:37:31.094  3217  4813 E MvpnTrial: 	at libv2ray.Libv2ray.measureOutboundDelay(Native Method)
+10-26 10:37:31.094  3217  4813 E MvpnTrial: 	at co.asiven.vixentvpn.trial.core.XrayCore.measureDelay(XrayCore.kt:81)
+10-26 10:37:31.094  3217  4813 E MvpnTrial: 	at co.asiven.vixentvpn.trial.ui.MainActivity.measure(MainActivity.kt:417)
+10-26 10:37:31.094  3217  4813 E MvpnTrial: 	at co.asiven.vixentvpn.trial.ui.MainActivity.access$measure(MainActivity.kt:61)
+10-26 10:37:31.094  3217  4813 E MvpnTrial: 	at co.asiven.vixentvpn.trial.ui.MainActivity$pingAll$2$1$1$1.invokeSuspend(MainActivity.kt:382)
+10-26 10:37:31.094  3217  4813 E MvpnTrial: 	at kotlin.coroutines.jvm.internal.BaseContinuationImpl.resumeWith(ContinuationImpl.kt:33)
+10-26 10:37:31.094  3217  4813 E MvpnTrial: 	at kotlinx.coroutines.DispatchedTask.run(DispatchedTask.kt:104)
+10-26 10:37:31.094  3217  4813 E MvpnTrial: 	at kotlinx.coroutines.internal.LimitedDispatcher$Worker.run(LimitedDispatcher.kt:111)
+10-26 10:37:31.094  3217  4813 E MvpnTrial: 	at kotlinx.coroutines.scheduling.TaskImpl.run(Tasks.kt:99)
+10-26 10:37:31.094  3217  4813 E MvpnTrial: 	at kotlinx.coroutines.scheduling.CoroutineScheduler.runSafely(CoroutineScheduler.kt:584)
+10-26 10:37:31.094  3217  4813 E MvpnTrial: 	at kotlinx.coroutines.scheduling.CoroutineScheduler$Worker.executeTask(CoroutineScheduler.kt:811)
+10-26 10:37:31.094  3217  4813 E MvpnTrial: 	at kotlinx.coroutines.scheduling.CoroutineScheduler$Worker.runWorker(CoroutineScheduler.kt:715)
+10-26 10:37:31.094  3217  4813 E MvpnTrial: 	at kotlinx.coroutines.scheduling.CoroutineScheduler$Worker.run(CoroutineScheduler.kt:702)
+10-26 10:37:31.098  3217  4813 D MvpnTrial: پینگ 🇺🇸 United States: -1 ms
+10-26 10:37:31.216  3217  4813 E MvpnTrial: سنجش تأخیر ناموفق
+10-26 10:37:31.216  3217  4813 E MvpnTrial: go.Universe$proxyerror: config load error: infra/conf/serial: failed to parse json config > infra/conf: failed to build outbound config with tag proxy > infra/conf: vless without TLS or other encryption is prohibited unless the server address is a private IP or domain
+10-26 10:37:31.216  3217  4813 E MvpnTrial: 	at libv2ray.Libv2ray.measureOutboundDelay(Native Method)
+10-26 10:37:31.216  3217  4813 E MvpnTrial: 	at co.asiven.vixentvpn.trial.core.XrayCore.measureDelay(XrayCore.kt:81)
+10-26 10:37:31.216  3217  4813 E MvpnTrial: 	at co.asiven.vixentvpn.trial.ui.MainActivity.measure(MainActivity.kt:417)
+10-26 10:37:31.216  3217  4813 E MvpnTrial: 	at co.asiven.vixentvpn.trial.ui.MainActivity.access$measure(MainActivity.kt:61)
+10-26 10:37:31.216  3217  4813 E MvpnTrial: 	at co.asiven.vixentvpn.trial.ui.MainActivity$pingAll$2$1$1$1.invokeSuspend(MainActivity.kt:382)
+10-26 10:37:31.216  3217  4813 E MvpnTrial: 	at kotlin.coroutines.jvm.internal.BaseContinuationImpl.resumeWith(ContinuationImpl.kt:33)
+10-26 10:37:31.216  3217  4813 E MvpnTrial: 	at kotlinx.coroutines.DispatchedTask.run(DispatchedTask.kt:104)
+10-26 10:37:31.216  3217  4813 E MvpnTrial: 	at kotlinx.coroutines.internal.LimitedDispatcher$Worker.run(LimitedDispatcher.kt:111)
+10-26 10:37:31.216  3217  4813 E MvpnTrial: 	at kotlinx.coroutines.scheduling.TaskImpl.run(Tasks.kt:99)
+10-26 10:37:31.216  3217  4813 E MvpnTrial: 	at kotlinx.coroutines.scheduling.CoroutineScheduler.runSafely(CoroutineScheduler.kt:584)
+10-26 10:37:31.216  3217  4813 E MvpnTrial: 	at kotlinx.coroutines.scheduling.CoroutineScheduler$Worker.executeTask(CoroutineScheduler.kt:811)
+10-26 10:37:31.216  3217  4813 E MvpnTrial: 	at kotlinx.coroutines.scheduling.CoroutineScheduler$Worker.runWorker(CoroutineScheduler.kt:715)
+10-26 10:37:31.216  3217  4813 E MvpnTrial: 	at kotlinx.coroutines.scheduling.CoroutineScheduler$Worker.run(CoroutineScheduler.kt:702)
+10-26 10:37:31.216  3217  4813 D MvpnTrial: پینگ 🇦🇺 Australia: -1 ms
+10-26 10:37:31.232  3217  4812 E MvpnTrial: سنجش تأخیر ناموفق
+10-26 10:37:31.232  3217  4812 E MvpnTrial: go.Universe$proxyerror: config load error: infra/conf/serial: failed to parse json config > infra/conf: failed to build outbound config with tag proxy > infra/conf: vless without TLS or other encryption is prohibited unless the server address is a private IP or domain
+10-26 10:37:31.232  3217  4812 E MvpnTrial: 	at libv2ray.Libv2ray.measureOutboundDelay(Native Method)
+10-26 10:37:31.232  3217  4812 E MvpnTrial: 	at co.asiven.vixentvpn.trial.core.XrayCore.measureDelay(XrayCore.kt:81)
+10-26 10:37:31.232  3217  4812 E MvpnTrial: 	at co.asiven.vixentvpn.trial.ui.MainActivity.measure(MainActivity.kt:417)
+10-26 10:37:31.232  3217  4812 E MvpnTrial: 	at co.asiven.vixentvpn.trial.ui.MainActivity.access$measure(MainActivity.kt:61)
+10-26 10:37:31.232  3217  4812 E MvpnTrial: 	at co.asiven.vixentvpn.trial.ui.MainActivity$pingAll$2$1$1$1.invokeSuspend(MainActivity.kt:382)
+10-26 10:37:31.232  3217  4812 E MvpnTrial: 	at kotlin.coroutines.jvm.internal.BaseContinuationImpl.resumeWith(ContinuationImpl.kt:33)
+10-26 10:37:31.232  3217  4812 E MvpnTrial: 	at kotlinx.coroutines.DispatchedTask.run(DispatchedTask.kt:104)
+10-26 10:37:31.232  3217  4812 E MvpnTrial: 	at kotlinx.coroutines.internal.LimitedDispatcher$Worker.run(LimitedDispatcher.kt:111)
+10-26 10:37:31.232  3217  4812 E MvpnTrial: 	at kotlinx.coroutines.scheduling.TaskImpl.run(Tasks.kt:99)
+10-26 10:37:31.232  3217  4812 E MvpnTrial: 	at kotlinx.coroutines.scheduling.CoroutineScheduler.runSafely(CoroutineScheduler.kt:584)
+10-26 10:37:31.232  3217  4812 E MvpnTrial: 	at kotlinx.coroutines.scheduling.CoroutineScheduler$Worker.executeTask(CoroutineScheduler.kt:811)
+10-26 10:37:31.232  3217  4812 E MvpnTrial: 	at kotlinx.coroutines.scheduling.CoroutineScheduler$Worker.runWorker(CoroutineScheduler.kt:715)
+10-26 10:37:31.232  3217  4812 E MvpnTrial: 	at kotlinx.coroutines.scheduling.CoroutineScheduler$Worker.run(CoroutineScheduler.kt:702)
+10-26 10:37:31.232  3217  4812 D MvpnTrial: پینگ 🇺🇸 United States: -1 ms
+10-26 10:37:31.233  3217  4812 E MvpnTrial: سنجش تأخیر ناموفق
+10-26 10:37:31.233  3217  4812 E MvpnTrial: go.Universe$proxyerror: config load error: infra/conf/serial: failed to parse json config > infra/conf: failed to build outbound config with tag proxy > infra/conf: vless without TLS or other encryption is prohibited unless the server address is a private IP or domain
+10-26 10:37:31.233  3217  4812 E MvpnTrial: 	at libv2ray.Libv2ray.measureOutboundDelay(Native Method)
+10-26 10:37:31.233  3217  4812 E MvpnTrial: 	at co.asiven.vixentvpn.trial.core.XrayCore.measureDelay(XrayCore.kt:81)
+10-26 10:37:31.233  3217  4812 E MvpnTrial: 	at co.asiven.vixentvpn.trial.ui.MainActivity.measure(MainActivity.kt:417)
+10-26 10:37:31.233  3217  4812 E MvpnTrial: 	at co.asiven.vixentvpn.trial.ui.MainActivity.access$measure(MainActivity.kt:61)
+10-26 10:37:31.233  3217  4812 E MvpnTrial: 	at co.asiven.vixentvpn.trial.ui.MainActivity$pingAll$2$1$1$1.invokeSuspend(MainActivity.kt:382)
+10-26 10:37:31.233  3217  4812 E MvpnTrial: 	at kotlin.coroutines.jvm.internal.BaseContinuationImpl.resumeWith(ContinuationImpl.kt:33)
+10-26 10:37:31.233  3217  4812 E MvpnTrial: 	at kotlinx.coroutines.DispatchedTask.run(DispatchedTask.kt:104)
+10-26 10:37:31.233  3217  4812 E MvpnTrial: 	at kotlinx.coroutines.internal.LimitedDispatcher$Worker.run(LimitedDispatcher.kt:111)
+10-26 10:37:31.233  3217  4812 E MvpnTrial: 	at kotlinx.coroutines.scheduling.TaskImpl.run(Tasks.kt:99)
+10-26 10:37:31.233  3217  4812 E MvpnTrial: 	at kotlinx.coroutines.scheduling.CoroutineScheduler.runSafely(CoroutineScheduler.kt:584)
+10-26 10:37:31.233  3217  4812 E MvpnTrial: 	at kotlinx.coroutines.scheduling.CoroutineScheduler$Worker.executeTask(CoroutineScheduler.kt:811)
+10-26 10:37:31.233  3217  4812 E MvpnTrial: 	at kotlinx.coroutines.scheduling.CoroutineScheduler$Worker.runWorker(CoroutineScheduler.kt:715)
+10-26 10:37:31.233  3217  4812 E MvpnTrial: 	at kotlinx.coroutines.scheduling.CoroutineScheduler$Worker.run(CoroutineScheduler.kt:702)
+10-26 10:37:31.233  3217  4812 D MvpnTrial: پینگ 🇺🇸 United States: -1 ms
+10-26 10:37:31.293  3217  4813 E MvpnTrial: سنجش تأخیر ناموفق
+10-26 10:37:31.293  3217  4813 E MvpnTrial: go.Universe$proxyerror: config load error: infra/conf/serial: failed to parse json config > infra/conf: failed to build outbound config with tag proxy > infra/conf: vless without TLS or other encryption is prohibited unless the server address is a private IP or domain
+10-26 10:37:31.293  3217  4813 E MvpnTrial: 	at libv2ray.Libv2ray.measureOutboundDelay(Native Method)
+10-26 10:37:31.293  3217  4813 E MvpnTrial: 	at co.asiven.vixentvpn.trial.core.XrayCore.measureDelay(XrayCore.kt:81)
+10-26 10:37:31.293  3217  4813 E MvpnTrial: 	at co.asiven.vixentvpn.trial.ui.MainActivity.measure(MainActivity.kt:417)
+10-26 10:37:31.293  3217  4813 E MvpnTrial: 	at co.asiven.vixentvpn.trial.ui.MainActivity.access$measure(MainActivity.kt:61)
+10-26 10:37:31.293  3217  4813 E MvpnTrial: 	at co.asiven.vixentvpn.trial.ui.MainActivity$pingAll$2$1$1$1.invokeSuspend(MainActivity.kt:382)
+10-26 10:37:31.293  3217  4813 E MvpnTrial: 	at kotlin.coroutines.jvm.internal.BaseContinuationImpl.resumeWith(ContinuationImpl.kt:33)
+10-26 10:37:31.293  3217  4813 E MvpnTrial: 	at kotlinx.coroutines.DispatchedTask.run(DispatchedTask.kt:104)
+10-26 10:37:31.293  3217  4813 E MvpnTrial: 	at kotlinx.coroutines.internal.LimitedDispatcher$Worker.run(LimitedDispatcher.kt:111)
+10-26 10:37:31.293  3217  4813 E MvpnTrial: 	at kotlinx.coroutines.scheduling.TaskImpl.run(Tasks.kt:99)
+10-26 10:37:31.293  3217  4813 E MvpnTrial: 	at kotlinx.coroutines.scheduling.CoroutineScheduler.runSafely(CoroutineScheduler.kt:584)
+10-26 10:37:31.293  3217  4813 E MvpnTrial: 	at kotlinx.coroutines.scheduling.CoroutineScheduler$Worker.executeTask(CoroutineScheduler.kt:811)
+10-26 10:37:31.293  3217  4813 E MvpnTrial: 	at kotlinx.coroutines.scheduling.CoroutineScheduler$Worker.runWorker(CoroutineScheduler.kt:715)
+10-26 10:37:31.293  3217  4813 E MvpnTrial: 	at kotlinx.coroutines.scheduling.CoroutineScheduler$Worker.run(CoroutineScheduler.kt:702)
+10-26 10:37:31.293  3217  4813 D MvpnTrial: پینگ 🇨🇦 Canada: -1 ms
+10-26 10:37:31.318  3217  4813 E MvpnTrial: سنجش تأخیر ناموفق
+10-26 10:37:31.318  3217  4813 E MvpnTrial: go.Universe$proxyerror: config load error: infra/conf/serial: failed to parse json config > infra/conf: failed to build outbound config with tag proxy > infra/conf: vless without TLS or other encryption is prohibited unless the server address is a private IP or domain
+10-26 10:37:31.318  3217  4813 E MvpnTrial: 	at libv2ray.Libv2ray.measureOutboundDelay(Native Method)
+10-26 10:37:31.318  3217  4813 E MvpnTrial: 	at co.asiven.vixentvpn.trial.core.XrayCore.measureDelay(XrayCore.kt:81)
+10-26 10:37:31.318  3217  4813 E MvpnTrial: 	at co.asiven.vixentvpn.trial.ui.MainActivity.measure(MainActivity.kt:417)
+10-26 10:37:31.318  3217  4813 E MvpnTrial: 	at co.asiven.vixentvpn.trial.ui.MainActivity.access$measure(MainActivity.kt:61)
+10-26 10:37:31.318  3217  4813 E MvpnTrial: 	at co.asiven.vixentvpn.trial.ui.MainActivity$pingAll$2$1$1$1.invokeSuspend(MainActivity.kt:382)
+10-26 10:37:31.318  3217  4813 E MvpnTrial: 	at kotlin.coroutines.jvm.internal.BaseContinuationImpl.resumeWith(ContinuationImpl.kt:33)
+10-26 10:37:31.318  3217  4813 E MvpnTrial: 	at kotlinx.coroutines.DispatchedTask.run(DispatchedTask.kt:104)
+10-26 10:37:31.318  3217  4813 E MvpnTrial: 	at kotlinx.coroutines.internal.LimitedDispatcher$Worker.run(LimitedDispatcher.kt:111)
+10-26 10:37:31.318  3217  4813 E MvpnTrial: 	at kotlinx.coroutines.scheduling.TaskImpl.run(Tasks.kt:99)
+10-26 10:37:31.318  3217  4813 E MvpnTrial: 	at kotlinx.coroutines.scheduling.CoroutineScheduler.runSafely(CoroutineScheduler.kt:584)
+10-26 10:37:31.318  3217  4813 E MvpnTrial: 	at kotlinx.coroutines.scheduling.CoroutineScheduler$Worker.executeTask(CoroutineScheduler.kt:811)
+10-26 10:37:31.318  3217  4813 E MvpnTrial: 	at kotlinx.coroutines.scheduling.CoroutineScheduler$Worker.runWorker(CoroutineScheduler.kt:715)
+10-26 10:37:31.318  3217  4813 E MvpnTrial: 	at kotlinx.coroutines.scheduling.CoroutineScheduler$Worker.run(CoroutineScheduler.kt:702)
+10-26 10:37:31.318  3217  4813 D MvpnTrial: پینگ 🇦🇺 Australia: -1 ms
+10-26 10:37:31.361  3217  4783 D MvpnTrial: پینگ 🇺🇸 United States: 85 ms
+10-26 10:37:31.368  3217  4783 E MvpnTrial: سنجش تأخیر ناموفق
+10-26 10:37:31.368  3217  4783 E MvpnTrial: go.Universe$proxyerror: config load error: infra/conf/serial: failed to parse json config > infra/conf: failed to build outbound config with tag proxy > infra/conf: vless without TLS or other encryption is prohibited unless the server address is a private IP or domain
+10-26 10:37:31.368  3217  4783 E MvpnTrial: 	at libv2ray.Libv2ray.measureOutboundDelay(Native Method)
+10-26 10:37:31.368  3217  4783 E MvpnTrial: 	at co.asiven.vixentvpn.trial.core.XrayCore.measureDelay(XrayCore.kt:81)
+10-26 10:37:31.368  3217  4783 E MvpnTrial: 	at co.asiven.vixentvpn.trial.ui.MainActivity.measure(MainActivity.kt:417)
+10-26 10:37:31.368  3217  4783 E MvpnTrial: 	at co.asiven.vixentvpn.trial.ui.MainActivity.access$measure(MainActivity.kt:61)
+10-26 10:37:31.368  3217  4783 E MvpnTrial: 	at co.asiven.vixentvpn.trial.ui.MainActivity$pingAll$2$1$1$1.invokeSuspend(MainActivity.kt:382)
+10-26 10:37:31.368  3217  4783 E MvpnTrial: 	at kotlin.coroutines.jvm.internal.BaseContinuationImpl.resumeWith(ContinuationImpl.kt:33)
+10-26 10:37:31.368  3217  4783 E MvpnTrial: 	at kotlinx.coroutines.DispatchedTask.run(DispatchedTask.kt:104)
+10-26 10:37:31.368  3217  4783 E MvpnTrial: 	at kotlinx.coroutines.internal.LimitedDispatcher$Worker.run(LimitedDispatcher.kt:111)
+10-26 10:37:31.368  3217  4783 E MvpnTrial: 	at kotlinx.coroutines.scheduling.TaskImpl.run(Tasks.kt:99)
+10-26 10:37:31.368  3217  4783 E MvpnTrial: 	at kotlinx.coroutines.scheduling.CoroutineScheduler.runSafely(CoroutineScheduler.kt:584)
+10-26 10:37:31.368  3217  4783 E MvpnTrial: 	at kotlinx.coroutines.scheduling.CoroutineScheduler$Worker.executeTask(CoroutineScheduler.kt:811)
+10-26 10:37:31.368  3217  4783 E MvpnTrial: 	at kotlinx.coroutines.scheduling.CoroutineScheduler$Worker.runWorker(CoroutineScheduler.kt:715)
+10-26 10:37:31.368  3217  4783 E MvpnTrial: 	at kotlinx.coroutines.scheduling.CoroutineScheduler$Worker.run(CoroutineScheduler.kt:702)
+10-26 10:37:31.393  3217  4813 E MvpnTrial: سنجش تأخیر ناموفق
+10-26 10:37:31.393  3217  4813 E MvpnTrial: go.Universe$proxyerror: config load error: infra/conf/serial: failed to parse json config > infra/conf: failed to build outbound config with tag proxy > infra/conf: vless without TLS or other encryption is prohibited unless the server address is a private IP or domain
+10-26 10:37:31.393  3217  4813 E MvpnTrial: 	at libv2ray.Libv2ray.measureOutboundDelay(Native Method)
+10-26 10:37:31.393  3217  4813 E MvpnTrial: 	at co.asiven.vixentvpn.trial.core.XrayCore.measureDelay(XrayCore.kt:81)
+10-26 10:37:31.393  3217  4813 E MvpnTrial: 	at co.asiven.vixentvpn.trial.ui.MainActivity.measure(MainActivity.kt:417)
+10-26 10:37:31.393  3217  4813 E MvpnTrial: 	at co.asiven.vixentvpn.trial.ui.MainActivity.access$measure(MainActivity.kt:61)
+10-26 10:37:31.393  3217  4813 E MvpnTrial: 	at co.asiven.vixentvpn.trial.ui.MainActivity$pingAll$2$1$1$1.invokeSuspend(MainActivity.kt:382)
+10-26 10:37:31.393  3217  4813 E MvpnTrial: 	at kotlin.coroutines.jvm.internal.BaseContinuationImpl.resumeWith(ContinuationImpl.kt:33)
+10-26 10:37:31.393  3217  4813 E MvpnTrial: 	at kotlinx.coroutines.DispatchedTask.run(DispatchedTask.kt:104)
+10-26 10:37:31.393  3217  4813 E MvpnTrial: 	at kotlinx.coroutines.internal.LimitedDispatcher$Worker.run(LimitedDispatcher.kt:111)
+10-26 10:37:31.393  3217  4813 E MvpnTrial: 	at kotlinx.coroutines.scheduling.TaskImpl.run(Tasks.kt:99)
+10-26 10:37:31.393  3217  4813 E MvpnTrial: 	at kotlinx.coroutines.scheduling.CoroutineScheduler.runSafely(CoroutineScheduler.kt:584)
+10-26 10:37:31.393  3217  4813 E MvpnTrial: 	at kotlinx.coroutines.scheduling.CoroutineScheduler$Worker.executeTask(CoroutineScheduler.kt:811)
+10-26 10:37:31.393  3217  4813 E MvpnTrial: 	at kotlinx.coroutines.scheduling.CoroutineScheduler$Worker.runWorker(CoroutineScheduler.kt:715)
+10-26 10:37:31.393  3217  4813 E MvpnTrial: 	at kotlinx.coroutines.scheduling.CoroutineScheduler$Worker.run(CoroutineScheduler.kt:702)
+10-26 10:37:31.397  3217  4783 D MvpnTrial: پینگ 🇦🇺 Australia: -1 ms
+10-26 10:37:31.402  3217  4811 E MvpnTrial: سنجش تأخیر ناموفق
+10-26 10:37:31.402  3217  4811 E MvpnTrial: go.Universe$proxyerror: config load error: infra/conf/serial: failed to parse json config > infra/conf: failed to build outbound config with tag proxy > infra/conf: vless without TLS or other encryption is prohibited unless the server address is a private IP or domain
+10-26 10:37:31.402  3217  4811 E MvpnTrial: 	at libv2ray.Libv2ray.measureOutboundDelay(Native Method)
+10-26 10:37:31.402  3217  4811 E MvpnTrial: 	at co.asiven.vixentvpn.trial.core.XrayCore.measureDelay(XrayCore.kt:81)
+10-26 10:37:31.402  3217  4811 E MvpnTrial: 	at co.asiven.vixentvpn.trial.ui.MainActivity.measure(MainActivity.kt:417)
+10-26 10:37:31.402  3217  4811 E MvpnTrial: 	at co.asiven.vixentvpn.trial.ui.MainActivity.access$measure(MainActivity.kt:61)
+10-26 10:37:31.402  3217  4811 E MvpnTrial: 	at co.asiven.vixentvpn.trial.ui.MainActivity$pingAll$2$1$1$1.invokeSuspend(MainActivity.kt:382)
+10-26 10:37:31.402  3217  4811 E MvpnTrial: 	at kotlin.coroutines.jvm.internal.BaseContinuationImpl.resumeWith(ContinuationImpl.kt:33)
+10-26 10:37:31.402  3217  4811 E MvpnTrial: 	at kotlinx.coroutines.DispatchedTask.run(DispatchedTask.kt:104)
+10-26 10:37:31.402  3217  4811 E MvpnTrial: 	at kotlinx.coroutines.internal.LimitedDispatcher$Worker.run(LimitedDispatcher.kt:111)
+10-26 10:37:31.402  3217  4811 E MvpnTrial: 	at kotlinx.coroutines.scheduling.TaskImpl.run(Tasks.kt:99)
+10-26 10:37:31.402  3217  4811 E MvpnTrial: 	at kotlinx.coroutines.scheduling.CoroutineScheduler.runSafely(CoroutineScheduler.kt:584)
+10-26 10:37:31.402  3217  4811 E MvpnTrial: 	at kotlinx.coroutines.scheduling.CoroutineScheduler$Worker.executeTask(CoroutineScheduler.kt:811)
+10-26 10:37:31.402  3217  4811 E MvpnTrial: 	at kotlinx.coroutines.scheduling.CoroutineScheduler$Worker.runWorker(CoroutineScheduler.kt:715)
+10-26 10:37:31.402  3217  4811 E MvpnTrial: 	at kotlinx.coroutines.scheduling.CoroutineScheduler$Worker.run(CoroutineScheduler.kt:702)
+10-26 10:37:31.402  3217  4811 D MvpnTrial: پینگ 🇸🇪 Sweden: -1 ms
+10-26 10:37:31.407  3217  4829 E MvpnTrial: سنجش تأخیر ناموفق
+10-26 10:37:31.407  3217  4829 E MvpnTrial: go.Universe$proxyerror: config load error: infra/conf/serial: failed to parse json config > infra/conf: failed to build outbound config with tag proxy > infra/conf: vless without TLS or other encryption is prohibited unless the server address is a private IP or domain
+10-26 10:37:31.407  3217  4829 E MvpnTrial: 	at libv2ray.Libv2ray.measureOutboundDelay(Native Method)
+10-26 10:37:31.407  3217  4829 E MvpnTrial: 	at co.asiven.vixentvpn.trial.core.XrayCore.measureDelay(XrayCore.kt:81)
+10-26 10:37:31.407  3217  4829 E MvpnTrial: 	at co.asiven.vixentvpn.trial.ui.MainActivity.measure(MainActivity.kt:417)
+10-26 10:37:31.407  3217  4829 E MvpnTrial: 	at co.asiven.vixentvpn.trial.ui.MainActivity.access$measure(MainActivity.kt:61)
+10-26 10:37:31.407  3217  4829 E MvpnTrial: 	at co.asiven.vixentvpn.trial.ui.MainActivity$pingAll$2$1$1$1.invokeSuspend(MainActivity.kt:382)
+10-26 10:37:31.407  3217  4829 E MvpnTrial: 	at kotlin.coroutines.jvm.internal.BaseContinuationImpl.resumeWith(ContinuationImpl.kt:33)
+10-26 10:37:31.407  3217  4829 E MvpnTrial: 	at kotlinx.coroutines.DispatchedTask.run(DispatchedTask.kt:104)
+10-26 10:37:31.407  3217  4829 E MvpnTrial: 	at kotlinx.coroutines.internal.LimitedDispatcher$Worker.run(LimitedDispatcher.kt:111)
+10-26 10:37:31.407  3217  4829 E MvpnTrial: 	at kotlinx.coroutines.scheduling.TaskImpl.run(Tasks.kt:99)
+10-26 10:37:31.407  3217  4829 E MvpnTrial: 	at kotlinx.coroutines.scheduling.CoroutineScheduler.runSafely(CoroutineScheduler.kt:584)
+10-26 10:37:31.407  3217  4829 E MvpnTrial: 	at kotlinx.coroutines.scheduling.CoroutineScheduler$Worker.executeTask(CoroutineScheduler.kt:811)
+10-26 10:37:31.407  3217  4829 E MvpnTrial: 	at kotlinx.coroutines.scheduling.CoroutineScheduler$Worker.runWorker(CoroutineScheduler.kt:715)
+10-26 10:37:31.407  3217  4829 E MvpnTrial: 	at kotlinx.coroutines.scheduling.CoroutineScheduler$Worker.run(CoroutineScheduler.kt:702)
+10-26 10:37:31.407  3217  4829 D MvpnTrial: پینگ 🇪🇸 Spain: -1 ms
+10-26 10:37:31.415  3217  3328 D MvpnTrial: پینگ 🇺🇸 United States: 99 ms
+10-26 10:37:31.420  3217  4829 E MvpnTrial: سنجش تأخیر ناموفق
+10-26 10:37:31.420  3217  4829 E MvpnTrial: go.Universe$proxyerror: config load error: infra/conf/serial: failed to parse json config > infra/conf: failed to build outbound config with tag proxy > infra/conf: vless without TLS or other encryption is prohibited unless the server address is a private IP or domain
+10-26 10:37:31.420  3217  4829 E MvpnTrial: 	at libv2ray.Libv2ray.measureOutboundDelay(Native Method)
+10-26 10:37:31.420  3217  4829 E MvpnTrial: 	at co.asiven.vixentvpn.trial.core.XrayCore.measureDelay(XrayCore.kt:81)
+10-26 10:37:31.420  3217  4829 E MvpnTrial: 	at co.asiven.vixentvpn.trial.ui.MainActivity.measure(MainActivity.kt:417)
+10-26 10:37:31.420  3217  4829 E MvpnTrial: 	at co.asiven.vixentvpn.trial.ui.MainActivity.access$measure(MainActivity.kt:61)
+10-26 10:37:31.420  3217  4829 E MvpnTrial: 	at co.asiven.vixentvpn.trial.ui.MainActivity$pingAll$2$1$1$1.invokeSuspend(MainActivity.kt:382)
+10-26 10:37:31.420  3217  4829 E MvpnTrial: 	at kotlin.coroutines.jvm.internal.BaseContinuationImpl.resumeWith(ContinuationImpl.kt:33)
+10-26 10:37:31.420  3217  4829 E MvpnTrial: 	at kotlinx.coroutines.DispatchedTask.run(DispatchedTask.kt:104)
+10-26 10:37:31.420  3217  4829 E MvpnTrial: 	at kotlinx.coroutines.internal.LimitedDispatcher$Worker.run(LimitedDispatcher.kt:111)
+10-26 10:37:31.420  3217  4829 E MvpnTrial: 	at kotlinx.coroutines.scheduling.TaskImpl.run(Tasks.kt:99)
+10-26 10:37:31.420  3217  4829 E MvpnTrial: 	at kotlinx.coroutines.scheduling.CoroutineScheduler.runSafely(CoroutineScheduler.kt:584)
+10-26 10:37:31.420  3217  4829 E MvpnTrial: 	at kotlinx.coroutines.scheduling.CoroutineScheduler$Worker.executeTask(CoroutineScheduler.kt:811)
+10-26 10:37:31.420  3217  4829 E MvpnTrial: 	at kotlinx.coroutines.scheduling.CoroutineScheduler$Worker.runWorker(CoroutineScheduler.kt:715)
+10-26 10:37:31.420  3217  4829 E MvpnTrial: 	at kotlinx.coroutines.scheduling.CoroutineScheduler$Worker.run(CoroutineScheduler.kt:702)
+10-26 10:37:31.422  3217  3328 E MvpnTrial: سنجش تأخیر ناموفق
+10-26 10:37:31.422  3217  3328 E MvpnTrial: go.Universe$proxyerror: config load error: infra/conf/serial: failed to parse json config > infra/conf: failed to build outbound config with tag proxy > infra/conf: vless without TLS or other encryption is prohibited unless the server address is a private IP or domain
+10-26 10:37:31.422  3217  3328 E MvpnTrial: 	at libv2ray.Libv2ray.measureOutboundDelay(Native Method)
+10-26 10:37:31.422  3217  3328 E MvpnTrial: 	at co.asiven.vixentvpn.trial.core.XrayCore.measureDelay(XrayCore.kt:81)
+10-26 10:37:31.422  3217  3328 E MvpnTrial: 	at co.asiven.vixentvpn.trial.ui.MainActivity.measure(MainActivity.kt:417)
+10-26 10:37:31.422  3217  3328 E MvpnTrial: 	at co.asiven.vixentvpn.trial.ui.MainActivity.access$measure(MainActivity.kt:61)
+10-26 10:37:31.422  3217  3328 E MvpnTrial: 	at co.asiven.vixentvpn.trial.ui.MainActivity$pingAll$2$1$1$1.invokeSuspend(MainActivity.kt:382)
+10-26 10:37:31.422  3217  3328 E MvpnTrial: 	at kotlin.coroutines.jvm.internal.BaseContinuationImpl.resumeWith(ContinuationImpl.kt:33)
+10-26 10:37:31.422  3217  3328 E MvpnTrial: 	at kotlinx.coroutines.DispatchedTask.run(DispatchedTask.kt:104)
+10-26 10:37:31.422  3217  3328 E MvpnTrial: 	at kotlinx.coroutines.internal.LimitedDispatcher$Worker.run(LimitedDispatcher.kt:111)
+10-26 10:37:31.422  3217  3328 E MvpnTrial: 	at kotlinx.coroutines.scheduling.TaskImpl.run(Tasks.kt:99)
+10-26 10:37:31.422  3217  3328 E MvpnTrial: 	at kotlinx.coroutines.scheduling.CoroutineScheduler.runSafely(CoroutineScheduler.kt:584)
+10-26 10:37:31.422  3217  3328 E MvpnTrial: 	at kotlinx.coroutines.scheduling.CoroutineScheduler$Worker.executeTask(CoroutineScheduler.kt:811)
+10-26 10:37:31.422  3217  3328 E MvpnTrial: 	at kotlinx.coroutines.scheduling.CoroutineScheduler$Worker.runWorker(CoroutineScheduler.kt:715)
+10-26 10:37:31.422  3217  3328 E MvpnTrial: 	at kotlinx.coroutines.scheduling.CoroutineScheduler$Worker.run(CoroutineScheduler.kt:702)
+10-26 10:37:31.443  3217  4829 D MvpnTrial: پینگ 🇺🇸 United States: -1 ms
+10-26 10:37:31.447  3217  4829 E MvpnTrial: سنجش تأخیر ناموفق
+10-26 10:37:31.447  3217  4829 E MvpnTrial: go.Universe$proxyerror: config load error: infra/conf/serial: failed to parse json config > infra/conf: failed to build outbound config with tag proxy > infra/conf: vless without TLS or other encryption is prohibited unless the server address is a private IP or domain
+10-26 10:37:31.447  3217  4829 E MvpnTrial: 	at libv2ray.Libv2ray.measureOutboundDelay(Native Method)
+10-26 10:37:31.447  3217  4829 E MvpnTrial: 	at co.asiven.vixentvpn.trial.core.XrayCore.measureDelay(XrayCore.kt:81)
+10-26 10:37:31.447  3217  4829 E MvpnTrial: 	at co.asiven.vixentvpn.trial.ui.MainActivity.measure(MainActivity.kt:417)
+10-26 10:37:31.447  3217  4829 E MvpnTrial: 	at co.asiven.vixentvpn.trial.ui.MainActivity.access$measure(MainActivity.kt:61)
+10-26 10:37:31.447  3217  4829 E MvpnTrial: 	at co.asiven.vixentvpn.trial.ui.MainActivity$pingAll$2$1$1$1.invokeSuspend(MainActivity.kt:382)
+10-26 10:37:31.447  3217  4829 E MvpnTrial: 	at kotlin.coroutines.jvm.internal.BaseContinuationImpl.resumeWith(ContinuationImpl.kt:33)
+10-26 10:37:31.447  3217  4829 E MvpnTrial: 	at kotlinx.coroutines.DispatchedTask.run(DispatchedTask.kt:104)
+10-26 10:37:31.447  3217  4829 E MvpnTrial: 	at kotlinx.coroutines.internal.LimitedDispatcher$Worker.run(LimitedDispatcher.kt:111)
+10-26 10:37:31.447  3217  4829 E MvpnTrial: 	at kotlinx.coroutines.scheduling.TaskImpl.run(Tasks.kt:99)
+10-26 10:37:31.447  3217  4829 E MvpnTrial: 	at kotlinx.coroutines.scheduling.CoroutineScheduler.runSafely(CoroutineScheduler.kt:584)
+10-26 10:37:31.447  3217  4829 E MvpnTrial: 	at kotlinx.coroutines.scheduling.CoroutineScheduler$Worker.executeTask(CoroutineScheduler.kt:811)
+10-26 10:37:31.447  3217  4829 E MvpnTrial: 	at kotlinx.coroutines.scheduling.CoroutineScheduler$Worker.runWorker(CoroutineScheduler.kt:715)
+10-26 10:37:31.447  3217  4829 E MvpnTrial: 	at kotlinx.coroutines.scheduling.CoroutineScheduler$Worker.run(CoroutineScheduler.kt:702)
+10-26 10:37:31.447  3217  4829 D MvpnTrial: پینگ 🇺🇸 United States: -1 ms
+10-26 10:37:31.448  3217  3328 D MvpnTrial: پینگ 🇫🇷 France: -1 ms
+10-26 10:37:31.448  3217  4823 E MvpnTrial: سنجش تأخیر ناموفق
+10-26 10:37:31.448  3217  4823 E MvpnTrial: go.Universe$proxyerror: config load error: infra/conf/serial: failed to parse json config > infra/conf: failed to build outbound config with tag proxy > infra/conf: vless without TLS or other encryption is prohibited unless the server address is a private IP or domain
+10-26 10:37:31.448  3217  4823 E MvpnTrial: 	at libv2ray.Libv2ray.measureOutboundDelay(Native Method)
+10-26 10:37:31.448  3217  4823 E MvpnTrial: 	at co.asiven.vixentvpn.trial.core.XrayCore.measureDelay(XrayCore.kt:81)
+10-26 10:37:31.448  3217  4823 E MvpnTrial: 	at co.asiven.vixentvpn.trial.ui.MainActivity.measure(MainActivity.kt:417)
+10-26 10:37:31.448  3217  4823 E MvpnTrial: 	at co.asiven.vixentvpn.trial.ui.MainActivity.access$measure(MainActivity.kt:61)
+10-26 10:37:31.448  3217  4823 E MvpnTrial: 	at co.asiven.vixentvpn.trial.ui.MainActivity$pingAll$2$1$1$1.invokeSuspend(MainActivity.kt:382)
+10-26 10:37:31.448  3217  4823 E MvpnTrial: 	at kotlin.coroutines.jvm.internal.BaseContinuationImpl.resumeWith(ContinuationImpl.kt:33)
+10-26 10:37:31.448  3217  4823 E MvpnTrial: 	at kotlinx.coroutines.DispatchedTask.run(DispatchedTask.kt:104)
+10-26 10:37:31.448  3217  4823 E MvpnTrial: 	at kotlinx.coroutines.internal.LimitedDispatcher$Worker.run(LimitedDispatcher.kt:111)
+10-26 10:37:31.448  3217  4823 E MvpnTrial: 	at kotlinx.coroutines.scheduling.TaskImpl.run(Tasks.kt:99)
+10-26 10:37:31.448  3217  4823 E MvpnTrial: 	at kotlinx.coroutines.scheduling.CoroutineScheduler.runSafely(CoroutineScheduler.kt:584)
+10-26 10:37:31.448  3217  4823 E MvpnTrial: 	at kotlinx.coroutines.scheduling.CoroutineScheduler$Worker.executeTask(CoroutineScheduler.kt:811)
+10-26 10:37:31.448  3217  4823 E MvpnTrial: 	at kotlinx.coroutines.scheduling.CoroutineScheduler$Worker.runWorker(CoroutineScheduler.kt:715)
+10-26 10:37:31.448  3217  4823 E MvpnTrial: 	at kotlinx.coroutines.scheduling.CoroutineScheduler$Worker.run(CoroutineScheduler.kt:702)
+10-26 10:37:31.448  3217  3328 E MvpnTrial: سنجش تأخیر ناموفق
+10-26 10:37:31.448  3217  3328 E MvpnTrial: go.Universe$proxyerror: config load error: infra/conf/serial: failed to parse json config > infra/conf: failed to build outbound config with tag proxy > infra/conf: vless without TLS or other encryption is prohibited unless the server address is a private IP or domain
+10-26 10:37:31.448  3217  3328 E MvpnTrial: 	at libv2ray.Libv2ray.measureOutboundDelay(Native Method)
+10-26 10:37:31.448  3217  3328 E MvpnTrial: 	at co.asiven.vixentvpn.trial.core.XrayCore.measureDelay(XrayCore.kt:81)
+10-26 10:37:31.448  3217  3328 E MvpnTrial: 	at co.asiven.vixentvpn.trial.ui.MainActivity.measure(MainActivity.kt:417)
+10-26 10:37:31.448  3217  3328 E MvpnTrial: 	at co.asiven.vixentvpn.trial.ui.MainActivity.access$measure(MainActivity.kt:61)
+10-26 10:37:31.448  3217  3328 E MvpnTrial: 	at co.asiven.vixentvpn.trial.ui.MainActivity$pingAll$2$1$1$1.invokeSuspend(MainActivity.kt:382)
+10-26 10:37:31.448  3217  3328 E MvpnTrial: 	at kotlin.coroutines.jvm.internal.BaseContinuationImpl.resumeWith(ContinuationImpl.kt:33)
+10-26 10:37:31.448  3217  3328 E MvpnTrial: 	at kotlinx.coroutines.DispatchedTask.run(DispatchedTask.kt:104)
+10-26 10:37:31.448  3217  3328 E MvpnTrial: 	at kotlinx.coroutines.internal.LimitedDispatcher$Worker.run(LimitedDispatcher.kt:111)
+10-26 10:37:31.448  3217  3328 E MvpnTrial: 	at kotlinx.coroutines.scheduling.TaskImpl.run(Tasks.kt:99)
+10-26 10:37:31.448  3217  3328 E MvpnTrial: 	at kotlinx.coroutines.scheduling.CoroutineScheduler.runSafely(CoroutineScheduler.kt:584)
+10-26 10:37:31.448  3217  3328 E MvpnTrial: 	at kotlinx.coroutines.scheduling.CoroutineScheduler$Worker.executeTask(CoroutineScheduler.kt:811)
+10-26 10:37:31.448  3217  3328 E MvpnTrial: 	at kotlinx.coroutines.scheduling.CoroutineScheduler$Worker.runWorker(CoroutineScheduler.kt:715)
+10-26 10:37:31.448  3217  3328 E MvpnTrial: 	at kotlinx.coroutines.scheduling.CoroutineScheduler$Worker.run(CoroutineScheduler.kt:702)
+10-26 10:37:31.448  3217  3328 D MvpnTrial: پینگ 🇺🇸 United States: -1 ms
+10-26 10:37:31.449  3217  3328 E MvpnTrial: سنجش تأخیر ناموفق
+10-26 10:37:31.449  3217  3328 E MvpnTrial: go.Universe$proxyerror: config load error: infra/conf/serial: failed to parse json config > infra/conf: failed to build outbound config with tag proxy > infra/conf: vless without TLS or other encryption is prohibited unless the server address is a private IP or domain
+10-26 10:37:31.449  3217  3328 E MvpnTrial: 	at libv2ray.Libv2ray.measureOutboundDelay(Native Method)
+10-26 10:37:31.449  3217  3328 E MvpnTrial: 	at co.asiven.vixentvpn.trial.core.XrayCore.measureDelay(XrayCore.kt:81)
+10-26 10:37:31.449  3217  3328 E MvpnTrial: 	at co.asiven.vixentvpn.trial.ui.MainActivity.measure(MainActivity.kt:417)
+10-26 10:37:31.449  3217  3328 E MvpnTrial: 	at co.asiven.vixentvpn.trial.ui.MainActivity.access$measure(MainActivity.kt:61)
+10-26 10:37:31.449  3217  3328 E MvpnTrial: 	at co.asiven.vixentvpn.trial.ui.MainActivity$pingAll$2$1$1$1.invokeSuspend(MainActivity.kt:382)
+10-26 10:37:31.449  3217  3328 E MvpnTrial: 	at kotlin.coroutines.jvm.internal.BaseContinuationImpl.resumeWith(ContinuationImpl.kt:33)
+10-26 10:37:31.449  3217  3328 E MvpnTrial: 	at kotlinx.coroutines.DispatchedTask.run(DispatchedTask.kt:104)
+10-26 10:37:31.449  3217  3328 E MvpnTrial: 	at kotlinx.coroutines.internal.LimitedDispatcher$Worker.run(LimitedDispatcher.kt:111)
+10-26 10:37:31.449  3217  3328 E MvpnTrial: 	at kotlinx.coroutines.scheduling.TaskImpl.run(Tasks.kt:99)
+10-26 10:37:31.449  3217  3328 E MvpnTrial: 	at kotlinx.coroutines.scheduling.CoroutineScheduler.runSafely(CoroutineScheduler.kt:584)
+10-26 10:37:31.449  3217  3328 E MvpnTrial: 	at kotlinx.coroutines.scheduling.CoroutineScheduler$Worker.executeTask(CoroutineScheduler.kt:811)
+10-26 10:37:31.449  3217  3328 E MvpnTrial: 	at kotlinx.coroutines.scheduling.CoroutineScheduler$Worker.runWorker(CoroutineScheduler.kt:715)
+10-26 10:37:31.449  3217  3328 E MvpnTrial: 	at kotlinx.coroutines.scheduling.CoroutineScheduler$Worker.run(CoroutineScheduler.kt:702)
+10-26 10:37:31.449  3217  3328 D MvpnTrial: پینگ 🇺🇸 United States: -1 ms
+10-26 10:37:31.451  3217  4823 D MvpnTrial: پینگ 🇸🇪 Sweden: -1 ms
+10-26 10:37:31.463  3217  4827 E MvpnTrial: سنجش تأخیر ناموفق
+10-26 10:37:31.463  3217  4827 E MvpnTrial: go.Universe$proxyerror: config load error: infra/conf/serial: failed to parse json config > infra/conf: failed to build outbound config with tag proxy > infra/conf: vless without TLS or other encryption is prohibited unless the server address is a private IP or domain
+10-26 10:37:31.463  3217  4827 E MvpnTrial: 	at libv2ray.Libv2ray.measureOutboundDelay(Native Method)
+10-26 10:37:31.463  3217  4827 E MvpnTrial: 	at co.asiven.vixentvpn.trial.core.XrayCore.measureDelay(XrayCore.kt:81)
+10-26 10:37:31.463  3217  4827 E MvpnTrial: 	at co.asiven.vixentvpn.trial.ui.MainActivity.measure(MainActivity.kt:417)
+10-26 10:37:31.463  3217  4827 E MvpnTrial: 	at co.asiven.vixentvpn.trial.ui.MainActivity.access$measure(MainActivity.kt:61)
+10-26 10:37:31.463  3217  4827 E MvpnTrial: 	at co.asiven.vixentvpn.trial.ui.MainActivity$pingAll$2$1$1$1.invokeSuspend(MainActivity.kt:382)
+10-26 10:37:31.463  3217  4827 E MvpnTrial: 	at kotlin.coroutines.jvm.internal.BaseContinuationImpl.resumeWith(ContinuationImpl.kt:33)
+10-26 10:37:31.463  3217  4827 E MvpnTrial: 	at kotlinx.coroutines.DispatchedTask.run(DispatchedTask.kt:104)
+10-26 10:37:31.463  3217  4827 E MvpnTrial: 	at kotlinx.coroutines.internal.LimitedDispatcher$Worker.run(LimitedDispatcher.kt:111)
+10-26 10:37:31.463  3217  4827 E MvpnTrial: 	at kotlinx.coroutines.scheduling.TaskImpl.run(Tasks.kt:99)
+10-26 10:37:31.463  3217  4827 E MvpnTrial: 	at kotlinx.coroutines.scheduling.CoroutineScheduler.runSafely(CoroutineScheduler.kt:584)
+10-26 10:37:31.463  3217  4827 E MvpnTrial: 	at kotlinx.coroutines.scheduling.CoroutineScheduler$Worker.executeTask(CoroutineScheduler.kt:811)
+10-26 10:37:31.463  3217  4827 E MvpnTrial: 	at kotlinx.coroutines.scheduling.CoroutineScheduler$Worker.runWorker(CoroutineScheduler.kt:715)
+10-26 10:37:31.463  3217  4827 E MvpnTrial: 	at kotlinx.coroutines.scheduling.CoroutineScheduler$Worker.run(CoroutineScheduler.kt:702)
+10-26 10:37:31.467  3217  4827 D MvpnTrial: پینگ 🇪🇸 Spain: -1 ms
+10-26 10:37:31.468  3217  4822 E MvpnTrial: سنجش تأخیر ناموفق
+10-26 10:37:31.468  3217  4822 E MvpnTrial: go.Universe$proxyerror: config load error: infra/conf/serial: failed to parse json config > infra/conf: failed to build outbound config with tag proxy > infra/conf: vless without TLS or other encryption is prohibited unless the server address is a private IP or domain
+10-26 10:37:31.468  3217  4822 E MvpnTrial: 	at libv2ray.Libv2ray.measureOutboundDelay(Native Method)
+10-26 10:37:31.468  3217  4822 E MvpnTrial: 	at co.asiven.vixentvpn.trial.core.XrayCore.measureDelay(XrayCore.kt:81)
+10-26 10:37:31.468  3217  4822 E MvpnTrial: 	at co.asiven.vixentvpn.trial.ui.MainActivity.measure(MainActivity.kt:417)
+10-26 10:37:31.468  3217  4822 E MvpnTrial: 	at co.asiven.vixentvpn.trial.ui.MainActivity.access$measure(MainActivity.kt:61)
+10-26 10:37:31.468  3217  4822 E MvpnTrial: 	at co.asiven.vixentvpn.trial.ui.MainActivity$pingAll$2$1$1$1.invokeSuspend(MainActivity.kt:382)
+10-26 10:37:31.468  3217  4822 E MvpnTrial: 	at kotlin.coroutines.jvm.internal.BaseContinuationImpl.resumeWith(ContinuationImpl.kt:33)
+10-26 10:37:31.468  3217  4822 E MvpnTrial: 	at kotlinx.coroutines.DispatchedTask.run(DispatchedTask.kt:104)
+10-26 10:37:31.468  3217  4822 E MvpnTrial: 	at kotlinx.coroutines.internal.LimitedDispatcher$Worker.run(LimitedDispatcher.kt:111)
+10-26 10:37:31.468  3217  4822 E MvpnTrial: 	at kotlinx.coroutines.scheduling.TaskImpl.run(Tasks.kt:99)
+10-26 10:37:31.468  3217  4822 E MvpnTrial: 	at kotlinx.coroutines.scheduling.CoroutineScheduler.runSafely(CoroutineScheduler.kt:584)
+10-26 10:37:31.468  3217  4822 E MvpnTrial: 	at kotlinx.coroutines.scheduling.CoroutineScheduler$Worker.executeTask(CoroutineScheduler.kt:811)
+10-26 10:37:31.468  3217  4822 E MvpnTrial: 	at kotlinx.coroutines.scheduling.CoroutineScheduler$Worker.runWorker(CoroutineScheduler.kt:715)
+10-26 10:37:31.468  3217  4822 E MvpnTrial: 	at kotlinx.coroutines.scheduling.CoroutineScheduler$Worker.run(CoroutineScheduler.kt:702)
+10-26 10:37:31.469  3217  4822 D MvpnTrial: پینگ 🇸🇪 Sweden: -1 ms
+10-26 10:37:31.470  3217  4822 E MvpnTrial: سنجش تأخیر ناموفق
+10-26 10:37:31.470  3217  4822 E MvpnTrial: go.Universe$proxyerror: config load error: infra/conf/serial: failed to parse json config > infra/conf: failed to build outbound config with tag proxy > infra/conf: vless without TLS or other encryption is prohibited unless the server address is a private IP or domain
+10-26 10:37:31.470  3217  4822 E MvpnTrial: 	at libv2ray.Libv2ray.measureOutboundDelay(Native Method)
+10-26 10:37:31.470  3217  4822 E MvpnTrial: 	at co.asiven.vixentvpn.trial.core.XrayCore.measureDelay(XrayCore.kt:81)
+10-26 10:37:31.470  3217  4822 E MvpnTrial: 	at co.asiven.vixentvpn.trial.ui.MainActivity.measure(MainActivity.kt:417)
+10-26 10:37:31.470  3217  4822 E MvpnTrial: 	at co.asiven.vixentvpn.trial.ui.MainActivity.access$measure(MainActivity.kt:61)
+10-26 10:37:31.470  3217  4822 E MvpnTrial: 	at co.asiven.vixentvpn.trial.ui.MainActivity$pingAll$2$1$1$1.invokeSuspend(MainActivity.kt:382)
+10-26 10:37:31.470  3217  4822 E MvpnTrial: 	at kotlin.coroutines.jvm.internal.BaseContinuationImpl.resumeWith(ContinuationImpl.kt:33)
+10-26 10:37:31.470  3217  4822 E MvpnTrial: 	at kotlinx.coroutines.DispatchedTask.run(DispatchedTask.kt:104)
+10-26 10:37:31.470  3217  4822 E MvpnTrial: 	at kotlinx.coroutines.internal.LimitedDispatcher$Worker.run(LimitedDispatcher.kt:111)
+10-26 10:37:31.470  3217  4822 E MvpnTrial: 	at kotlinx.coroutines.scheduling.TaskImpl.run(Tasks.kt:99)
+10-26 10:37:31.470  3217  4822 E MvpnTrial: 	at kotlinx.coroutines.scheduling.CoroutineScheduler.runSafely(CoroutineScheduler.kt:584)
+10-26 10:37:31.470  3217  4822 E MvpnTrial: 	at kotlinx.coroutines.scheduling.CoroutineScheduler$Worker.executeTask(CoroutineScheduler.kt:811)
+10-26 10:37:31.470  3217  4822 E MvpnTrial: 	at kotlinx.coroutines.scheduling.CoroutineScheduler$Worker.runWorker(CoroutineScheduler.kt:715)
+10-26 10:37:31.470  3217  4822 E MvpnTrial: 	at kotlinx.coroutines.scheduling.CoroutineScheduler$Worker.run(CoroutineScheduler.kt:702)
+10-26 10:37:31.470  3217  4822 D MvpnTrial: پینگ 🇸🇪 Sweden: -1 ms
+10-26 10:37:31.472  3217  4827 E MvpnTrial: سنجش تأخیر ناموفق
+10-26 10:37:31.472  3217  4827 E MvpnTrial: go.Universe$proxyerror: config load error: infra/conf/serial: failed to parse json config > infra/conf: failed to build outbound config with tag proxy > infra/conf: vless without TLS or other encryption is prohibited unless the server address is a private IP or domain
+10-26 10:37:31.472  3217  4827 E MvpnTrial: 	at libv2ray.Libv2ray.measureOutboundDelay(Native Method)
+10-26 10:37:31.472  3217  4827 E MvpnTrial: 	at co.asiven.vixentvpn.trial.core.XrayCore.measureDelay(XrayCore.kt:81)
+10-26 10:37:31.472  3217  4827 E MvpnTrial: 	at co.asiven.vixentvpn.trial.ui.MainActivity.measure(MainActivity.kt:417)
+10-26 10:37:31.472  3217  4827 E MvpnTrial: 	at co.asiven.vixentvpn.trial.ui.MainActivity.access$measure(MainActivity.kt:61)
+10-26 10:37:31.472  3217  4827 E MvpnTrial: 	at co.asiven.vixentvpn.trial.ui.MainActivity$pingAll$2$1$1$1.invokeSuspend(MainActivity.kt:382)
+10-26 10:37:31.472  3217  4827 E MvpnTrial: 	at kotlin.coroutines.jvm.internal.BaseContinuationImpl.resumeWith(ContinuationImpl.kt:33)
+10-26 10:37:31.472  3217  4827 E MvpnTrial: 	at kotlinx.coroutines.DispatchedTask.run(DispatchedTask.kt:104)
+10-26 10:37:31.472  3217  4827 E MvpnTrial: 	at kotlinx.coroutines.internal.LimitedDispatcher$Worker.run(LimitedDispatcher.kt:111)
+10-26 10:37:31.472  3217  4827 E MvpnTrial: 	at kotlinx.coroutines.scheduling.TaskImpl.run(Tasks.kt:99)
+10-26 10:37:31.472  3217  4827 E MvpnTrial: 	at kotlinx.coroutines.scheduling.CoroutineScheduler.runSafely(CoroutineScheduler.kt:584)
+10-26 10:37:31.472  3217  4827 E MvpnTrial: 	at kotlinx.coroutines.scheduling.CoroutineScheduler$Worker.executeTask(CoroutineScheduler.kt:811)
+10-26 10:37:31.472  3217  4827 E MvpnTrial: 	at kotlinx.coroutines.scheduling.CoroutineScheduler$Worker.runWorker(CoroutineScheduler.kt:715)
+10-26 10:37:31.472  3217  4827 E MvpnTrial: 	at kotlinx.coroutines.scheduling.CoroutineScheduler$Worker.run(CoroutineScheduler.kt:702)
+10-26 10:37:31.472  3217  4827 D MvpnTrial: پینگ 🇨🇦 Canada: -1 ms
+10-26 10:37:31.473  3217  4827 E MvpnTrial: سنجش تأخیر ناموفق
+10-26 10:37:31.473  3217  4827 E MvpnTrial: go.Universe$proxyerror: config load error: infra/conf/serial: failed to parse json config > infra/conf: failed to build outbound config with tag proxy > infra/conf: vless without TLS or other encryption is prohibited unless the server address is a private IP or domain
+10-26 10:37:31.473  3217  4827 E MvpnTrial: 	at libv2ray.Libv2ray.measureOutboundDelay(Native Method)
+10-26 10:37:31.473  3217  4827 E MvpnTrial: 	at co.asiven.vixentvpn.trial.core.XrayCore.measureDelay(XrayCore.kt:81)
+10-26 10:37:31.473  3217  4827 E MvpnTrial: 	at co.asiven.vixentvpn.trial.ui.MainActivity.measure(MainActivity.kt:417)
+10-26 10:37:31.473  3217  4827 E MvpnTrial: 	at co.asiven.vixentvpn.trial.ui.MainActivity.access$measure(MainActivity.kt:61)
+10-26 10:37:31.473  3217  4827 E MvpnTrial: 	at co.asiven.vixentvpn.trial.ui.MainActivity$pingAll$2$1$1$1.invokeSuspend(MainActivity.kt:382)
+10-26 10:37:31.473  3217  4827 E MvpnTrial: 	at kotlin.coroutines.jvm.internal.BaseContinuationImpl.resumeWith(ContinuationImpl.kt:33)
+10-26 10:37:31.473  3217  4827 E MvpnTrial: 	at kotlinx.coroutines.DispatchedTask.run(DispatchedTask.kt:104)
+10-26 10:37:31.473  3217  4827 E MvpnTrial: 	at kotlinx.coroutines.internal.LimitedDispatcher$Worker.run(LimitedDispatcher.kt:111)
+10-26 10:37:31.473  3217  4827 E MvpnTrial: 	at kotlinx.coroutines.scheduling.TaskImpl.run(Tasks.kt:99)
+10-26 10:37:31.473  3217  4827 E MvpnTrial: 	at kotlinx.coroutines.scheduling.CoroutineScheduler.runSafely(CoroutineScheduler.kt:584)
+10-26 10:37:31.473  3217  4827 E MvpnTrial: 	at kotlinx.coroutines.scheduling.CoroutineScheduler$Worker.executeTask(CoroutineScheduler.kt:811)
+10-26 10:37:31.473  3217  4827 E MvpnTrial: 	at kotlinx.coroutines.scheduling.CoroutineScheduler$Worker.runWorker(CoroutineScheduler.kt:715)
+10-26 10:37:31.473  3217  4827 E MvpnTrial: 	at kotlinx.coroutines.scheduling.CoroutineScheduler$Worker.run(CoroutineScheduler.kt:702)
+10-26 10:37:31.473  3217  4827 D MvpnTrial: پینگ 🇨🇦 Canada: -1 ms
+10-26 10:37:31.473  3217  4827 E MvpnTrial: سنجش تأخیر ناموفق
+10-26 10:37:31.473  3217  4827 E MvpnTrial: go.Universe$proxyerror: config load error: infra/conf/serial: failed to parse json config > infra/conf: failed to build outbound config with tag proxy > infra/conf: vless without TLS or other encryption is prohibited unless the server address is a private IP or domain
+10-26 10:37:31.473  3217  4827 E MvpnTrial: 	at libv2ray.Libv2ray.measureOutboundDelay(Native Method)
+10-26 10:37:31.473  3217  4827 E MvpnTrial: 	at co.asiven.vixentvpn.trial.core.XrayCore.measureDelay(XrayCore.kt:81)
+10-26 10:37:31.473  3217  4827 E MvpnTrial: 	at co.asiven.vixentvpn.trial.ui.MainActivity.measure(MainActivity.kt:417)
+10-26 10:37:31.473  3217  4827 E MvpnTrial: 	at co.asiven.vixentvpn.trial.ui.MainActivity.access$measure(MainActivity.kt:61)
+10-26 10:37:31.473  3217  4827 E MvpnTrial: 	at co.asiven.vixentvpn.trial.ui.MainActivity$pingAll$2$1$1$1.invokeSuspend(MainActivity.kt:382)
+10-26 10:37:31.473  3217  4827 E MvpnTrial: 	at kotlin.coroutines.jvm.internal.BaseContinuationImpl.resumeWith(ContinuationImpl.kt:33)
+10-26 10:37:31.473  3217  4827 E MvpnTrial: 	at kotlinx.coroutines.DispatchedTask.run(DispatchedTask.kt:104)
+10-26 10:37:31.473  3217  4827 E MvpnTrial: 	at kotlinx.coroutines.internal.LimitedDispatcher$Worker.run(LimitedDispatcher.kt:111)
+10-26 10:37:31.473  3217  4827 E MvpnTrial: 	at kotlinx.coroutines.scheduling.TaskImpl.run(Tasks.kt:99)
+10-26 10:37:31.473  3217  4827 E MvpnTrial: 	at kotlinx.coroutines.scheduling.CoroutineScheduler.runSafely(CoroutineScheduler.kt:584)
+10-26 10:37:31.473  3217  4827 E MvpnTrial: 	at kotlinx.coroutines.scheduling.CoroutineScheduler$Worker.executeTask(CoroutineScheduler.kt:811)
+10-26 10:37:31.473  3217  4827 E MvpnTrial: 	at kotlinx.coroutines.scheduling.CoroutineScheduler$Worker.runWorker(CoroutineScheduler.kt:715)
+10-26 10:37:31.473  3217  4827 E MvpnTrial: 	at kotlinx.coroutines.scheduling.CoroutineScheduler$Worker.run(CoroutineScheduler.kt:702)
+10-26 10:37:31.475  3217  4827 D MvpnTrial: پینگ 🇺🇸 United States: -1 ms
+10-26 10:37:31.477  3217  4827 E MvpnTrial: سنجش تأخیر ناموفق
+10-26 10:37:31.477  3217  4827 E MvpnTrial: go.Universe$proxyerror: config load error: infra/conf/serial: failed to parse json config > infra/conf: failed to build outbound config with tag proxy > infra/conf: vless without TLS or other encryption is prohibited unless the server address is a private IP or domain
+10-26 10:37:31.477  3217  4827 E MvpnTrial: 	at libv2ray.Libv2ray.measureOutboundDelay(Native Method)
+10-26 10:37:31.477  3217  4827 E MvpnTrial: 	at co.asiven.vixentvpn.trial.core.XrayCore.measureDelay(XrayCore.kt:81)
+10-26 10:37:31.477  3217  4827 E MvpnTrial: 	at co.asiven.vixentvpn.trial.ui.MainActivity.measure(MainActivity.kt:417)
+10-26 10:37:31.477  3217  4827 E MvpnTrial: 	at co.asiven.vixentvpn.trial.ui.MainActivity.access$measure(MainActivity.kt:61)
+10-26 10:37:31.477  3217  4827 E MvpnTrial: 	at co.asiven.vixentvpn.trial.ui.MainActivity$pingAll$2$1$1$1.invokeSuspend(MainActivity.kt:382)
+10-26 10:37:31.477  3217  4827 E MvpnTrial: 	at kotlin.coroutines.jvm.internal.BaseContinuationImpl.resumeWith(ContinuationImpl.kt:33)
+10-26 10:37:31.477  3217  4827 E MvpnTrial: 	at kotlinx.coroutines.DispatchedTask.run(DispatchedTask.kt:104)
+10-26 10:37:31.477  3217  4827 E MvpnTrial: 	at kotlinx.coroutines.internal.LimitedDispatcher$Worker.run(LimitedDispatcher.kt:111)
+10-26 10:37:31.477  3217  4827 E MvpnTrial: 	at kotlinx.coroutines.scheduling.TaskImpl.run(Tasks.kt:99)
+10-26 10:37:31.477  3217  4827 E MvpnTrial: 	at kotlinx.coroutines.scheduling.CoroutineScheduler.runSafely(CoroutineScheduler.kt:584)
+10-26 10:37:31.477  3217  4827 E MvpnTrial: 	at kotlinx.coroutines.scheduling.CoroutineScheduler$Worker.executeTask(CoroutineScheduler.kt:811)
+10-26 10:37:31.477  3217  4827 E MvpnTrial: 	at kotlinx.coroutines.scheduling.CoroutineScheduler$Worker.runWorker(CoroutineScheduler.kt:715)
+10-26 10:37:31.477  3217  4827 E MvpnTrial: 	at kotlinx.coroutines.scheduling.CoroutineScheduler$Worker.run(CoroutineScheduler.kt:702)
+10-26 10:37:31.480  3217  4827 D MvpnTrial: پینگ 🇪🇸 Spain: -1 ms
+10-26 10:37:31.480  3217  4822 E MvpnTrial: سنجش تأخیر ناموفق
+10-26 10:37:31.480  3217  4822 E MvpnTrial: go.Universe$proxyerror: config load error: infra/conf/serial: failed to parse json config > infra/conf: failed to build outbound config with tag proxy > infra/conf: vless without TLS or other encryption is prohibited unless the server address is a private IP or domain
+10-26 10:37:31.480  3217  4822 E MvpnTrial: 	at libv2ray.Libv2ray.measureOutboundDelay(Native Method)
+10-26 10:37:31.480  3217  4822 E MvpnTrial: 	at co.asiven.vixentvpn.trial.core.XrayCore.measureDelay(XrayCore.kt:81)
+10-26 10:37:31.480  3217  4822 E MvpnTrial: 	at co.asiven.vixentvpn.trial.ui.MainActivity.measure(MainActivity.kt:417)
+10-26 10:37:31.480  3217  4822 E MvpnTrial: 	at co.asiven.vixentvpn.trial.ui.MainActivity.access$measure(MainActivity.kt:61)
+10-26 10:37:31.480  3217  4822 E MvpnTrial: 	at co.asiven.vixentvpn.trial.ui.MainActivity$pingAll$2$1$1$1.invokeSuspend(MainActivity.kt:382)
+10-26 10:37:31.480  3217  4822 E MvpnTrial: 	at kotlin.coroutines.jvm.internal.BaseContinuationImpl.resumeWith(ContinuationImpl.kt:33)
+10-26 10:37:31.480  3217  4822 E MvpnTrial: 	at kotlinx.coroutines.DispatchedTask.run(DispatchedTask.kt:104)
+10-26 10:37:31.480  3217  4822 E MvpnTrial: 	at kotlinx.coroutines.internal.LimitedDispatcher$Worker.run(LimitedDispatcher.kt:111)
+10-26 10:37:31.480  3217  4822 E MvpnTrial: 	at kotlinx.coroutines.scheduling.TaskImpl.run(Tasks.kt:99)
+10-26 10:37:31.480  3217  4822 E MvpnTrial: 	at kotlinx.coroutines.scheduling.CoroutineScheduler.runSafely(CoroutineScheduler.kt:584)
+10-26 10:37:31.480  3217  4822 E MvpnTrial: 	at kotlinx.coroutines.scheduling.CoroutineScheduler$Worker.executeTask(CoroutineScheduler.kt:811)
+10-26 10:37:31.480  3217  4822 E MvpnTrial: 	at kotlinx.coroutines.scheduling.CoroutineScheduler$Worker.runWorker(CoroutineScheduler.kt:715)
+10-26 10:37:31.480  3217  4822 E MvpnTrial: 	at kotlinx.coroutines.scheduling.CoroutineScheduler$Worker.run(CoroutineScheduler.kt:702)
+10-26 10:37:31.481  3217  4827 E MvpnTrial: سنجش تأخیر ناموفق
+10-26 10:37:31.481  3217  4827 E MvpnTrial: go.Universe$proxyerror: config load error: infra/conf/serial: failed to parse json config > infra/conf: failed to build outbound config with tag proxy > infra/conf: vless without TLS or other encryption is prohibited unless the server address is a private IP or domain
+10-26 10:37:31.481  3217  4827 E MvpnTrial: 	at libv2ray.Libv2ray.measureOutboundDelay(Native Method)
+10-26 10:37:31.481  3217  4827 E MvpnTrial: 	at co.asiven.vixentvpn.trial.core.XrayCore.measureDelay(XrayCore.kt:81)
+10-26 10:37:31.481  3217  4827 E MvpnTrial: 	at co.asiven.vixentvpn.trial.ui.MainActivity.measure(MainActivity.kt:417)
+10-26 10:37:31.481  3217  4827 E MvpnTrial: 	at co.asiven.vixentvpn.trial.ui.MainActivity.access$measure(MainActivity.kt:61)
+10-26 10:37:31.481  3217  4827 E MvpnTrial: 	at co.asiven.vixentvpn.trial.ui.MainActivity$pingAll$2$1$1$1.invokeSuspend(MainActivity.kt:382)
+10-26 10:37:31.481  3217  4827 E MvpnTrial: 	at kotlin.coroutines.jvm.internal.BaseContinuationImpl.resumeWith(ContinuationImpl.kt:33)
+10-26 10:37:31.481  3217  4827 E MvpnTrial: 	at kotlinx.coroutines.DispatchedTask.run(DispatchedTask.kt:104)
+10-26 10:37:31.481  3217  4827 E MvpnTrial: 	at kotlinx.coroutines.internal.LimitedDispatcher$Worker.run(LimitedDispatcher.kt:111)
+10-26 10:37:31.481  3217  4827 E MvpnTrial: 	at kotlinx.coroutines.scheduling.TaskImpl.run(Tasks.kt:99)
+10-26 10:37:31.481  3217  4827 E MvpnTrial: 	at kotlinx.coroutines.scheduling.CoroutineScheduler.runSafely(CoroutineScheduler.kt:584)
+10-26 10:37:31.481  3217  4827 E MvpnTrial: 	at kotlinx.coroutines.scheduling.CoroutineScheduler$Worker.executeTask(CoroutineScheduler.kt:811)
+10-26 10:37:31.481  3217  4827 E MvpnTrial: 	at kotlinx.coroutines.scheduling.CoroutineScheduler$Worker.runWorker(CoroutineScheduler.kt:715)
+10-26 10:37:31.481  3217  4827 E MvpnTrial: 	at kotlinx.coroutines.scheduling.CoroutineScheduler$Worker.run(CoroutineScheduler.kt:702)
+10-26 10:37:31.481  3217  4827 D MvpnTrial: پینگ 🇺🇸 United States: -1 ms
+10-26 10:37:31.482  3217  4822 D MvpnTrial: پینگ 🇪🇸 Spain: -1 ms
+10-26 10:37:31.485  3217  4827 E MvpnTrial: سنجش تأخیر ناموفق
+10-26 10:37:31.485  3217  4827 E MvpnTrial: go.Universe$proxyerror: config load error: infra/conf/serial: failed to parse json config > infra/conf: failed to build outbound config with tag proxy > infra/conf: vless without TLS or other encryption is prohibited unless the server address is a private IP or domain
+10-26 10:37:31.485  3217  4827 E MvpnTrial: 	at libv2ray.Libv2ray.measureOutboundDelay(Native Method)
+10-26 10:37:31.485  3217  4827 E MvpnTrial: 	at co.asiven.vixentvpn.trial.core.XrayCore.measureDelay(XrayCore.kt:81)
+10-26 10:37:31.485  3217  4827 E MvpnTrial: 	at co.asiven.vixentvpn.trial.ui.MainActivity.measure(MainActivity.kt:417)
+10-26 10:37:31.485  3217  4827 E MvpnTrial: 	at co.asiven.vixentvpn.trial.ui.MainActivity.access$measure(MainActivity.kt:61)
+10-26 10:37:31.485  3217  4827 E MvpnTrial: 	at co.asiven.vixentvpn.trial.ui.MainActivity$pingAll$2$1$1$1.invokeSuspend(MainActivity.kt:382)
+10-26 10:37:31.485  3217  4827 E MvpnTrial: 	at kotlin.coroutines.jvm.internal.BaseContinuationImpl.resumeWith(ContinuationImpl.kt:33)
+10-26 10:37:31.485  3217  4827 E MvpnTrial: 	at kotlinx.coroutines.DispatchedTask.run(DispatchedTask.kt:104)
+10-26 10:37:31.485  3217  4827 E MvpnTrial: 	at kotlinx.coroutines.internal.LimitedDispatcher$Worker.run(LimitedDispatcher.kt:111)
+10-26 10:37:31.485  3217  4827 E MvpnTrial: 	at kotlinx.coroutines.scheduling.TaskImpl.run(Tasks.kt:99)
+10-26 10:37:31.485  3217  4827 E MvpnTrial: 	at kotlinx.coroutines.scheduling.CoroutineScheduler.runSafely(CoroutineScheduler.kt:584)
+10-26 10:37:31.485  3217  4827 E MvpnTrial: 	at kotlinx.coroutines.scheduling.CoroutineScheduler$Worker.executeTask(CoroutineScheduler.kt:811)
+10-26 10:37:31.485  3217  4827 E MvpnTrial: 	at kotlinx.coroutines.scheduling.CoroutineScheduler$Worker.runWorker(CoroutineScheduler.kt:715)
+10-26 10:37:31.485  3217  4827 E MvpnTrial: 	at kotlinx.coroutines.scheduling.CoroutineScheduler$Worker.run(CoroutineScheduler.kt:702)
+10-26 10:37:31.486  3217  4827 D MvpnTrial: پینگ 🇪🇸 Spain: -1 ms
+10-26 10:37:31.487  3217  4827 E MvpnTrial: سنجش تأخیر ناموفق
+10-26 10:37:31.487  3217  4827 E MvpnTrial: go.Universe$proxyerror: config load error: infra/conf/serial: failed to parse json config > infra/conf: failed to build outbound config with tag proxy > infra/conf: vless without TLS or other encryption is prohibited unless the server address is a private IP or domain
+10-26 10:37:31.487  3217  4827 E MvpnTrial: 	at libv2ray.Libv2ray.measureOutboundDelay(Native Method)
+10-26 10:37:31.487  3217  4827 E MvpnTrial: 	at co.asiven.vixentvpn.trial.core.XrayCore.measureDelay(XrayCore.kt:81)
+10-26 10:37:31.487  3217  4827 E MvpnTrial: 	at co.asiven.vixentvpn.trial.ui.MainActivity.measure(MainActivity.kt:417)
+10-26 10:37:31.487  3217  4827 E MvpnTrial: 	at co.asiven.vixentvpn.trial.ui.MainActivity.access$measure(MainActivity.kt:61)
+10-26 10:37:31.487  3217  4827 E MvpnTrial: 	at co.asiven.vixentvpn.trial.ui.MainActivity$pingAll$2$1$1$1.invokeSuspend(MainActivity.kt:382)
+10-26 10:37:31.487  3217  4827 E MvpnTrial: 	at kotlin.coroutines.jvm.internal.BaseContinuationImpl.resumeWith(ContinuationImpl.kt:33)
+10-26 10:37:31.487  3217  4827 E MvpnTrial: 	at kotlinx.coroutines.DispatchedTask.run(DispatchedTask.kt:104)
+10-26 10:37:31.487  3217  4827 E MvpnTrial: 	at kotlinx.coroutines.internal.LimitedDispatcher$Worker.run(LimitedDispatcher.kt:111)
+10-26 10:37:31.487  3217  4827 E MvpnTrial: 	at kotlinx.coroutines.scheduling.TaskImpl.run(Tasks.kt:99)
+10-26 10:37:31.487  3217  4827 E MvpnTrial: 	at kotlinx.coroutines.scheduling.CoroutineScheduler.runSafely(CoroutineScheduler.kt:584)
+10-26 10:37:31.487  3217  4827 E MvpnTrial: 	at kotlinx.coroutines.scheduling.CoroutineScheduler$Worker.executeTask(CoroutineScheduler.kt:811)
+10-26 10:37:31.487  3217  4827 E MvpnTrial: 	at kotlinx.coroutines.scheduling.CoroutineScheduler$Worker.runWorker(CoroutineScheduler.kt:715)
+10-26 10:37:31.487  3217  4827 E MvpnTrial: 	at kotlinx.coroutines.scheduling.CoroutineScheduler$Worker.run(CoroutineScheduler.kt:702)
+10-26 10:37:31.487  3217  4827 D MvpnTrial: پینگ 🇺🇸 United States: -1 ms
+10-26 10:37:31.487  3217  4813 D MvpnTrial: پینگ 🇦🇺 Australia: -1 ms
+10-26 10:37:31.490  3217  4812 E MvpnTrial: سنجش تأخیر ناموفق
+10-26 10:37:31.490  3217  4812 E MvpnTrial: go.Universe$proxyerror: config load error: infra/conf/serial: failed to parse json config > infra/conf: failed to build outbound config with tag proxy > infra/conf: vless without TLS or other encryption is prohibited unless the server address is a private IP or domain
+10-26 10:37:31.490  3217  4812 E MvpnTrial: 	at libv2ray.Libv2ray.measureOutboundDelay(Native Method)
+10-26 10:37:31.490  3217  4812 E MvpnTrial: 	at co.asiven.vixentvpn.trial.core.XrayCore.measureDelay(XrayCore.kt:81)
+10-26 10:37:31.490  3217  4812 E MvpnTrial: 	at co.asiven.vixentvpn.trial.ui.MainActivity.measure(MainActivity.kt:417)
+10-26 10:37:31.490  3217  4812 E MvpnTrial: 	at co.asiven.vixentvpn.trial.ui.MainActivity.access$measure(MainActivity.kt:61)
+10-26 10:37:31.490  3217  4812 E MvpnTrial: 	at co.asiven.vixentvpn.trial.ui.MainActivity$pingAll$2$1$1$1.invokeSuspend(MainActivity.kt:382)
+10-26 10:37:31.490  3217  4812 E MvpnTrial: 	at kotlin.coroutines.jvm.internal.BaseContinuationImpl.resumeWith(ContinuationImpl.kt:33)
+10-26 10:37:31.490  3217  4812 E MvpnTrial: 	at kotlinx.coroutines.DispatchedTask.run(DispatchedTask.kt:104)
+10-26 10:37:31.490  3217  4812 E MvpnTrial: 	at kotlinx.coroutines.internal.LimitedDispatcher$Worker.run(LimitedDispatcher.kt:111)
+10-26 10:37:31.490  3217  4812 E MvpnTrial: 	at kotlinx.coroutines.scheduling.TaskImpl.run(Tasks.kt:99)
+10-26 10:37:31.490  3217  4812 E MvpnTrial: 	at kotlinx.coroutines.scheduling.CoroutineScheduler.runSafely(CoroutineScheduler.kt:584)
+10-26 10:37:31.490  3217  4812 E MvpnTrial: 	at kotlinx.coroutines.scheduling.CoroutineScheduler$Worker.executeTask(CoroutineScheduler.kt:811)
+10-26 10:37:31.490  3217  4812 E MvpnTrial: 	at kotlinx.coroutines.scheduling.CoroutineScheduler$Worker.runWorker(CoroutineScheduler.kt:715)
+10-26 10:37:31.490  3217  4812 E MvpnTrial: 	at kotlinx.coroutines.scheduling.CoroutineScheduler$Worker.run(CoroutineScheduler.kt:702)
+10-26 10:37:31.490  3217  4812 D MvpnTrial: پینگ 🇨🇦 Canada: -1 ms
+10-26 10:37:31.492  3217  4829 E MvpnTrial: سنجش تأخیر ناموفق
+10-26 10:37:31.492  3217  4829 E MvpnTrial: go.Universe$proxyerror: config load error: infra/conf/serial: failed to parse json config > infra/conf: failed to build outbound config with tag proxy > infra/conf: vless without TLS or other encryption is prohibited unless the server address is a private IP or domain
+10-26 10:37:31.492  3217  4829 E MvpnTrial: 	at libv2ray.Libv2ray.measureOutboundDelay(Native Method)
+10-26 10:37:31.492  3217  4829 E MvpnTrial: 	at co.asiven.vixentvpn.trial.core.XrayCore.measureDelay(XrayCore.kt:81)
+10-26 10:37:31.492  3217  4829 E MvpnTrial: 	at co.asiven.vixentvpn.trial.ui.MainActivity.measure(MainActivity.kt:417)
+10-26 10:37:31.492  3217  4829 E MvpnTrial: 	at co.asiven.vixentvpn.trial.ui.MainActivity.access$measure(MainActivity.kt:61)
+10-26 10:37:31.492  3217  4829 E MvpnTrial: 	at co.asiven.vixentvpn.trial.ui.MainActivity$pingAll$2$1$1$1.invokeSuspend(MainActivity.kt:382)
+10-26 10:37:31.492  3217  4829 E MvpnTrial: 	at kotlin.coroutines.jvm.internal.BaseContinuationImpl.resumeWith(ContinuationImpl.kt:33)
+10-26 10:37:31.492  3217  4829 E MvpnTrial: 	at kotlinx.coroutines.DispatchedTask.run(DispatchedTask.kt:104)
+10-26 10:37:31.492  3217  4829 E MvpnTrial: 	at kotlinx.coroutines.internal.LimitedDispatcher$Worker.run(LimitedDispatcher.kt:111)
+10-26 10:37:31.492  3217  4829 E MvpnTrial: 	at kotlinx.coroutines.scheduling.TaskImpl.run(Tasks.kt:99)
+10-26 10:37:31.492  3217  4829 E MvpnTrial: 	at kotlinx.coroutines.scheduling.CoroutineScheduler.runSafely(CoroutineScheduler.kt:584)
+10-26 10:37:31.492  3217  4829 E MvpnTrial: 	at kotlinx.coroutines.scheduling.CoroutineScheduler$Worker.executeTask(CoroutineScheduler.kt:811)
+10-26 10:37:31.492  3217  4829 E MvpnTrial: 	at kotlinx.coroutines.scheduling.CoroutineScheduler$Worker.runWorker(CoroutineScheduler.kt:715)
+10-26 10:37:31.492  3217  4829 E MvpnTrial: 	at kotlinx.coroutines.scheduling.CoroutineScheduler$Worker.run(CoroutineScheduler.kt:702)
+10-26 10:37:31.492  3217  4829 D MvpnTrial: پینگ 🇺🇸 United States: -1 ms
+10-26 10:37:31.493  3217  4811 E MvpnTrial: سنجش تأخیر ناموفق
+10-26 10:37:31.493  3217  4811 E MvpnTrial: go.Universe$proxyerror: config load error: infra/conf/serial: failed to parse json config > infra/conf: failed to build outbound config with tag proxy > infra/conf: vless without TLS or other encryption is prohibited unless the server address is a private IP or domain
+10-26 10:37:31.493  3217  4811 E MvpnTrial: 	at libv2ray.Libv2ray.measureOutboundDelay(Native Method)
+10-26 10:37:31.493  3217  4811 E MvpnTrial: 	at co.asiven.vixentvpn.trial.core.XrayCore.measureDelay(XrayCore.kt:81)
+10-26 10:37:31.493  3217  4811 E MvpnTrial: 	at co.asiven.vixentvpn.trial.ui.MainActivity.measure(MainActivity.kt:417)
+10-26 10:37:31.493  3217  4811 E MvpnTrial: 	at co.asiven.vixentvpn.trial.ui.MainActivity.access$measure(MainActivity.kt:61)
+10-26 10:37:31.493  3217  4811 E MvpnTrial: 	at co.asiven.vixentvpn.trial.ui.MainActivity$pingAll$2$1$1$1.invokeSuspend(MainActivity.kt:382)
+10-26 10:37:31.493  3217  4811 E MvpnTrial: 	at kotlin.coroutines.jvm.internal.BaseContinuationImpl.resumeWith(ContinuationImpl.kt:33)
+10-26 10:37:31.493  3217  4811 E MvpnTrial: 	at kotlinx.coroutines.DispatchedTask.run(DispatchedTask.kt:104)
+10-26 10:37:31.493  3217  4811 E MvpnTrial: 	at kotlinx.coroutines.internal.LimitedDispatcher$Worker.run(LimitedDispatcher.kt:111)
+10-26 10:37:31.493  3217  4811 E MvpnTrial: 	at kotlinx.coroutines.scheduling.TaskImpl.run(Tasks.kt:99)
+10-26 10:37:31.493  3217  4811 E MvpnTrial: 	at kotlinx.coroutines.scheduling.CoroutineScheduler.runSafely(CoroutineScheduler.kt:584)
+10-26 10:37:31.493  3217  4811 E MvpnTrial: 	at kotlinx.coroutines.scheduling.CoroutineScheduler$Worker.executeTask(CoroutineScheduler.kt:811)
+10-26 10:37:31.493  3217  4811 E MvpnTrial: 	at kotlinx.coroutines.scheduling.CoroutineScheduler$Worker.runWorker(CoroutineScheduler.kt:715)
+10-26 10:37:31.493  3217  4811 E MvpnTrial: 	at kotlinx.coroutines.scheduling.CoroutineScheduler$Worker.run(CoroutineScheduler.kt:702)
+10-26 10:37:31.497  3217  4811 D MvpnTrial: پینگ 🇺🇸 United States: -1 ms
+10-26 10:37:31.498  3217  4811 E MvpnTrial: سنجش تأخیر ناموفق
+10-26 10:37:31.498  3217  4811 E MvpnTrial: go.Universe$proxyerror: config load error: infra/conf/serial: failed to parse json config > infra/conf: failed to build outbound config with tag proxy > infra/conf: vless without TLS or other encryption is prohibited unless the server address is a private IP or domain
+10-26 10:37:31.498  3217  4811 E MvpnTrial: 	at libv2ray.Libv2ray.measureOutboundDelay(Native Method)
+10-26 10:37:31.498  3217  4811 E MvpnTrial: 	at co.asiven.vixentvpn.trial.core.XrayCore.measureDelay(XrayCore.kt:81)
+10-26 10:37:31.498  3217  4811 E MvpnTrial: 	at co.asiven.vixentvpn.trial.ui.MainActivity.measure(MainActivity.kt:417)
+10-26 10:37:31.498  3217  4811 E MvpnTrial: 	at co.asiven.vixentvpn.trial.ui.MainActivity.access$measure(MainActivity.kt:61)
+10-26 10:37:31.498  3217  4811 E MvpnTrial: 	at co.asiven.vixentvpn.trial.ui.MainActivity$pingAll$2$1$1$1.invokeSuspend(MainActivity.kt:382)
+10-26 10:37:31.498  3217  4811 E MvpnTrial: 	at kotlin.coroutines.jvm.internal.BaseContinuationImpl.resumeWith(ContinuationImpl.kt:33)
+10-26 10:37:31.498  3217  4811 E MvpnTrial: 	at kotlinx.coroutines.DispatchedTask.run(DispatchedTask.kt:104)
+10-26 10:37:31.498  3217  4811 E MvpnTrial: 	at kotlinx.coroutines.internal.LimitedDispatcher$Worker.run(LimitedDispatcher.kt:111)
+10-26 10:37:31.498  3217  4811 E MvpnTrial: 	at kotlinx.coroutines.scheduling.TaskImpl.run(Tasks.kt:99)
+10-26 10:37:31.498  3217  4811 E MvpnTrial: 	at kotlinx.coroutines.scheduling.CoroutineScheduler.runSafely(CoroutineScheduler.kt:584)
+10-26 10:37:31.498  3217  4811 E MvpnTrial: 	at kotlinx.coroutines.scheduling.CoroutineScheduler$Worker.executeTask(CoroutineScheduler.kt:811)
+10-26 10:37:31.498  3217  4811 E MvpnTrial: 	at kotlinx.coroutines.scheduling.CoroutineScheduler$Worker.runWorker(CoroutineScheduler.kt:715)
+10-26 10:37:31.498  3217  4811 E MvpnTrial: 	at kotlinx.coroutines.scheduling.CoroutineScheduler$Worker.run(CoroutineScheduler.kt:702)
+10-26 10:37:31.498  3217  4811 D MvpnTrial: پینگ 🇺🇸 United States: -1 ms
+10-26 10:37:31.801  3217  4812 D MvpnTrial: پینگ 🇺🇸 United States: 30 ms
+10-26 10:37:31.944  3217  4811 D MvpnTrial: پینگ 🇺🇸 United States: 72 ms
+10-26 10:37:32.047  3217  4812 D MvpnTrial: پینگ 🇺🇸 United States: 52 ms
+10-26 10:37:32.068  3217  4825 E MvpnTrial: سنجش تأخیر ناموفق
+10-26 10:37:32.068  3217  4825 E MvpnTrial: go.Universe$proxyerror: config load error: infra/conf/serial: failed to parse json config > infra/conf: failed to build outbound config with tag proxy > infra/conf: vless without TLS or other encryption is prohibited unless the server address is a private IP or domain
+10-26 10:37:32.068  3217  4825 E MvpnTrial: 	at libv2ray.Libv2ray.measureOutboundDelay(Native Method)
+10-26 10:37:32.068  3217  4825 E MvpnTrial: 	at co.asiven.vixentvpn.trial.core.XrayCore.measureDelay(XrayCore.kt:81)
+10-26 10:37:32.068  3217  4825 E MvpnTrial: 	at co.asiven.vixentvpn.trial.ui.MainActivity.measure(MainActivity.kt:417)
+10-26 10:37:32.068  3217  4825 E MvpnTrial: 	at co.asiven.vixentvpn.trial.ui.MainActivity.access$measure(MainActivity.kt:61)
+10-26 10:37:32.068  3217  4825 E MvpnTrial: 	at co.asiven.vixentvpn.trial.ui.MainActivity$pingAll$2$1$1$1.invokeSuspend(MainActivity.kt:382)
+10-26 10:37:32.068  3217  4825 E MvpnTrial: 	at kotlin.coroutines.jvm.internal.BaseContinuationImpl.resumeWith(ContinuationImpl.kt:33)
+10-26 10:37:32.068  3217  4825 E MvpnTrial: 	at kotlinx.coroutines.DispatchedTask.run(DispatchedTask.kt:104)
+10-26 10:37:32.068  3217  4825 E MvpnTrial: 	at kotlinx.coroutines.internal.LimitedDispatcher$Worker.run(LimitedDispatcher.kt:111)
+10-26 10:37:32.068  3217  4825 E MvpnTrial: 	at kotlinx.coroutines.scheduling.TaskImpl.run(Tasks.kt:99)
+10-26 10:37:32.068  3217  4825 E MvpnTrial: 	at kotlinx.coroutines.scheduling.CoroutineScheduler.runSafely(CoroutineScheduler.kt:584)
+10-26 10:37:32.068  3217  4825 E MvpnTrial: 	at kotlinx.coroutines.scheduling.CoroutineScheduler$Worker.executeTask(CoroutineScheduler.kt:811)
+10-26 10:37:32.068  3217  4825 E MvpnTrial: 	at kotlinx.coroutines.scheduling.CoroutineScheduler$Worker.runWorker(CoroutineScheduler.kt:715)
+10-26 10:37:32.068  3217  4825 E MvpnTrial: 	at kotlinx.coroutines.scheduling.CoroutineScheduler$Worker.run(CoroutineScheduler.kt:702)
+10-26 10:37:32.068  3217  4825 D MvpnTrial: پینگ 🇺🇸 United States: -1 ms
+10-26 10:37:32.069  3217  4826 E MvpnTrial: سنجش تأخیر ناموفق
+10-26 10:37:32.069  3217  4826 E MvpnTrial: go.Universe$proxyerror: config load error: infra/conf/serial: failed to parse json config > infra/conf: failed to build outbound config with tag proxy > infra/conf: vless without TLS or other encryption is prohibited unless the server address is a private IP or domain
+10-26 10:37:32.069  3217  4826 E MvpnTrial: 	at libv2ray.Libv2ray.measureOutboundDelay(Native Method)
+10-26 10:37:32.069  3217  4826 E MvpnTrial: 	at co.asiven.vixentvpn.trial.core.XrayCore.measureDelay(XrayCore.kt:81)
+10-26 10:37:32.069  3217  4826 E MvpnTrial: 	at co.asiven.vixentvpn.trial.ui.MainActivity.measure(MainActivity.kt:417)
+10-26 10:37:32.069  3217  4826 E MvpnTrial: 	at co.asiven.vixentvpn.trial.ui.MainActivity.access$measure(MainActivity.kt:61)
+10-26 10:37:32.069  3217  4826 E MvpnTrial: 	at co.asiven.vixentvpn.trial.ui.MainActivity$pingAll$2$1$1$1.invokeSuspend(MainActivity.kt:382)
+10-26 10:37:32.069  3217  4826 E MvpnTrial: 	at kotlin.coroutines.jvm.internal.BaseContinuationImpl.resumeWith(ContinuationImpl.kt:33)
+10-26 10:37:32.069  3217  4826 E MvpnTrial: 	at kotlinx.coroutines.DispatchedTask.run(DispatchedTask.kt:104)
+10-26 10:37:32.069  3217  4826 E MvpnTrial: 	at kotlinx.coroutines.internal.LimitedDispatcher$Worker.run(LimitedDispatcher.kt:111)
+10-26 10:37:32.069  3217  4826 E MvpnTrial: 	at kotlinx.coroutines.scheduling.TaskImpl.run(Tasks.kt:99)
+10-26 10:37:32.069  3217  4826 E MvpnTrial: 	at kotlinx.coroutines.scheduling.CoroutineScheduler.runSafely(CoroutineScheduler.kt:584)
+10-26 10:37:32.069  3217  4826 E MvpnTrial: 	at kotlinx.coroutines.scheduling.CoroutineScheduler$Worker.executeTask(CoroutineScheduler.kt:811)
+10-26 10:37:32.069  3217  4826 E MvpnTrial: 	at kotlinx.coroutines.scheduling.CoroutineScheduler$Worker.runWorker(CoroutineScheduler.kt:715)
+10-26 10:37:32.069  3217  4826 E MvpnTrial: 	at kotlinx.coroutines.scheduling.CoroutineScheduler$Worker.run(CoroutineScheduler.kt:702)
+10-26 10:37:32.070  3217  4826 D MvpnTrial: پینگ 🇺🇸 United States: -1 ms
+10-26 10:37:32.072  3217  4824 E MvpnTrial: سنجش تأخیر ناموفق
+10-26 10:37:32.072  3217  4824 E MvpnTrial: go.Universe$proxyerror: config load error: infra/conf/serial: failed to parse json config > infra/conf: failed to build outbound config with tag proxy > infra/conf: vless without TLS or other encryption is prohibited unless the server address is a private IP or domain
+10-26 10:37:32.072  3217  4824 E MvpnTrial: 	at libv2ray.Libv2ray.measureOutboundDelay(Native Method)
+10-26 10:37:32.072  3217  4824 E MvpnTrial: 	at co.asiven.vixentvpn.trial.core.XrayCore.measureDelay(XrayCore.kt:81)
+10-26 10:37:32.072  3217  4824 E MvpnTrial: 	at co.asiven.vixentvpn.trial.ui.MainActivity.measure(MainActivity.kt:417)
+10-26 10:37:32.072  3217  4824 E MvpnTrial: 	at co.asiven.vixentvpn.trial.ui.MainActivity.access$measure(MainActivity.kt:61)
+10-26 10:37:32.072  3217  4824 E MvpnTrial: 	at co.asiven.vixentvpn.trial.ui.MainActivity$pingAll$2$1$1$1.invokeSuspend(MainActivity.kt:382)
+10-26 10:37:32.072  3217  4824 E MvpnTrial: 	at kotlin.coroutines.jvm.internal.BaseContinuationImpl.resumeWith(ContinuationImpl.kt:33)
+10-26 10:37:32.072  3217  4824 E MvpnTrial: 	at kotlinx.coroutines.DispatchedTask.run(DispatchedTask.kt:104)
+10-26 10:37:32.072  3217  4824 E MvpnTrial: 	at kotlinx.coroutines.internal.LimitedDispatcher$Worker.run(LimitedDispatcher.kt:111)
+10-26 10:37:32.072  3217  4824 E MvpnTrial: 	at kotlinx.coroutines.scheduling.TaskImpl.run(Tasks.kt:99)
+10-26 10:37:32.072  3217  4824 E MvpnTrial: 	at kotlinx.coroutines.scheduling.CoroutineScheduler.runSafely(CoroutineScheduler.kt:584)
+10-26 10:37:32.072  3217  4824 E MvpnTrial: 	at kotlinx.coroutines.scheduling.CoroutineScheduler$Worker.executeTask(CoroutineScheduler.kt:811)
+10-26 10:37:32.072  3217  4824 E MvpnTrial: 	at kotlinx.coroutines.scheduling.CoroutineScheduler$Worker.runWorker(CoroutineScheduler.kt:715)
+10-26 10:37:32.072  3217  4824 E MvpnTrial: 	at kotlinx.coroutines.scheduling.CoroutineScheduler$Worker.run(CoroutineScheduler.kt:702)
+10-26 10:37:32.072  3217  4824 D MvpnTrial: پینگ 🇺🇸 United States: -1 ms
+10-26 10:37:32.308  3217  4824 D MvpnTrial: پینگ 🇺🇸 United States: 40 ms
+10-26 10:37:32.499  3217  4811 D MvpnTrial: پینگ 🇺🇸 United States: 73 ms
+10-26 10:37:32.700  3217  4824 D MvpnTrial: پینگ 🇺🇸 United States: 30 ms
+10-26 10:37:32.797  3217  4826 D MvpnTrial: پینگ 🇺🇸 United States: 105 ms
+10-26 10:37:32.806  3217  4824 E MvpnTrial: سنجش تأخیر ناموفق
+10-26 10:37:32.806  3217  4824 E MvpnTrial: go.Universe$proxyerror: config load error: infra/conf/serial: failed to parse json config > infra/conf: failed to build outbound config with tag proxy > infra/conf: vless without TLS or other encryption is prohibited unless the server address is a private IP or domain
+10-26 10:37:32.806  3217  4824 E MvpnTrial: 	at libv2ray.Libv2ray.measureOutboundDelay(Native Method)
+10-26 10:37:32.806  3217  4824 E MvpnTrial: 	at co.asiven.vixentvpn.trial.core.XrayCore.measureDelay(XrayCore.kt:81)
+10-26 10:37:32.806  3217  4824 E MvpnTrial: 	at co.asiven.vixentvpn.trial.ui.MainActivity.measure(MainActivity.kt:417)
+10-26 10:37:32.806  3217  4824 E MvpnTrial: 	at co.asiven.vixentvpn.trial.ui.MainActivity.access$measure(MainActivity.kt:61)
+10-26 10:37:32.806  3217  4824 E MvpnTrial: 	at co.asiven.vixentvpn.trial.ui.MainActivity$pingAll$2$1$1$1.invokeSuspend(MainActivity.kt:382)
+10-26 10:37:32.806  3217  4824 E MvpnTrial: 	at kotlin.coroutines.jvm.internal.BaseContinuationImpl.resumeWith(ContinuationImpl.kt:33)
+10-26 10:37:32.806  3217  4824 E MvpnTrial: 	at kotlinx.coroutines.DispatchedTask.run(DispatchedTask.kt:104)
+10-26 10:37:32.806  3217  4824 E MvpnTrial: 	at kotlinx.coroutines.internal.LimitedDispatcher$Worker.run(LimitedDispatcher.kt:111)
+10-26 10:37:32.806  3217  4824 E MvpnTrial: 	at kotlinx.coroutines.scheduling.TaskImpl.run(Tasks.kt:99)
+10-26 10:37:32.806  3217  4824 E MvpnTrial: 	at kotlinx.coroutines.scheduling.CoroutineScheduler.runSafely(CoroutineScheduler.kt:584)
+10-26 10:37:32.806  3217  4824 E MvpnTrial: 	at kotlinx.coroutines.scheduling.CoroutineScheduler$Worker.executeTask(CoroutineScheduler.kt:811)
+10-26 10:37:32.806  3217  4824 E MvpnTrial: 	at kotlinx.coroutines.scheduling.CoroutineScheduler$Worker.runWorker(CoroutineScheduler.kt:715)
+10-26 10:37:32.806  3217  4824 E MvpnTrial: 	at kotlinx.coroutines.scheduling.CoroutineScheduler$Worker.run(CoroutineScheduler.kt:702)
+10-26 10:37:32.808  3217  4824 D MvpnTrial: پینگ 🇺🇸 United States: -1 ms
+10-26 10:37:32.933  3217  3326 E MvpnTrial: سنجش تأخیر ناموفق
+10-26 10:37:32.933  3217  3326 E MvpnTrial: go.Universe$proxyerror: Get "https://www.gstatic.com/generate_204": io: read/write on closed pipe
+10-26 10:37:32.933  3217  3326 E MvpnTrial: 	at libv2ray.Libv2ray.measureOutboundDelay(Native Method)
+10-26 10:37:32.933  3217  3326 E MvpnTrial: 	at co.asiven.vixentvpn.trial.core.XrayCore.measureDelay(XrayCore.kt:81)
+10-26 10:37:32.933  3217  3326 E MvpnTrial: 	at co.asiven.vixentvpn.trial.ui.MainActivity.measure(MainActivity.kt:417)
+10-26 10:37:32.933  3217  3326 E MvpnTrial: 	at co.asiven.vixentvpn.trial.ui.MainActivity.access$measure(MainActivity.kt:61)
+10-26 10:37:32.933  3217  3326 E MvpnTrial: 	at co.asiven.vixentvpn.trial.ui.MainActivity$pingAll$2$1$1$1.invokeSuspend(MainActivity.kt:382)
+10-26 10:37:32.933  3217  3326 E MvpnTrial: 	at kotlin.coroutines.jvm.internal.BaseContinuationImpl.resumeWith(ContinuationImpl.kt:33)
+10-26 10:37:32.933  3217  3326 E MvpnTrial: 	at kotlinx.coroutines.DispatchedTask.run(DispatchedTask.kt:104)
+10-26 10:37:32.933  3217  3326 E MvpnTrial: 	at kotlinx.coroutines.internal.LimitedDispatcher$Worker.run(LimitedDispatcher.kt:111)
+10-26 10:37:32.933  3217  3326 E MvpnTrial: 	at kotlinx.coroutines.scheduling.TaskImpl.run(Tasks.kt:99)
+10-26 10:37:32.933  3217  3326 E MvpnTrial: 	at kotlinx.coroutines.scheduling.CoroutineScheduler.runSafely(CoroutineScheduler.kt:584)
+10-26 10:37:32.933  3217  3326 E MvpnTrial: 	at kotlinx.coroutines.scheduling.CoroutineScheduler$Worker.executeTask(CoroutineScheduler.kt:811)
+10-26 10:37:32.933  3217  3326 E MvpnTrial: 	at kotlinx.coroutines.scheduling.CoroutineScheduler$Worker.runWorker(CoroutineScheduler.kt:715)
+10-26 10:37:32.933  3217  3326 E MvpnTrial: 	at kotlinx.coroutines.scheduling.CoroutineScheduler$Worker.run(CoroutineScheduler.kt:702)
+10-26 10:37:32.933  3217  3326 D MvpnTrial: پینگ 🇺🇸 United States: -1 ms
+10-26 10:37:32.936  3217  4824 E MvpnTrial: سنجش تأخیر ناموفق
+10-26 10:37:32.936  3217  4824 E MvpnTrial: go.Universe$proxyerror: config load error: infra/conf/serial: failed to parse json config > infra/conf: failed to build outbound config with tag proxy > infra/conf: vless without TLS or other encryption is prohibited unless the server address is a private IP or domain
+10-26 10:37:32.936  3217  4824 E MvpnTrial: 	at libv2ray.Libv2ray.measureOutboundDelay(Native Method)
+10-26 10:37:32.936  3217  4824 E MvpnTrial: 	at co.asiven.vixentvpn.trial.core.XrayCore.measureDelay(XrayCore.kt:81)
+10-26 10:37:32.936  3217  4824 E MvpnTrial: 	at co.asiven.vixentvpn.trial.ui.MainActivity.measure(MainActivity.kt:417)
+10-26 10:37:32.936  3217  4824 E MvpnTrial: 	at co.asiven.vixentvpn.trial.ui.MainActivity.access$measure(MainActivity.kt:61)
+10-26 10:37:32.936  3217  4824 E MvpnTrial: 	at co.asiven.vixentvpn.trial.ui.MainActivity$pingAll$2$1$1$1.invokeSuspend(MainActivity.kt:382)
+10-26 10:37:32.936  3217  4824 E MvpnTrial: 	at kotlin.coroutines.jvm.internal.BaseContinuationImpl.resumeWith(ContinuationImpl.kt:33)
+10-26 10:37:32.936  3217  4824 E MvpnTrial: 	at kotlinx.coroutines.DispatchedTask.run(DispatchedTask.kt:104)
+10-26 10:37:32.936  3217  4824 E MvpnTrial: 	at kotlinx.coroutines.internal.LimitedDispatcher$Worker.run(LimitedDispatcher.kt:111)
+10-26 10:37:32.936  3217  4824 E MvpnTrial: 	at kotlinx.coroutines.scheduling.TaskImpl.run(Tasks.kt:99)
+10-26 10:37:32.936  3217  4824 E MvpnTrial: 	at kotlinx.coroutines.scheduling.CoroutineScheduler.runSafely(CoroutineScheduler.kt:584)
+10-26 10:37:32.936  3217  4824 E MvpnTrial: 	at kotlinx.coroutines.scheduling.CoroutineScheduler$Worker.executeTask(CoroutineScheduler.kt:811)
+10-26 10:37:32.936  3217  4824 E MvpnTrial: 	at kotlinx.coroutines.scheduling.CoroutineScheduler$Worker.runWorker(CoroutineScheduler.kt:715)
+10-26 10:37:32.936  3217  4824 E MvpnTrial: 	at kotlinx.coroutines.scheduling.CoroutineScheduler$Worker.run(CoroutineScheduler.kt:702)
+10-26 10:37:32.939  3217  4824 D MvpnTrial: پینگ 🇺🇸 United States: -1 ms
+10-26 10:37:32.943  3217  3326 E MvpnTrial: سنجش تأخیر ناموفق
+10-26 10:37:32.943  3217  3326 E MvpnTrial: go.Universe$proxyerror: config load error: infra/conf/serial: failed to parse json config > infra/conf: failed to build outbound config with tag proxy > infra/conf: vless without TLS or other encryption is prohibited unless the server address is a private IP or domain
+10-26 10:37:32.943  3217  3326 E MvpnTrial: 	at libv2ray.Libv2ray.measureOutboundDelay(Native Method)
+10-26 10:37:32.943  3217  3326 E MvpnTrial: 	at co.asiven.vixentvpn.trial.core.XrayCore.measureDelay(XrayCore.kt:81)
+10-26 10:37:32.943  3217  3326 E MvpnTrial: 	at co.asiven.vixentvpn.trial.ui.MainActivity.measure(MainActivity.kt:417)
+10-26 10:37:32.943  3217  3326 E MvpnTrial: 	at co.asiven.vixentvpn.trial.ui.MainActivity.access$measure(MainActivity.kt:61)
+10-26 10:37:32.943  3217  3326 E MvpnTrial: 	at co.asiven.vixentvpn.trial.ui.MainActivity$pingAll$2$1$1$1.invokeSuspend(MainActivity.kt:382)
+10-26 10:37:32.943  3217  3326 E MvpnTrial: 	at kotlin.coroutines.jvm.internal.BaseContinuationImpl.resumeWith(ContinuationImpl.kt:33)
+10-26 10:37:32.943  3217  3326 E MvpnTrial: 	at kotlinx.coroutines.DispatchedTask.run(DispatchedTask.kt:104)
+10-26 10:37:32.943  3217  3326 E MvpnTrial: 	at kotlinx.coroutines.internal.LimitedDispatcher$Worker.run(LimitedDispatcher.kt:111)
+10-26 10:37:32.943  3217  3326 E MvpnTrial: 	at kotlinx.coroutines.scheduling.TaskImpl.run(Tasks.kt:99)
+10-26 10:37:32.943  3217  3326 E MvpnTrial: 	at kotlinx.coroutines.scheduling.CoroutineScheduler.runSafely(CoroutineScheduler.kt:584)
+10-26 10:37:32.943  3217  3326 E MvpnTrial: 	at kotlinx.coroutines.scheduling.CoroutineScheduler$Worker.executeTask(CoroutineScheduler.kt:811)
+10-26 10:37:32.943  3217  3326 E MvpnTrial: 	at kotlinx.coroutines.scheduling.CoroutineScheduler$Worker.runWorker(CoroutineScheduler.kt:715)
+10-26 10:37:32.943  3217  3326 E MvpnTrial: 	at kotlinx.coroutines.scheduling.CoroutineScheduler$Worker.run(CoroutineScheduler.kt:702)
+10-26 10:37:32.945  3217  3326 D MvpnTrial: پینگ 🇺🇸 United States: -1 ms
+10-26 10:37:33.074  3217  4826 D MvpnTrial: پینگ 🇺🇸 United States: 67 ms
+10-26 10:37:33.237  3217  4824 D MvpnTrial: پینگ 🇺🇸 United States: 33 ms
+10-26 10:37:33.329  3217  4811 D MvpnTrial: پینگ 🇺🇸 United States: 108 ms
+10-26 10:37:33.732  3217  4825 D MvpnTrial: پینگ 🇺🇸 United States: 78 ms
+10-26 10:37:33.733  3217  4811 E MvpnTrial: سنجش تأخیر ناموفق
+10-26 10:37:33.733  3217  4811 E MvpnTrial: go.Universe$proxyerror: config load error: infra/conf/serial: failed to parse json config > infra/conf: failed to build outbound config with tag proxy > infra/conf: vless without TLS or other encryption is prohibited unless the server address is a private IP or domain
+10-26 10:37:33.733  3217  4811 E MvpnTrial: 	at libv2ray.Libv2ray.measureOutboundDelay(Native Method)
+10-26 10:37:33.733  3217  4811 E MvpnTrial: 	at co.asiven.vixentvpn.trial.core.XrayCore.measureDelay(XrayCore.kt:81)
+10-26 10:37:33.733  3217  4811 E MvpnTrial: 	at co.asiven.vixentvpn.trial.ui.MainActivity.measure(MainActivity.kt:417)
+10-26 10:37:33.733  3217  4811 E MvpnTrial: 	at co.asiven.vixentvpn.trial.ui.MainActivity.access$measure(MainActivity.kt:61)
+10-26 10:37:33.733  3217  4811 E MvpnTrial: 	at co.asiven.vixentvpn.trial.ui.MainActivity$pingAll$2$1$1$1.invokeSuspend(MainActivity.kt:382)
+10-26 10:37:33.733  3217  4811 E MvpnTrial: 	at kotlin.coroutines.jvm.internal.BaseContinuationImpl.resumeWith(ContinuationImpl.kt:33)
+10-26 10:37:33.733  3217  4811 E MvpnTrial: 	at kotlinx.coroutines.DispatchedTask.run(DispatchedTask.kt:104)
+10-26 10:37:33.733  3217  4811 E MvpnTrial: 	at kotlinx.coroutines.internal.LimitedDispatcher$Worker.run(LimitedDispatcher.kt:111)
+10-26 10:37:33.733  3217  4811 E MvpnTrial: 	at kotlinx.coroutines.scheduling.TaskImpl.run(Tasks.kt:99)
+10-26 10:37:33.733  3217  4811 E MvpnTrial: 	at kotlinx.coroutines.scheduling.CoroutineScheduler.runSafely(CoroutineScheduler.kt:584)
+10-26 10:37:33.733  3217  4811 E MvpnTrial: 	at kotlinx.coroutines.scheduling.CoroutineScheduler$Worker.executeTask(CoroutineScheduler.kt:811)
+10-26 10:37:33.733  3217  4811 E MvpnTrial: 	at kotlinx.coroutines.scheduling.CoroutineScheduler$Worker.runWorker(CoroutineScheduler.kt:715)
+10-26 10:37:33.733  3217  4811 E MvpnTrial: 	at kotlinx.coroutines.scheduling.CoroutineScheduler$Worker.run(CoroutineScheduler.kt:702)
+10-26 10:37:33.733  3217  4811 D MvpnTrial: پینگ 🇺🇸 United States: -1 ms
+10-26 10:37:34.336  3217  4826 D MvpnTrial: پینگ 🇫🇷 France: 224 ms
+10-26 10:37:37.115  3217  4822 E MvpnTrial: سنجش تأخیر ناموفق
+10-26 10:37:37.115  3217  4822 E MvpnTrial: go.Universe$proxyerror: Get "https://www.gstatic.com/generate_204": io: read/write on closed pipe
+10-26 10:37:37.115  3217  4822 E MvpnTrial: 	at libv2ray.Libv2ray.measureOutboundDelay(Native Method)
+10-26 10:37:37.115  3217  4822 E MvpnTrial: 	at co.asiven.vixentvpn.trial.core.XrayCore.measureDelay(XrayCore.kt:81)
+10-26 10:37:37.115  3217  4822 E MvpnTrial: 	at co.asiven.vixentvpn.trial.ui.MainActivity.measure(MainActivity.kt:417)
+10-26 10:37:37.115  3217  4822 E MvpnTrial: 	at co.asiven.vixentvpn.trial.ui.MainActivity.access$measure(MainActivity.kt:61)
+10-26 10:37:37.115  3217  4822 E MvpnTrial: 	at co.asiven.vixentvpn.trial.ui.MainActivity$pingAll$2$1$1$1.invokeSuspend(MainActivity.kt:382)
+10-26 10:37:37.115  3217  4822 E MvpnTrial: 	at kotlin.coroutines.jvm.internal.BaseContinuationImpl.resumeWith(ContinuationImpl.kt:33)
+10-26 10:37:37.115  3217  4822 E MvpnTrial: 	at kotlinx.coroutines.DispatchedTask.run(DispatchedTask.kt:104)
+10-26 10:37:37.115  3217  4822 E MvpnTrial: 	at kotlinx.coroutines.internal.LimitedDispatcher$Worker.run(LimitedDispatcher.kt:111)
+10-26 10:37:37.115  3217  4822 E MvpnTrial: 	at kotlinx.coroutines.scheduling.TaskImpl.run(Tasks.kt:99)
+10-26 10:37:37.115  3217  4822 E MvpnTrial: 	at kotlinx.coroutines.scheduling.CoroutineScheduler.runSafely(CoroutineScheduler.kt:584)
+10-26 10:37:37.115  3217  4822 E MvpnTrial: 	at kotlinx.coroutines.scheduling.CoroutineScheduler$Worker.executeTask(CoroutineScheduler.kt:811)
+10-26 10:37:37.115  3217  4822 E MvpnTrial: 	at kotlinx.coroutines.scheduling.CoroutineScheduler$Worker.runWorker(CoroutineScheduler.kt:715)
+10-26 10:37:37.115  3217  4822 E MvpnTrial: 	at kotlinx.coroutines.scheduling.CoroutineScheduler$Worker.run(CoroutineScheduler.kt:702)
+10-26 10:37:37.115  3217  4822 D MvpnTrial: پینگ 🇸🇪 Sweden: -1 ms
+10-26 10:37:37.161  3217  4824 D MvpnTrial: پینگ 🇺🇸 United States: 382 ms
+10-26 10:37:37.231  3217  3217 D MvpnTrial: hero: running=false connected=- shown=-37675-492--1094354695 pressed=اتصال
+10-26 10:37:37.232  3217  3217 I MvpnTrial: سرور انتخاب شد: 🇺🇸 United States (price=0, type=vless · reality)
+10-26 10:37:37.257  3217  3217 D MvpnTrial: hero: running=false connected=- shown=-37675-492--1094354695 pressed=اتصال
+10-26 10:37:37.258  3217  3217 I MvpnTrial: پینگ همهٔ 105 سرور انجام شد؛ سریع‌ترین: 🇺🇸 United States
