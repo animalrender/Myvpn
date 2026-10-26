@@ -6,11 +6,11 @@
 
 ### 📦 خروجی آمادهٔ تست
 
-* ریلیز: **[trial-arm64-25](https://github.com/animalrender/Myvpn/releases/tag/trial-arm64-25)**
-  → `mvpn-trial-arm64-25.apk` (۴۶٬۸۹۱٬۲۱۳ بایت، arm64-v8a) + `mvpn-trial-arm64-25.apk.sha256`
+* ریلیز: **[trial-arm64-40](https://github.com/animalrender/Myvpn/releases/tag/trial-arm64-40)**
+  → `mvpn-trial-arm64-40.apk` (۴۶٬۹۳۸٬۰۲۲ بایت، arm64-v8a) + `mvpn-trial-arm64-40.apk.sha256`
 * امضا: AOSP testkey با `SHA-256 = a40da80a59d170caa950cf15c18c454d47a39b26989d8b640ecd745ba71bf5dc`
   — **همان گواهی نسخهٔ اصلی**، تا هدرهای `sign` و `sha_hexadecimal` بایت‌به‌بایت درست باشند.
-* نصب: `adb install -r mvpn-trial-arm64-25.apk`
+* نصب: `adb install -r mvpn-trial-arm64-40.apk`
   (چون `applicationId` همان `co.asiven.vixentvpn` است، اگر نسخهٔ اصلی نصب است باید حذف شود.)
 
 ```bash
@@ -70,6 +70,12 @@ sha256sum -c mvpn-trial-arm64-25.apk.sha256
 حالت‌های متعارف AES/ChaCha20 در `tools/probe-*.py` آزمایش شد و نتیجه نداد — کلید در کد native
 محافظت‌شدهٔ اپ اصلی (Dex2C / `Entrypoint.stub`) است. بنابراین:
 
+* پروب‌های تازه (`tools/probe-decode.py`، `tools/probe-resolve.py`) همهٔ مسیرهای «این سرور را
+  باز کن» را با هدرهای اصلی امتحان کردند: `POST/GET /api/v2/protocols` (فقط GET؛ POST = 405)،
+  `/api/protocols/resolve` (GET = همان فهرست)، `/api/config(s)` = 404، `/api/connect` = 404،
+  `/api/endpoint|route|config-key/<key>` = 404، `?plain/decoded/raw` بی‌اثر، و
+  `POST /api/protocols` = `{"data":0}` بی‌محتوا. یعنی **هیچ اندپوینتی نسخهٔ رمزگشایی‌شده را
+  برنمی‌گرداند**؛ رمزگشایی فقط داخل کد native اپ اصلی انجام می‌شود.
 * فهرست کامل + برچسب‌ها + پینگ + انتخاب + کپی لینک **همین حالا کار می‌کند**؛
 * لحظه‌ای که `value` یک لینک/JSON معتبر باشد، اتصال هم بدون تغییر کد برقرار می‌شود
   (`ConfigBuilder` همهٔ فرمت‌ها را پشتیبانی می‌کند)؛
@@ -81,6 +87,26 @@ sha256sum -c mvpn-trial-arm64-25.apk.sha256
 * `apksigner verify --print-certs` ⇒ گواهی AOSP testkey مطابق نسخهٔ اصلی
 * `aapt2 dump badging` ⇒ `package=co.asiven.vixentvpn`، `versionCode=1004220`، `native-code=arm64-v8a`
 * اجرای پروب‌های واقعی API (ورک‌فلوی `probe-api`) و انتشار همهٔ نتایج به‌صورت annotation
+
+### 🖼️ رابط کاربری، واقعاً دیده و آزمایش شده
+
+ورک‌فلوی `ui-snapshot` نسخهٔ `x86_64` را با همان کلید امضا می‌سازد، شبیه‌ساز Android 14
+(۱۰۸۰×۲۲۸۰، KVM) را بالا می‌آورد، اپ را نصب و با `tools/ui-drive.py` کنترل می‌کند و از هر مرحله
+اسکرین‌شات می‌گیرد. اجرای آخر (run 12) **بدون هیچ خطا** تمام شد (`FAILURES: none`،
+`crash-check: pid=yes, fatal lines=0`) و ۱۱ تصویر در [`android-app/docs/screenshots`](
+screenshots/) کامیت شد:
+
+`01-home` · `02-list-loaded` · `03-single-ping` · `04-ping-all` · `05-server-sheet` ·
+`06-filter-paid` · `07-search` · `08-menu` · `09-scrolled` · `10-scrolled-more`
+
+آنچه در همین اجرا داخل شبیه‌ساز تأیید شد: ورود اپ، دریافت **۱۰۵ سرور** از `/api/protocols`
+(۲۰۰، ۷۷–۱۰۴ کیلوبایت)، رندر برچسب‌ها، باز شدن bottom sheet، فیلتر و جست‌وجو
+(تایپ «Finland»)، منوی «بیشتر» و اسکرول. خطاها و اصلاح‌های همین مسیر هم ثبت شده‌اند:
+اندازهٔ صفحهٔ شبیه‌ساز، از دست رفتن foreground، تپ روی متن بنر به‌جای چیپ، و نمایش «—» برای
+برچسب‌های خالی.
+
+نکتهٔ عمدی: در این بک‌اند همهٔ ۱۰۵ سرور `price = 0` هستند، پس فیلتر «پولی» عمداً **خالی** است و
+همین را هم پیام «با این فیلتر سروری پیدا نشد» می‌گوید.
 
 ### 📚 مستندات فارسی داخل پروژه
 
