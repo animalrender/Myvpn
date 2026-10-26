@@ -18,3 +18,13 @@ Success
 - outcome apk: success
 - outcome emusetup: success
 - outcome drive: cancelled
+- outcome jdk: success
+- outcome sdk: success
+- outcome chmod: success
+- outcome aar: success
+- outcome hev: success
+- outcome key: success
+- outcome gradlesetup: success
+- outcome apk: cancelled
+- outcome emusetup: skipped
+- outcome drive: skipped
