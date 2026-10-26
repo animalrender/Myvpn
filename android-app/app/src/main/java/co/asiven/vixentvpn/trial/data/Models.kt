@@ -202,6 +202,15 @@ object ServerParser {
             trimmed.contains("#") -> runCatching {
                 java.net.URLDecoder.decode(trimmed.substringAfter("#"), "UTF-8")
             }.getOrNull()?.takeIf { it.isNotBlank() } ?: fallbackName
+            // vmess links often carry the remark inside the base64 JSON (`ps`), like v2rayNG shows.
+            scheme == "vmess" -> runCatching {
+                val body = trimmed.substringAfter("://").trim()
+                val json = String(
+                    android.util.Base64.decode(body, android.util.Base64.DEFAULT),
+                    Charsets.UTF_8,
+                )
+                JSONObject(json).optString("ps")
+            }.getOrNull()?.takeIf { it.isNotBlank() } ?: fallbackName
             else -> fallbackName
         }
         return Server(

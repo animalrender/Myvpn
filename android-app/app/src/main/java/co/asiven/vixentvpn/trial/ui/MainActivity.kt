@@ -69,6 +69,9 @@ class MainActivity : AppCompatActivity() {
     private var pingJob: Job? = null
     private var pendingServer: Server? = null
     private var tunnelRunning = false
+
+    /** Key of the server the tunnel is currently running on (null when disconnected). */
+    private var connectedKey: String? = null
     private var busy = false
     private var filterMode = FilterMode.ALL
 
@@ -92,6 +95,7 @@ class MainActivity : AppCompatActivity() {
         override fun onReceive(context: Context?, intent: Intent?) {
             if (intent?.action != VpnTunnelService.ACTION_STATE) return
             tunnelRunning = intent.getBooleanExtra(VpnTunnelService.EXTRA_RUNNING, false)
+            if (!tunnelRunning) connectedKey = null
             val text = intent.getStringExtra(VpnTunnelService.EXTRA_TEXT).orEmpty()
             binding.statusText.text = text
             binding.connectButton.setText(
@@ -396,6 +400,13 @@ class MainActivity : AppCompatActivity() {
 
     private fun toggleConnection() {
         if (tunnelRunning) {
+            val target = selectedServer()
+            // A different server is selected: pressing the button must move the tunnel to it
+            // instead of silently dropping the connection (and instead of needing two taps).
+            if (target != null && connectedKey != null && target.key != connectedKey) {
+                connectTo(target)
+                return
+            }
             VpnTunnelService.stop(this)
             return
         }
@@ -413,8 +424,15 @@ class MainActivity : AppCompatActivity() {
         }
         selectServer(server)
         if (tunnelRunning) {
+            val same = connectedKey == server.key
             VpnTunnelService.stop(this)
-            toast(getString(R.string.status_disconnected))
+            if (same) {
+                toast(getString(R.string.status_disconnected))
+                return
+            }
+            // Give the old service a moment to release the TUN device, then start on the new one.
+            binding.statusText.text = getString(R.string.status_connecting)
+            binding.root.postDelayed({ launchTunnel(server) }, RECONNECT_DELAY_MS)
             return
         }
         binding.statusText.text = getString(R.string.status_connecting)
@@ -430,6 +448,7 @@ class MainActivity : AppCompatActivity() {
     }
 
     private fun launchTunnel(server: Server) {
+        connectedKey = server.key
         runCatching { VpnTunnelService.start(this, server, prefs.mode) }
             .onFailure {
                 AppLog.e("شروع سرویس تونل ناموفق", it)
@@ -450,6 +469,13 @@ class MainActivity : AppCompatActivity() {
             binding.connectButton.setText(if (running) R.string.btn_disconnect else R.string.btn_connect)
             return
         }
+        binding.connectButton.setText(
+            when {
+                !running -> R.string.btn_connect
+                connectedKey != null && connectedKey != shown.key -> R.string.btn_connect_selected
+                else -> R.string.btn_disconnect
+            },
+        )
         binding.selectedNameText.text = "${shown.displayFlag}  ${shown.name}"
         val price = when {
             shown.price == null -> getString(R.string.badge_unknown_price)
@@ -809,5 +835,6 @@ class MainActivity : AppCompatActivity() {
 
     companion object {
         private const val PING_CONCURRENCY = 4
+        private const val RECONNECT_DELAY_MS = 700L
     }
 }

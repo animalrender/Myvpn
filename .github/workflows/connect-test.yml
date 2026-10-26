@@ -84,16 +84,26 @@ jobs:
           /tmp/xray/xray version | head -2
           UUID="11111111-2222-3333-4444-555555555555"
           echo "CI_UUID=$UUID" >> "$GITHUB_ENV"
+          # Two servers, two protocols: the test connects to one, then switches to the other.
           cat > /tmp/xray-server.json <<JSON
           {
             "log": { "loglevel": "info", "access": "/tmp/xray-access.log", "error": "/tmp/xray-error.log" },
-            "inbounds": [{
-              "listen": "0.0.0.0",
-              "port": 10086,
-              "protocol": "vless",
-              "settings": { "clients": [{ "id": "$UUID", "level": 0 }], "decryption": "none" },
-              "streamSettings": { "network": "tcp", "security": "none" }
-            }],
+            "inbounds": [
+              {
+                "listen": "0.0.0.0",
+                "port": 10086,
+                "protocol": "vless",
+                "settings": { "clients": [{ "id": "$UUID", "level": 0 }], "decryption": "none" },
+                "streamSettings": { "network": "tcp", "security": "none" }
+              },
+              {
+                "listen": "0.0.0.0",
+                "port": 10087,
+                "protocol": "vmess",
+                "settings": { "clients": [{ "id": "$UUID", "alterId": 0, "level": 0 }] },
+                "streamSettings": { "network": "ws", "security": "none", "wsSettings": { "path": "/ci" } }
+              }
+            ],
             "outbounds": [{ "protocol": "freedom", "settings": {} }]
           }
           JSON
@@ -189,10 +199,13 @@ jobs:
           timeout 30 adb shell pm grant co.asiven.vixentvpn android.permission.POST_NOTIFICATIONS >/dev/null 2>&1 || true
           timeout 120 adb shell am start -W -n co.asiven.vixentvpn/co.asiven.vixentvpn.trial.ui.MainActivity >> "$OUT/STATUS.md" 2>&1 || true
           sleep 10
-          URI="vless://${CI_UUID}@10.0.2.2:10086?encryption=none&security=none&type=tcp&headerType=none#CI-Local"
+          URI_A="vless://${CI_UUID}@10.0.2.2:10086?encryption=none&security=none&type=tcp&headerType=none#CI-Local-A"
+          VMESS_JSON="{\"v\":\"2\",\"ps\":\"CI-Local-B\",\"add\":\"10.0.2.2\",\"port\":\"10087\",\"id\":\"${CI_UUID}\",\"aid\":\"0\",\"scy\":\"auto\",\"net\":\"ws\",\"type\":\"none\",\"host\":\"\",\"path\":\"/ci\",\"tls\":\"\"}"
+          URI_B="vmess://$(printf '%s' "$VMESS_JSON" | base64 -w0)"
           EXIT=0
-          timeout 1500 python3 android-app/tools/connect-drive.py "$OUT" "CI-Local" "$URI" \
-            /tmp/xray-access.log "https://www.gstatic.com/generate_204" || EXIT=$?
+          timeout 1800 python3 android-app/tools/connect-drive.py "$OUT" \
+            /tmp/xray-access.log "https://www.gstatic.com/generate_204" \
+            "CI-Local-A=$URI_A" "CI-Local-B=$URI_B" || EXIT=$?
           echo "" >> "$OUT/STATUS.md"
           echo "- connect-drive exit: $EXIT" >> "$OUT/STATUS.md"
           echo "" >> "$OUT/STATUS.md"

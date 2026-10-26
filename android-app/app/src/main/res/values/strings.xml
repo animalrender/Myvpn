@@ -9,6 +9,7 @@
     <string name="btn_raw_json">JSON خام</string>
     <string name="btn_logs">لاگ‌ها</string>
     <string name="btn_connect">اتصال</string>
+    <string name="btn_connect_selected">اتصال به سرور انتخابی</string>
     <string name="btn_disconnect">قطع اتصال</string>
     <string name="btn_ping">پینگ</string>
     <string name="btn_details">جزئیات</string>
