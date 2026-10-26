@@ -99,6 +99,14 @@ jobs:
       - name: Prepare release signing key
         run: bash android-app/tools/fetch-testkey.sh 2>&1 | tee /tmp/testkey.log
 
+      - name: Allow the runner user to use KVM
+        run: |
+          # /dev/kvm is root:kvm 660 and the runner user is not in the kvm group, so the emulator
+          # would silently fall back to (unusable) software emulation and never finish booting.
+          sudo chmod 666 /dev/kvm || true
+          ls -l /dev/kvm
+          test -r /dev/kvm && test -w /dev/kvm && echo "KVM is readable and writable"
+
       - name: Set up Gradle
         uses: gradle/actions/setup-gradle@v4
         with:
