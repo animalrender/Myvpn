@@ -459,9 +459,24 @@ def main(argv):
             log("ردیف دومی با پینگ موفق در صفحهٔ فعلی دیده نشد")
 
         # ---------------------------------------------------------- 6. teardown
-        if tap_rid("connectButton"):
-            time.sleep(10)
-            shot("05-disconnected")
+        # The hero button reads «قطع اتصال» only while the *connected* row is the selected one;
+        # after selecting another row it turns into «اتصال به سرور انتخابی». Selecting the live
+        # row again brings the disconnect label back.
+        label = connect_button_text()
+        if label != "قطع اتصال":
+            live = find(text="متصل", exact=False)
+            current = hero_name()
+            log(f"دکمه در وضعیت «{label}» است؛ ابتدا ردیف متصل انتخاب می‌شود: `{current}`")
+            if current:
+                connect_row({"name": current, "ping": None}, "05")
+                label = connect_button_text()
+        log(f"برچسب دکمه پیش از قطع: `{label}`")
+        if label == "قطع اتصال" and tap_rid("connectButton"):
+            for _ in range(15):
+                if not tun_up():
+                    break
+                time.sleep(2)
+            shot("06-disconnected")
             log(f"پس از قطع اتصال: tun0 {'هنوز موجود است' if tun_up() else 'حذف شد'}")
             if tun_up():
                 failures.append("tun-not-removed")
