@@ -182,7 +182,12 @@ def main():
     else:
         log("== still no endpoint that returns a usable config")
 
-    print("::notice title=probe-resolve::%s" % urllib.parse.quote("\n".join(REPORT)[-5500:], safe=""))
+    # GitHub drops a single annotation whose message is too long, so the report is published in
+    # chunks of ~3500 characters with distinct titles.
+    body = "\n".join(REPORT)
+    chunks = [body[i:i + 3500] for i in range(0, len(body), 3500)] or [""]
+    for index, chunk in enumerate(chunks, start=1):
+        print("::notice title=probe-resolve-%d/%d::%s" % (index, len(chunks), urllib.parse.quote(chunk, safe="")))
     return 0
 
 
