@@ -341,6 +341,24 @@ def connect_row(row, index, wait_seconds=90):
     return False
 
 
+def connect_button_text():
+    """Label of the hero button: «اتصال» / «اتصال به سرور انتخابی» / «قطع اتصال»."""
+    node = find(rid="connectButton")
+    return (node.get("text") or "").strip() if node else None
+
+
+def hero_name():
+    """The server the activity currently has selected (it auto-picks the fastest after a ping)."""
+    node = find(rid="selectedNameText")
+    text = unescape((node or {}).get("text") or "")
+    return text.replace("\u200f", "").strip()
+
+
+def bulk_ping_finished():
+    out = adb("logcat", "-d", "-s", "MvpnTrial:V", timeout=120).stdout or ""
+    return "پینگ همهٔ" in out
+
+
 def main(argv):
     global OUT, PROBE_URL
     if len(argv) < 1:
