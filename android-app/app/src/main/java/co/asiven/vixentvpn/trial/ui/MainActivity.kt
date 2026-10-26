@@ -98,9 +98,8 @@ class MainActivity : AppCompatActivity() {
             if (!tunnelRunning) connectedKey = null
             val text = intent.getStringExtra(VpnTunnelService.EXTRA_TEXT).orEmpty()
             binding.statusText.text = text
-            binding.connectButton.setText(
-                if (tunnelRunning) R.string.btn_disconnect else R.string.btn_connect,
-            )
+            // The label is owned by updateHero(): it also distinguishes "disconnect" from
+            // "switch to the selected server".
             paintStatusDot()
             adapter.setConnectedKey(if (tunnelRunning) connectedKey else null)
             updateHero()
