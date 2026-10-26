@@ -6,18 +6,18 @@
 
 ### 📦 خروجی آمادهٔ تست
 
-* ریلیز: **[trial-5](https://github.com/animalrender/Myvpn/releases/tag/trial-5)** — **دو APK**:
-  * `mvpn-trial-arm64-5.apk` — گوشی/تبلت (`arm64-v8a`)
-  * `mvpn-trial-x86_64-5.apk` — شبیه‌ساز/کروم‌بوک (`x86_64`)
+* ریلیز: **[trial-9](https://github.com/animalrender/Myvpn/releases/tag/trial-9)** — **دو APK**:
+  * `mvpn-trial-arm64-9.apk` — گوشی/تبلت (`arm64-v8a`)
+  * `mvpn-trial-x86_64-9.apk` — شبیه‌ساز/کروم‌بوک (`x86_64`)
   * هر دو با فایل `.sha256`
 * امضا: AOSP testkey با `SHA-256 = a40da80a59d170caa950cf15c18c454d47a39b26989d8b640ecd745ba71bf5dc`
   — **همان گواهی نسخهٔ اصلی**، تا هدرهای `sign` و `sha_hexadecimal` بایت‌به‌بایت درست باشند.
-* نصب: `adb install -r mvpn-trial-arm64-5.apk`
+* نصب: `adb install -r mvpn-trial-arm64-9.apk`
   (چون `applicationId` همان `co.asiven.vixentvpn` است، اگر نسخهٔ اصلی نصب است باید حذف شود.)
 
 ```bash
-gh release download trial-5
-sha256sum -c mvpn-trial-arm64-5.apk.sha256
+gh release download trial-9
+sha256sum -c mvpn-trial-arm64-9.apk.sha256
 ```
 
 ### ✅ چه چیزی در این نسخه کار می‌کند
@@ -89,7 +89,7 @@ sha256sum -c mvpn-trial-arm64-5.apk.sha256
 `10086` و VMess/WS روی `10087`)، اپ را روی شبیه‌ساز نصب می‌کند، کانفیگ را با intent وارد
 می‌کند (`vless://…`)، «اتصال» را می‌زند، مجوز VPN را تأیید می‌کند و بعد **ترافیک را از داخل
 TUN به بیرون می‌فرستد و ردِ آن را در لاگ access سرور Xray** می‌بیند. نتیجهٔ اجرای
-[`40268938592`](https://github.com/animalrender/Myvpn/actions/runs/40268938592) — همهٔ گام‌ها ✅:
+[`40275697024`](https://github.com/animalrender/Myvpn/actions/runs/40275697024) — همهٔ گام‌ها ✅:
 
 | گام | نتیجه |
 | --- | --- |
@@ -167,7 +167,7 @@ APK اصلی دوباره از گوگل‌درایو دانلود و با REA/an
 
 ### 🧪 پیشنهاد تست برای شما
 
-1. نصب APK از ریلیز `trial-5` (روی شبیه‌ساز: فایل `x86_64`).
+1. نصب APK از ریلیز `trial-9` (روی شبیه‌ساز: فایل `x86_64`).
 2. زدن «دریافت و بازآوری همهٔ سرورها» ← باید ۱۰۵ سرور با برچسب‌ها بیاید.
 3. «پینگ همه» و «لینک v2ray» یک ردیف را امتحان کنید.
 4. برای سنجش اتصال با یک کانفیگ واقعی: لینک `vless://`/`vmess://` را در مرورگر لمس کنید
