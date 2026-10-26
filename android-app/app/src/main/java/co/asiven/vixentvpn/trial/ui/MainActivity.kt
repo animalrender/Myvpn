@@ -144,6 +144,9 @@ class MainActivity : AppCompatActivity() {
         updateHero()
         updateSummary()
         loadCached()
+        // When a selection was restored from the previous run, the status line must say so
+        // instead of claiming that nothing is selected.
+        selectedServer()?.let { binding.statusText.text = getString(R.string.status_selected, it.name) }
         askNotificationPermissionIfNeeded()
         if (servers.isEmpty()) refreshAll()
     }
@@ -414,6 +417,7 @@ class MainActivity : AppCompatActivity() {
         val server = selectedServer()
         val shown = server
         if (shown == null) {
+            if (!running) binding.statusText.setText(R.string.status_idle)
             binding.selectedNameText.setText(R.string.hero_no_server)
             binding.selectedMetaText.setText(R.string.hero_no_server_hint)
             binding.connectButton.setText(if (running) R.string.btn_disconnect else R.string.btn_connect)
