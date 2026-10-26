@@ -1,0 +1,21 @@
+--------- beginning of main
+10-26 10:18:38.494  3576  3576 I MvpnTrial: MVPN Trial 3.2.0-trial (co.asiven.vixentvpn) راه‌اندازی شد
+10-26 10:18:38.653  3576  3576 I MvpnTrial: هستهٔ Xray آماده شد: Lib v40, Xray-core v26.10.21
+10-26 10:18:38.939  3576  3576 D MvpnTrial: hero(no row): running=false connected=- pressed=اتصال
+10-26 10:18:39.003  3576  3576 D MvpnTrial: hero(no row): running=false connected=- pressed=اتصال
+10-26 10:18:39.092  3576  3576 D MvpnTrial: hero(no row): running=false connected=- pressed=اتصال
+10-26 10:18:39.093  3576  3576 D MvpnTrial: hero(no row): running=false connected=- pressed=اتصال
+10-26 10:18:39.713  3576  3691 D MvpnTrial: GET https://managev1.xyz/api/token?deviceId=25c25c4e0eb0cab3 → 200 (66 بایت)
+10-26 10:18:39.713  3576  3691 I MvpnTrial: توکن سمت سرور غیرفعال است؛ بدون هدر token ادامه می‌دهیم
+10-26 10:18:39.803  3576  3692 D MvpnTrial: GET https://managev1.xyz/api/token?deviceId=25c25c4e0eb0cab3 → 200 (66 بایت)
+10-26 10:18:39.803  3576  3692 I MvpnTrial: توکن سمت سرور غیرفعال است؛ بدون هدر token ادامه می‌دهیم
+10-26 10:18:39.884  3576  3691 D MvpnTrial: GET https://managev1.xyz/api/setting → 200 (44 بایت)
+10-26 10:18:39.885  3576  3691 I MvpnTrial: setting خالی است (data=null) — پیش‌فرض‌های برنامه استفاده می‌شوند
+10-26 10:18:39.965  3576  3692 D MvpnTrial: GET https://managev1.xyz/api/setting → 200 (44 بایت)
+10-26 10:18:39.970  3576  3692 I MvpnTrial: setting خالی است (data=null) — پیش‌فرض‌های برنامه استفاده می‌شوند
+10-26 10:18:40.461  3576  3691 D MvpnTrial: GET https://managev1.xyz/api/protocols → 200 (87123 بایت)
+10-26 10:18:40.549  3576  3692 D MvpnTrial: GET https://managev1.xyz/api/protocols → 200 (87123 بایت)
+10-26 10:18:40.720  3576  3691 I MvpnTrial: 105 سرور از /api/protocols دریافت شد
+10-26 10:18:41.436  3576  3692 I MvpnTrial: 105 سرور از /api/protocols دریافت شد
+10-26 10:18:41.462  3576  3576 D MvpnTrial: hero: running=false connected=- shown=-118949-466-931889960 pressed=اتصال
+10-26 10:18:42.574  3576  3576 W MvpnTrial: دریافت توکن Firebase ناموفق: java.util.concurrent.ExecutionException: java.io.IOException: AUTHENTICATION_FAILED
