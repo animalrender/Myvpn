@@ -112,16 +112,26 @@ jobs:
           gradle assembleRelease --no-daemon -PtargetAbi=x86_64 2>&1 | tee /tmp/gradle.log
           ls -l app/build/outputs/apk/release/
 
-      - name: Install emulator and the system image
+      - name: Install emulator, system image and its runtime libraries
         run: |
           set -uo pipefail
           OUT=android-app/docs/screenshots
+          # The SDK emulator binary links against PulseAudio and the X11/GL shims even when it runs
+          # headless; the ubuntu runner image does not ship all of them.
+          sudo apt-get update -qq || true
+          sudo apt-get install -y --no-install-recommends \
+            libpulse0 libnss3 libxcomposite1 libxcursor1 libxi6 libxtst6 libglu1-mesa \
+            libasound2t64 || sudo apt-get install -y --no-install-recommends \
+            libpulse0 libnss3 libxcomposite1 libxcursor1 libxi6 libxtst6 libglu1-mesa libasound2 || true
           SDKMANAGER="$ANDROID_HOME/cmdline-tools/latest/bin/sdkmanager"
           [ -x "$SDKMANAGER" ] || SDKMANAGER="$(ls "$ANDROID_HOME"/cmdline-tools/*/bin/sdkmanager 2>/dev/null | head -1)"
           AVDMANAGER="$(dirname "$SDKMANAGER")/avdmanager"
           yes | "$SDKMANAGER" --licenses > /dev/null 2>&1 || true
           "$SDKMANAGER" --install "platform-tools" "emulator" "system-images;android-34;google_apis;x86_64" 2>&1 | tail -8
-          echo no | "$AVDMANAGER" create avd -n mvpn -k "system-images;android-34;google_apis;x86_64" -d pixel_6 --force 2>&1 | tail -5
+          export ANDROID_AVD_HOME="$HOME/.android/avd"
+          mkdir -p "$ANDROID_AVD_HOME"
+          echo "ANDROID_AVD_HOME=$ANDROID_AVD_HOME" >> "$GITHUB_ENV"
+          CREATE="$(echo no | "$AVDMANAGER" create avd -n mvpn -k "system-images;android-34;google_apis;x86_64" --force 2>&1)"
           # /dev/kvm is root:kvm 660 and the runner user is not in the kvm group; without access the
           # emulator falls back to software emulation and never finishes booting.
           sudo chmod 666 /dev/kvm || true
@@ -129,11 +139,16 @@ jobs:
             echo ""
             echo "## Emulator setup"
             echo "- kvm: $(ls -l /dev/kvm 2>&1 | tr -d '\n')"
-            echo "- emulator: $("$ANDROID_HOME/emulator/emulator" -version 2>&1 | head -1)"
-            echo "- avds: $("$ANDROID_HOME/emulator/emulator" -list-avds 2>&1 | tr '\n' ' ')"
+            echo "- emulator: $("$ANDROID_HOME/emulator/emulator" -version 2>&1 | head -3 | tr '\n' ' ')"
+            echo "- avd create: $(echo "$CREATE" | tr '\n' ' ')"
+            echo "- avd files: $(ls "$ANDROID_AVD_HOME" 2>&1 | tr '\n' ' ')"
             echo "- images: $(ls "$ANDROID_HOME/system-images/android-34/google_apis" 2>&1 | tr '\n' ' ')"
           } >> "$OUT/STATUS.md"
           cat "$OUT/STATUS.md"
+          test -f "$ANDROID_AVD_HOME/mvpn.ini" || {
+            echo "::error title=ui-snapshot::could not create the AVD (see STATUS.md)"
+            exit 1
+          }
 
       - name: Boot the emulator, install the app and drive it
         run: |
@@ -141,6 +156,7 @@ jobs:
           OUT=android-app/docs/screenshots
           STATUS="$OUT/STATUS.md"
           export ANDROID_SDK_ROOT="$ANDROID_HOME"
+          export ANDROID_AVD_HOME="${ANDROID_AVD_HOME:-$HOME/.android/avd}"
           nohup "$ANDROID_HOME/emulator/emulator" -avd mvpn \
             -no-window -no-audio -no-boot-anim -no-snapshot -no-snapshot-save \
             -gpu swiftshader_indirect -accel on -port 5554 > /tmp/emulator.log 2>&1 &
