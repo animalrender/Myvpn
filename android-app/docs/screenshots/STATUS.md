@@ -1,15 +1,15 @@
-# ui-snapshot — run 16
+# ui-snapshot — run 17
 
 - branch: arena/b9372ae1-myvpn
-- sha: c668b7d388e251fa3fed11e3de576c2b574b20e7
-- started: 2026-10-26T02:51:49Z
-- kvm: crw-rw---- 1 root kvm 10, 232 Oct 26 02:51 /dev/kvm
+- sha: 4d6544806563f784d591ac4d44ed0a69375d16c7
+- started: 2026-10-26T03:02:26Z
+- kvm: crw-rw---- 1 root kvm 10, 232 Oct 26 03:00 /dev/kvm
 - user: runner / groups: runner adm users docker systemd-journal
 - python: Python 3.12.3
 - adb: Android Debug Bridge version 1.0.41
 
 ## Emulator setup
-- kvm: crw-rw-rw- 1 root kvm 10, 232 Oct 26 02:51 /dev/kvm
+- kvm: crw-rw-rw- 1 root kvm 10, 232 Oct 26 03:00 /dev/kvm
 - emulator: Android emulator version 37.2.12.0 (build_id 16428233) (CL:N/A) Copyright (C) 2006-2024 The Android Open Source Project and many others. This program is a derivative of the QEMU CPU emulator (www.qemu.org). 
 - avd create: Loading local repository...                                                     [=========                              ] 25% Loading local repository...       [=========                              ] 25% Fetch remote repository...        [=======================================] 100% Fetch remote repository...        Auto-selecting single ABI x86_64 
 - avd files: mvpn.avd mvpn.ini 
@@ -28,6 +28,6 @@ Physical density: 440
 ## Steps
 - install: Performing Streamed Install
 Success
-- start: Starting: Intent { cmp=co.asiven.vixentvpn/.trial.ui.MainActivity } Status: ok LaunchState: COLD Activity: co.asiven.vixentvpn/.trial.ui.MainActivity TotalTime: 2924 WaitTime: 2963 Complete 
+- start: Starting: Intent { cmp=co.asiven.vixentvpn/.trial.ui.MainActivity } Status: ok LaunchState: COLD Activity: co.asiven.vixentvpn/.trial.ui.MainActivity TotalTime: 5219 WaitTime: 5324 Complete 
 - ui-drive exit: 0
-- pid: 3306
+- pid: 3227

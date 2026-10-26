@@ -1,11 +1,12 @@
 --------- beginning of main
-10-26 02:56:36.090  3306  3306 I MvpnTrial: MVPN Trial 3.2.0-trial (co.asiven.vixentvpn) راه‌اندازی شد
-10-26 02:56:36.249  3306  3306 I MvpnTrial: هستهٔ Xray آماده شد: Lib v40, Xray-core v26.10.21
-10-26 02:56:37.792  3306  3414 D MvpnTrial: GET https://managev1.xyz/api/token?deviceId=36c0df1d334f98d0 → 200 (66 بایت)
-10-26 02:56:37.800  3306  3414 I MvpnTrial: توکن سمت سرور غیرفعال است؛ بدون هدر token ادامه می‌دهیم
-10-26 02:56:37.993  3306  3414 D MvpnTrial: GET https://managev1.xyz/api/setting → 200 (44 بایت)
-10-26 02:56:37.997  3306  3414 I MvpnTrial: setting خالی است (data=null) — پیش‌فرض‌های برنامه استفاده می‌شوند
-10-26 02:56:38.687  3306  3414 D MvpnTrial: GET https://managev1.xyz/api/protocols → 200 (111685 بایت)
-10-26 02:56:39.545  3306  3414 I MvpnTrial: 105 سرور از /api/protocols دریافت شد
-10-26 02:56:41.373  3306  3306 W MvpnTrial: دریافت توکن Firebase ناموفق: java.util.concurrent.ExecutionException: java.io.IOException: AUTHENTICATION_FAILED
-10-26 02:58:14.291  3306  3306 I MvpnTrial: 105 سرور از کش بارگذاری شد
+10-26 03:07:01.623  3227  3227 I MvpnTrial: MVPN Trial 3.2.0-trial (co.asiven.vixentvpn) راه‌اندازی شد
+10-26 03:07:02.954  3227  3227 I MvpnTrial: هستهٔ Xray آماده شد: Lib v40, Xray-core v26.10.21
+10-26 03:07:05.006  3227  3515 D MvpnTrial: GET https://managev1.xyz/api/token?deviceId=7ce0b6b38e1728fe → 200 (66 بایت)
+10-26 03:07:05.102  3227  3515 I MvpnTrial: توکن سمت سرور غیرفعال است؛ بدون هدر token ادامه می‌دهیم
+10-26 03:07:05.266  3227  3515 D MvpnTrial: GET https://managev1.xyz/api/setting → 200 (44 بایت)
+10-26 03:07:05.281  3227  3515 I MvpnTrial: setting خالی است (data=null) — پیش‌فرض‌های برنامه استفاده می‌شوند
+10-26 03:07:05.717  3227  3515 D MvpnTrial: GET https://managev1.xyz/api/protocols → 200 (57790 بایت)
+10-26 03:07:05.801  3227  3515 I MvpnTrial: 105 سرور از /api/protocols دریافت شد
+10-26 03:07:07.927  3227  3227 W MvpnTrial: دریافت توکن Firebase ناموفق: java.util.concurrent.ExecutionException: java.io.IOException: AUTHENTICATION_FAILED
+10-26 03:08:42.829  3227  3227 I MvpnTrial: 105 سرور از کش بارگذاری شد
+10-26 03:08:49.218  3227  3227 I MvpnTrial: 105 سرور از کش بارگذاری شد
