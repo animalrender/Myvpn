@@ -1,0 +1,6 @@
+rows: 105
+scheme counts: {'json': 6, 'vless': 98, 'trojan': 1}
+transport counts: {'vless/xhttp/reality': 2, 'hysteria/?/tls': 1, 'vless/tcp/none': 3, 'vless:uri': 98, 'trojan:uri': 1}
+failures: 0
+decrypt-coverage: 100.00%
+share-link share: 1.90%
