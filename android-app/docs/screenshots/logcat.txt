@@ -1,12 +1,18 @@
 --------- beginning of main
-10-26 03:07:01.623  3227  3227 I MvpnTrial: MVPN Trial 3.2.0-trial (co.asiven.vixentvpn) راه‌اندازی شد
-10-26 03:07:02.954  3227  3227 I MvpnTrial: هستهٔ Xray آماده شد: Lib v40, Xray-core v26.10.21
-10-26 03:07:05.006  3227  3515 D MvpnTrial: GET https://managev1.xyz/api/token?deviceId=7ce0b6b38e1728fe → 200 (66 بایت)
-10-26 03:07:05.102  3227  3515 I MvpnTrial: توکن سمت سرور غیرفعال است؛ بدون هدر token ادامه می‌دهیم
-10-26 03:07:05.266  3227  3515 D MvpnTrial: GET https://managev1.xyz/api/setting → 200 (44 بایت)
-10-26 03:07:05.281  3227  3515 I MvpnTrial: setting خالی است (data=null) — پیش‌فرض‌های برنامه استفاده می‌شوند
-10-26 03:07:05.717  3227  3515 D MvpnTrial: GET https://managev1.xyz/api/protocols → 200 (57790 بایت)
-10-26 03:07:05.801  3227  3515 I MvpnTrial: 105 سرور از /api/protocols دریافت شد
-10-26 03:07:07.927  3227  3227 W MvpnTrial: دریافت توکن Firebase ناموفق: java.util.concurrent.ExecutionException: java.io.IOException: AUTHENTICATION_FAILED
-10-26 03:08:42.829  3227  3227 I MvpnTrial: 105 سرور از کش بارگذاری شد
-10-26 03:08:49.218  3227  3227 I MvpnTrial: 105 سرور از کش بارگذاری شد
+10-26 03:17:03.983  3297  3297 I MvpnTrial: MVPN Trial 3.2.0-trial (co.asiven.vixentvpn) راه‌اندازی شد
+10-26 03:17:04.060  3297  3297 I MvpnTrial: هستهٔ Xray آماده شد: Lib v40, Xray-core v26.10.21
+10-26 03:17:05.059  3297  3403 D MvpnTrial: GET https://managev1.xyz/api/token?deviceId=a9079e1e39b61f92 → 200 (66 بایت)
+10-26 03:17:05.060  3297  3403 I MvpnTrial: توکن سمت سرور غیرفعال است؛ بدون هدر token ادامه می‌دهیم
+10-26 03:17:05.212  3297  3403 D MvpnTrial: GET https://managev1.xyz/api/setting → 200 (44 بایت)
+10-26 03:17:05.212  3297  3403 I MvpnTrial: setting خالی است (data=null) — پیش‌فرض‌های برنامه استفاده می‌شوند
+10-26 03:17:05.599  3297  3403 D MvpnTrial: GET https://managev1.xyz/api/protocols → 200 (54491 بایت)
+10-26 03:17:05.831  3297  3403 I MvpnTrial: 105 سرور از /api/protocols دریافت شد
+10-26 03:17:06.055  3297  3404 D MvpnTrial: GET https://managev1.xyz/api/token?deviceId=a9079e1e39b61f92 → 200 (66 بایت)
+10-26 03:17:06.056  3297  3404 I MvpnTrial: توکن سمت سرور غیرفعال است؛ بدون هدر token ادامه می‌دهیم
+10-26 03:17:06.210  3297  3404 D MvpnTrial: GET https://managev1.xyz/api/setting → 200 (44 بایت)
+10-26 03:17:06.211  3297  3404 I MvpnTrial: setting خالی است (data=null) — پیش‌فرض‌های برنامه استفاده می‌شوند
+10-26 03:17:06.470  3297  3404 D MvpnTrial: GET https://managev1.xyz/api/protocols → 200 (54491 بایت)
+10-26 03:17:06.487  3297  3404 I MvpnTrial: 105 سرور از /api/protocols دریافت شد
+10-26 03:17:08.287  3297  3297 W MvpnTrial: دریافت توکن Firebase ناموفق: java.util.concurrent.ExecutionException: java.io.IOException: AUTHENTICATION_FAILED
+10-26 03:18:33.632  3297  3297 I MvpnTrial: 105 سرور از کش بارگذاری شد
+10-26 03:18:39.571  3297  3297 I MvpnTrial: 105 سرور از کش بارگذاری شد

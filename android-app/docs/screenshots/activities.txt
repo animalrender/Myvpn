@@ -1,23 +1,23 @@
 ACTIVITY MANAGER ACTIVITIES (dumpsys activity activities)
 Display #0 (activities from top to bottom):
-  * Task{795a6e5 #10 type=standard A=10192:co.asiven.vixentvpn U=0 visible=true visibleRequested=true mode=fullscreen translucent=false sz=1}
+  * Task{a919187 #10 type=standard A=10192:co.asiven.vixentvpn U=0 visible=true visibleRequested=true mode=fullscreen translucent=false sz=1}
     mLastNonFullscreenBounds=Rect(261, 631 - 820, 1711)
     isSleeping=false
-    topResumedActivity=ActivityRecord{c33b5dc u0 co.asiven.vixentvpn/.trial.ui.MainActivity t10}
-    * Hist  #0: ActivityRecord{c33b5dc u0 co.asiven.vixentvpn/.trial.ui.MainActivity t10}
+    topResumedActivity=ActivityRecord{50bfdc6 u0 co.asiven.vixentvpn/.trial.ui.MainActivity t10}
+    * Hist  #0: ActivityRecord{50bfdc6 u0 co.asiven.vixentvpn/.trial.ui.MainActivity t10}
       packageName=co.asiven.vixentvpn processName=co.asiven.vixentvpn
       launchedFromUid=2000 launchedFromPackage=com.android.shell launchedFromFeature=null userId=0
-      app=ProcessRecord{16f17c6 3227:co.asiven.vixentvpn/u0a192}
+      app=ProcessRecord{1d6c803 3297:co.asiven.vixentvpn/u0a192}
       Intent { flg=0x10000000 cmp=co.asiven.vixentvpn/.trial.ui.MainActivity }
-      rootOfTask=true task=Task{795a6e5 #10 type=standard A=10192:co.asiven.vixentvpn}
+      rootOfTask=true task=Task{a919187 #10 type=standard A=10192:co.asiven.vixentvpn}
       taskAffinity=10192:co.asiven.vixentvpn
       mActivityComponent=co.asiven.vixentvpn/.trial.ui.MainActivity
-      baseDir=/data/app/~~EVKNvZs5oRzO0FMSCKgqaw==/co.asiven.vixentvpn-I7U0LopjQXZfqo41YvdWdA==/base.apk
+      baseDir=/data/app/~~xcvJ5ynWK6LzG3bvM8gdug==/co.asiven.vixentvpn-15NYzpGGfLblvBAbzkj42w==/base.apk
       dataDir=/data/user/0/co.asiven.vixentvpn
       stateNotNeeded=false componentSpecified=false mActivityType=standard
       compat={440dpi} labelRes=0x7f11001c icon=0x7f0e0000 theme=0x7f120275
       mLastReportedConfigurations:
-        mGlobalConfig={1.0 310mcc260mnc [en_US] ldltr sw393dp w393dp h759dp 440dpi nrml long port finger qwerty/v/v -nav/h winConfig={ mBounds=Rect(0, 0 - 1080, 2280) mAppBounds=Rect(0, 128 - 1080, 2214) mMaxBounds=Rect(0, 0 - 1080, 2280) mDisplayRotation=ROTATION_0 mWindowingMode=fullscreen mDisplayWindowingMode=fullscreen mActivityType=undefined mAlwaysOnTop=undefined mRotation=ROTATION_0} as.3 s.138 fontWeightAdjustment=0}
+        mGlobalConfig={1.0 310mcc260mnc [en_US] ldltr sw393dp w393dp h759dp 440dpi nrml long port finger qwerty/v/v -nav/h winConfig={ mBounds=Rect(0, 0 - 1080, 2280) mAppBounds=Rect(0, 128 - 1080, 2214) mMaxBounds=Rect(0, 0 - 1080, 2280) mDisplayRotation=ROTATION_0 mWindowingMode=fullscreen mDisplayWindowingMode=fullscreen mActivityType=undefined mAlwaysOnTop=undefined mRotation=ROTATION_0} as.5 s.182 fontWeightAdjustment=0}
         mOverrideConfig={1.0 310mcc260mnc [en_US] ldltr sw393dp w393dp h759dp 440dpi nrml long port finger qwerty/v/v -nav/h winConfig={ mBounds=Rect(0, 0 - 1080, 2280) mAppBounds=Rect(0, 128 - 1080, 2214) mMaxBounds=Rect(0, 0 - 1080, 2280) mDisplayRotation=ROTATION_0 mWindowingMode=fullscreen mDisplayWindowingMode=fullscreen mActivityType=standard mAlwaysOnTop=undefined mRotation=ROTATION_0} as.3 s.2 fontWeightAdjustment=0}
       CurrentConfiguration={1.0 310mcc260mnc [en_US] ldltr sw393dp w393dp h759dp 440dpi nrml long port finger qwerty/v/v -nav/h winConfig={ mBounds=Rect(0, 0 - 1080, 2280) mAppBounds=Rect(0, 128 - 1080, 2214) mMaxBounds=Rect(0, 0 - 1080, 2280) mDisplayRotation=ROTATION_0 mWindowingMode=fullscreen mDisplayWindowingMode=fullscreen mActivityType=standard mAlwaysOnTop=undefined mRotation=ROTATION_0} as.3 s.2 fontWeightAdjustment=0}
       RequestedOverrideConfiguration={0.0 ?mcc0mnc ?localeList ?layoutDir ?swdp ?wdp ?hdp ?density ?lsize ?long ?ldr ?wideColorGamut ?orien ?uimode ?night ?touch ?keyb/?/? ?nav/? winConfig={ mBounds=Rect(0, 0 - 0, 0) mAppBounds=null mMaxBounds=Rect(0, 0 - 0, 0) mDisplayRotation=undefined mWindowingMode=undefined mDisplayWindowingMode=undefined mActivityType=standard mAlwaysOnTop=undefined mRotation=undefined} ?fontWeightAdjustment}
@@ -25,7 +25,7 @@ Display #0 (activities from top to bottom):
       taskDescription: label="null" icon=null iconResource=/0 iconFilename=null primaryColor=ff4f8cff
         backgroundColor=ff070b14 statusBarColor=ff070b14 navigationBarColor=ff070b14
        backgroundColorFloating=ff424242
-      launchFailed=false launchCount=1 lastLaunchTime=-19s677ms
+      launchFailed=false launchCount=1 lastLaunchTime=-17s726ms
       mHaveState=false mIcicle=null
       state=RESUMED delayedResume=false finishing=false
       keysPaused=false inHistory=true idle=true
@@ -33,7 +33,7 @@ Display #0 (activities from top to bottom):
       frozenBeforeDestroy=false forceNewConfig=false
       mActivityType=standard
       mImeInsetsFrozenUntilStartInput=false
-      windows=[Window{d8f1a36 u0 co.asiven.vixentvpn/co.asiven.vixentvpn.trial.ui.MainActivity}]
+      windows=[Window{bb56476 u0 co.asiven.vixentvpn/co.asiven.vixentvpn.trial.ui.MainActivity}]
       windowType=2 waitingToShow=true
       mOccludesParent=true
       overrideOrientation=SCREEN_ORIENTATION_UNSPECIFIED
@@ -41,7 +41,7 @@ Display #0 (activities from top to bottom):
       mVisibleRequested=true mVisible=true mClientVisible=true reportedDrawn=true reportedVisible=true
       mNumInterestingWindows=2 mNumDrawnWindows=2 allDrawn=true lastAllDrawn=true)
       startingData=null firstWindowDrawn=true mIsExiting=false
-      nowVisible=true lastVisibleTime=-18s332ms
+      nowVisible=true lastVisibleTime=-16s784ms
       resizeMode=RESIZE_MODE_RESIZEABLE_VIA_SDK_VERSION
       mLastReportedMultiWindowMode=false mLastReportedPictureInPictureMode=false
       supportsSizeChanges=SIZE_CHANGES_UNSUPPORTED_METADATA
@@ -52,17 +52,17 @@ Display #0 (activities from top to bottom):
       mCameraCompatControlState=hidden
       mCameraCompatControlEnabled=true
 
-  * Task{2de372d #1 type=home U=0 visible=false visibleRequested=false mode=fullscreen translucent=true sz=1}
-    * Task{b533e8a #7 type=home I=com.google.android.apps.nexuslauncher/.NexusLauncherActivity U=0 rootTaskId=1 visible=false visibleRequested=false mode=fullscreen translucent=true sz=1}
-      mLastPausedActivity: ActivityRecord{e44fa39 u0 com.google.android.apps.nexuslauncher/.NexusLauncherActivity t7}
+  * Task{9c1824b #1 type=home U=0 visible=false visibleRequested=false mode=fullscreen translucent=true sz=1}
+    * Task{fc1f4a7 #7 type=home I=com.google.android.apps.nexuslauncher/.NexusLauncherActivity U=0 rootTaskId=1 visible=false visibleRequested=false mode=fullscreen translucent=true sz=1}
+      mLastPausedActivity: ActivityRecord{e417966 u0 com.google.android.apps.nexuslauncher/.NexusLauncherActivity t7}
       mLastNonFullscreenBounds=Rect(260, 567 - 820, 1647)
       isSleeping=false
-      * Hist  #0: ActivityRecord{e44fa39 u0 com.google.android.apps.nexuslauncher/.NexusLauncherActivity t7}
+      * Hist  #0: ActivityRecord{e417966 u0 com.google.android.apps.nexuslauncher/.NexusLauncherActivity t7}
         packageName=com.google.android.apps.nexuslauncher processName=com.google.android.apps.nexuslauncher
         launchedFromUid=0 launchedFromPackage=null launchedFromFeature=null userId=0
-        app=ProcessRecord{35e988d 1090:com.google.android.apps.nexuslauncher/u0a169}
+        app=ProcessRecord{4409c09 1078:com.google.android.apps.nexuslauncher/u0a169}
         Intent { act=android.intent.action.MAIN cat=[android.intent.category.HOME] flg=0x10000100 cmp=com.google.android.apps.nexuslauncher/.NexusLauncherActivity (has extras) }
-        rootOfTask=true task=Task{b533e8a #7 type=home I=com.google.android.apps.nexuslauncher/.NexusLauncherActivity}
+        rootOfTask=true task=Task{fc1f4a7 #7 type=home I=com.google.android.apps.nexuslauncher/.NexusLauncherActivity}
         taskAffinity=null
         mActivityComponent=com.google.android.apps.nexuslauncher/.NexusLauncherActivity
         baseDir=/system_ext/priv-app/NexusLauncherRelease/NexusLauncherRelease.apk
@@ -70,14 +70,14 @@ Display #0 (activities from top to bottom):
         stateNotNeeded=true componentSpecified=false mActivityType=home
         compat={440dpi} labelRes=0x7f130067 icon=0x7f080291 theme=0x7f140014
         mLastReportedConfigurations:
-          mGlobalConfig={1.0 310mcc260mnc [en_US] ldltr sw393dp w393dp h759dp 440dpi nrml long port finger qwerty/v/v -nav/h winConfig={ mBounds=Rect(0, 0 - 1080, 2280) mAppBounds=Rect(0, 128 - 1080, 2214) mMaxBounds=Rect(0, 0 - 1080, 2280) mDisplayRotation=ROTATION_0 mWindowingMode=fullscreen mDisplayWindowingMode=fullscreen mActivityType=undefined mAlwaysOnTop=undefined mRotation=ROTATION_0} as.3 s.176 fontWeightAdjustment=0}
+          mGlobalConfig={1.0 310mcc260mnc [en_US] ldltr sw393dp w393dp h759dp 440dpi nrml long port finger qwerty/v/v -nav/h winConfig={ mBounds=Rect(0, 0 - 1080, 2280) mAppBounds=Rect(0, 128 - 1080, 2214) mMaxBounds=Rect(0, 0 - 1080, 2280) mDisplayRotation=ROTATION_0 mWindowingMode=fullscreen mDisplayWindowingMode=fullscreen mActivityType=undefined mAlwaysOnTop=undefined mRotation=ROTATION_0} as.3 s.179 fontWeightAdjustment=0}
           mOverrideConfig={1.0 310mcc260mnc [en_US] ldltr sw393dp w393dp h759dp 440dpi nrml long port finger qwerty/v/v -nav/h winConfig={ mBounds=Rect(0, 0 - 1080, 2280) mAppBounds=Rect(0, 128 - 1080, 2214) mMaxBounds=Rect(0, 0 - 1080, 2280) mDisplayRotation=ROTATION_0 mWindowingMode=fullscreen mDisplayWindowingMode=fullscreen mActivityType=home mAlwaysOnTop=undefined mRotation=ROTATION_0} as.3 s.7 fontWeightAdjustment=0}
         CurrentConfiguration={1.0 310mcc260mnc [en_US] ldltr sw393dp w393dp h759dp 440dpi nrml long port finger qwerty/v/v -nav/h winConfig={ mBounds=Rect(0, 0 - 1080, 2280) mAppBounds=Rect(0, 128 - 1080, 2214) mMaxBounds=Rect(0, 0 - 1080, 2280) mDisplayRotation=ROTATION_0 mWindowingMode=fullscreen mDisplayWindowingMode=fullscreen mActivityType=home mAlwaysOnTop=undefined mRotation=ROTATION_0} as.3 s.7 fontWeightAdjustment=0}
         RequestedOverrideConfiguration={0.0 ?mcc0mnc ?localeList ?layoutDir ?swdp ?wdp ?hdp ?density ?lsize ?long ?ldr ?wideColorGamut ?orien ?uimode ?night ?touch ?keyb/?/? ?nav/? winConfig={ mBounds=Rect(0, 0 - 0, 0) mAppBounds=null mMaxBounds=Rect(0, 0 - 0, 0) mDisplayRotation=undefined mWindowingMode=undefined mDisplayWindowingMode=undefined mActivityType=home mAlwaysOnTop=undefined mRotation=undefined} as.3 ?fontWeightAdjustment}
         taskDescription: label="null" icon=null iconResource=/0 iconFilename=null primaryColor=fff0f0f3
           backgroundColor=fff0f0f3 statusBarColor=0 navigationBarColor=0
          backgroundColorFloating=fff0f0f3
-        launchFailed=false launchCount=0 lastLaunchTime=-2m18s449ms
+        launchFailed=false launchCount=0 lastLaunchTime=-2m3s583ms
         mHaveState=true mIcicle=Bundle[mParcelledData.dataSize=8344]
         state=STOPPED delayedResume=false finishing=false
         keysPaused=false inHistory=true idle=true
@@ -85,7 +85,7 @@ Display #0 (activities from top to bottom):
         frozenBeforeDestroy=false forceNewConfig=false
         mActivityType=home
         mImeInsetsFrozenUntilStartInput=true
-        windows=[Window{e076edf u0 com.google.android.apps.nexuslauncher/com.google.android.apps.nexuslauncher.NexusLauncherActivity}, Window{2640665 u0 com.google.android.apps.nexuslauncher/com.google.android.apps.nexuslauncher.NexusLauncherActivity}]
+        windows=[Window{1fffe1b u0 com.google.android.apps.nexuslauncher/com.google.android.apps.nexuslauncher.NexusLauncherActivity}, Window{fa103eb u0 com.google.android.apps.nexuslauncher/com.google.android.apps.nexuslauncher.NexusLauncherActivity}]
         windowType=2
         mOccludesParent=true
         overrideOrientation=SCREEN_ORIENTATION_NOSENSOR
@@ -93,8 +93,8 @@ Display #0 (activities from top to bottom):
         mVisibleRequested=false mVisible=false mClientVisible=false reportedDrawn=false reportedVisible=false
         mAppStopped=true
         mNumInterestingWindows=2 mNumDrawnWindows=2 allDrawn=true lastAllDrawn=true)
-        nowVisible=false lastVisibleTime=-20s605ms
-        connections={ConnectionRecord{7053bda u0 com.google.android.apps.nexuslauncher/com.android.quickstep.TouchInteractionService:@c036185 flags=0x0}}
+        nowVisible=false lastVisibleTime=-18s623ms
+        connections={ConnectionRecord{f59f75d u0 com.google.android.apps.nexuslauncher/com.android.quickstep.TouchInteractionService:@93d9d34 flags=0x0}}
         resizeMode=RESIZE_MODE_RESIZEABLE
         mLastReportedMultiWindowMode=false mLastReportedPictureInPictureMode=false
         supportsSizeChanges=SIZE_CHANGES_UNSUPPORTED_METADATA
@@ -105,36 +105,36 @@ Display #0 (activities from top to bottom):
         mCameraCompatControlState=hidden
         mCameraCompatControlEnabled=true
 
-  * Task{5c7226d #2 type=undefined U=0 visible=false visibleRequested=false mode=fullscreen translucent=true sz=2}
+  * Task{bb51fec #2 type=undefined U=0 visible=false visibleRequested=false mode=fullscreen translucent=true sz=2}
     mCreatedByOrganizer=true
-    * Task{38c733 #4 type=undefined U=0 rootTaskId=2 visible=false visibleRequested=false mode=multi-window translucent=true sz=0}
+    * Task{1b2264a #4 type=undefined U=0 rootTaskId=2 visible=false visibleRequested=false mode=multi-window translucent=true sz=0}
       mBounds=Rect(0, 2280 - 1080, 3420)
       mCreatedByOrganizer=true
       isSleeping=false
-    * Task{f950ea2 #3 type=undefined U=0 rootTaskId=2 visible=false visibleRequested=false mode=multi-window translucent=true sz=0}
+    * Task{860afb5 #3 type=undefined U=0 rootTaskId=2 visible=false visibleRequested=false mode=multi-window translucent=true sz=0}
       mCreatedByOrganizer=true
       isSleeping=false
 
   Resumed activities in task display areas (from top to bottom):
-    Resumed: ActivityRecord{c33b5dc u0 co.asiven.vixentvpn/.trial.ui.MainActivity t10}
+    Resumed: ActivityRecord{50bfdc6 u0 co.asiven.vixentvpn/.trial.ui.MainActivity t10}
 
-  ResumedActivity: ActivityRecord{c33b5dc u0 co.asiven.vixentvpn/.trial.ui.MainActivity t10}
+  ResumedActivity: ActivityRecord{50bfdc6 u0 co.asiven.vixentvpn/.trial.ui.MainActivity t10}
 
 ActivityTaskSupervisor state:
-  topDisplayFocusedRootTask=Task{795a6e5 #10 type=standard A=10192:co.asiven.vixentvpn}
+  topDisplayFocusedRootTask=Task{a919187 #10 type=standard A=10192:co.asiven.vixentvpn}
   Display: mDisplayId=0 (organized)
     init=1080x2280 440dpi mMinSizeOfResizeableTaskDp=220 cur=1080x2280 app=1080x2086 rng=1080x948-2152x2086
     deferred=false mLayoutNeeded=false mTouchExcludeRegion=SkRegion((0,0,1080,2280))
 
-  mLastOrientationSource=WindowedMagnification:0:31@61312855
-  deepestLastOrientationSource=ActivityRecord{c33b5dc u0 co.asiven.vixentvpn/.trial.ui.MainActivity t10}
-  overrideConfig={1.0 310mcc260mnc [en_US] ldltr sw393dp w393dp h759dp 440dpi nrml long port finger qwerty/v/v -nav/h winConfig={ mBounds=Rect(0, 0 - 1080, 2280) mAppBounds=Rect(0, 128 - 1080, 2214) mMaxBounds=Rect(0, 0 - 1080, 2280) mDisplayRotation=ROTATION_0 mWindowingMode=fullscreen mDisplayWindowingMode=fullscreen mActivityType=undefined mAlwaysOnTop=undefined mRotation=ROTATION_0} as.3 s.138 fontWeightAdjustment=0}
-  mLayoutSeq=231
-  mCurrentFocus=Window{d8f1a36 u0 co.asiven.vixentvpn/co.asiven.vixentvpn.trial.ui.MainActivity}
-  mFocusedApp=ActivityRecord{c33b5dc u0 co.asiven.vixentvpn/.trial.ui.MainActivity t10}
+  mLastOrientationSource=WindowedMagnification:0:31@229814725
+  deepestLastOrientationSource=ActivityRecord{50bfdc6 u0 co.asiven.vixentvpn/.trial.ui.MainActivity t10}
+  overrideConfig={1.0 310mcc260mnc [en_US] ldltr sw393dp w393dp h759dp 440dpi nrml long port finger qwerty/v/v -nav/h winConfig={ mBounds=Rect(0, 0 - 1080, 2280) mAppBounds=Rect(0, 128 - 1080, 2214) mMaxBounds=Rect(0, 0 - 1080, 2280) mDisplayRotation=ROTATION_0 mWindowingMode=fullscreen mDisplayWindowingMode=fullscreen mActivityType=undefined mAlwaysOnTop=undefined mRotation=ROTATION_0} as.3 s.140 fontWeightAdjustment=0}
+  mLayoutSeq=220
+  mCurrentFocus=Window{bb56476 u0 co.asiven.vixentvpn/co.asiven.vixentvpn.trial.ui.MainActivity}
+  mFocusedApp=ActivityRecord{50bfdc6 u0 co.asiven.vixentvpn/.trial.ui.MainActivity t10}
 
   mHoldScreenWindow=null
-  mObscuringWindow=Window{d8f1a36 u0 co.asiven.vixentvpn/co.asiven.vixentvpn.trial.ui.MainActivity}
+  mObscuringWindow=Window{bb56476 u0 co.asiven.vixentvpn/co.asiven.vixentvpn.trial.ui.MainActivity}
   mLastWakeLockHoldingWindow=null
   mLastWakeLockObscuringWindow=null
 
@@ -189,22 +189,22 @@ ActivityTaskSupervisor state:
   Task display areas in top down Z order:
     TaskDisplayArea DefaultTaskDisplayArea
       overrideConfig={0.0 ?mcc0mnc ?localeList ?layoutDir ?swdp ?wdp ?hdp ?density ?lsize ?long ?ldr ?wideColorGamut ?orien ?uimode ?night ?touch ?keyb/?/? ?nav/? winConfig={ mBounds=Rect(0, 0 - 0, 0) mAppBounds=null mMaxBounds=Rect(0, 0 - 0, 0) mDisplayRotation=undefined mWindowingMode=fullscreen mDisplayWindowingMode=fullscreen mActivityType=undefined mAlwaysOnTop=undefined mRotation=undefined} ?fontWeightAdjustment}
-      mPreferredTopFocusableRootTask=Task{795a6e5 #10 type=standard A=10192:co.asiven.vixentvpn}
-      mLastFocusedRootTask=Task{795a6e5 #10 type=standard A=10192:co.asiven.vixentvpn}
+      mPreferredTopFocusableRootTask=Task{a919187 #10 type=standard A=10192:co.asiven.vixentvpn}
+      mLastFocusedRootTask=Task{a919187 #10 type=standard A=10192:co.asiven.vixentvpn}
       Application tokens in top down Z order:
-      * Task{795a6e5 #10 type=standard A=10192:co.asiven.vixentvpn U=0 visible=true visibleRequested=true mode=fullscreen translucent=false sz=1}
+      * Task{a919187 #10 type=standard A=10192:co.asiven.vixentvpn U=0 visible=true visibleRequested=true mode=fullscreen translucent=false sz=1}
         bounds=[0,0][1080,2280]
-        * ActivityRecord{c33b5dc u0 co.asiven.vixentvpn/.trial.ui.MainActivity t10}
-      * Task{2de372d #1 type=home U=0 visible=false visibleRequested=false mode=fullscreen translucent=true sz=1}
+        * ActivityRecord{50bfdc6 u0 co.asiven.vixentvpn/.trial.ui.MainActivity t10}
+      * Task{9c1824b #1 type=home U=0 visible=false visibleRequested=false mode=fullscreen translucent=true sz=1}
         bounds=[0,0][1080,2280]
-        * Task{b533e8a #7 type=home I=com.google.android.apps.nexuslauncher/.NexusLauncherActivity U=0 rootTaskId=1 visible=false visibleRequested=false mode=fullscreen translucent=true sz=1}
+        * Task{fc1f4a7 #7 type=home I=com.google.android.apps.nexuslauncher/.NexusLauncherActivity U=0 rootTaskId=1 visible=false visibleRequested=false mode=fullscreen translucent=true sz=1}
           bounds=[0,0][1080,2280]
-          * ActivityRecord{e44fa39 u0 com.google.android.apps.nexuslauncher/.NexusLauncherActivity t7}
-      * Task{5c7226d #2 type=undefined U=0 visible=false visibleRequested=false mode=fullscreen translucent=true sz=2}
+          * ActivityRecord{e417966 u0 com.google.android.apps.nexuslauncher/.NexusLauncherActivity t7}
+      * Task{bb51fec #2 type=undefined U=0 visible=false visibleRequested=false mode=fullscreen translucent=true sz=2}
         bounds=[0,0][1080,2280]
-        * Task{38c733 #4 type=undefined U=0 rootTaskId=2 visible=false visibleRequested=false mode=multi-window translucent=true sz=0}
+        * Task{1b2264a #4 type=undefined U=0 rootTaskId=2 visible=false visibleRequested=false mode=multi-window translucent=true sz=0}
           bounds=[0,2280][1080,3420]
-        * Task{f950ea2 #3 type=undefined U=0 rootTaskId=2 visible=false visibleRequested=false mode=multi-window translucent=true sz=0}
+        * Task{860afb5 #3 type=undefined U=0 rootTaskId=2 visible=false visibleRequested=false mode=multi-window translucent=true sz=0}
           bounds=[0,0][1080,2280]
 
   no ScreenRotationAnimation 
@@ -227,27 +227,27 @@ ActivityTaskSupervisor state:
     mHdmiPlugged=false
     mLastBehavior=DEFAULT
     mShowingDream=false mDreamingLockscreen=false
-    mStatusBar=Window{9282a30 u0 StatusBar}
-    mExpandedPanel=Window{dc043b3 u0 NotificationShade}
+    mStatusBar=Window{5b26693 u0 StatusBar}
+    mExpandedPanel=Window{fdd6bcc u0 NotificationShade}
     isKeyguardShowing=false
-    mNavigationBar=Window{16aeb9 u0 NavigationBar0}
+    mNavigationBar=Window{9ec77f0 u0 NavigationBar0}
     mNavBarOpacityMode=2
     mNavigationBarCanMove=false
     mNavigationBarPosition=4
-    mLeftGestureHost=Window{16aeb9 u0 NavigationBar0}
-    mTopGestureHost=Window{9282a30 u0 StatusBar}
-    mRightGestureHost=Window{16aeb9 u0 NavigationBar0}
-    mBottomGestureHost=Window{16aeb9 u0 NavigationBar0}
-    mFocusedWindow=Window{d8f1a36 u0 co.asiven.vixentvpn/co.asiven.vixentvpn.trial.ui.MainActivity}
-    mTopFullscreenOpaqueWindowState=Window{d8f1a36 u0 co.asiven.vixentvpn/co.asiven.vixentvpn.trial.ui.MainActivity}
-    mSystemBarColorApps={ActivityRecord{c33b5dc u0 co.asiven.vixentvpn/.trial.ui.MainActivity t10}}
-    mNavBarColorWindowCandidate=Window{d8f1a36 u0 co.asiven.vixentvpn/co.asiven.vixentvpn.trial.ui.MainActivity}
-    mNavBarBackgroundWindow=Window{d8f1a36 u0 co.asiven.vixentvpn/co.asiven.vixentvpn.trial.ui.MainActivity}
+    mLeftGestureHost=Window{9ec77f0 u0 NavigationBar0}
+    mTopGestureHost=Window{5b26693 u0 StatusBar}
+    mRightGestureHost=Window{9ec77f0 u0 NavigationBar0}
+    mBottomGestureHost=Window{9ec77f0 u0 NavigationBar0}
+    mFocusedWindow=Window{bb56476 u0 co.asiven.vixentvpn/co.asiven.vixentvpn.trial.ui.MainActivity}
+    mTopFullscreenOpaqueWindowState=Window{bb56476 u0 co.asiven.vixentvpn/co.asiven.vixentvpn.trial.ui.MainActivity}
+    mSystemBarColorApps={ActivityRecord{50bfdc6 u0 co.asiven.vixentvpn/.trial.ui.MainActivity t10}}
+    mNavBarColorWindowCandidate=Window{bb56476 u0 co.asiven.vixentvpn/co.asiven.vixentvpn.trial.ui.MainActivity}
+    mNavBarBackgroundWindow=Window{bb56476 u0 co.asiven.vixentvpn/co.asiven.vixentvpn.trial.ui.MainActivity}
     mLastStatusBarAppearanceRegions=
       AppearanceRegion{ bounds=[0,0][1080,2280]}
     mLastLetterboxDetails=
     mStatusBarBackgroundWindows=
-      Window{d8f1a36 u0 co.asiven.vixentvpn/co.asiven.vixentvpn.trial.ui.MainActivity}
+      Window{bb56476 u0 co.asiven.vixentvpn/co.asiven.vixentvpn.trial.ui.MainActivity}
     mTopIsFullscreen=false
     mForceShowNavigationBarEnabled=false mAllowLockscreenWhenOn=false
     mRemoteInsetsControllerControlsSystemBars=false
@@ -261,7 +261,7 @@ ActivityTaskSupervisor state:
       mSwipeStartThreshold=Rect(66, 161 - 66, 66)
       mSwipeDistanceThreshold=66
     Looper state:
-      Looper (android.ui, tid 22) {f6ed20e}
+      Looper (android.ui, tid 22) {bd03334}
         (Total messages: 0, polling=true, quitting=false)
 
   DisplayRotation
@@ -283,7 +283,7 @@ ActivityTaskSupervisor state:
         mLastFilteredX=0.0
         mLastFilteredY=9.776321
         mLastFilteredZ=0.812345
-        mLastFilteredTimestampNanos=176735728422 (60.080048ms ago)
+        mLastFilteredTimestampNanos=152516623643 (27.11986ms ago)
         mTiltHistory={last: 5.0}
         mFlat=false
         mSwinging=false
@@ -299,7 +299,7 @@ ActivityTaskSupervisor state:
     mFixedToUserRotation=false
 
   InputConsumers:
-    name=recents_animation_input_consumer pid=1090 user=UserHandle{0}
+    name=recents_animation_input_consumer pid=1078 user=UserHandle{0}
 
   WindowInsetsStateController
     InsetsState
@@ -309,78 +309,78 @@ ActivityTaskSupervisor state:
       mRoundedCornerFrame=Rect(0, 0 - 0, 0)
       mPrivacyIndicatorBounds=PrivacyIndicatorBounds {static bounds=Rect(816, 0 - 1042, 128) rotation=0}
       mDisplayShape=DisplayShape{ spec=-275998131 displayWidth=1080 displayHeight=2280 physicalPixelDisplaySizeRatio=1.0 rotation=0 offsetX=0 offsetY=0 scale=1.0}
-        InsetsSource id=8d000000 type=statusBars frame=[0,0][1080,128] visible=true flags= insetsRoundedCornerFrame=false
-        InsetsSource id=8d000005 type=mandatorySystemGestures frame=[0,0][1080,161] visible=true flags= insetsRoundedCornerFrame=false
-        InsetsSource id=8d000006 type=tappableElement frame=[0,0][1080,128] visible=true flags= insetsRoundedCornerFrame=false
-        InsetsSource id=c6350001 type=navigationBars frame=[0,2214][1080,2280] visible=true flags=SUPPRESS_SCRIM insetsRoundedCornerFrame=false
-        InsetsSource id=c6350004 type=systemGestures frame=[0,0][82,2280] visible=true flags= insetsRoundedCornerFrame=false
-        InsetsSource id=c6350005 type=mandatorySystemGestures frame=[0,2192][1080,2280] visible=true flags= insetsRoundedCornerFrame=false
-        InsetsSource id=c6350006 type=tappableElement frame=[0,0][0,0] visible=true flags= insetsRoundedCornerFrame=false
-        InsetsSource id=c6350024 type=systemGestures frame=[998,0][1080,2280] visible=true flags= insetsRoundedCornerFrame=false
+        InsetsSource id=a8240000 type=statusBars frame=[0,0][1080,128] visible=true flags= insetsRoundedCornerFrame=false
+        InsetsSource id=a8240005 type=mandatorySystemGestures frame=[0,0][1080,161] visible=true flags= insetsRoundedCornerFrame=false
+        InsetsSource id=a8240006 type=tappableElement frame=[0,0][1080,128] visible=true flags= insetsRoundedCornerFrame=false
         InsetsSource id=3 type=ime frame=[0,0][0,0] visibleFrame=[0,2148][1080,2280] visible=false flags= insetsRoundedCornerFrame=false
         InsetsSource id=27 type=displayCutout frame=[0,0][1080,128] visible=true flags= insetsRoundedCornerFrame=false
+        InsetsSource id=19850001 type=navigationBars frame=[0,2214][1080,2280] visible=true flags=SUPPRESS_SCRIM insetsRoundedCornerFrame=false
+        InsetsSource id=19850004 type=systemGestures frame=[0,0][82,2280] visible=true flags= insetsRoundedCornerFrame=false
+        InsetsSource id=19850005 type=mandatorySystemGestures frame=[0,2192][1080,2280] visible=true flags= insetsRoundedCornerFrame=false
+        InsetsSource id=19850006 type=tappableElement frame=[0,0][0,0] visible=true flags= insetsRoundedCornerFrame=false
+        InsetsSource id=19850024 type=systemGestures frame=[998,0][1080,2280] visible=true flags= insetsRoundedCornerFrame=false
     Control map:
-      Window{d8f1a36 u0 co.asiven.vixentvpn/co.asiven.vixentvpn.trial.ui.MainActivity}:
-        InsetsSourceControl: {8d000000 mType=statusBars initiallyVisible mSurfacePosition=Point(0, 0) mInsetsHint=Insets{left=0, top=128, right=0, bottom=0}}
-        InsetsSourceControl: {c6350001 mType=navigationBars initiallyVisible mSurfacePosition=Point(0, 2148) mInsetsHint=Insets{left=0, top=0, right=0, bottom=66}}
+      Window{bb56476 u0 co.asiven.vixentvpn/co.asiven.vixentvpn.trial.ui.MainActivity}:
+        InsetsSourceControl: {a8240000 mType=statusBars initiallyVisible mSurfacePosition=Point(0, 0) mInsetsHint=Insets{left=0, top=128, right=0, bottom=0}}
+        InsetsSourceControl: {19850001 mType=navigationBars initiallyVisible mSurfacePosition=Point(0, 2148) mInsetsHint=Insets{left=0, top=0, right=0, bottom=66}}
         InsetsSourceControl: {3 mType=ime mSurfacePosition=Point(0, 128) mInsetsHint=Insets{left=0, top=0, right=0, bottom=822}}
     InsetsSourceProviders:
+      InsetsSourceProvider
+        mSource=InsetsSource id=19850024 type=systemGestures frame=[998,0][1080,2280] visible=true flags= insetsRoundedCornerFrame=false
+        mSourceFrame=Rect(998, 0 - 1080, 2280)
+        mIsLeashReadyForDispatching=true
+        mWindowContainer=Window{9ec77f0 u0 NavigationBar0}
+      InsetsSourceProvider
+        mSource=InsetsSource id=19850006 type=tappableElement frame=[0,0][0,0] visible=true flags= insetsRoundedCornerFrame=false
+        mSourceFrame=Rect(0, 0 - 0, 0)
+        mIsLeashReadyForDispatching=true
+        mWindowContainer=Window{9ec77f0 u0 NavigationBar0}
+      InsetsSourceProvider
+        mSource=InsetsSource id=19850005 type=mandatorySystemGestures frame=[0,2192][1080,2280] visible=true flags= insetsRoundedCornerFrame=false
+        mSourceFrame=Rect(0, 2192 - 1080, 2280)
+        mIsLeashReadyForDispatching=true
+        mWindowContainer=Window{9ec77f0 u0 NavigationBar0}
+      InsetsSourceProvider
+        mSource=InsetsSource id=19850004 type=systemGestures frame=[0,0][82,2280] visible=true flags= insetsRoundedCornerFrame=false
+        mSourceFrame=Rect(0, 0 - 82, 2280)
+        mIsLeashReadyForDispatching=true
+        mWindowContainer=Window{9ec77f0 u0 NavigationBar0}
+      InsetsSourceProvider
+        mSource=InsetsSource id=19850001 type=navigationBars frame=[0,2214][1080,2280] visible=true flags=SUPPRESS_SCRIM insetsRoundedCornerFrame=false
+        mSourceFrame=Rect(0, 2214 - 1080, 2280)
+        mOverrideFrames={2011=Rect(0, 2148 - 1080, 2280)}
+        mControl=InsetsSourceControl mId=19850001 mType=navigationBars mLeash=Surface(name=Surface(name=9ec77f0 NavigationBar0)/@0xe39231c - animation-leash of insets_animation)/@0x8ea17b2 mInitiallyVisible=true mSurfacePosition=Point(0, 2148) mInsetsHint=Insets{left=0, top=0, right=0, bottom=66} mSkipAnimationOnce=false
+        mIsLeashReadyForDispatching=true
+        mWindowContainer=Window{9ec77f0 u0 NavigationBar0}
+        mAdapter=ControlAdapter mCapturedLeash=Surface(name=Surface(name=9ec77f0 NavigationBar0)/@0xe39231c - animation-leash of insets_animation)/@0x8ea17b2
+        mControlTarget=Window{bb56476 u0 co.asiven.vixentvpn/co.asiven.vixentvpn.trial.ui.MainActivity}
       ImeInsetsSourceProvider
         mSource=InsetsSource id=3 type=ime frame=[0,0][0,0] visibleFrame=[0,2148][1080,2280] visible=false flags= insetsRoundedCornerFrame=false
         mSourceFrame=Rect(0, 2148 - 1080, 2280)
-        mControl=InsetsSourceControl mId=3 mType=ime mLeash=Surface(name=Surface(name=fa38016 InputMethod)/@0x8be8f25 - animation-leash of insets_animation)/@0x914e035 mInitiallyVisible=false mSurfacePosition=Point(0, 128) mInsetsHint=Insets{left=0, top=0, right=0, bottom=822} mSkipAnimationOnce=false
+        mControl=InsetsSourceControl mId=3 mType=ime mLeash=Surface(name=Surface(name=3516ae4 InputMethod)/@0x6d61602 - animation-leash of insets_animation)/@0xa629b79 mInitiallyVisible=false mSurfacePosition=Point(0, 128) mInsetsHint=Insets{left=0, top=0, right=0, bottom=822} mSkipAnimationOnce=false
         mIsLeashReadyForDispatching=true
-        mWindowContainer=Window{fa38016 u0 InputMethod}
-        mAdapter=ControlAdapter mCapturedLeash=Surface(name=Surface(name=fa38016 InputMethod)/@0x8be8f25 - animation-leash of insets_animation)/@0x914e035
-        mControlTarget=Window{d8f1a36 u0 co.asiven.vixentvpn/co.asiven.vixentvpn.trial.ui.MainActivity}
+        mWindowContainer=Window{3516ae4 u0 InputMethod}
+        mAdapter=ControlAdapter mCapturedLeash=Surface(name=Surface(name=3516ae4 InputMethod)/@0x6d61602 - animation-leash of insets_animation)/@0xa629b79
+        mControlTarget=Window{bb56476 u0 co.asiven.vixentvpn/co.asiven.vixentvpn.trial.ui.MainActivity}
         mImeShowing=false
       InsetsSourceProvider
-        mSource=InsetsSource id=c6350024 type=systemGestures frame=[998,0][1080,2280] visible=true flags= insetsRoundedCornerFrame=false
-        mSourceFrame=Rect(998, 0 - 1080, 2280)
-        mIsLeashReadyForDispatching=true
-        mWindowContainer=Window{16aeb9 u0 NavigationBar0}
-      InsetsSourceProvider
-        mSource=InsetsSource id=c6350006 type=tappableElement frame=[0,0][0,0] visible=true flags= insetsRoundedCornerFrame=false
-        mSourceFrame=Rect(0, 0 - 0, 0)
-        mIsLeashReadyForDispatching=true
-        mWindowContainer=Window{16aeb9 u0 NavigationBar0}
-      InsetsSourceProvider
-        mSource=InsetsSource id=c6350005 type=mandatorySystemGestures frame=[0,2192][1080,2280] visible=true flags= insetsRoundedCornerFrame=false
-        mSourceFrame=Rect(0, 2192 - 1080, 2280)
-        mIsLeashReadyForDispatching=true
-        mWindowContainer=Window{16aeb9 u0 NavigationBar0}
-      InsetsSourceProvider
-        mSource=InsetsSource id=c6350004 type=systemGestures frame=[0,0][82,2280] visible=true flags= insetsRoundedCornerFrame=false
-        mSourceFrame=Rect(0, 0 - 82, 2280)
-        mIsLeashReadyForDispatching=true
-        mWindowContainer=Window{16aeb9 u0 NavigationBar0}
-      InsetsSourceProvider
-        mSource=InsetsSource id=c6350001 type=navigationBars frame=[0,2214][1080,2280] visible=true flags=SUPPRESS_SCRIM insetsRoundedCornerFrame=false
-        mSourceFrame=Rect(0, 2214 - 1080, 2280)
-        mOverrideFrames={2011=Rect(0, 2148 - 1080, 2280)}
-        mControl=InsetsSourceControl mId=c6350001 mType=navigationBars mLeash=Surface(name=Surface(name=16aeb9 NavigationBar0)/@0xe58c6d1 - animation-leash of insets_animation)/@0xe15c4d4 mInitiallyVisible=true mSurfacePosition=Point(0, 2148) mInsetsHint=Insets{left=0, top=0, right=0, bottom=66} mSkipAnimationOnce=false
-        mIsLeashReadyForDispatching=true
-        mWindowContainer=Window{16aeb9 u0 NavigationBar0}
-        mAdapter=ControlAdapter mCapturedLeash=Surface(name=Surface(name=16aeb9 NavigationBar0)/@0xe58c6d1 - animation-leash of insets_animation)/@0xe15c4d4
-        mControlTarget=Window{d8f1a36 u0 co.asiven.vixentvpn/co.asiven.vixentvpn.trial.ui.MainActivity}
-      InsetsSourceProvider
-        mSource=InsetsSource id=8d000006 type=tappableElement frame=[0,0][1080,128] visible=true flags= insetsRoundedCornerFrame=false
+        mSource=InsetsSource id=a8240006 type=tappableElement frame=[0,0][1080,128] visible=true flags= insetsRoundedCornerFrame=false
         mSourceFrame=Rect(0, 0 - 1080, 128)
         mIsLeashReadyForDispatching=true
-        mWindowContainer=Window{9282a30 u0 StatusBar}
+        mWindowContainer=Window{5b26693 u0 StatusBar}
       InsetsSourceProvider
-        mSource=InsetsSource id=8d000005 type=mandatorySystemGestures frame=[0,0][1080,161] visible=true flags= insetsRoundedCornerFrame=false
+        mSource=InsetsSource id=a8240005 type=mandatorySystemGestures frame=[0,0][1080,161] visible=true flags= insetsRoundedCornerFrame=false
         mSourceFrame=Rect(0, 0 - 1080, 161)
         mIsLeashReadyForDispatching=true
-        mWindowContainer=Window{9282a30 u0 StatusBar}
+        mWindowContainer=Window{5b26693 u0 StatusBar}
       InsetsSourceProvider
-        mSource=InsetsSource id=8d000000 type=statusBars frame=[0,0][1080,128] visible=true flags= insetsRoundedCornerFrame=false
+        mSource=InsetsSource id=a8240000 type=statusBars frame=[0,0][1080,128] visible=true flags= insetsRoundedCornerFrame=false
         mSourceFrame=Rect(0, 0 - 1080, 128)
-        mControl=InsetsSourceControl mId=8d000000 mType=statusBars mLeash=Surface(name=Surface(name=9282a30 StatusBar)/@0x8c1189a - animation-leash of insets_animation)/@0x135967d mInitiallyVisible=true mSurfacePosition=Point(0, 0) mInsetsHint=Insets{left=0, top=128, right=0, bottom=0} mSkipAnimationOnce=false
+        mControl=InsetsSourceControl mId=a8240000 mType=statusBars mLeash=Surface(name=Surface(name=5b26693 StatusBar)/@0x741a1ce - animation-leash of insets_animation)/@0x4908303 mInitiallyVisible=true mSurfacePosition=Point(0, 0) mInsetsHint=Insets{left=0, top=128, right=0, bottom=0} mSkipAnimationOnce=false
         mIsLeashReadyForDispatching=true
-        mWindowContainer=Window{9282a30 u0 StatusBar}
-        mAdapter=ControlAdapter mCapturedLeash=Surface(name=Surface(name=9282a30 StatusBar)/@0x8c1189a - animation-leash of insets_animation)/@0x135967d
-        mControlTarget=Window{d8f1a36 u0 co.asiven.vixentvpn/co.asiven.vixentvpn.trial.ui.MainActivity}
+        mWindowContainer=Window{5b26693 u0 StatusBar}
+        mAdapter=ControlAdapter mCapturedLeash=Surface(name=Surface(name=5b26693 StatusBar)/@0x741a1ce - animation-leash of insets_animation)/@0x4908303
+        mControlTarget=Window{bb56476 u0 co.asiven.vixentvpn/co.asiven.vixentvpn.trial.ui.MainActivity}
 
   KeyguardController:
     mKeyguardShowing=false
@@ -401,12 +401,12 @@ ActivityTaskSupervisor state:
   mNoHistoryActivities=[]
 
   TaskOrganizerController:
-      android.window.ITaskOrganizer$Stub$Proxy@fc5a313 uid=10168:
-        (fullscreen) Task{2de372d #1 type=home}
-        (fullscreen) Task{5c7226d #2 type=undefined}
-        (multi-window) Task{f950ea2 #3 type=undefined}
-        (multi-window) Task{38c733 #4 type=undefined}
-        (fullscreen) Task{795a6e5 #10 type=standard A=10192:co.asiven.vixentvpn}
+      android.window.ITaskOrganizer$Stub$Proxy@7bde8 uid=10168:
+        (fullscreen) Task{9c1824b #1 type=home}
+        (fullscreen) Task{bb51fec #2 type=undefined}
+        (multi-window) Task{860afb5 #3 type=undefined}
+        (multi-window) Task{1b2264a #4 type=undefined}
+        (fullscreen) Task{a919187 #10 type=standard A=10192:co.asiven.vixentvpn}
 
-  VisibleActivityProcess:[ ProcessRecord{16f17c6 3227:co.asiven.vixentvpn/u0a192}]
+  VisibleActivityProcess:[ ProcessRecord{1d6c803 3297:co.asiven.vixentvpn/u0a192}]
   NumNonAppVisibleWindowUidMap:[ 10168:4]
