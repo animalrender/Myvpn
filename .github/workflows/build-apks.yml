@@ -1,6 +1,9 @@
-name: build-arm64
+name: build-apks
 
-# Builds the trial APK for arm64-v8a and publishes it as a GitHub Release.
+# Builds the trial APK for arm64-v8a (real phones) **and** x86_64 (emulators/Chromebooks) and
+# publishes both as one GitHub Release. Both APKs are signed with the same AOSP test key so the
+# vendor API answers instead of rejecting the signature.
+#
 # The heavy/native inputs (libv2ray.aar from AndroidLibXrayLite, hev-socks5-tunnel sources,
 # the AOSP test key used for signature-identical API headers) are fetched here, inside the
 # runner, and never committed to the repository.
@@ -15,20 +18,28 @@ on:
       - "android-app/build.gradle.kts"
       - "android-app/settings.gradle.kts"
       - "android-app/gradle.properties"
-      - ".github/workflows/build-arm64.yml"
+      - ".github/workflows/build-apks.yml"
   workflow_dispatch:
 
 permissions:
   contents: write
 
 concurrency:
-  group: build-arm64-${{ github.ref }}
+  group: build-apks-${{ github.ref }}
   cancel-in-progress: true
 
 jobs:
   build:
     runs-on: ubuntu-latest
     timeout-minutes: 75
+    strategy:
+      fail-fast: false
+      matrix:
+        include:
+          - abi: arm64-v8a
+            slug: arm64
+          - abi: x86_64
+            slug: x86_64
     steps:
       - name: Checkout
         uses: actions/checkout@v4
@@ -48,8 +59,6 @@ jobs:
             done
           fi
           echo "ANDROID_HOME=$ANDROID_HOME" | tee -a "$GITHUB_ENV"
-          echo "SDK dirs:"; ls "$ANDROID_HOME" || true
-          echo "NDK dirs:"; ls "$ANDROID_HOME/ndk" 2>/dev/null || echo "(none)"
           NDK="${ANDROID_NDK_LATEST_HOME:-}"
           if [ -z "$NDK" ] || [ ! -d "$NDK" ]; then
             NDK="$(ls -d "$ANDROID_HOME"/ndk/* 2>/dev/null | sort -V | tail -1 || true)"
@@ -74,10 +83,10 @@ jobs:
           set -o pipefail
           bash android-app/tools/fetch-libv2ray.sh 2>&1 | tee /tmp/fetch-aar.log
 
-      - name: Build hev-socks5-tunnel JNI library (arm64-v8a)
+      - name: Build hev-socks5-tunnel JNI library (${{ matrix.abi }})
         run: |
           set -o pipefail
-          bash android-app/tools/build-hevtun.sh 2>&1 | tee /tmp/build-hev.log
+          HEV_ABI="${{ matrix.abi }}" bash android-app/tools/build-hevtun.sh 2>&1 | tee /tmp/build-hev.log
           ls -lR android-app/app/src/main/jniLibs
 
       - name: Prepare release signing key
@@ -90,12 +99,12 @@ jobs:
         with:
           gradle-version: "8.9"
 
-      - name: Assemble release APK
+      - name: Assemble release APK (${{ matrix.abi }})
         working-directory: android-app
         run: |
           set -o pipefail
           gradle --version
-          gradle assembleRelease --no-daemon --stacktrace 2>&1 | tee /tmp/gradle.log
+          gradle assembleRelease --no-daemon -PtargetAbi=${{ matrix.abi }} --stacktrace 2>&1 | tee /tmp/gradle.log
 
       - name: Inspect the APK
         id: inspect
@@ -103,13 +112,20 @@ jobs:
           set -euo pipefail
           APK="$(find android-app/app/build/outputs/apk/release -name '*.apk' | head -1)"
           test -n "$APK"
+          ABI="${{ matrix.abi }}"
           echo "==> $APK ($(du -h "$APK" | cut -f1))"
           echo "--- staged jniLibs ---"; find android-app/app/src/main/jniLibs -type f || true
           echo "--- native libraries in APK ---"; unzip -l "$APK" | grep -E "\.so" || true
-          unzip -l "$APK" | grep -q "lib/arm64-v8a/libgojni.so" \
-            || { echo "::error::Xray core missing from APK"; exit 1; }
-          unzip -l "$APK" | grep -q "lib/arm64-v8a/libhev-socks5-tunnel.so" \
-            || { echo "::error::hev tun2socks missing from APK"; exit 1; }
+          unzip -l "$APK" | grep -q "lib/$ABI/libgojni.so" \
+            || { echo "::error::Xray core missing from the $ABI APK"; exit 1; }
+          unzip -l "$APK" | grep -q "lib/$ABI/libhev-socks5-tunnel.so" \
+            || { echo "::error::hev tun2socks missing from the $ABI APK"; exit 1; }
+          # Only the requested ABI may be shipped, so the APK stays small and predictable.
+          OTHER="$(unzip -l "$APK" | grep -oE 'lib/[^/]+/' | sort -u | grep -v "lib/$ABI/" || true)"
+          if [ -n "$OTHER" ]; then
+            echo "::error::unexpected ABIs in the $ABI APK: $OTHER"
+            exit 1
+          fi
 
           BT="$(ls -d "$ANDROID_HOME/build-tools/"* 2>/dev/null | sort -V | tail -1)"
           echo "--- badging ---"
@@ -123,7 +139,7 @@ jobs:
           else
             echo "::warning title=signing::APK certificate is '$GOT_CERT' (expected '$EXPECTED_CERT'); API headers may not match"
           fi
-          OUT_NAME="mvpn-trial-arm64-${GITHUB_RUN_NUMBER}.apk"
+          OUT_NAME="mvpn-trial-${{ matrix.slug }}-${GITHUB_RUN_NUMBER}.apk"
           cp "$APK" "$OUT_NAME"
           echo "apk=$OUT_NAME" >> "$GITHUB_OUTPUT"
           sha256sum "$OUT_NAME" | tee "$OUT_NAME.sha256"
@@ -133,30 +149,11 @@ jobs:
       - name: Upload workflow artifact
         uses: actions/upload-artifact@v4
         with:
-          name: mvpn-trial-arm64-apk
+          name: mvpn-trial-${{ matrix.slug }}-apk
           path: |
-            mvpn-trial-arm64-*.apk
-            mvpn-trial-arm64-*.apk.sha256
+            mvpn-trial-*.apk
+            mvpn-trial-*.apk.sha256
           if-no-files-found: error
-
-      - name: Publish GitHub Release
-        uses: softprops/action-gh-release@v2
-        with:
-          tag_name: trial-arm64-${{ github.run_number }}
-          name: MVPN Trial — arm64 build ${{ github.run_number }}
-          body: |
-            نسخهٔ آزمایشی MVPN Trial برای arm64-v8a — بدون تبلیغ، بدون حساب کاربری، بدون قفل قیمت (Firebase طبق اپ اصلی).
-
-            * هستهٔ Xray: `libgojni.so` از `libv2ray.aar` (AndroidLibXrayLite)
-            * تونل TUN→SOCKS: `libhev-socks5-tunnel.so` (hev-socks5-tunnel 2.19.3، JNI)
-            * امضا: ${{ steps.inspect.outputs.signing }}
-            * نصب: `adb install -r <file>.apk` — چون `applicationId` همان `co.asiven.vixentvpn` است، نسخهٔ اصلی باید حذف شود.
-
-            مستندات فارسی: `android-app/docs/README-fa.md`
-          files: |
-            mvpn-trial-arm64-*.apk
-            mvpn-trial-arm64-*.apk.sha256
-          fail_on_unmatched_files: true
 
       - name: Report failure details
         if: failure()
@@ -184,3 +181,43 @@ jobs:
           flat = [l for chunk in tail.values() for l in chunk]
           print("::warning title=log-tail::%s" % urllib.parse.quote("\n".join(flat)[-6000:], safe=""))
           PY
+
+  release:
+    needs: build
+    runs-on: ubuntu-latest
+    timeout-minutes: 15
+    steps:
+      - name: Download both APKs
+        uses: actions/download-artifact@v4
+        with:
+          pattern: mvpn-trial-*-apk
+          merge-multiple: true
+
+      - name: Show the assets
+        run: ls -l
+
+      - name: Publish GitHub Release
+        uses: softprops/action-gh-release@v2
+        with:
+          tag_name: trial-${{ github.run_number }}
+          name: MVPN Trial — build ${{ github.run_number }}
+          body: |
+            نسخهٔ آزمایشی MVPN Trial — بدون تبلیغ، بدون حساب کاربری، بدون قفل قیمت (Firebase طبق اپ اصلی).
+
+            دو فایل در این انتشار هست:
+
+            | فایل | معماری | کاربرد |
+            | --- | --- | --- |
+            | `mvpn-trial-arm64-*.apk` | `arm64-v8a` | گوشی و تبلت اندرویدی (نسخهٔ اصلی) |
+            | `mvpn-trial-x86_64-*.apk` | `x86_64` | شبیه‌ساز اندروید و کروم‌بوک |
+
+            * هستهٔ Xray: `libgojni.so` از `libv2ray.aar` (AndroidLibXrayLite v26.10.21)
+            * تونل TUN→SOCKS: `libhev-socks5-tunnel.so` (hev-socks5-tunnel 2.19.3، JNI)
+            * امضا: AOSP testkey — همان امضای APK اصلی، تا هدرهای امضا در بک‌اند پذیرفته شوند
+            * نصب: `adb install -r <file>.apk` — چون `applicationId` همان `co.asiven.vixentvpn` است، نسخهٔ اصلی باید حذف شود.
+
+            مستندات فارسی: `android-app/docs/README-fa.md`
+          files: |
+            mvpn-trial-*.apk
+            mvpn-trial-*.apk.sha256
+          fail_on_unmatched_files: true

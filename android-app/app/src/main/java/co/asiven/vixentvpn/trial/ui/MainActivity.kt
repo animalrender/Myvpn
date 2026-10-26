@@ -149,6 +149,33 @@ class MainActivity : AppCompatActivity() {
         selectedServer()?.let { binding.statusText.text = getString(R.string.status_selected, it.name) }
         askNotificationPermissionIfNeeded()
         if (servers.isEmpty()) refreshAll()
+        handleIncoming(intent)
+    }
+
+    override fun onNewIntent(intent: Intent) {
+        super.onNewIntent(intent)
+        setIntent(intent)
+        handleIncoming(intent)
+    }
+
+    /**
+     * Accepts a config the way v2rayNG does: `ACTION_VIEW` on a `vless://`/`vmess://`/`trojan://`/
+     * `ss://` link, or `ACTION_SEND` with the share text. Sharing a subscription link from a
+     * browser or a messenger therefore lands directly in this client.
+     */
+    private fun handleIncoming(intent: Intent?) {
+        if (intent == null) return
+        val data = intent.data?.toString()
+        val text = data ?: intent.getStringExtra(Intent.EXTRA_TEXT)
+        if (text.isNullOrBlank()) return
+        val single = text.trim().lines().firstOrNull { it.isNotBlank() }?.trim().orEmpty()
+        if (single.isBlank()) return
+        // A subscription URL is fetched, a single config is imported directly.
+        if (single.startsWith("http://", true) || single.startsWith("https://", true)) {
+            importSubscription(single)
+            return
+        }
+        importRaw(single)
     }
 
     override fun onStart() {
@@ -712,8 +739,17 @@ class MainActivity : AppCompatActivity() {
             toast(getString(R.string.import_empty))
             return
         }
+        if (text.startsWith("http://", true) || text.startsWith("https://", true)) {
+            importSubscription(text.lines().first().trim())
+            return
+        }
+        importRaw(text)
+    }
+
+    /** Adds one raw config (share link or Xray JSON) to the list and selects it. */
+    private fun importRaw(text: String) {
         val looksLikeConfig = text.startsWith("{") ||
-            listOf("vmess://", "vless://", "trojan://", "ss://", "socks://", "http://", "https://")
+            listOf("vmess://", "vless://", "trojan://", "ss://", "socks://")
                 .any { text.startsWith(it, ignoreCase = true) }
         if (!looksLikeConfig) {
             toast(getString(R.string.import_invalid))

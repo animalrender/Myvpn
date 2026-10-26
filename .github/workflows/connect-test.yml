@@ -1,0 +1,247 @@
+name: connect-test
+
+# Real-time end-to-end verification of the tunnel.
+#
+# The sandbox that writes this code cannot run Android, so the only honest way to prove that
+# «اتصال» really works is to run it: this workflow starts a genuine Xray **server** on the
+# runner, boots an emulator, imports a config that points at that server (10.0.2.2 is the host
+# from inside the emulator), taps connect, pushes HTTP traffic from the `shell` uid into the TUN
+# and then checks the server's access log — if the request is there, the bytes really travelled
+# through Xray. Finally it re-pings all servers while connected to make sure the client does not
+# silently hop to another server (the defect observed in the original APK).
+#
+# Everything the run observed is committed under android-app/docs/connect-test/.
+#
+# Trigger: workflow_dispatch, or a push whose tip commit message contains [net].
+
+on:
+  workflow_dispatch:
+  push:
+    branches: [arena/b9372ae1-myvpn]
+
+permissions:
+  contents: write
+
+concurrency:
+  group: connect-test-${{ github.ref }}
+  cancel-in-progress: true
+
+jobs:
+  connect:
+    if: >-
+      github.event_name == 'workflow_dispatch' ||
+      contains(github.event.head_commit.message, '[net]')
+    runs-on: ubuntu-latest
+    timeout-minutes: 90
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Set up JDK 17
+        uses: actions/setup-java@v4
+        with:
+          distribution: temurin
+          java-version: "17"
+
+      - name: Locate Android SDK and NDK
+        run: |
+          set -euo pipefail
+          if [ -z "${ANDROID_HOME:-}" ]; then
+            for candidate in /usr/local/lib/android/sdk "$HOME/Android/Sdk" /opt/android-sdk; do
+              if [ -d "$candidate" ]; then export ANDROID_HOME="$candidate"; break; fi
+            done
+          fi
+          echo "ANDROID_HOME=$ANDROID_HOME" | tee -a "$GITHUB_ENV"
+          echo "ANDROID_SDK_ROOT=$ANDROID_HOME" | tee -a "$GITHUB_ENV"
+          echo "$ANDROID_HOME/platform-tools" | tee -a "$GITHUB_PATH"
+          echo "$ANDROID_HOME/emulator" | tee -a "$GITHUB_PATH"
+          NDK="${ANDROID_NDK_LATEST_HOME:-}"
+          if [ -z "$NDK" ] || [ ! -d "$NDK" ]; then
+            NDK="$(ls -d "$ANDROID_HOME"/ndk/* 2>/dev/null | sort -V | tail -1 || true)"
+          fi
+          if [ -z "$NDK" ] || [ ! -d "$NDK" ]; then
+            SDKMANAGER="$ANDROID_HOME/cmdline-tools/latest/bin/sdkmanager"
+            [ -x "$SDKMANAGER" ] || SDKMANAGER="$(ls "$ANDROID_HOME"/cmdline-tools/*/bin/sdkmanager 2>/dev/null | head -1)"
+            yes | "$SDKMANAGER" --licenses >/dev/null 2>&1 || true
+            "$SDKMANAGER" "ndk;27.2.12479018" >/dev/null
+            NDK="$ANDROID_HOME/ndk/27.2.12479018"
+          fi
+          echo "NDK_HOME=$NDK" | tee -a "$GITHUB_ENV"
+          echo "ANDROID_NDK_LATEST_HOME=$NDK" | tee -a "$GITHUB_ENV"
+          test -x "$NDK/ndk-build"
+
+      - name: Make helper scripts executable
+        run: chmod +x android-app/tools/*.sh
+
+      - name: Start a real Xray server on the runner
+        run: |
+          set -euo pipefail
+          curl -fL --retry 4 --retry-all-errors --connect-timeout 20 \
+            -o /tmp/xray.zip \
+            https://github.com/XTLS/Xray-core/releases/latest/download/Xray-linux-64.zip
+          unzip -o -q /tmp/xray.zip -d /tmp/xray
+          chmod +x /tmp/xray/xray
+          /tmp/xray/xray version | head -2
+          UUID="11111111-2222-3333-4444-555555555555"
+          echo "CI_UUID=$UUID" >> "$GITHUB_ENV"
+          cat > /tmp/xray-server.json <<JSON
+          {
+            "log": { "loglevel": "info", "access": "/tmp/xray-access.log", "error": "/tmp/xray-error.log" },
+            "inbounds": [{
+              "listen": "0.0.0.0",
+              "port": 10086,
+              "protocol": "vless",
+              "settings": { "clients": [{ "id": "$UUID", "level": 0 }], "decryption": "none" },
+              "streamSettings": { "network": "tcp", "security": "none" }
+            }],
+            "outbounds": [{ "protocol": "freedom", "settings": {} }]
+          }
+          JSON
+          : > /tmp/xray-access.log
+          nohup /tmp/xray/xray run -c /tmp/xray-server.json > /tmp/xray-server.log 2>&1 &
+          sleep 4
+          ss -ltn | grep 10086 || { echo "::error::the Xray server is not listening"; tail -20 /tmp/xray-server.log; exit 1; }
+          echo "==> Xray server up on :10086"
+
+      - name: Fetch libv2ray.aar (Xray core, all ABIs)
+        run: bash android-app/tools/fetch-libv2ray.sh 2>&1 | tee /tmp/fetch-aar.log
+
+      - name: Build hev-socks5-tunnel JNI library (x86_64, for the emulator)
+        run: HEV_ABI=x86_64 bash android-app/tools/build-hevtun.sh 2>&1 | tee /tmp/build-hev.log
+
+      - name: Prepare release signing key
+        run: bash android-app/tools/fetch-testkey.sh 2>&1 | tee /tmp/testkey.log
+
+      - name: Set up Gradle
+        uses: gradle/actions/setup-gradle@v4
+        with:
+          gradle-version: "8.9"
+
+      - name: Assemble release APK for x86_64
+        working-directory: android-app
+        run: |
+          set -o pipefail
+          gradle assembleRelease --no-daemon -PtargetAbi=x86_64 2>&1 | tee /tmp/gradle.log
+          ls -l app/build/outputs/apk/release/
+
+      - name: Install emulator, system image and its runtime libraries
+        run: |
+          set -uo pipefail
+          sudo apt-get update -qq || true
+          sudo apt-get install -y --no-install-recommends \
+            libpulse0 libnss3 libxcomposite1 libxcursor1 libxi6 libxtst6 libglu1-mesa \
+            libasound2t64 || sudo apt-get install -y --no-install-recommends \
+            libpulse0 libnss3 libxcomposite1 libxcursor1 libxi6 libxtst6 libglu1-mesa libasound2 || true
+          SDKMANAGER="$ANDROID_HOME/cmdline-tools/latest/bin/sdkmanager"
+          [ -x "$SDKMANAGER" ] || SDKMANAGER="$(ls "$ANDROID_HOME"/cmdline-tools/*/bin/sdkmanager 2>/dev/null | head -1)"
+          AVDMANAGER="$(dirname "$SDKMANAGER")/avdmanager"
+          yes | "$SDKMANAGER" --licenses > /dev/null 2>&1 || true
+          "$SDKMANAGER" --install "platform-tools" "emulator" "system-images;android-34;google_apis;x86_64" 2>&1 | tail -8
+          export ANDROID_AVD_HOME="$HOME/.android/avd"
+          mkdir -p "$ANDROID_AVD_HOME"
+          echo "ANDROID_AVD_HOME=$ANDROID_AVD_HOME" >> "$GITHUB_ENV"
+          echo no | "$AVDMANAGER" create avd -n mvpn -k "system-images;android-34;google_apis;x86_64" -d pixel_6 --force 2>&1 | tail -3
+          CFG="$ANDROID_AVD_HOME/mvpn.avd/config.ini"
+          if [ -f "$CFG" ]; then
+            sed -i '/hw.lcd.width/d;/hw.lcd.height/d;/hw.lcd.density/d;/skin.name/d;/skin.path/d' "$CFG"
+            printf 'hw.lcd.width=1080\nhw.lcd.height=2280\nhw.lcd.density=440\n' >> "$CFG"
+          fi
+          sudo chmod 666 /dev/kvm || true
+
+      - name: Boot the emulator, import a config, connect and verify the tunnel
+        run: |
+          set -uo pipefail
+          OUT=android-app/docs/connect-test
+          mkdir -p "$OUT"
+          {
+            echo "# connect-test — run ${{ github.run_number }}"
+            echo ""
+            echo "- branch: ${{ github.ref_name }}"
+            echo "- sha: ${{ github.sha }}"
+            echo "- started: $(date -u +%FT%TZ)"
+            echo "- kvm: $(ls -l /dev/kvm 2>&1 | tr -d '\n')"
+          } > "$OUT/STATUS.md"
+          export ANDROID_SDK_ROOT="$ANDROID_HOME"
+          export ANDROID_AVD_HOME="${ANDROID_AVD_HOME:-$HOME/.android/avd}"
+          nohup "$ANDROID_HOME/emulator/emulator" -avd mvpn \
+            -no-window -no-audio -no-boot-anim -no-snapshot -no-snapshot-save \
+            -gpu swiftshader_indirect -accel on -port 5554 \
+            -skin 1080x2280 > /tmp/emulator.log 2>&1 &
+          adb start-server >/dev/null 2>&1 || true
+          BOOTED=0
+          for _ in $(seq 1 200); do
+            if [ "$(adb shell getprop sys.boot_completed 2>/dev/null | tr -d '\r')" = "1" ]; then
+              BOOTED=1; break
+            fi
+            sleep 5
+          done
+          echo "- booted: $BOOTED" >> "$OUT/STATUS.md"
+          if [ "$BOOTED" != "1" ]; then
+            echo "::error title=connect-test::the emulator did not boot"; tail -30 /tmp/emulator.log; exit 1
+          fi
+          adb shell settings put system screen_off_timeout 2147483647 >/dev/null 2>&1 || true
+          adb shell settings put global window_animation_scale 0 >/dev/null 2>&1 || true
+          adb shell settings put global transition_animation_scale 0 >/dev/null 2>&1 || true
+          adb shell settings put global animator_duration_scale 0 >/dev/null 2>&1 || true
+          APK="$(find android-app/app/build/outputs/apk/release -name '*.apk' | head -1)"
+          echo "- apk: $APK" >> "$OUT/STATUS.md"
+          timeout 240 adb install -r -t "$APK" >> "$OUT/STATUS.md" 2>&1 || true
+          timeout 30 adb shell pm grant co.asiven.vixentvpn android.permission.POST_NOTIFICATIONS >/dev/null 2>&1 || true
+          timeout 120 adb shell am start -W -n co.asiven.vixentvpn/co.asiven.vixentvpn.trial.ui.MainActivity >> "$OUT/STATUS.md" 2>&1 || true
+          sleep 10
+          URI="vless://${CI_UUID}@10.0.2.2:10086?encryption=none&security=none&type=tcp&headerType=none#CI-Local"
+          EXIT=0
+          timeout 1500 python3 android-app/tools/connect-drive.py "$OUT" "CI-Local" "$URI" \
+            /tmp/xray-access.log "https://www.gstatic.com/generate_204" || EXIT=$?
+          echo "" >> "$OUT/STATUS.md"
+          echo "- connect-drive exit: $EXIT" >> "$OUT/STATUS.md"
+          echo "" >> "$OUT/STATUS.md"
+          echo "## Xray server access log" >> "$OUT/STATUS.md"
+          echo '```' >> "$OUT/STATUS.md"
+          tail -40 /tmp/xray-access.log >> "$OUT/STATUS.md" 2>&1 || true
+          echo '```' >> "$OUT/STATUS.md"
+          echo "## Xray server error log" >> "$OUT/STATUS.md"
+          echo '```' >> "$OUT/STATUS.md"
+          tail -40 /tmp/xray-error.log >> "$OUT/STATUS.md" 2>&1 || true
+          echo '```' >> "$OUT/STATUS.md"
+          exit $EXIT
+
+      - name: Collect logs
+        if: always()
+        run: |
+          OUT=android-app/docs/connect-test
+          mkdir -p "$OUT"
+          timeout 60 adb logcat -d -s MvpnTrial:V AndroidRuntime:E > "$OUT/logcat-app.txt" 2>/dev/null || true
+          timeout 90 adb logcat -b all -d > /tmp/logcat-all.txt 2>/dev/null || true
+          tail -c 200000 /tmp/logcat-all.txt > "$OUT/logcat-all.txt" 2>/dev/null || true
+          cp /tmp/xray-server.log "$OUT/xray-server.txt" 2>/dev/null || true
+          cp /tmp/xray-access.log "$OUT/xray-access.txt" 2>/dev/null || true
+          cp /tmp/emulator.log "$OUT/emulator.txt" 2>/dev/null || true
+
+      - name: Commit the result
+        if: always()
+        run: |
+          set -euo pipefail
+          git config user.name "arena-agent"
+          git config user.email "297053741+arena-agent@users.noreply.github.com"
+          git add android-app/docs/connect-test
+          if git diff --cached --quiet; then
+            echo "no changes"
+          else
+            git commit -m "test(net): connection verification from run ${{ github.run_number }}"
+            git push
+          fi
+
+      - name: Report the result
+        if: always()
+        run: |
+          python3 - <<'PY'
+          import pathlib, urllib.parse
+          body = ""
+          for name in ("CONNECT.md", "STATUS.md"):
+              path = pathlib.Path("android-app/docs/connect-test") / name
+              if path.exists():
+                  body += path.read_text(errors="replace") + "\n"
+          level = "error" if "${{ job.status }}" != "success" else "notice"
+          print("::%s title=connect-test::%s" % (level, urllib.parse.quote(body[-4000:], safe="")))
+          PY
