@@ -67,7 +67,8 @@ class VpnTunnelService : VpnService() {
         // same text for imported rows but NOT for rows parsed from `/api/protocols`, and sending
         // the wrong one made the service start without a server at all.
         val server = parseServer(rawConfig, displayName)
-        activeKey = server?.key.orEmpty()
+        val announcedKey = intent?.getStringExtra(EXTRA_KEY).orEmpty()
+        activeKey = announcedKey.ifBlank { server?.key.orEmpty() }
         if (server == null) {
             AppLog.e("سروری برای اتصال ارسال نشده است")
             publish(false, getString(R.string.status_error, "سروری انتخاب نشده"))
@@ -276,6 +277,13 @@ class VpnTunnelService : VpnService() {
         const val EXTRA_SERVER = "server_config"
         const val EXTRA_NAME = "server_name"
         const val EXTRA_MODE = "mode"
+
+        /**
+         * Identity of the row as the **list** knows it. The service re-parses the config into its
+         * own `Server` (whose key is content-derived), so without this the activity could never
+         * recognise the row it is connected to and「قطع اتصال」kept behaving like「تغییر سرور」.
+         */
+        const val EXTRA_KEY = "server_key"
         const val EXTRA_RUNNING = "running"
         const val EXTRA_TEXT = "text"
 
@@ -289,6 +297,7 @@ class VpnTunnelService : VpnService() {
                 .setAction(ACTION_START)
                 .putExtra(EXTRA_SERVER, server.rawConfig.ifBlank { server.rawJson })
                 .putExtra(EXTRA_NAME, server.name)
+                .putExtra(EXTRA_KEY, server.key)
                 .putExtra(EXTRA_MODE, mode)
             if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
                 context.startForegroundService(intent)
