@@ -69,4 +69,26 @@
     <string name="link_copied">لینک v2ray سرور %1$s کپی شد</string>
     <string name="link_unavailable">این سرور لینک قابل کپی ندارد</string>
     <string name="vpn_permission_needed">برای حالت VPN باید اجازهٔ اتصال بدهید.</string>
+
+    <!-- ---------------------------------------------------------------- redesigned UI -->
+    <string name="menu_more">منوی بیشتر</string>
+    <string name="hero_no_server">سروری انتخاب نشده</string>
+    <string name="hero_no_server_hint">از فهرست پایین یک سرور را انتخاب کنید</string>
+    <string name="hero_meta">%1$s · %2$s · %3$s</string>
+    <string name="mode_vpn_short">VPN</string>
+    <string name="mode_proxy_short">پروکسی</string>
+    <string name="search_hint">جست‌وجو در نام، کشور و نوع سرور…</string>
+    <string name="filter_all">همه</string>
+    <string name="filter_free">رایگان</string>
+    <string name="filter_paid">پولی</string>
+    <string name="filter_ready">قابل اتصال</string>
+    <string name="btn_connect_this">اتصال به همین سرور</string>
+    <string name="btn_copy_link_v2ray">کپی لینک v2ray</string>
+    <string name="btn_copy_json">کپی JSON</string>
+    <string name="btn_details_full">جزئیات</string>
+    <string name="status_filtered">نمایش %1$d از %2$d سرور (رایگان: %3$d / پولی: %4$d)</string>
+    <string name="status_connected_short">متصل</string>
+    <string name="status_selected_short">انتخاب‌شده</string>
+    <string name="toast_select_first">اول یک سرور انتخاب کنید</string>
+    <string name="sheet_opaque">این سرور مقدار اتصال رمزنگاری‌شده دارد؛ اتصال و پینگ روی آن ممکن نیست، اما برچسب‌ها و لینک/JSON در دسترس‌اند.</string>
 </resources>

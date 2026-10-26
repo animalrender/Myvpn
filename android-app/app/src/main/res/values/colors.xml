@@ -1,16 +1,21 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <color name="bg">#FF0B1020</color>
-    <color name="surface">#FF151C33</color>
-    <color name="surface_alt">#FF1D2743</color>
+    <color name="bg">#FF070B14</color>
+    <color name="surface">#FF121A2B</color>
+    <color name="surface_alt">#FF1A2540</color>
+    <color name="card_stroke">#26FFFFFF</color>
     <color name="primary">#FF4F8CFF</color>
-    <color name="primary_dark">#FF2B5FD9</color>
+    <color name="primary_dark">#FF274B8F</color>
+    <color name="primary_soft">#FF1B2C4D</color>
     <color name="accent">#FF35D0BA</color>
-    <color name="text">#FFECF1FF</color>
-    <color name="text_dim">#FF9AA6C4</color>
+    <color name="text">#FFF2F6FF</color>
+    <color name="text_dim">#FF93A0BF</color>
     <color name="good">#FF3DDC97</color>
     <color name="warn">#FFFFC14D</color>
     <color name="bad">#FFFF6B6B</color>
     <color name="paid">#FFFFB13B</color>
     <color name="free">#FF3DDC97</color>
+    <color name="hero_start">#FF16264F</color>
+    <color name="hero_end">#FF101827</color>
+    <color name="chip_surface">#FF162034</color>
 </resources>

@@ -1,0 +1,176 @@
+name: ui-snapshot
+
+# Sees and drives the app on a real Android emulator and captures screenshots.
+#
+# The sandbox that writes this code has no JVM, no Android SDK and no emulator, so a screen
+# cannot be verified locally. This workflow builds the release APK for x86_64 (signed with the
+# same AOSP test key, so the vendor API answers instead of rejecting the signature), boots an
+# emulator, drives the UI with tools/ui-drive.py, screenshots every step and commits the PNGs to
+# android-app/docs/screenshots on this branch — which is how the agent and the user can look at
+# the result.
+#
+# Trigger: workflow_dispatch, or a push whose tip commit message contains [ui].
+
+on:
+  workflow_dispatch:
+  push:
+    branches: [arena/b9372ae1-myvpn]
+
+permissions:
+  contents: write
+
+concurrency:
+  group: ui-snapshot-${{ github.ref }}
+  cancel-in-progress: true
+
+jobs:
+  snapshot:
+    if: >-
+      github.event_name == 'workflow_dispatch' ||
+      contains(github.event.head_commit.message, '[ui]')
+    runs-on: ubuntu-latest
+    timeout-minutes: 90
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Set up JDK 17
+        uses: actions/setup-java@v4
+        with:
+          distribution: temurin
+          java-version: "17"
+
+      - name: Locate Android SDK and NDK
+        run: |
+          set -euo pipefail
+          if [ -z "${ANDROID_HOME:-}" ]; then
+            for candidate in /usr/local/lib/android/sdk "$HOME/Android/Sdk" /opt/android-sdk; do
+              if [ -d "$candidate" ]; then export ANDROID_HOME="$candidate"; break; fi
+            done
+          fi
+          echo "ANDROID_HOME=$ANDROID_HOME" | tee -a "$GITHUB_ENV"
+          NDK="${ANDROID_NDK_LATEST_HOME:-}"
+          if [ -z "$NDK" ] || [ ! -d "$NDK" ]; then
+            NDK="$(ls -d "$ANDROID_HOME"/ndk/* 2>/dev/null | sort -V | tail -1 || true)"
+          fi
+          if [ -z "$NDK" ] || [ ! -d "$NDK" ]; then
+            SDKMANAGER="$ANDROID_HOME/cmdline-tools/latest/bin/sdkmanager"
+            [ -x "$SDKMANAGER" ] || SDKMANAGER="$(ls "$ANDROID_HOME"/cmdline-tools/*/bin/sdkmanager 2>/dev/null | head -1)"
+            yes | "$SDKMANAGER" --licenses >/dev/null 2>&1 || true
+            "$SDKMANAGER" "ndk;27.2.12479018" >/dev/null
+            NDK="$ANDROID_HOME/ndk/27.2.12479018"
+          fi
+          echo "NDK_HOME=$NDK" | tee -a "$GITHUB_ENV"
+          echo "ANDROID_NDK_LATEST_HOME=$NDK" | tee -a "$GITHUB_ENV"
+          test -x "$NDK/ndk-build"
+          ls /dev/kvm && echo "KVM present" || echo "::warning title=ui-snapshot::/dev/kvm missing — the emulator may be very slow or fail to boot"
+
+      - name: Make helper scripts executable
+        run: chmod +x android-app/tools/*.sh
+
+      - name: Fetch libv2ray.aar (Xray core, all ABIs)
+        run: bash android-app/tools/fetch-libv2ray.sh 2>&1 | tee /tmp/fetch-aar.log
+
+      - name: Build hev-socks5-tunnel JNI library (x86_64, for the emulator)
+        run: HEV_ABI=x86_64 bash android-app/tools/build-hevtun.sh 2>&1 | tee /tmp/build-hev.log
+
+      - name: Prepare release signing key
+        run: bash android-app/tools/fetch-testkey.sh 2>&1 | tee /tmp/testkey.log
+
+      - name: Set up Gradle
+        uses: gradle/actions/setup-gradle@v4
+        with:
+          gradle-version: "8.9"
+
+      - name: Assemble release APK for x86_64
+        working-directory: android-app
+        run: |
+          set -o pipefail
+          gradle assembleRelease --no-daemon -PtargetAbi=x86_64 2>&1 | tee /tmp/gradle.log
+          ls -l app/build/outputs/apk/release/
+
+      - name: Run the emulator and capture screenshots
+        uses: reactivecircus/android-emulator-runner@v2
+        with:
+          api-level: 34
+          target: google_apis
+          arch: x86_64
+          profile: pixel_6
+          disable-animations: true
+          emulator-options: -no-snapshot -no-boot-anim -no-audio -gpu swiftshader_indirect
+          script: |
+            set -uo pipefail
+            APK="$(find android-app/app/build/outputs/apk/release -name '*.apk' | head -1)"
+            echo "APK: $APK"
+            adb install -r -t "$APK" || adb install -r "$APK"
+            adb shell pm grant co.asiven.vixentvpn android.permission.POST_NOTIFICATIONS || true
+            adb shell am start -W -n co.asiven.vixentvpn/co.asiven.vixentvpn.trial.ui.MainActivity
+            python3 android-app/tools/ui-drive.py android-app/docs/screenshots \
+              wait-text "MVPN" 40 \
+              sleep 3 \
+              shot 01-home \
+              dump 01-home \
+              wait-text "رایگان" 120 \
+              shot 02-list-loaded \
+              tap-text "پینگ" \
+              sleep 6 \
+              shot 03-single-ping \
+              tap-text "پینگ همه" \
+              sleep 25 \
+              shot 04-ping-all \
+              tap-desc "جزئیات" \
+              sleep 3 \
+              shot 05-server-sheet \
+              back \
+              sleep 2 \
+              tap-text "پولی" \
+              sleep 3 \
+              shot 06-filter-paid \
+              tap-text "همه" \
+              sleep 2 \
+              type-from-list \
+              sleep 3 \
+              shot 07-search \
+              back \
+              sleep 1 \
+              tap-desc "منوی بیشتر" \
+              sleep 2 \
+              shot 08-menu \
+              back \
+              crash-check
+
+      - name: Collect logs
+        if: always()
+        run: |
+          mkdir -p android-app/docs/screenshots
+          adb logcat -d -s MvpnTrial:V AndroidRuntime:E > android-app/docs/screenshots/logcat.txt 2>/dev/null || true
+          adb shell dumpsys window | head -40 > android-app/docs/screenshots/window.txt 2>/dev/null || true
+          ls -l android-app/docs/screenshots || true
+
+      - name: Commit the screenshots
+        if: always()
+        run: |
+          set -euo pipefail
+          cd "$GITHUB_WORKSPACE"
+          git config user.name "arena-agent"
+          git config user.email "297053741+arena-agent@users.noreply.github.com"
+          git add android-app/docs/screenshots
+          if git diff --cached --quiet; then
+            echo "no screenshot changes"
+          else
+            git commit -m "chore(ui): screenshots from run ${{ github.run_number }}"
+            git push
+          fi
+
+      - name: Report the result
+        if: always()
+        run: |
+          python3 - <<'PY'
+          import pathlib, urllib.parse
+          report = pathlib.Path("android-app/docs/screenshots/STEPS.txt")
+          body = report.read_text(errors="replace") if report.exists() else "no STEPS.txt (the emulator step did not run)"
+          print("::notice title=ui-snapshot::%s" % urllib.parse.quote(body[-4000:], safe=""))
+          log = pathlib.Path("/tmp/gradle.log")
+          if log.exists():
+              print("::warning title=gradle-tail::%s" % urllib.parse.quote(log.read_text(errors="replace")[-3000:], safe=""))
+          PY

@@ -1,0 +1,184 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!--
+  Bottom sheet opened from a server row: the same labels as the row plus every action that
+  can be taken on that single server (connect, ping, copy the v2ray share link, copy the raw
+  JSON). Kept as plain views so it can be filled with findViewById from MainActivity.
+-->
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:background="@color/surface"
+    android:orientation="vertical"
+    android:paddingHorizontal="18dp"
+    android:paddingTop="10dp"
+    android:paddingBottom="22dp">
+
+    <View
+        android:layout_width="40dp"
+        android:layout_height="4dp"
+        android:layout_gravity="center_horizontal"
+        android:background="@drawable/bg_badge" />
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="14dp"
+        android:gravity="center_vertical"
+        android:orientation="horizontal">
+
+        <TextView
+            android:id="@+id/sheetFlag"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="🌐"
+            android:textSize="24sp" />
+
+        <TextView
+            android:id="@+id/sheetName"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="10dp"
+            android:layout_weight="1"
+            android:textColor="@color/text"
+            android:textSize="16sp"
+            android:textStyle="bold" />
+
+        <TextView
+            android:id="@+id/sheetPing"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:background="@drawable/bg_badge"
+            android:paddingHorizontal="9dp"
+            android:paddingVertical="3dp"
+            android:text="@string/ping_none"
+            android:textColor="@color/text_dim"
+            android:textSize="11sp" />
+    </LinearLayout>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="10dp"
+        android:orientation="horizontal">
+
+        <TextView
+            android:id="@+id/sheetType"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:background="@drawable/bg_badge"
+            android:paddingHorizontal="9dp"
+            android:paddingVertical="3dp"
+            android:textColor="@color/accent"
+            android:textSize="11sp" />
+
+        <TextView
+            android:id="@+id/sheetPrice"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="6dp"
+            android:background="@drawable/bg_badge"
+            android:paddingHorizontal="9dp"
+            android:paddingVertical="3dp"
+            android:textColor="@color/paid"
+            android:textSize="11sp" />
+
+        <TextView
+            android:id="@+id/sheetLocation"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="6dp"
+            android:background="@drawable/bg_badge"
+            android:paddingHorizontal="9dp"
+            android:paddingVertical="3dp"
+            android:textColor="@color/text_dim"
+            android:textSize="11sp" />
+    </LinearLayout>
+
+    <TextView
+        android:id="@+id/sheetUsage"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="10dp"
+        android:text="@string/badge_no_usage"
+        android:textColor="@color/text_dim"
+        android:textSize="11sp" />
+
+    <TextView
+        android:id="@+id/sheetState"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="6dp"
+        android:textColor="@color/warn"
+        android:textSize="11sp"
+        android:visibility="gone" />
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="14dp"
+        android:orientation="horizontal">
+
+        <com.google.android.material.button.MaterialButton
+            android:id="@+id/sheetConnect"
+            android:layout_width="0dp"
+            android:layout_height="48dp"
+            android:layout_weight="1"
+            android:text="@string/btn_connect_this"
+            android:textSize="13sp"
+            app:cornerRadius="16dp" />
+
+        <com.google.android.material.button.MaterialButton
+            android:id="@+id/sheetPingButton"
+            style="@style/Widget.Material3.Button.OutlinedButton"
+            android:layout_width="0dp"
+            android:layout_height="48dp"
+            android:layout_marginStart="8dp"
+            android:layout_weight="1"
+            android:text="@string/btn_ping"
+            android:textSize="13sp"
+            app:cornerRadius="16dp"
+            app:icon="@drawable/ic_bolt"
+            app:iconGravity="textStart"
+            app:iconPadding="4dp"
+            app:strokeColor="@color/primary" />
+    </LinearLayout>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="8dp"
+        android:orientation="horizontal">
+
+        <com.google.android.material.button.MaterialButton
+            android:id="@+id/sheetCopyLink"
+            style="@style/Widget.Material3.Button.TextButton"
+            android:layout_width="0dp"
+            android:layout_height="44dp"
+            android:layout_weight="1"
+            android:text="@string/btn_copy_link_v2ray"
+            android:textSize="12sp"
+            app:icon="@drawable/ic_link"
+            app:iconGravity="textStart"
+            app:iconPadding="4dp"
+            app:iconSize="16dp" />
+
+        <com.google.android.material.button.MaterialButton
+            android:id="@+id/sheetCopyJson"
+            style="@style/Widget.Material3.Button.TextButton"
+            android:layout_width="0dp"
+            android:layout_height="44dp"
+            android:layout_weight="1"
+            android:text="@string/btn_copy_json"
+            android:textSize="12sp" />
+
+        <com.google.android.material.button.MaterialButton
+            android:id="@+id/sheetDetails"
+            style="@style/Widget.Material3.Button.TextButton"
+            android:layout_width="wrap_content"
+            android:layout_height="44dp"
+            android:minWidth="0dp"
+            android:text="@string/btn_details_full"
+            android:textSize="12sp" />
+    </LinearLayout>
+</LinearLayout>

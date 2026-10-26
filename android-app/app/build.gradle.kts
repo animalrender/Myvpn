@@ -27,7 +27,9 @@ android {
         versionName = "3.2.0-trial"
 
         ndk {
-            abiFilters += listOf("arm64-v8a")
+            // arm64-v8a for the shipped APK; `-PtargetAbi=x86_64` builds the same sources for the
+            // emulator-based UI verification workflow only.
+            abiFilters += listOf((project.findProperty("targetAbi") as String?) ?: "arm64-v8a")
         }
         buildConfigField("String", "API_BASE", "\"https://managev1.xyz\"")
         buildConfigField("String", "TEST_URL", "\"https://www.gstatic.com/generate_204\"")

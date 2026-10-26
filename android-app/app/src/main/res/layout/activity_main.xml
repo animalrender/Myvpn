@@ -1,4 +1,12 @@
 <?xml version="1.0" encoding="utf-8"?>
+<!--
+  Main screen of MVPN Trial.
+
+  Layout, from top to bottom: a slim header with the app name and the overflow menu, the
+  "hero" card (connection state, the selected server, the single connect button), one primary
+  action that fetches and refreshes *all* servers, search + filter chips, the summary line and
+  the scrollable server list. Everything is a label — free and paid rows are shown identically.
+-->
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
@@ -6,59 +14,122 @@
     android:background="@color/bg"
     android:orientation="vertical">
 
-    <com.google.android.material.appbar.MaterialToolbar
-        android:id="@+id/toolbar"
+    <LinearLayout
         android:layout_width="match_parent"
-        android:layout_height="?attr/actionBarSize"
-        android:background="@color/bg"
-        app:menu="@menu/menu_main"
-        app:subtitle="@string/subtitle"
-        app:subtitleTextColor="@color/text_dim"
-        app:title="@string/title_main"
-        app:titleTextColor="@color/text" />
+        android:layout_height="wrap_content"
+        android:gravity="center_vertical"
+        android:orientation="horizontal"
+        android:paddingStart="18dp"
+        android:paddingTop="10dp"
+        android:paddingEnd="6dp">
 
-    <androidx.cardview.widget.CardView
-        xmlns:card="http://schemas.android.com/apk/res-auto"
+        <LinearLayout
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:orientation="vertical">
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/title_main"
+                android:textColor="@color/text"
+                android:textSize="20sp"
+                android:textStyle="bold" />
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/subtitle"
+                android:textColor="@color/text_dim"
+                android:textSize="11sp" />
+        </LinearLayout>
+
+        <ImageButton
+            android:id="@+id/menuButton"
+            android:layout_width="42dp"
+            android:layout_height="42dp"
+            android:background="?attr/selectableItemBackgroundBorderless"
+            android:contentDescription="@string/menu_more"
+            android:padding="8dp"
+            android:src="@drawable/ic_more" />
+    </LinearLayout>
+
+    <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_marginHorizontal="12dp"
-        android:layout_marginTop="4dp"
-        card:cardBackgroundColor="@color/surface"
-        card:cardCornerRadius="18dp"
-        card:cardElevation="0dp">
+        android:layout_marginTop="8dp"
+        android:background="@drawable/bg_hero"
+        android:orientation="vertical"
+        android:padding="16dp">
 
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:orientation="vertical"
-            android:padding="14dp">
+            android:gravity="center_vertical"
+            android:orientation="horizontal">
+
+            <View
+                android:id="@+id/statusDot"
+                android:layout_width="9dp"
+                android:layout_height="9dp"
+                android:background="@drawable/bg_dot" />
 
             <TextView
                 android:id="@+id/statusText"
-                android:layout_width="match_parent"
+                android:layout_width="0dp"
                 android:layout_height="wrap_content"
+                android:layout_marginStart="7dp"
+                android:layout_weight="1"
+                android:ellipsize="end"
+                android:maxLines="1"
                 android:text="@string/status_idle"
-                android:textColor="@color/text"
-                android:textSize="15sp"
-                android:textStyle="bold" />
-
-            <TextView
-                android:id="@+id/modeText"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_marginTop="2dp"
-                android:text="@string/mode_vpn"
                 android:textColor="@color/text_dim"
                 android:textSize="12sp" />
 
-            <com.google.android.material.button.MaterialButton
-                android:id="@+id/connectButton"
-                android:layout_width="match_parent"
+            <TextView
+                android:id="@+id/modeText"
+                android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_marginTop="10dp"
-                android:text="@string/btn_connect" />
+                android:background="@drawable/bg_badge"
+                android:paddingHorizontal="8dp"
+                android:paddingVertical="3dp"
+                android:text="@string/mode_vpn_short"
+                android:textColor="@color/accent"
+                android:textSize="10sp" />
         </LinearLayout>
-    </androidx.cardview.widget.CardView>
+
+        <TextView
+            android:id="@+id/selectedNameText"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="10dp"
+            android:ellipsize="end"
+            android:maxLines="2"
+            android:text="@string/hero_no_server"
+            android:textColor="@color/text"
+            android:textSize="19sp"
+            android:textStyle="bold" />
+
+        <TextView
+            android:id="@+id/selectedMetaText"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="3dp"
+            android:text="@string/hero_no_server_hint"
+            android:textColor="@color/text_dim"
+            android:textSize="11sp" />
+
+        <com.google.android.material.button.MaterialButton
+            android:id="@+id/connectButton"
+            android:layout_width="match_parent"
+            android:layout_height="52dp"
+            android:layout_marginTop="14dp"
+            android:text="@string/btn_connect"
+            android:textSize="15sp"
+            app:cornerRadius="18dp" />
+    </LinearLayout>
 
     <LinearLayout
         android:layout_width="match_parent"
@@ -70,19 +141,110 @@
         <com.google.android.material.button.MaterialButton
             android:id="@+id/fetchButton"
             android:layout_width="0dp"
-            android:layout_height="wrap_content"
-            android:layout_weight="1.6"
-            android:text="@string/btn_fetch_all" />
+            android:layout_height="48dp"
+            android:layout_weight="1.7"
+            android:text="@string/btn_fetch_all"
+            android:textSize="13sp"
+            app:cornerRadius="16dp"
+            app:icon="@drawable/ic_refresh"
+            app:iconGravity="textStart"
+            app:iconPadding="8dp" />
 
         <com.google.android.material.button.MaterialButton
             android:id="@+id/pingAllButton"
             style="@style/Widget.Material3.Button.OutlinedButton"
             android:layout_width="0dp"
-            android:layout_height="wrap_content"
+            android:layout_height="48dp"
             android:layout_marginStart="8dp"
             android:layout_weight="1"
-            android:text="@string/btn_ping_all" />
+            android:text="@string/btn_ping_all"
+            android:textSize="13sp"
+            app:cornerRadius="16dp"
+            app:icon="@drawable/ic_bolt"
+            app:iconGravity="textStart"
+            app:iconPadding="4dp"
+            app:strokeColor="@color/primary" />
     </LinearLayout>
+
+    <EditText
+        android:id="@+id/searchInput"
+        android:layout_width="match_parent"
+        android:layout_height="44dp"
+        android:layout_marginHorizontal="12dp"
+        android:layout_marginTop="10dp"
+        android:importantForAutofill="no"
+        android:background="@drawable/bg_search"
+        android:drawableStart="@drawable/ic_search"
+        android:drawablePadding="8dp"
+        android:hint="@string/search_hint"
+        android:imeOptions="actionSearch"
+        android:inputType="text"
+        android:maxLines="1"
+        android:paddingHorizontal="12dp"
+        android:textColor="@color/text"
+        android:textColorHint="@color/text_dim"
+        android:textSize="13sp" />
+
+    <com.google.android.material.chip.ChipGroup
+        android:id="@+id/filterChips"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginHorizontal="12dp"
+        android:layout_marginTop="8dp"
+        app:chipSpacingHorizontal="6dp"
+        app:selectionRequired="true"
+        app:singleLine="true"
+        app:singleSelection="true">
+
+        <com.google.android.material.chip.Chip
+            android:id="@+id/chipAll"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:checkable="true"
+            android:checked="true"
+            android:text="@string/filter_all"
+            android:textColor="@color/chip_text"
+            android:textSize="11sp"
+            app:chipBackgroundColor="@color/chip_bg"
+            app:chipStrokeColor="@color/card_stroke"
+            app:chipStrokeWidth="1dp" />
+
+        <com.google.android.material.chip.Chip
+            android:id="@+id/chipFree"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:checkable="true"
+            android:text="@string/filter_free"
+            android:textColor="@color/chip_text"
+            android:textSize="11sp"
+            app:chipBackgroundColor="@color/chip_bg"
+            app:chipStrokeColor="@color/card_stroke"
+            app:chipStrokeWidth="1dp" />
+
+        <com.google.android.material.chip.Chip
+            android:id="@+id/chipPaid"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:checkable="true"
+            android:text="@string/filter_paid"
+            android:textColor="@color/chip_text"
+            android:textSize="11sp"
+            app:chipBackgroundColor="@color/chip_bg"
+            app:chipStrokeColor="@color/card_stroke"
+            app:chipStrokeWidth="1dp" />
+
+        <com.google.android.material.chip.Chip
+            android:id="@+id/chipReady"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:checkable="true"
+            android:text="@string/filter_ready"
+            android:textColor="@color/chip_text"
+            android:textSize="11sp"
+            app:chipBackgroundColor="@color/chip_bg"
+            app:chipStrokeColor="@color/card_stroke"
+            app:chipStrokeWidth="1dp" />
+    </com.google.android.material.chip.ChipGroup>
 
     <LinearLayout
         android:layout_width="match_parent"
@@ -99,7 +261,7 @@
             android:layout_weight="1"
             android:text="@string/status_empty"
             android:textColor="@color/text_dim"
-            android:textSize="12sp" />
+            android:textSize="11sp" />
 
         <ProgressBar
             android:id="@+id/progress"
@@ -118,6 +280,6 @@
         android:layout_weight="1"
         android:clipToPadding="false"
         android:paddingHorizontal="10dp"
-        android:paddingBottom="16dp"
+        android:paddingBottom="18dp"
         android:scrollbars="vertical" />
 </LinearLayout>

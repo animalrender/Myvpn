@@ -8,14 +8,20 @@ import android.content.Context
 import android.content.Intent
 import android.content.IntentFilter
 import android.content.pm.PackageManager
+import android.content.res.ColorStateList
 import android.net.VpnService
 import android.os.Build
 import android.os.Bundle
+import android.view.View
+import android.widget.EditText
+import android.widget.PopupMenu
+import android.widget.TextView
 import android.widget.Toast
 import androidx.activity.result.contract.ActivityResultContracts
 import androidx.appcompat.app.AlertDialog
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.content.ContextCompat
+import androidx.core.widget.doAfterTextChanged
 import androidx.lifecycle.lifecycleScope
 import androidx.recyclerview.widget.LinearLayoutManager
 import co.asiven.vixentvpn.service.VpnTunnelService
@@ -30,6 +36,8 @@ import co.asiven.vixentvpn.trial.data.Server
 import co.asiven.vixentvpn.trial.data.ServerParser
 import co.asiven.vixentvpn.trial.databinding.ActivityMainBinding
 import co.asiven.vixentvpn.trial.util.AppLog
+import com.google.android.material.bottomsheet.BottomSheetDialog
+import com.google.android.material.button.MaterialButton
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.Job
 import kotlinx.coroutines.async
@@ -62,6 +70,7 @@ class MainActivity : AppCompatActivity() {
     private var pendingServer: Server? = null
     private var tunnelRunning = false
     private var busy = false
+    private var filterMode = FilterMode.ALL
 
     private val vpnPermissionLauncher = registerForActivityResult(
         ActivityResultContracts.StartActivityForResult(),
@@ -88,7 +97,9 @@ class MainActivity : AppCompatActivity() {
             binding.connectButton.setText(
                 if (tunnelRunning) R.string.btn_disconnect else R.string.btn_connect,
             )
+            paintStatusDot()
             adapter.setConnectedKey(if (tunnelRunning) prefs.selectedKey else null)
+            updateHero()
             updateSummary()
         }
     }
@@ -97,7 +108,7 @@ class MainActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         binding = ActivityMainBinding.inflate(layoutInflater)
         setContentView(binding.root)
-        window.decorView.layoutDirection = android.view.View.LAYOUT_DIRECTION_RTL
+        window.decorView.layoutDirection = View.LAYOUT_DIRECTION_RTL
         AppLog.attach(applicationContext)
         prefs = Prefs(applicationContext)
         api = ApiClient(applicationContext, prefs)
@@ -106,7 +117,7 @@ class MainActivity : AppCompatActivity() {
         adapter = ServerAdapter(
             onSelect = { selectServer(it) },
             onPing = { pingSingle(it) },
-            onDetails = { showDetails(it) },
+            onDetails = { showServerSheet(it) },
             onCopyLink = { copyShareLink(it) },
         )
         binding.serverList.layoutManager = LinearLayoutManager(this)
@@ -115,37 +126,21 @@ class MainActivity : AppCompatActivity() {
         binding.fetchButton.setOnClickListener { refreshAll() }
         binding.pingAllButton.setOnClickListener { pingAll() }
         binding.connectButton.setOnClickListener { toggleConnection() }
-        binding.toolbar.setOnMenuItemClickListener { item ->
-            when (item.itemId) {
-                R.id.action_raw_json -> {
-                    showText(getString(R.string.dlg_raw_title), prefs.protocolsCache.ifBlank { "—" })
-                    true
-                }
-                R.id.action_logs -> {
-                    showText(getString(R.string.dlg_log_title), AppLog.dump().ifBlank { "—" })
-                    true
-                }
-                R.id.action_import_clipboard -> {
-                    importFromClipboard()
-                    true
-                }
-                R.id.action_self_test -> {
-                    showText(getString(R.string.dlg_self_test_title), api.selfTest())
-                    true
-                }
-                R.id.action_import_sub -> {
-                    promptSubscription()
-                    true
-                }
-                R.id.action_toggle_mode -> {
-                    toggleMode()
-                    true
-                }
-                else -> false
+        binding.menuButton.setOnClickListener { showOverflow(it) }
+        binding.searchInput.doAfterTextChanged { applyFilter() }
+        binding.filterChips.setOnCheckedChangeListener { _, checkedId ->
+            filterMode = when (checkedId) {
+                R.id.chipFree -> FilterMode.FREE
+                R.id.chipPaid -> FilterMode.PAID
+                R.id.chipReady -> FilterMode.READY
+                else -> FilterMode.ALL
             }
+            applyFilter()
         }
 
+        paintStatusDot()
         updateModeLabel()
+        updateHero()
         loadCached()
         askNotificationPermissionIfNeeded()
         if (servers.isEmpty()) refreshAll()
@@ -166,6 +161,43 @@ class MainActivity : AppCompatActivity() {
         runCatching { unregisterReceiver(stateReceiver) }
     }
 
+    // ------------------------------------------------------------------- menu
+
+    private fun showOverflow(anchor: View) {
+        val popup = PopupMenu(this, anchor)
+        menuInflater.inflate(R.menu.menu_main, popup.menu)
+        popup.setOnMenuItemClickListener { item -> handleMenu(item.itemId) }
+        popup.show()
+    }
+
+    private fun handleMenu(itemId: Int): Boolean = when (itemId) {
+        R.id.action_raw_json -> {
+            showText(getString(R.string.dlg_raw_title), prefs.protocolsCache.ifBlank { "—" })
+            true
+        }
+        R.id.action_logs -> {
+            showText(getString(R.string.dlg_log_title), AppLog.dump().ifBlank { "—" })
+            true
+        }
+        R.id.action_import_clipboard -> {
+            importFromClipboard()
+            true
+        }
+        R.id.action_self_test -> {
+            showText(getString(R.string.dlg_self_test_title), api.selfTest())
+            true
+        }
+        R.id.action_import_sub -> {
+            promptSubscription()
+            true
+        }
+        R.id.action_toggle_mode -> {
+            toggleMode()
+            true
+        }
+        else -> false
+    }
+
     // ---------------------------------------------------------------- servers
 
     private fun loadCached() {
@@ -181,6 +213,8 @@ class MainActivity : AppCompatActivity() {
             servers.clear()
             servers.addAll(parsed)
             adapter.submit(servers, prefs.selectedKey)
+            applyFilter()
+            updateHero()
             updateSummary()
             AppLog.i("${parsed.size} سرور از کش بارگذاری شد")
         }
@@ -204,6 +238,7 @@ class MainActivity : AppCompatActivity() {
             if (result.isEmpty()) {
                 val reason = api.lastError.ifBlank { prefs.protocolsSource.ifBlank { "—" } }
                 binding.statusText.text = getString(R.string.status_error, reason.lineSequence().first())
+                paintStatusDot()
                 showText(getString(R.string.dlg_fetch_failed_title), reason)
             } else {
                 servers.clear()
@@ -212,7 +247,10 @@ class MainActivity : AppCompatActivity() {
                     prefs.selectedKey = servers.firstOrNull()?.key.orEmpty()
                 }
                 adapter.submit(servers, prefs.selectedKey)
+                applyFilter()
+                updateHero()
                 binding.statusText.text = getString(R.string.status_selected, selectedServer()?.name.orEmpty())
+                paintStatusDot()
                 updateSummary()
             }
         }
@@ -222,10 +260,17 @@ class MainActivity : AppCompatActivity() {
         prefs.selectedKey = server.key
         adapter.setSelected(server.key)
         binding.statusText.text = getString(R.string.status_selected, server.name)
+        paintStatusDot()
+        updateHero()
         AppLog.i("سرور انتخاب شد: ${server.name} (price=${server.price}, type=${server.typeHint})")
     }
 
     private fun selectedServer(): Server? = servers.firstOrNull { it.key == prefs.selectedKey }
+
+    private fun applyFilter() {
+        adapter.setFilter(binding.searchInput.text?.toString().orEmpty(), filterMode)
+        updateSummary()
+    }
 
     // ---------------------------------------------------------------- ping
 
@@ -236,11 +281,13 @@ class MainActivity : AppCompatActivity() {
         }
         server.pingState = PingState.RUNNING
         adapter.updatePing(server)
+        updateHero()
         lifecycleScope.launch {
             val ms = withContext(Dispatchers.IO) { measure(server) }
             server.pingMs = ms
             server.pingState = if (ms > 0) PingState.OK else PingState.FAILED
             adapter.updatePing(server)
+            updateHero()
             updateSummary()
         }
     }
@@ -282,6 +329,7 @@ class MainActivity : AppCompatActivity() {
                 }.awaitAll()
             }
             setProgress(false)
+            updateHero()
             updateSummary()
             AppLog.i("پینگ همهٔ $total سرور انجام شد")
         }
@@ -304,15 +352,14 @@ class MainActivity : AppCompatActivity() {
     private fun toggleMode() {
         prefs.mode = if (prefs.mode == Prefs.MODE_VPN) Prefs.MODE_PROXY else Prefs.MODE_VPN
         updateModeLabel()
+        updateHero()
         toast(if (prefs.mode == Prefs.MODE_VPN) getString(R.string.mode_vpn) else getString(R.string.mode_proxy))
     }
 
     private fun updateModeLabel() {
-        binding.modeText.text = if (prefs.mode == Prefs.MODE_VPN) {
-            getString(R.string.mode_vpn)
-        } else {
-            getString(R.string.mode_proxy)
-        }
+        binding.modeText.setText(
+            if (prefs.mode == Prefs.MODE_VPN) R.string.mode_vpn_short else R.string.mode_proxy_short,
+        )
     }
 
     private fun toggleConnection() {
@@ -321,11 +368,21 @@ class MainActivity : AppCompatActivity() {
             return
         }
         val server = selectedServer() ?: run {
-            toast("اول یک سرور انتخاب کنید")
+            toast(getString(R.string.toast_select_first))
             return
         }
+        connectTo(server)
+    }
+
+    private fun connectTo(server: Server) {
         if (server.isOpaquePayload) {
             showText(getString(R.string.dlg_opaque_title), getString(R.string.dlg_opaque_body))
+            return
+        }
+        selectServer(server)
+        if (tunnelRunning) {
+            VpnTunnelService.stop(this)
+            toast(getString(R.string.status_disconnected))
             return
         }
         binding.statusText.text = getString(R.string.status_connecting)
@@ -350,21 +407,124 @@ class MainActivity : AppCompatActivity() {
 
     // ---------------------------------------------------------------- ui helpers
 
+    private fun updateHero() {
+        val running = tunnelRunning
+        val server = selectedServer()
+        val shown = server
+        if (shown == null) {
+            binding.selectedNameText.setText(R.string.hero_no_server)
+            binding.selectedMetaText.setText(R.string.hero_no_server_hint)
+            binding.connectButton.setText(if (running) R.string.btn_disconnect else R.string.btn_connect)
+            return
+        }
+        binding.selectedNameText.text = "${shown.displayFlag}  ${shown.name}"
+        val price = when {
+            shown.price == null -> getString(R.string.badge_unknown_price)
+            shown.isFree -> getString(R.string.badge_free)
+            else -> getString(R.string.badge_paid, shown.price)
+        }
+        val location = shown.flag.ifBlank { "—" }
+        val ping = when {
+            shown.pingState == PingState.OK -> getString(R.string.ping_ms, shown.pingMs)
+            shown.pingState == PingState.RUNNING -> "…"
+            shown.pingState == PingState.FAILED -> getString(R.string.ping_timeout)
+            else -> getString(R.string.ping_none)
+        }
+        binding.selectedMetaText.text = getString(
+            R.string.hero_meta,
+            shown.typeHint.ifBlank { "?" },
+            price,
+            "$location · $ping",
+        )
+        binding.connectButton.setText(if (running) R.string.btn_disconnect else R.string.btn_connect)
+    }
+
+    private fun paintStatusDot() {
+        val color = when {
+            tunnelRunning -> R.color.good
+            busy -> R.color.warn
+            servers.isEmpty() -> R.color.text_dim
+            else -> R.color.primary
+        }
+        binding.statusDot.backgroundTintList =
+            ColorStateList.valueOf(ContextCompat.getColor(this, color))
+    }
+
     private fun updateSummary() {
-        if (servers.isEmpty()) {
-            binding.summaryText.text = getString(R.string.status_empty)
+        val total = servers.size
+        val visible = adapter.visibleCount()
+        if (total == 0) {
+            binding.summaryText.setText(R.string.status_empty)
             return
         }
         val free = servers.count { it.isFree }
-        val paid = servers.size - free
-        if (pingJob?.isActive == true) return
-        binding.summaryText.text = getString(R.string.status_servers, servers.size, free, paid)
+        val paid = total - free
+        binding.summaryText.text = getString(R.string.status_filtered, visible, total, free, paid)
     }
 
     private fun setProgress(visible: Boolean) {
-        binding.progress.visibility = if (visible) android.view.View.VISIBLE else android.view.View.GONE
+        binding.progress.visibility = if (visible) View.VISIBLE else View.GONE
         binding.fetchButton.isEnabled = !visible
         binding.pingAllButton.isEnabled = !visible
+        busy = visible
+        paintStatusDot()
+    }
+
+    /** Bottom sheet with every action for one server (labels + connect/ping/copy). */
+    private fun showServerSheet(server: Server) {
+        val sheet = BottomSheetDialog(this)
+        val view = layoutInflater.inflate(R.layout.dialog_server, null)
+        sheet.setContentView(view)
+
+        view.findViewById<TextView>(R.id.sheetFlag).text = server.displayFlag
+        view.findViewById<TextView>(R.id.sheetName).text = server.name
+        view.findViewById<TextView>(R.id.sheetType).text = server.typeHint.ifBlank { "?" }
+        view.findViewById<TextView>(R.id.sheetLocation).text = server.flag.ifBlank { "—" }
+        val priceView = view.findViewById<TextView>(R.id.sheetPrice)
+        priceView.text = when {
+            server.price == null -> getString(R.string.badge_unknown_price)
+            server.isFree -> getString(R.string.badge_free)
+            else -> getString(R.string.badge_paid, server.price)
+        }
+        priceView.setTextColor(
+            ContextCompat.getColor(this, if (server.isFree) R.color.free else R.color.paid),
+        )
+        val pingView = view.findViewById<TextView>(R.id.sheetPing)
+        pingView.text = when {
+            server.pingState == PingState.OK -> getString(R.string.ping_ms, server.pingMs)
+            server.pingState == PingState.RUNNING -> "…"
+            server.pingState == PingState.FAILED -> getString(R.string.ping_timeout)
+            else -> getString(R.string.ping_none)
+        }
+        view.findViewById<TextView>(R.id.sheetUsage).text =
+            server.usage?.summary().orEmpty().ifBlank { getString(R.string.badge_no_usage) }
+        if (server.isOpaquePayload) {
+            val state = view.findViewById<TextView>(R.id.sheetState)
+            state.setText(R.string.sheet_opaque)
+            state.visibility = View.VISIBLE
+        }
+
+        view.findViewById<MaterialButton>(R.id.sheetConnect).setOnClickListener {
+            sheet.dismiss()
+            connectTo(server)
+        }
+        view.findViewById<MaterialButton>(R.id.sheetPingButton).setOnClickListener {
+            sheet.dismiss()
+            pingSingle(server)
+        }
+        view.findViewById<MaterialButton>(R.id.sheetCopyLink).setOnClickListener {
+            sheet.dismiss()
+            copyShareLink(server)
+        }
+        view.findViewById<MaterialButton>(R.id.sheetCopyJson).setOnClickListener {
+            sheet.dismiss()
+            copy(server.rawConfig.ifBlank { server.rawJson })
+        }
+        view.findViewById<MaterialButton>(R.id.sheetDetails).setOnClickListener {
+            sheet.dismiss()
+            showDetails(server)
+        }
+        sheet.show()
     }
 
     private fun showDetails(server: Server) {
@@ -382,6 +542,9 @@ class MainActivity : AppCompatActivity() {
             appendLine()
             appendLine("فیلدهای دیگر پاسخ سرور:")
             appendLine(extras)
+            appendLine()
+            appendLine("مقدار اتصال (value):")
+            appendLine(server.rawConfig.take(2000).ifBlank { "—" })
             appendLine()
             appendLine("JSON خام این سرور:")
             appendLine(server.rawJson.take(4000))
@@ -401,7 +564,7 @@ class MainActivity : AppCompatActivity() {
      */
     private fun promptSubscription() {
         val layout = layoutInflater.inflate(R.layout.dialog_input, null)
-        val input = layout.findViewById<android.widget.EditText>(R.id.input)
+        val input = layout.findViewById<EditText>(R.id.input)
         input.hint = "https://…/sub"
         val dialog = AlertDialog.Builder(this)
             .setTitle(R.string.dlg_sub_title)
@@ -440,6 +603,7 @@ class MainActivity : AppCompatActivity() {
             setProgress(false)
             if (raw.isNullOrBlank()) {
                 binding.statusText.text = getString(R.string.status_error, getString(R.string.import_sub_failed))
+                paintStatusDot()
                 return@launch
             }
             val body = unwrapSubscription(raw)
@@ -449,14 +613,17 @@ class MainActivity : AppCompatActivity() {
                 .toList()
             if (links.isEmpty()) {
                 binding.statusText.text = getString(R.string.status_error, getString(R.string.import_sub_empty))
+                paintStatusDot()
                 return@launch
             }
             val added = links.mapIndexed { index, link -> ServerParser.fromRaw(link, servers.size + index) }
             servers.addAll(0, added)
             if (servers.none { it.key == prefs.selectedKey }) prefs.selectedKey = servers.first().key
             adapter.submit(servers, prefs.selectedKey)
-            updateSummary()
+            applyFilter()
+            updateHero()
             binding.statusText.text = getString(R.string.import_sub_ok, added.size)
+            paintStatusDot()
             AppLog.i("${added.size} سرور از اشتراک $url اضافه شد")
         }
     }
@@ -502,7 +669,8 @@ class MainActivity : AppCompatActivity() {
         servers.add(0, server)
         prefs.selectedKey = server.key
         adapter.submit(servers, prefs.selectedKey)
-        updateSummary()
+        applyFilter()
+        updateHero()
         binding.statusText.text = getString(R.string.status_selected, server.name)
         toast(getString(R.string.import_ok, server.typeHint))
         AppLog.i("کانفیگ دستی اضافه شد: ${server.typeHint} (${text.length} کاراکتر)")

@@ -1,6 +1,7 @@
 package co.asiven.vixentvpn.trial.ui
 
 import android.view.LayoutInflater
+import android.view.View
 import android.view.ViewGroup
 import androidx.core.content.ContextCompat
 import androidx.recyclerview.widget.RecyclerView
@@ -9,10 +10,16 @@ import co.asiven.vixentvpn.trial.data.PingState
 import co.asiven.vixentvpn.trial.data.Server
 import co.asiven.vixentvpn.trial.databinding.ItemServerBinding
 
+/** Filter chips above the list. */
+enum class FilterMode { ALL, FREE, PAID, READY }
+
 /**
  * Flat, scrollable list of every server the backend returned — free **and** paid — with the
  * original attributes (type, price, usage, location) rendered as labels, exactly what the
  * trial build is supposed to expose instead of hiding paid rows behind a purchase gate.
+ *
+ * Search and the filter chips are applied here so the activity only ever deals with the full
+ * list; the visible subset is what gets drawn.
  *
  * Every row can also export itself as a v2ray share link (copied to the clipboard), so the same
  * server can be pasted into v2rayNG/nekobox and used outside this app.
@@ -24,35 +31,74 @@ class ServerAdapter(
     private val onCopyLink: (Server) -> Unit,
 ) : RecyclerView.Adapter<ServerAdapter.Holder>() {
 
+    private val all = mutableListOf<Server>()
     private val items = mutableListOf<Server>()
     private var selectedKey: String? = null
     private var runningKey: String? = null
+    private var query: String = ""
+    private var mode: FilterMode = FilterMode.ALL
 
     fun submit(servers: List<Server>, selected: String?) {
-        items.clear()
-        items.addAll(servers)
+        all.clear()
+        all.addAll(servers)
         selectedKey = selected
+        recompute()
+    }
+
+    /** Applies the search box text and the selected chip. */
+    fun setFilter(text: String, filter: FilterMode) {
+        query = text.trim()
+        mode = filter
+        recompute()
+    }
+
+    fun visibleCount(): Int = items.size
+    fun totalCount(): Int = all.size
+
+    private fun recompute() {
+        val needle = query.lowercase()
+        items.clear()
+        items.addAll(
+            all.filter { server ->
+                val matchesText = needle.isEmpty() ||
+                    server.name.lowercase().contains(needle) ||
+                    server.flag.lowercase().contains(needle) ||
+                    server.typeHint.lowercase().contains(needle) ||
+                    server.protocolId?.toString()?.contains(needle) == true ||
+                    server.serverId?.toString()?.contains(needle) == true
+                val matchesMode = when (mode) {
+                    FilterMode.ALL -> true
+                    FilterMode.FREE -> server.isFree
+                    FilterMode.PAID -> !server.isFree
+                    FilterMode.READY -> !server.isOpaquePayload
+                }
+                matchesText && matchesMode
+            },
+        )
         notifyDataSetChanged()
     }
 
     fun setSelected(key: String?) {
         val old = selectedKey
         selectedKey = key
-        items.indexOfFirst { it.key == old }.takeIf { it >= 0 }?.let { notifyItemChanged(it) }
-        items.indexOfFirst { it.key == key }.takeIf { it >= 0 }?.let { notifyItemChanged(it) }
+        refreshRow(old)
+        refreshRow(key)
     }
 
     fun setConnectedKey(key: String?) {
         val old = runningKey
         runningKey = key
-        items.indexOfFirst { it.key == old }.takeIf { it >= 0 }?.let { notifyItemChanged(it) }
-        items.indexOfFirst { it.key == key }.takeIf { it >= 0 }?.let { notifyItemChanged(it) }
+        refreshRow(old)
+        refreshRow(key)
     }
 
-    fun updatePing(server: Server) {
-        val index = items.indexOfFirst { it.key == server.key }
+    private fun refreshRow(key: String?) {
+        if (key == null) return
+        val index = items.indexOfFirst { it.key == key }
         if (index >= 0) notifyItemChanged(index)
     }
+
+    fun updatePing(server: Server) = refreshRow(server.key)
 
     fun snapshot(): List<Server> = items.toList()
 
@@ -87,19 +133,15 @@ class ServerAdapter(
 
             binding.locationBadge.text = server.flag.ifBlank { "—" }
 
-            if (server.isOpaquePayload) {
-                binding.payloadBadge.visibility = android.view.View.VISIBLE
-                binding.payloadBadge.text = context.getString(R.string.badge_encrypted_payload)
-                binding.pingButton.isEnabled = false
-                binding.pingButton.alpha = 0.45f
-            } else {
-                binding.payloadBadge.visibility = android.view.View.GONE
-                binding.pingButton.isEnabled = true
-                binding.pingButton.alpha = 1f
-            }
+            binding.pingButton.isEnabled = !server.isOpaquePayload
+            binding.pingButton.alpha = if (server.isOpaquePayload) 0.4f else 1f
 
             val usageSummary = server.usage?.summary().orEmpty()
-            binding.usageText.text = usageSummary.ifBlank { context.getString(R.string.badge_no_usage) }
+            binding.usageText.text = when {
+                usageSummary.isNotBlank() -> usageSummary
+                server.isOpaquePayload -> context.getString(R.string.badge_encrypted_payload)
+                else -> context.getString(R.string.badge_no_usage)
+            }
 
             when (server.pingState) {
                 PingState.OK -> {
@@ -127,22 +169,27 @@ class ServerAdapter(
 
             val isSelected = server.key == selectedKey
             val isConnected = server.key == runningKey
-            binding.rowCard.setCardBackgroundColor(
-                ContextCompat.getColor(
-                    context,
-                    when {
-                        isConnected -> R.color.primary_dark
-                        isSelected -> R.color.surface_alt
-                        else -> R.color.surface
-                    },
-                ),
-            )
+            val background = when {
+                isConnected -> R.color.primary_soft
+                isSelected -> R.color.surface_alt
+                else -> R.color.surface
+            }
+            val stroke = when {
+                isConnected -> R.color.good
+                isSelected -> R.color.primary
+                else -> R.color.card_stroke
+            }
+            binding.rowCard.setCardBackgroundColor(ContextCompat.getColor(context, background))
+            binding.rowCard.strokeColor = ContextCompat.getColor(context, stroke)
+            binding.rowCard.strokeWidth =
+                if (isSelected || isConnected) (1.5f * context.resources.displayMetrics.density).toInt()
+                else (context.resources.displayMetrics.density).toInt()
+
             binding.connectHint.text = when {
-                isConnected -> "متصل"
-                isSelected -> "انتخاب‌شده"
+                isConnected -> context.getString(R.string.status_connected_short)
+                isSelected -> context.getString(R.string.status_selected_short)
                 else -> ""
             }
-            binding.connectHint.setTextColor(ContextCompat.getColor(context, R.color.good))
 
             binding.root.setOnClickListener { onSelect(server) }
             binding.pingButton.setOnClickListener { onPing(server) }
@@ -152,6 +199,7 @@ class ServerAdapter(
                 onDetails(server)
                 true
             }
+            binding.connectHint.visibility = View.VISIBLE
         }
     }
 }
