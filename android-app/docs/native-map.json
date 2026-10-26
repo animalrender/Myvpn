@@ -1,0 +1,1367 @@
+[
+ {
+  "class": "co/dev/models/Social",
+  "methods": [
+   {
+    "name": "getFacebook",
+    "signature": "()Ljava/lang/String;",
+    "code": 151844
+   },
+   {
+    "name": "getInstagram",
+    "signature": "()Ljava/lang/String;",
+    "code": 152084
+   },
+   {
+    "name": "getShare",
+    "signature": "()Ljava/lang/String;",
+    "code": 152324
+   },
+   {
+    "name": "getTelegram",
+    "signature": "()Ljava/lang/String;",
+    "code": 152612
+   },
+   {
+    "name": "getTiktok",
+    "signature": "()Ljava/lang/String;",
+    "code": 152900
+   },
+   {
+    "name": "getTwiter",
+    "signature": "()Ljava/lang/String;",
+    "code": 153140
+   },
+   {
+    "name": "getYoutube",
+    "signature": "()Ljava/lang/String;",
+    "code": 153380
+   },
+   {
+    "name": "setFacebook",
+    "signature": "(Ljava/lang/String;)V",
+    "code": 153620
+   },
+   {
+    "name": "setInstagram",
+    "signature": "(Ljava/lang/String;)V",
+    "code": 153868
+   },
+   {
+    "name": "setShare",
+    "signature": "(Ljava/lang/String;)V",
+    "code": 154116
+   },
+   {
+    "name": "setTelegram",
+    "signature": "(Ljava/lang/String;)V",
+    "code": 154364
+   },
+   {
+    "name": "setTiktok",
+    "signature": "(Ljava/lang/String;)V",
+    "code": 154612
+   },
+   {
+    "name": "setTwiter",
+    "signature": "(Ljava/lang/String;)V",
+    "code": 154860
+   },
+   {
+    "name": "setYoutube",
+    "signature": "(Ljava/lang/String;)V",
+    "code": 155108
+   }
+  ]
+ },
+ {
+  "class": "co/nevisa/commonlib/admob/c",
+  "methods": [
+   {
+    "name": "i",
+    "signature": "(ILjava/lang/String;)V",
+    "code": 642800
+   },
+   {
+    "name": "a",
+    "signature": "(Landroid/app/Activity;)V",
+    "code": 619400
+   },
+   {
+    "name": "b",
+    "signature": "(Ljava/lang/String;)Ljava/util/ArrayList;",
+    "code": 623740
+   },
+   {
+    "name": "c",
+    "signature": "()Lco/nevisa/commonlib/admob/models/AdmobKeys;",
+    "code": 627000
+   },
+   {
+    "name": "d",
+    "signature": "()Z",
+    "code": 627500
+   },
+   {
+    "name": "e",
+    "signature": "()V",
+    "code": 627532
+   },
+   {
+    "name": "f",
+    "signature": "(Landroid/app/Activity;Lm4/b;Ljava/lang/String;)V",
+    "code": 634808
+   },
+   {
+    "name": "g",
+    "signature": "(Ljava/lang/String;)V",
+    "code": 636044
+   },
+   {
+    "name": "h",
+    "signature": "(Ljava/lang/String;Ljava/util/ArrayList;)I",
+    "code": 636968
+   }
+  ]
+ },
+ {
+  "class": "co/nevisa/commonlib/fairbid/c",
+  "methods": [
+   {
+    "name": "a",
+    "signature": "(Ljava/lang/String;)Ljava/util/ArrayList;",
+    "code": 643988
+   },
+   {
+    "name": "b",
+    "signature": "()Lq4/a;",
+    "code": 647248
+   },
+   {
+    "name": "c",
+    "signature": "()Z",
+    "code": 647772
+   },
+   {
+    "name": "d",
+    "signature": "(Ljava/lang/String;)V",
+    "code": 647804
+   },
+   {
+    "name": "e",
+    "signature": "(Ljava/lang/String;)V",
+    "code": 655744
+   }
+  ]
+ },
+ {
+  "class": "com/CustomDialogClass$$ExternalSyntheticLambda0",
+  "methods": [
+   {
+    "name": "onClick",
+    "signature": "(Landroid/content/DialogInterface;I)V",
+    "code": 155356
+   }
+  ]
+ },
+ {
+  "class": "com/CustomDialogClass$$ExternalSyntheticLambda1",
+  "methods": [
+   {
+    "name": "onClick",
+    "signature": "(Landroid/content/DialogInterface;I)V",
+    "code": 155900
+   }
+  ]
+ },
+ {
+  "class": "com/CustomDialogClass",
+  "methods": [
+   {
+    "name": "setTypeeee",
+    "signature": "()V",
+    "code": 156176
+   }
+  ]
+ },
+ {
+  "class": "com/WebService",
+  "methods": [
+   {
+    "name": "Heh",
+    "signature": "(Landroid/app/Activity;)V",
+    "code": 613236
+   },
+   {
+    "name": "doInBackground",
+    "signature": "([Ljava/lang/String;)Ljava/lang/String;",
+    "code": 607412
+   },
+   {
+    "name": "onPostExecute",
+    "signature": "(Ljava/lang/String;)V",
+    "code": 614076
+   }
+  ]
+ },
+ {
+  "class": "com/v2ray/ang/service/V2RayServiceManager",
+  "methods": [
+   {
+    "name": "appendSpeedString",
+    "signature": "(Ljava/lang/StringBuilder;Ljava/lang/String;DD)V",
+    "code": 158108
+   },
+   {
+    "name": "createNotificationChannel",
+    "signature": "()Ljava/lang/String;",
+    "code": 162812
+   },
+   {
+    "name": "getGlobalStorage",
+    "signature": "()Lcom/tencent/mmkv/MMKV;",
+    "code": 164232
+   },
+   {
+    "name": "getMainStorage",
+    "signature": "()Lcom/tencent/mmkv/MMKV;",
+    "code": 164716
+   },
+   {
+    "name": "getNotificationManager",
+    "signature": "()Landroid/app/NotificationManager;",
+    "code": 165200
+   },
+   {
+    "name": "getSettingsStorage",
+    "signature": "()Lcom/tencent/mmkv/MMKV;",
+    "code": 167264
+   },
+   {
+    "name": "measureV2rayDelay",
+    "signature": "()V",
+    "code": 168448
+   },
+   {
+    "name": "showNotification",
+    "signature": "()V",
+    "code": 172052
+   },
+   {
+    "name": "startSpeedNotification",
+    "signature": "()V",
+    "code": 180084
+   },
+   {
+    "name": "startSpeedNotification$lambda$0",
+    "signature": "(Lqe/b;Ljava/lang/Object;)V",
+    "code": 179380
+   },
+   {
+    "name": "stopSpeedNotification",
+    "signature": "()V",
+    "code": 194680
+   },
+   {
+    "name": "updateNotification",
+    "signature": "(Ljava/lang/String;JJ)V",
+    "code": 198392
+   },
+   {
+    "name": "cancelNotification",
+    "signature": "()V",
+    "code": 161652
+   },
+   {
+    "name": "getCurrentConfig",
+    "signature": "()Lcom/v2ray/ang/dto/ServerConfig;",
+    "code": 164016
+   },
+   {
+    "name": "getServiceControl",
+    "signature": "()Ljava/lang/ref/SoftReference;",
+    "code": 167048
+   },
+   {
+    "name": "getUpdateSpeed",
+    "signature": "()Landroidx/lifecycle/i0;",
+    "code": 167748
+   },
+   {
+    "name": "getV2rayPoint",
+    "signature": "()Llibv2ray/V2RayPoint;",
+    "code": 168232
+   },
+   {
+    "name": "setCurrentConfig",
+    "signature": "(Lcom/v2ray/ang/dto/ServerConfig;)V",
+    "code": 169980
+   },
+   {
+    "name": "setServiceControl",
+    "signature": "(Ljava/lang/ref/SoftReference;)V",
+    "code": 170236
+   },
+   {
+    "name": "startV2Ray",
+    "signature": "(Landroid/content/Context;)V",
+    "code": 182900
+   },
+   {
+    "name": "startV2rayPoint",
+    "signature": "()V",
+    "code": 186664
+   },
+   {
+    "name": "stopV2rayPoint",
+    "signature": "()V",
+    "code": 195608
+   }
+  ]
+ },
+ {
+  "class": "com/v2ray/ang/ui/BaseActivity",
+  "methods": [
+   {
+    "name": "checkDarkMode",
+    "signature": "()V",
+    "code": 201556
+   },
+   {
+    "name": "initGoogleReview$lambda$4",
+    "signature": "(Lcom/v2ray/ang/ui/BaseActivity;Z)V",
+    "code": 212764
+   },
+   {
+    "name": "initGoogleReview$lambda$4$lambda$2",
+    "signature": "(Lcom/v2ray/ang/ui/BaseActivity;Lnd/h;)V",
+    "code": 207520
+   },
+   {
+    "name": "initGoogleReview$lambda$4$lambda$3",
+    "signature": "(Lnd/h;)V",
+    "code": 212520
+   },
+   {
+    "name": "attachBaseContext",
+    "signature": "(Landroid/content/Context;)V",
+    "code": 200716
+   },
+   {
+    "name": "getCompatibleDrawable",
+    "signature": "(I)Landroid/graphics/drawable/Drawable;",
+    "code": 205188
+   },
+   {
+    "name": "getOperator",
+    "signature": "()Ljava/lang/String;",
+    "code": 205424
+   },
+   {
+    "name": "getServerSideVerificationOptions",
+    "signature": "()Lcom/google/android/gms/ads/rewarded/ServerSideVerificationOptions;",
+    "code": 206856
+   },
+   {
+    "name": "initGoogleReview",
+    "signature": "()V",
+    "code": 216700
+   },
+   {
+    "name": "initServerSideVerificationOptions",
+    "signature": "()V",
+    "code": 228300
+   },
+   {
+    "name": "onCreate",
+    "signature": "(Landroid/os/Bundle;)V",
+    "code": 231296
+   },
+   {
+    "name": "onOptionsItemSelected",
+    "signature": "(Landroid/view/MenuItem;)Z",
+    "code": 234000
+   },
+   {
+    "name": "setServerSideVerificationOptions",
+    "signature": "(Lcom/google/android/gms/ads/rewarded/ServerSideVerificationOptions;)V",
+    "code": 234952
+   }
+  ]
+ },
+ {
+  "class": "com/v2ray/ang/ui/MainActivity$initConnectionTimer$1",
+  "methods": [
+   {
+    "name": "run$lambda$0",
+    "signature": "(Lcom/v2ray/ang/ui/MainActivity;Ljava/lang/String;)V",
+    "code": 245804
+   },
+   {
+    "name": "run",
+    "signature": "()V",
+    "code": 247420
+   }
+  ]
+ },
+ {
+  "class": "com/v2ray/ang/ui/MainActivity",
+  "methods": [
+   {
+    "name": "adProgressHide",
+    "signature": "()V",
+    "code": 247924
+   },
+   {
+    "name": "adProgressInit",
+    "signature": "()V",
+    "code": 248280
+   },
+   {
+    "name": "adProgressShow",
+    "signature": "()V",
+    "code": 249604
+   },
+   {
+    "name": "boostTimeIncentivePolicy",
+    "signature": "(Z)V",
+    "code": 249840
+   },
+   {
+    "name": "cancelTimingNotification",
+    "signature": "()V",
+    "code": 257004
+   },
+   {
+    "name": "checkPushUpdate",
+    "signature": "()V",
+    "code": 268876
+   },
+   {
+    "name": "checkPushUpdate$lambda$28",
+    "signature": "(Lcom/v2ray/ang/ui/MainActivity;Lco/nevisa/commonlib/firebase/models/Update;)V",
+    "code": 262852
+   },
+   {
+    "name": "checkPushUpdate$lambda$28$lambda$26",
+    "signature": "(Lcom/v2ray/ang/ui/MainActivity;Lnd/h;)V",
+    "code": 258844
+   },
+   {
+    "name": "checkPushUpdate$lambda$28$lambda$27",
+    "signature": "(Lnd/h;)V",
+    "code": 262608
+   },
+   {
+    "name": "chooseFileForCustomConfig$lambda$16",
+    "signature": "(Lcom/v2ray/ang/ui/MainActivity;Landroidx/activity/result/ActivityResult;)V",
+    "code": 269328
+   },
+   {
+    "name": "connectClick",
+    "signature": "(Landroid/view/View;)V",
+    "code": 270404
+   },
+   {
+    "name": "connected",
+    "signature": "(Z)V",
+    "code": 272812
+   },
+   {
+    "name": "connectedActivityLauncher$lambda$57",
+    "signature": "(Lcom/v2ray/ang/ui/MainActivity;Landroidx/activity/result/ActivityResult;)V",
+    "code": 271572
+   },
+   {
+    "name": "copyAssets",
+    "signature": "()V",
+    "code": 277272
+   },
+   {
+    "name": "customOnCreate",
+    "signature": "()V",
+    "code": 278272
+   },
+   {
+    "name": "decreaseServerUsage",
+    "signature": "()V",
+    "code": 284412
+   },
+   {
+    "name": "doShare",
+    "signature": "(Ljava/lang/String;)V",
+    "code": 289188
+   },
+   {
+    "name": "exportAllConfig",
+    "signature": "()V",
+    "code": 299388
+   },
+   {
+    "name": "format",
+    "signature": "(J)Ljava/lang/String;",
+    "code": 305692
+   },
+   {
+    "name": "getAdapter",
+    "signature": "()Lcom/v2ray/ang/ui/MainRecyclerAdapter;",
+    "code": 306240
+   },
+   {
+    "name": "getData",
+    "signature": "()V",
+    "code": 307012
+   },
+   {
+    "name": "getData",
+    "signature": "(Z)V",
+    "code": 307256
+   },
+   {
+    "name": "getData",
+    "signature": "(ZLcom/v2ray/ang/ui/MainActivity$IGetData;)V",
+    "code": 307508
+   },
+   {
+    "name": "getMainStorage",
+    "signature": "()Lcom/tencent/mmkv/MMKV;",
+    "code": 313228
+   },
+   {
+    "name": "getSettingsStorage",
+    "signature": "()Lcom/tencent/mmkv/MMKV;",
+    "code": 316104
+   },
+   {
+    "name": "getSocialIcon",
+    "signature": "(Ljava/lang/String;)I",
+    "code": 316880
+   },
+   {
+    "name": "getSocialVisibility",
+    "signature": "(Ljava/lang/String;)I",
+    "code": 319920
+   },
+   {
+    "name": "hideCircle",
+    "signature": "()V",
+    "code": 321440
+   },
+   {
+    "name": "hideCircle$lambda$18",
+    "signature": "(Lqe/b;Ljava/lang/Object;)V",
+    "code": 320736
+   },
+   {
+    "name": "importBatchConfig",
+    "signature": "(Ljava/lang/String;Ljava/lang/String;)V",
+    "code": 323548
+   },
+   {
+    "name": "importBatchConfig",
+    "signature": "(Ljava/lang/String;Ljava/lang/String;Lco/dev/models/Protocol;Z)V",
+    "code": 323920
+   },
+   {
+    "name": "importClipboard",
+    "signature": "()Z",
+    "code": 327384
+   },
+   {
+    "name": "importManually",
+    "signature": "(I)V",
+    "code": 340908
+   },
+   {
+    "name": "importQRcode$lambda$11",
+    "signature": "(Lqe/b;Ljava/lang/Object;)V",
+    "code": 342688
+   },
+   {
+    "name": "increaseServerUsage",
+    "signature": "()V",
+    "code": 344884
+   },
+   {
+    "name": "initAd",
+    "signature": "()V",
+    "code": 352360
+   },
+   {
+    "name": "initAd$lambda$55",
+    "signature": "(Lcom/v2ray/ang/ui/MainActivity;Ljava/lang/Object;)V",
+    "code": 350728
+   },
+   {
+    "name": "initAppUpdate",
+    "signature": "()V",
+    "code": 368756
+   },
+   {
+    "name": "initAppUpdate$lambda$25",
+    "signature": "(Lcom/v2ray/ang/ui/MainActivity;)V",
+    "code": 365536
+   },
+   {
+    "name": "initAppUpdate$lambda$25$lambda$23",
+    "signature": "(Lnd/h;)V",
+    "code": 360876
+   },
+   {
+    "name": "initAppUpdate$lambda$25$lambda$24",
+    "signature": "(Lnd/h;)V",
+    "code": 365288
+   },
+   {
+    "name": "initConnectionTimer",
+    "signature": "()V",
+    "code": 376360
+   },
+   {
+    "name": "initConnectionTimer$lambda$50",
+    "signature": "(Lcom/v2ray/ang/ui/MainActivity;Landroid/view/View;)V",
+    "code": 372260
+   },
+   {
+    "name": "initConnectionTimer$lambda$50$lambda$48",
+    "signature": "(Lnd/h;)V",
+    "code": 370580
+   },
+   {
+    "name": "initConnectionTimer$lambda$50$lambda$49",
+    "signature": "(Lcom/v2ray/ang/ui/MainActivity;Lnd/h;)V",
+    "code": 370828
+   },
+   {
+    "name": "initCustomOptionMenu",
+    "signature": "(Landroid/view/Menu;)V",
+    "code": 388532
+   },
+   {
+    "name": "initCustomOptionMenu$lambda$35",
+    "signature": "(Lcom/v2ray/ang/ui/MainActivity;Landroid/view/View;)V",
+    "code": 383804
+   },
+   {
+    "name": "initCustomOptionMenu$lambda$35$lambda$34",
+    "signature": "(Lcom/v2ray/ang/ui/MainActivity;)V",
+    "code": 382332
+   },
+   {
+    "name": "initData",
+    "signature": "(Ljava/util/ArrayList;)V",
+    "code": 390908
+   },
+   {
+    "name": "initSocialMedia",
+    "signature": "()V",
+    "code": 410428
+   },
+   {
+    "name": "initSocialMedia$lambda$20",
+    "signature": "(Lcom/v2ray/ang/ui/MainActivity;Ljava/lang/String;Landroid/view/View;)V",
+    "code": 397764
+   },
+   {
+    "name": "initSponsor",
+    "signature": "()V",
+    "code": 415532
+   },
+   {
+    "name": "initSponsor$lambda$21",
+    "signature": "(Lcom/v2ray/ang/ui/MainActivity;Lco/dev/models/Sponsor;Landroid/view/View;)V",
+    "code": 414256
+   },
+   {
+    "name": "initToolbarDrawerMenu",
+    "signature": "()V",
+    "code": 448764
+   },
+   {
+    "name": "initToolbarDrawerMenu$lambda$43",
+    "signature": "(Lcom/v2ray/ang/ui/MainActivity;Landroid/view/View;)V",
+    "code": 447668
+   },
+   {
+    "name": "initView",
+    "signature": "()V",
+    "code": 449708
+   },
+   {
+    "name": "migrateLegacy",
+    "signature": "()V",
+    "code": 459740
+   },
+   {
+    "name": "myOnResume",
+    "signature": "()V",
+    "code": 460476
+   },
+   {
+    "name": "onCreate$lambda$7",
+    "signature": "(Lcom/v2ray/ang/ui/MainActivity;Landroid/view/View;)V",
+    "code": 465180
+   },
+   {
+    "name": "onCreate$lambda$7$lambda$1",
+    "signature": "(Lcom/v2ray/ang/ui/MainActivity;Lnd/h;)V",
+    "code": 462484
+   },
+   {
+    "name": "onCreate$lambda$7$lambda$2",
+    "signature": "(Lnd/h;)V",
+    "code": 463500
+   },
+   {
+    "name": "onCreate$lambda$7$lambda$3",
+    "signature": "(Landroid/content/DialogInterface;)V",
+    "code": 463748
+   },
+   {
+    "name": "onCreate$lambda$7$lambda$4",
+    "signature": "(Lcom/v2ray/ang/ui/MainActivity;Lnd/h;)V",
+    "code": 463808
+   },
+   {
+    "name": "onCreate$lambda$7$lambda$5",
+    "signature": "(Lnd/h;)V",
+    "code": 464876
+   },
+   {
+    "name": "onCreate$lambda$7$lambda$6",
+    "signature": "(Landroid/content/DialogInterface;)V",
+    "code": 465120
+   },
+   {
+    "name": "onCreate$lambda$8",
+    "signature": "(Lcom/v2ray/ang/ui/MainActivity;Landroid/view/View;)V",
+    "code": 474856
+   },
+   {
+    "name": "onCreate$lambda$9",
+    "signature": "(Lqe/b;Ljava/lang/Object;)V",
+    "code": 477600
+   },
+   {
+    "name": "openExternalUrl",
+    "signature": "(Ljava/lang/String;)V",
+    "code": 505860
+   },
+   {
+    "name": "pingServers",
+    "signature": "()V",
+    "code": 507736
+   },
+   {
+    "name": "pingServers",
+    "signature": "(Z)V",
+    "code": 507980
+   },
+   {
+    "name": "readContentFromUri",
+    "signature": "(Landroid/net/Uri;)V",
+    "code": 511372
+   },
+   {
+    "name": "readContentFromUri$lambda$17",
+    "signature": "(Lqe/b;Ljava/lang/Object;)V",
+    "code": 510668
+   },
+   {
+    "name": "remainingTimeToText",
+    "signature": "()Ljava/lang/String;",
+    "code": 513024
+   },
+   {
+    "name": "removeAllConfig",
+    "signature": "()V",
+    "code": 518892
+   },
+   {
+    "name": "removeAllConfig$lambda$39",
+    "signature": "(Lcom/v2ray/ang/ui/MainActivity;Lnd/h;)V",
+    "code": 517476
+   },
+   {
+    "name": "removeAllConfig$lambda$40",
+    "signature": "(Lnd/h;)V",
+    "code": 518644
+   },
+   {
+    "name": "removeDuplicateConfig",
+    "signature": "()V",
+    "code": 522916
+   },
+   {
+    "name": "removeDuplicateConfig$lambda$37",
+    "signature": "(Lcom/v2ray/ang/ui/MainActivity;Lnd/h;)V",
+    "code": 521748
+   },
+   {
+    "name": "removeDuplicateConfig$lambda$38",
+    "signature": "(Lnd/h;)V",
+    "code": 522668
+   },
+   {
+    "name": "removeInvalidConfig",
+    "signature": "()V",
+    "code": 526900
+   },
+   {
+    "name": "removeInvalidConfig$lambda$41",
+    "signature": "(Lcom/v2ray/ang/ui/MainActivity;Lnd/h;)V",
+    "code": 525484
+   },
+   {
+    "name": "removeInvalidConfig$lambda$42",
+    "signature": "(Lnd/h;)V",
+    "code": 526652
+   },
+   {
+    "name": "requestVpnPermission$lambda$0",
+    "signature": "(Lcom/v2ray/ang/ui/MainActivity;Landroidx/activity/result/ActivityResult;)V",
+    "code": 529756
+   },
+   {
+    "name": "restartV2Ray$lambda$10",
+    "signature": "(Lqe/b;Ljava/lang/Object;)V",
+    "code": 530904
+   },
+   {
+    "name": "scanQRCodeForConfig$lambda$12",
+    "signature": "(Lcom/v2ray/ang/ui/MainActivity;Landroidx/activity/result/ActivityResult;)V",
+    "code": 533804
+   },
+   {
+    "name": "scanQRCodeForUrlToCustomConfig$lambda$13",
+    "signature": "(Lcom/v2ray/ang/ui/MainActivity;Landroidx/activity/result/ActivityResult;)V",
+    "code": 535196
+   },
+   {
+    "name": "selectServerActivityLauncher$lambda$58",
+    "signature": "(Lcom/v2ray/ang/ui/MainActivity;Landroidx/activity/result/ActivityResult;)V",
+    "code": 536560
+   },
+   {
+    "name": "setupViewModel",
+    "signature": "()V",
+    "code": 540696
+   },
+   {
+    "name": "showAd",
+    "signature": "(Ljava/lang/String;)V",
+    "code": 543544
+   },
+   {
+    "name": "showFairbidAd",
+    "signature": "(Ljava/lang/String;)V",
+    "code": 548780
+   },
+   {
+    "name": "showFairbidInterstitial",
+    "signature": "(Ljava/lang/String;)V",
+    "code": 550352
+   },
+   {
+    "name": "showFairbidReward",
+    "signature": "(Ljava/lang/String;)V",
+    "code": 555420
+   },
+   {
+    "name": "showFileChooser",
+    "signature": "()V",
+    "code": 557708
+   },
+   {
+    "name": "showInterstitial",
+    "signature": "(Ljava/lang/String;)V",
+    "code": 560140
+   },
+   {
+    "name": "showInterstitialReward",
+    "signature": "(Ljava/lang/String;)V",
+    "code": 562168
+   },
+   {
+    "name": "showLanguageOptionSheet",
+    "signature": "()V",
+    "code": 563188
+   },
+   {
+    "name": "showNativeAsSponsor",
+    "signature": "()V",
+    "code": 577780
+   },
+   {
+    "name": "showNativeAsSponsor$lambda$22",
+    "signature": "(Lcom/v2ray/ang/ui/MainActivity;Ljava/lang/Object;)V",
+    "code": 566652
+   },
+   {
+    "name": "showReward",
+    "signature": "(Ljava/lang/String;)V",
+    "code": 579148
+   },
+   {
+    "name": "startConnectionTimer",
+    "signature": "()V",
+    "code": 579908
+   },
+   {
+    "name": "toggleServerUsage",
+    "signature": "(ILco/dev/models/ProtocolUsage;)V",
+    "code": 588772
+   },
+   {
+    "name": "updatePingStatus",
+    "signature": "(I)V",
+    "code": 592452
+   },
+   {
+    "name": "updateRemoveAdUI",
+    "signature": "()Z",
+    "code": 594356
+   },
+   {
+    "name": "updateRewardIcon",
+    "signature": "()V",
+    "code": 597916
+   },
+   {
+    "name": "updateRewardIcon$lambda$32",
+    "signature": "(Lcom/v2ray/ang/ui/MainActivity;)V",
+    "code": 596444
+   },
+   {
+    "name": "updateSelectedServer",
+    "signature": "()V",
+    "code": 600108
+   },
+   {
+    "name": "delayDisconnect",
+    "signature": "(J)V",
+    "code": 287800
+   },
+   {
+    "name": "disconnect",
+    "signature": "()V",
+    "code": 288604
+   },
+   {
+    "name": "extendConnectionTime",
+    "signature": "(Z)V",
+    "code": 300316
+   },
+   {
+    "name": "getBtnConnectClickStatus",
+    "signature": "()I",
+    "code": 306756
+   },
+   {
+    "name": "getHasSponsor",
+    "signature": "()Z",
+    "code": 312716
+   },
+   {
+    "name": "getJob",
+    "signature": "()Lgh/d1;",
+    "code": 312972
+   },
+   {
+    "name": "getMainViewModel",
+    "signature": "()Lcom/v2ray/ang/viewmodel/MainViewModel;",
+    "code": 313744
+   },
+   {
+    "name": "getMenuPingItem",
+    "signature": "()Landroid/widget/ImageView;",
+    "code": 314260
+   },
+   {
+    "name": "getMenuRewardItem",
+    "signature": "()Landroid/widget/ImageView;",
+    "code": 314924
+   },
+   {
+    "name": "getON_RESUME_GET_DATA",
+    "signature": "()Ljava/lang/String;",
+    "code": 315588
+   },
+   {
+    "name": "getOnResumeGetDataCache",
+    "signature": "()I",
+    "code": 315848
+   },
+   {
+    "name": "getShareUrl",
+    "signature": "()Ljava/lang/String;",
+    "code": 316620
+   },
+   {
+    "name": "getTAG",
+    "signature": "()Ljava/lang/String;",
+    "code": 320220
+   },
+   {
+    "name": "getTryGetData",
+    "signature": "()I",
+    "code": 320480
+   },
+   {
+    "name": "importConfigCustomClipboard",
+    "signature": "()Z",
+    "code": 328208
+   },
+   {
+    "name": "importConfigCustomLocal",
+    "signature": "()Z",
+    "code": 329412
+   },
+   {
+    "name": "importConfigCustomUrl",
+    "signature": "(Ljava/lang/String;)Z",
+    "code": 331120
+   },
+   {
+    "name": "importConfigCustomUrlClipboard",
+    "signature": "()Z",
+    "code": 329916
+   },
+   {
+    "name": "importConfigViaSub",
+    "signature": "()Z",
+    "code": 332708
+   },
+   {
+    "name": "importCustomizeConfig",
+    "signature": "(Ljava/lang/String;)V",
+    "code": 337496
+   },
+   {
+    "name": "importQRcode",
+    "signature": "(Z)Z",
+    "code": 343392
+   },
+   {
+    "name": "onBackPressed",
+    "signature": "()V",
+    "code": 462008
+   },
+   {
+    "name": "onCreate",
+    "signature": "(Landroid/os/Bundle;)V",
+    "code": 478304
+   },
+   {
+    "name": "onCreateOptionsMenu",
+    "signature": "(Landroid/view/Menu;)Z",
+    "code": 485764
+   },
+   {
+    "name": "onDestroy",
+    "signature": "()V",
+    "code": 486716
+   },
+   {
+    "name": "onKeyDown",
+    "signature": "(ILandroid/view/KeyEvent;)Z",
+    "code": 487192
+   },
+   {
+    "name": "onNavigationItemSelected",
+    "signature": "(Landroid/view/MenuItem;)Z",
+    "code": 488024
+   },
+   {
+    "name": "onOptionsItemSelected",
+    "signature": "(Landroid/view/MenuItem;)Z",
+    "code": 494420
+   },
+   {
+    "name": "onPause",
+    "signature": "()V",
+    "code": 502004
+   },
+   {
+    "name": "onRestart",
+    "signature": "()V",
+    "code": 502244
+   },
+   {
+    "name": "onResume",
+    "signature": "()V",
+    "code": 504428
+   },
+   {
+    "name": "onStart",
+    "signature": "()V",
+    "code": 505016
+   },
+   {
+    "name": "restartV2Ray",
+    "signature": "()V",
+    "code": 531608
+   },
+   {
+    "name": "setBtnConnectClickStatus",
+    "signature": "(I)V",
+    "code": 537232
+   },
+   {
+    "name": "setHasSponsor",
+    "signature": "(Z)V",
+    "code": 537476
+   },
+   {
+    "name": "setJob",
+    "signature": "(Lgh/d1;)V",
+    "code": 537720
+   },
+   {
+    "name": "setMenuPingItem",
+    "signature": "(Landroid/widget/ImageView;)V",
+    "code": 538024
+   },
+   {
+    "name": "setMenuRewardItem",
+    "signature": "(Landroid/widget/ImageView;)V",
+    "code": 538680
+   },
+   {
+    "name": "setShareUrl",
+    "signature": "(Ljava/lang/String;)V",
+    "code": 539336
+   },
+   {
+    "name": "setTestState",
+    "signature": "(Ljava/lang/String;)V",
+    "code": 539640
+   },
+   {
+    "name": "setTryGetData",
+    "signature": "(I)V",
+    "code": 540452
+   },
+   {
+    "name": "showCircle",
+    "signature": "()V",
+    "code": 547716
+   },
+   {
+    "name": "startV2Ray",
+    "signature": "()V",
+    "code": 586044
+   }
+  ]
+ },
+ {
+  "class": "com/v2ray/ang/ui/j",
+  "methods": [
+   {
+    "name": "invoke",
+    "signature": "(Ljava/lang/Object;)Ljava/lang/Object;",
+    "code": 235608
+   }
+  ]
+ },
+ {
+  "class": "h/n0",
+  "methods": [
+   {
+    "name": "addContentView",
+    "signature": "(Landroid/view/View;Landroid/view/ViewGroup$LayoutParams;)V",
+    "code": 656720
+   },
+   {
+    "name": "d",
+    "signature": "()Lh/w;",
+    "code": 658212
+   },
+   {
+    "name": "dismiss",
+    "signature": "()V",
+    "code": 659304
+   },
+   {
+    "name": "dispatchKeyEvent",
+    "signature": "(Landroid/view/KeyEvent;)Z",
+    "code": 659764
+   },
+   {
+    "name": "e",
+    "signature": "(Landroid/view/KeyEvent;)Z",
+    "code": 660440
+   },
+   {
+    "name": "findViewById",
+    "signature": "(I)Landroid/view/View;",
+    "code": 660712
+   },
+   {
+    "name": "invalidateOptionsMenu",
+    "signature": "()V",
+    "code": 661420
+   },
+   {
+    "name": "onCreate",
+    "signature": "(Landroid/os/Bundle;)V",
+    "code": 661760
+   },
+   {
+    "name": "onStop",
+    "signature": "()V",
+    "code": 662504
+   },
+   {
+    "name": "onSupportActionModeFinished",
+    "signature": "(Ll/c;)V",
+    "code": 663296
+   },
+   {
+    "name": "onSupportActionModeStarted",
+    "signature": "(Ll/c;)V",
+    "code": 663356
+   },
+   {
+    "name": "onWindowStartingSupportActionMode",
+    "signature": "(Ll/b;)Ll/c;",
+    "code": 663416
+   },
+   {
+    "name": "setContentView",
+    "signature": "(I)V",
+    "code": 663508
+   },
+   {
+    "name": "setContentView",
+    "signature": "(Landroid/view/View;)V",
+    "code": 663856
+   },
+   {
+    "name": "setContentView",
+    "signature": "(Landroid/view/View;Landroid/view/ViewGroup$LayoutParams;)V",
+    "code": 664228
+   },
+   {
+    "name": "setTitle",
+    "signature": "(I)V",
+    "code": 664636
+   },
+   {
+    "name": "setTitle",
+    "signature": "(Ljava/lang/CharSequence;)V",
+    "code": 665352
+   }
+  ]
+ },
+ {
+  "class": "h/o",
+  "methods": [
+   {
+    "name": "f",
+    "signature": "(Landroid/content/Context;I)I",
+    "code": 665848
+   },
+   {
+    "name": "onCreate",
+    "signature": "(Landroid/os/Bundle;)V",
+    "code": 666592
+   },
+   {
+    "name": "onKeyDown",
+    "signature": "(ILandroid/view/KeyEvent;)Z",
+    "code": 696196
+   },
+   {
+    "name": "onKeyUp",
+    "signature": "(ILandroid/view/KeyEvent;)Z",
+    "code": 696892
+   },
+   {
+    "name": "setTitle",
+    "signature": "(Ljava/lang/CharSequence;)V",
+    "code": 697588
+   }
+  ]
+ },
+ {
+  "class": "nd/h",
+  "methods": [
+   {
+    "name": "b",
+    "signature": "(Z)V",
+    "code": 698332
+   },
+   {
+    "name": "c",
+    "signature": "(Landroid/widget/Button;Ljava/lang/Integer;)V",
+    "code": 699740
+   },
+   {
+    "name": "cancel",
+    "signature": "()V",
+    "code": 699512
+   },
+   {
+    "name": "d",
+    "signature": "(Ljava/lang/String;)V",
+    "code": 701696
+   },
+   {
+    "name": "e",
+    "signature": "(Lcom/v2ray/ang/ui/d;)V",
+    "code": 702564
+   },
+   {
+    "name": "f",
+    "signature": "(Ljava/lang/String;)V",
+    "code": 703344
+   },
+   {
+    "name": "g",
+    "signature": "(Ljava/lang/String;)V",
+    "code": 703828
+   },
+   {
+    "name": "h",
+    "signature": "(Landroid/graphics/drawable/Drawable;)V",
+    "code": 705324
+   },
+   {
+    "name": "i",
+    "signature": "(Ljava/lang/String;)V",
+    "code": 706192
+   },
+   {
+    "name": "onClick",
+    "signature": "(Landroid/view/View;)V",
+    "code": 707676
+   },
+   {
+    "name": "onCreate",
+    "signature": "(Landroid/os/Bundle;)V",
+    "code": 708764
+   },
+   {
+    "name": "onStart",
+    "signature": "()V",
+    "code": 735360
+   },
+   {
+    "name": "setCancelable",
+    "signature": "(Z)V",
+    "code": 738092
+   },
+   {
+    "name": "setTitle",
+    "signature": "(I)V",
+    "code": 738320
+   },
+   {
+    "name": "setTitle",
+    "signature": "(Ljava/lang/CharSequence;)V",
+    "code": 738936
+   }
+  ]
+ }
+]

@@ -287,9 +287,14 @@ mode == PROXY → HevTunnel(fd = 0) → locale SOCKS/HTTP → XrayCore.start(con
   فقط داخل خود اپ اصلی (کد native) انجام می‌شود.
 - رمزگشایی `value` با همهٔ کلیدهای قابل استخراج از خود APK (رشته‌های dex، `libstub.so`، گواهی امضا،
   `app_name`/`version_code`/`deviceId`، `configKey`/`routeKey`/`endpointKey`) و همهٔ حالت‌های متعارف
-  AES (ECB/CBC/CTR/CFB/OFB/GCM) و ChaCha20/Salsa20 آزمایش شد و نتیجه نداد؛ یعنی کلید/الگوریتم
-  رمزگشایی در کد native محافظت‌شدهٔ اپ اصلی (Dex2C، `libstub.so`، `EntryPoint.stub`) نگه‌داری می‌شود و
-  از سمت کلاینت بدون آن باینری قابل بازتولید نیست.
+  AES (ECB/CBC/CTR/CFB/OFB/GCM) و ChaCha20 آزمایش شد و نتیجه نداد.
+- **دلیل قطعی (۲۰۲۶-۱۰-۲۶):** کلید رمزگشایی `value` در نسخهٔ ۳٫۲٫۰ اپ اصلی هم **وجود ندارد**.
+  `libstub.so` هیچ ابتدایی رمزنگاری ندارد، تاب‌های محافظت (`ApkDex2C`) کاملاً باز شدند (۱۵ کلاس /
+  ۲۵۸ متد با نام و آدرس)، و متد بومی `MainActivity.importBatchConfig` مقدار `value` را دست‌نخورده
+  به `AngConfigManager` می‌دهد که فقط JSON خام (شامل `inbounds`/`outbounds`/`routing`) را می‌پذیرد.
+  `value` هم در هر درخواست عوض می‌شود و کلیدهای `configKey`/`routeKey`/`endpointKey` هر پاسخ تصادفی‌اند؛
+  یعنی سرویس‌دهنده برای نسل بعدی کلاینت کار می‌کند. جزئیات در بخش ۸ سند
+  [`re-analysis-fa.md`](re-analysis-fa.md).
 
 نتیجهٔ عملی برای این نسخهٔ آزمایشی:
 
@@ -354,10 +359,12 @@ Firebase **طبق اپ اصلی** اضافه شده است:
 `base.apk` دوباره از گوگل‌درایو دانلود و با REA/androguard بازآزمایی شد؛ جدول کامل تفاوت‌ها و
 یافته‌ها در [`re-analysis-fa.md`](re-analysis-fa.md) است. مهم‌ترین‌ها:
 
-* سه لایه محافظت: ApkDex2C 3.1.14، رمزنگاری رشته‌ها با ScKit (۵۷٬۶۸۶ رشته)، و `libstub.so` با
-  ثبت پویای توابع بومی.
-* `value` سرورها با کلید موجود در کد بومی رمز می‌شود؛ ۶۵۶٬۷۵۰ ترکیب کلید آزمایش شد و
-  رمزگشایی ایستا ممکن نبود.
+* هر سه لایه محافظت **باز شد**: قاعدهٔ رمزنگاری رشته‌ها (ScKit، `AES/ECB` + `MD5(passphrase)[8:24]`)
+  با رمزگشایی کامل ۴۶٬۶۹۰ نقطهٔ فراخوانی (۰ خطا)، کلید آدرس API (`AES/CBC` با کلید و IV =
+  نام بسته → `https://managev1.xyz`)، و نقشهٔ کامل کد بومی (۱۵ کلاس / ۲۵۸ متد) از جدول
+  `np/dcc/protect/EntryPoint`.
+* کلید `value` در این بسته **نیست** (نه در dex، نه در کد بومی) و `value` در هر درخواست عوض
+  می‌شود؛ پس با APK ۳٫۲٫۰ قابل رمزگشایی نیست — نه برای ما، نه برای خود اپ اصلی.
 * `geoip.dat`/`geosite.dat` در APK اصلی هم نیست و این نسخه به آن‌ها نیاز ندارد.
 * «پینگ همه → مکث → پریدن به سرور دیگر» از منطق انتخاب خودکار سرور در اپ اصلی می‌آید؛ این نسخه
   چنین رفتاری ندارد و در `connect-test` هر بار سنجیده می‌شود.
@@ -367,3 +374,22 @@ Firebase **طبق اپ اصلی** اضافه شده است:
 گزارش تولیدشده در CI: [`connect-test/CONNECT.md`](connect-test/CONNECT.md) — شامل لحظه‌های
 ورود کانفیگ، اتصال، عبور ترافیک (با ردِ لاگ سرور Xray)، پایداری سرور در «پینگ همه»، تغییر سرور
 در حال اتصال و قطع اتصال، همراه با تصاویر.
+
+## ۱۲) ابزارهای استخراج کلید و بازکردن لایه‌های محافظت
+
+هر یافتهٔ بخش ۱۰ بازتولیدپذیر است:
+
+| ابزار | کار | خروجی نمونه |
+| --- | --- | --- |
+| `tools/apk-keys.py --apk-dir <unpacked-apk>` | رمزگشایی کامل رشته‌های ScKit + کلید آدرس API | ۴۶٬۶۹۰ نقطهٔ فراخوانی، ۴۴٬۳۹۶ رشتهٔ یکتا، `https://managev1.xyz` |
+| `tools/dcc-native-map.py <libstub.so> --json` | خواندن جدول محافظت ApkDex2C و نقشهٔ متدهای بومی | `docs/native-map.json` — ۱۵ کلاس / ۲۵۸ متد |
+| `tools/probe-rows.py` | آزمون زندهٔ ۹ حالت هدر روی `/api/protocols` و `/api/v2/protocols` | `docs/probe-rows/{variants,v1,v2}.json` |
+| `.github/workflows/probe-rows.yml` | اجرای پروب بالا در CI (تنها جایی که دسترسی به `managev1.xyz` هست) | کامیت خودکار شواهد |
+
+```bash
+# روی ماشین خودتان، با APK بازشده:
+unzip -o base.apk -d /tmp/apk
+pip install pycryptodome androguard
+python3 android-app/tools/apk-keys.py --apk-dir /tmp/apk
+python3 android-app/tools/dcc-native-map.py /tmp/apk/lib/arm64-v8a/libstub.so --json
+```
