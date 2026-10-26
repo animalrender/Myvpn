@@ -1,0 +1,8 @@
+Traceback (most recent call last):
+  File "/home/runner/work/Myvpn/Myvpn/android-app/tools/connect-real.py", line 509, in run
+    return main(argv)
+           ^^^^^^^^^^
+  File "/home/runner/work/Myvpn/Myvpn/android-app/tools/connect-real.py", line 462, in main
+    write_report(failures, baseline_ip, connected or fastest)
+                                                     ^^^^^^^
+NameError: name 'fastest' is not defined
