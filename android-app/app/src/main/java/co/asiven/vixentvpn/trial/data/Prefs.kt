@@ -17,9 +17,17 @@ class Prefs(context: Context) {
         }.getOrNull().orEmpty().ifBlank { "unknown-device" }
     }
 
+    /**
+     * Device token. Sanitised on read: older builds stored the *error body* here
+     * (`Internal server error.`), and sending that as the `token` header poisons every request.
+     */
     var token: String
-        get() = sp.getString(KEY_TOKEN, "").orEmpty()
-        set(value) = sp.edit().putString(KEY_TOKEN, value).apply()
+        get() {
+            val stored = sp.getString(KEY_TOKEN, "").orEmpty().trim()
+            val valid = stored.length in 8..512 && stored.none { it.isWhitespace() } && !stored.endsWith(".")
+            return if (valid) stored else ""
+        }
+        set(value) = sp.edit().putString(KEY_TOKEN, value.trim()).apply()
 
     /** FCM registration token (`firebase_token` in the original MMKV store). */
     var firebaseToken: String
@@ -38,6 +46,16 @@ class Prefs(context: Context) {
     var mode: String
         get() = sp.getString(KEY_MODE, MODE_VPN).orEmpty()
         set(value) = sp.edit().putString(KEY_MODE, value).apply()
+
+    /** `admobSeen` in the original store — sent as the `seen` header (the value the baseline uses). */
+    var admobSeen: Int
+        get() = sp.getInt(KEY_ADMOB_SEEN, 0)
+        set(value) = sp.edit().putInt(KEY_ADMOB_SEEN, value).apply()
+
+    /** Endpoint that produced the cached list (`/api/protocols` or `/api/v2/protocols`). */
+    var protocolsSource: String
+        get() = sp.getString(KEY_PROTOCOLS_SOURCE, "").orEmpty()
+        set(value) = sp.edit().putString(KEY_PROTOCOLS_SOURCE, value).apply()
 
     var protocolsCache: String
         get() = sp.getString(KEY_PROTOCOLS, "").orEmpty()
@@ -63,6 +81,8 @@ class Prefs(context: Context) {
         private const val KEY_TEST_URL = "testUrl"
         private const val KEY_MODE = "pref_mode"
         private const val KEY_PROTOCOLS = "protocolsCache"
+        private const val KEY_PROTOCOLS_SOURCE = "protocolsSource"
+        private const val KEY_ADMOB_SEEN = "admobSeen"
         private const val KEY_SETTINGS = "settingCache"
         private const val KEY_SELECTED = "selectedServer"
     }

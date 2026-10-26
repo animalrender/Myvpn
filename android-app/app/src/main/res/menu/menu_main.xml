@@ -3,5 +3,7 @@
     <item android:id="@+id/action_raw_json" android:title="@string/btn_raw_json" />
     <item android:id="@+id/action_logs" android:title="@string/btn_logs" />
     <item android:id="@+id/action_import_clipboard" android:title="@string/btn_import" />
+    <item android:id="@+id/action_import_sub" android:title="@string/btn_import_sub" />
+    <item android:id="@+id/action_self_test" android:title="@string/btn_self_test" />
     <item android:id="@+id/action_toggle_mode" android:title="@string/mode_toggle" />
 </menu>

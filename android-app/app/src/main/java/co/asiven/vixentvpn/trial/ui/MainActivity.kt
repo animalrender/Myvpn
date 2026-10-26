@@ -129,6 +129,14 @@ class MainActivity : AppCompatActivity() {
                     importFromClipboard()
                     true
                 }
+                R.id.action_self_test -> {
+                    showText(getString(R.string.dlg_self_test_title), api.selfTest())
+                    true
+                }
+                R.id.action_import_sub -> {
+                    promptSubscription()
+                    true
+                }
                 R.id.action_toggle_mode -> {
                     toggleMode()
                     true
@@ -194,7 +202,9 @@ class MainActivity : AppCompatActivity() {
             busy = false
             setProgress(false)
             if (result.isEmpty()) {
-                binding.statusText.text = getString(R.string.status_error, "فهرست سرورها دریافت نشد — لاگ‌ها را ببینید")
+                val reason = api.lastError.ifBlank { prefs.protocolsSource.ifBlank { "—" } }
+                binding.statusText.text = getString(R.string.status_error, reason.lineSequence().first())
+                showText(getString(R.string.dlg_fetch_failed_title), reason)
             } else {
                 servers.clear()
                 servers.addAll(result)
@@ -220,6 +230,10 @@ class MainActivity : AppCompatActivity() {
     // ---------------------------------------------------------------- ping
 
     private fun pingSingle(server: Server) {
+        if (server.isOpaquePayload) {
+            toast(getString(R.string.msg_no_ping_opaque))
+            return
+        }
         server.pingState = PingState.RUNNING
         adapter.updatePing(server)
         lifecycleScope.launch {
@@ -237,9 +251,14 @@ class MainActivity : AppCompatActivity() {
             toast(getString(R.string.status_empty))
             return
         }
+        val measurable = servers.filterNot { it.isOpaquePayload }
+        if (measurable.isEmpty()) {
+            toast(getString(R.string.msg_no_ping_opaque))
+            return
+        }
         pingJob?.cancel()
         setProgress(true)
-        val targets = servers.toList()
+        val targets = measurable
         targets.forEach { it.pingState = PingState.RUNNING }
         adapter.notifyDataSetChanged()
         val total = targets.size
@@ -303,6 +322,10 @@ class MainActivity : AppCompatActivity() {
         }
         val server = selectedServer() ?: run {
             toast("اول یک سرور انتخاب کنید")
+            return
+        }
+        if (server.isOpaquePayload) {
+            showText(getString(R.string.dlg_opaque_title), getString(R.string.dlg_opaque_body))
             return
         }
         binding.statusText.text = getString(R.string.status_connecting)
@@ -369,6 +392,90 @@ class MainActivity : AppCompatActivity() {
             .setPositiveButton(R.string.btn_close, null)
             .setNeutralButton(R.string.btn_copy) { _, _ -> copy(server.rawJson) }
             .show()
+    }
+
+    /**
+     * Imports a whole subscription: fetches the URL, base64-decodes it when needed and adds every
+     * recognised share link. This is the fully client-side path that always works, regardless of
+     * what the vendor backend returns.
+     */
+    private fun promptSubscription() {
+        val layout = layoutInflater.inflate(R.layout.dialog_input, null)
+        val input = layout.findViewById<android.widget.EditText>(R.id.input)
+        input.hint = "https://…/sub"
+        val dialog = AlertDialog.Builder(this)
+            .setTitle(R.string.dlg_sub_title)
+            .setView(layout)
+            .setNegativeButton(R.string.btn_close, null)
+            .setPositiveButton(R.string.btn_import, null)
+            .create()
+        dialog.setOnShowListener {
+            dialog.getButton(AlertDialog.BUTTON_POSITIVE).setOnClickListener {
+                val url = input.text?.toString()?.trim().orEmpty()
+                if (!url.startsWith("http")) {
+                    input.error = getString(R.string.import_invalid_url)
+                    return@setOnClickListener
+                }
+                dialog.dismiss()
+                importSubscription(url)
+            }
+        }
+        dialog.show()
+    }
+
+    private fun importSubscription(url: String) {
+        setProgress(true)
+        binding.statusText.text = getString(R.string.status_fetching)
+        lifecycleScope.launch {
+            val raw = withContext(Dispatchers.IO) {
+                runCatching {
+                    val connection = (java.net.URL(url).openConnection() as java.net.HttpURLConnection).apply {
+                        connectTimeout = 20_000
+                        readTimeout = 25_000
+                        setRequestProperty("User-Agent", "v2rayNG/1.8.5")
+                    }
+                    connection.inputStream.bufferedReader().use { it.readText() }
+                }.onFailure { AppLog.e("دریافت اشتراک ناموفق", it) }.getOrNull()
+            }
+            setProgress(false)
+            if (raw.isNullOrBlank()) {
+                binding.statusText.text = getString(R.string.status_error, getString(R.string.import_sub_failed))
+                return@launch
+            }
+            val body = unwrapSubscription(raw)
+            val links = body.lineSequence()
+                .map { it.trim() }
+                .filter { it.isNotEmpty() && listOf("vmess://", "vless://", "trojan://", "ss://", "socks://", "hysteria://", "hy2://").any { p -> it.startsWith(p, true) } }
+                .toList()
+            if (links.isEmpty()) {
+                binding.statusText.text = getString(R.string.status_error, getString(R.string.import_sub_empty))
+                return@launch
+            }
+            val added = links.mapIndexed { index, link -> ServerParser.fromRaw(link, servers.size + index) }
+            servers.addAll(0, added)
+            if (servers.none { it.key == prefs.selectedKey }) prefs.selectedKey = servers.first().key
+            adapter.submit(servers, prefs.selectedKey)
+            updateSummary()
+            binding.statusText.text = getString(R.string.import_sub_ok, added.size)
+            AppLog.i("${added.size} سرور از اشتراک $url اضافه شد")
+        }
+    }
+
+    /** Subscription payloads are usually base64 of a newline-separated link list. */
+    private fun unwrapSubscription(raw: String): String {
+        val trimmed = raw.trim()
+        val looksLikeList = listOf("vmess://", "vless://", "trojan://", "ss://").any { trimmed.contains(it) }
+        if (looksLikeList) return trimmed
+        val decoded = runCatching {
+            String(
+                android.util.Base64.decode(
+                    trimmed.replace("\n", "").replace("\r", ""),
+                    android.util.Base64.DEFAULT,
+                ),
+                Charsets.UTF_8,
+            )
+        }.getOrNull()
+        return decoded ?: trimmed
     }
 
     /**

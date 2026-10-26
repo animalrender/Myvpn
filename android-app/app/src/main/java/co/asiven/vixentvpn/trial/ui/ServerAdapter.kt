@@ -87,6 +87,17 @@ class ServerAdapter(
 
             binding.locationBadge.text = server.flag.ifBlank { "—" }
 
+            if (server.isOpaquePayload) {
+                binding.payloadBadge.visibility = android.view.View.VISIBLE
+                binding.payloadBadge.text = context.getString(R.string.badge_encrypted_payload)
+                binding.pingButton.isEnabled = false
+                binding.pingButton.alpha = 0.45f
+            } else {
+                binding.payloadBadge.visibility = android.view.View.GONE
+                binding.pingButton.isEnabled = true
+                binding.pingButton.alpha = 1f
+            }
+
             val usageSummary = server.usage?.summary().orEmpty()
             binding.usageText.text = usageSummary.ifBlank { context.getString(R.string.badge_no_usage) }
 

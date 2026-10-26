@@ -14,31 +14,54 @@ import java.security.MessageDigest
 import java.util.Locale
 
 /**
- * Client for the backend used by the analysed APK.
+ * Client for the backend of the analysed APK — byte-for-byte the same request contract.
  *
- * Endpoints (identical to the original):
- *   GET/POST  {api}/api/token      — device token
- *   GET       {api}/api/setting    — app settings (test URL, remote api switch, …)
- *   GET       {api}/api/protocols  — the full server list (free **and** paid)
+ * Endpoints:
+ *   GET  {api}/api/token?deviceId=…[&firebase_token=…]
+ *   GET  {api}/api/setting
+ *   GET  {api}/api/protocols            (+ /api/protocols/ and /api/v2/protocols as fallbacks)
+ *   GET  {api}/api/configs?deviceId=…&serverId=…&protocolId=…
  *
- * Headers (identical to the original `VolleyHelper`):
- *   Content-Type: application/json
- *   app_name: <package>
- *   version_code: <versionCode>
- *   admobSeen: false            (kept for wire compatibility; the trial build has no ads)
- *   token: <token>
- *   sha_hexadecimal: <package>,<sha256 of signing certificate>
- *   sign: Base64(sha256(signing certificate bytes))
- *   Authorization: bearer <token>   (only once a token is known)
+ * Headers, exactly as `VolleyHelper.initHeaders()` builds them:
+ *   Content-Type      application/json
+ *   app_name          <package name>
+ *   version_code      <versionCode>            (1004220)
+ *   seen              <admobSeen int>          (0)
+ *   token             only when a real token exists
+ *   sign              Base64(MD5(certificate DER))          ← MUST be MD5, not SHA-256
+ *   sha_hexadecimal   hex(SHA-256(SHA-256(certificate DER)))  (several certs joined by ",")
+ *   Authorization     "bearer <token>" only when a real token exists
  *
- * NOTE: no Firebase header is sent — the trial build has no Firebase at all. The token
- * request is retried with GET/POST and with both hex cases so a stricter backend does not
- * lock the client out on a technicality.
+ * Every response is an envelope `{statusCode, status, data}` and the backend reports logical
+ * errors with **HTTP 200** (`{"statusCode":400,"status":false,"data":"Internal server error."}`),
+ * so an HTTP 200 alone is never treated as success.
  */
 class ApiClient(private val context: Context, private val prefs: Prefs) {
 
     data class Result(val code: Int, val body: String, val url: String) {
-        val ok: Boolean get() = code in 200..299 && body.isNotBlank()
+        val httpOk: Boolean get() = code in 200..299 && body.isNotBlank()
+
+        /** Envelope-aware success check: `statusCode == 200 && status == true` (or a bare payload). */
+        val ok: Boolean
+            get() {
+                if (!httpOk) return false
+                val json = parseObject(body) ?: return !body.trimStart().startsWith("{")
+                return envelopeOk(json)
+            }
+
+        /** Human readable error text (`data`/`message`) for logs and dialogs. */
+        val errorText: String
+            get() {
+                if (!httpOk) return "HTTP $code"
+                val json = parseObject(body)
+                if (json == null) return body.take(200)
+                val data = json.opt("data")
+                return when {
+                    data is String && data.isNotBlank() && data != "null" -> data
+                    json.has("message") -> json.optString("message")
+                    else -> body.take(200)
+                }
+            }
     }
 
     private val signing: Signing.Info? by lazy { Signing.info(context.packageName, context) }
@@ -47,214 +70,269 @@ class ApiClient(private val context: Context, private val prefs: Prefs) {
 
     // ---------------------------------------------------------------- public API
 
+    /**
+     * `GET /api/token`. This backend currently answers `{"statusCode":0,"data":"The app token is
+     * disabled"}`, which is a valid state, not a failure: the client then simply works without a
+     * token (the baseline puts the header only when the value is non-empty).
+     */
     fun fetchToken(): String? {
         val deviceId = prefs.deviceId
         val firebase = prefs.firebaseToken
-        // The original client uses GET (POST answers 405 on this backend); `firebase_token` rides
-        // along once Firebase has handed us one, exactly like the baseline MMKV value.
-        val firebaseQuery = if (firebase.isBlank()) "" else "&firebase_token=$firebase"
-        val body = JSONObject().apply {
-            put("deviceId", deviceId)
-            put("device_id", deviceId)
-            put("name", "${Build.MANUFACTURER} ${Build.MODEL}")
-            put("firebase_token", firebase)
-        }.toString()
+        val firebaseQuery =
+            if (firebase.isBlank()) "" else "&firebase_token=" + java.net.URLEncoder.encode(firebase, "UTF-8")
 
         val attempts = listOf(
-            Attempt("GET", "/api/token?deviceId=$deviceId$firebaseQuery", null, hexUpper = false),
-            Attempt("GET", "/api/token/?deviceId=$deviceId$firebaseQuery", null, hexUpper = false),
-            Attempt("POST", "/api/token", body, hexUpper = false),
-            Attempt("POST", "/api/token/", body, hexUpper = false),
+            "/api/token?deviceId=$deviceId$firebaseQuery",
+            "/api/token/?deviceId=$deviceId$firebaseQuery",
         )
-        for (attempt in attempts) {
-            val result = execute(attempt) ?: continue
+        for (path in attempts) {
+            val result = request("GET", path)
+            if (!result.httpOk) {
+                AppLog.w("توکن: ${result.url} → ${result.code}")
+                continue
+            }
             val token = extractToken(result.body)
             if (token != null) {
                 prefs.token = token
-                AppLog.i("token دریافت شد (${token.take(6)}…) از ${result.url}")
+                AppLog.i("token دریافت شد (${token.take(6)}…)")
                 return token
             }
-            // `The app token is disabled` is a valid backend state, not a failure to retry.
             if (result.body.contains("disabled", ignoreCase = true)) {
-                AppLog.i("توکن سمت سرور غیرفعال است؛ بدون توکن ادامه می‌دهیم")
+                prefs.token = ""
+                AppLog.i("توکن سمت سرور غیرفعال است؛ بدون هدر token ادامه می‌دهیم")
                 return null
             }
-            AppLog.w("پاسخ توکن قابل تجزیه نبود: ${result.code} ${result.body.take(200)}")
+            AppLog.w("پاسخ توکن قابل استفاده نبود: ${result.body.take(200)}")
         }
-        AppLog.w("دریافت توکن انجام نشد؛ درخواست‌ها بدون هدر token ادامه می‌یابند")
+        prefs.token = ""
         return null
     }
 
     fun fetchSetting(): AppSetting? {
-        val attempts = listOf(
-            Attempt("GET", "/api/setting", null, false),
-            Attempt("GET", "/api/setting/", null, false),
-            Attempt("POST", "/api/setting/", "{}", false),
-            Attempt("GET", "/api/setting", null, true),
-        )
-        for (attempt in attempts) {
-            val result = execute(attempt) ?: continue
-            val json = parseObject(result.body) ?: continue
-            prefs.settingsCache = json.toString()
-            val setting = AppSetting.from(unwrap(json) as? JSONObject ?: json)
-            AppLog.i("setting دریافت شد از ${result.url}")
-            // Remote api switch — the original app persists `apiUrl` from the settings payload.
-            setting.apiUrl?.takeIf { it.startsWith("http") }?.let {
-                if (it != prefs.apiUrl) AppLog.i("apiUrl از راه دور به‌روزرسانی شد: $it")
-                prefs.apiUrl = it.trimEnd('/')
-            }
-            setting.testUrl?.takeIf { it.startsWith("http") }?.let { prefs.testUrl = it }
-            return setting
+        val result = request("GET", "/api/setting")
+        if (!result.ok) {
+            AppLog.w("setting: ${result.code} ${result.errorText}")
+            return null
         }
-        AppLog.e("دریافت setting شکست خورد")
-        return null
+        val json = parseObject(result.body) ?: return null
+        val payload = unwrap(json) as? JSONObject ?: JSONObject()
+        if (payload.length() == 0) {
+            AppLog.i("setting خالی است (data=null) — پیش‌فرض‌های برنامه استفاده می‌شوند")
+            return null
+        }
+        val setting = AppSetting.from(payload)
+        prefs.settingsCache = payload.toString()
+        setting.apiUrl?.takeIf { it.startsWith("http") && it != prefs.apiUrl }?.let {
+            AppLog.i("apiUrl از راه دور به‌روزرسانی شد: $it")
+            prefs.apiUrl = it.trimEnd('/')
+        }
+        setting.testUrl?.takeIf { it.startsWith("http") }?.let { prefs.testUrl = it }
+        return setting
     }
 
+    /** The full server list — `/api/protocols`, with `/api/v2/protocols` as a richer fallback. */
     fun fetchProtocols(): List<Server> {
-        val attempts = listOf(
-            Attempt("GET", "/api/protocols", null, false),
-            Attempt("GET", "/api/protocols/", null, false),
-            Attempt("POST", "/api/protocols/", "{}", false),
-            Attempt("GET", "/api/protocols", null, true),
-        )
-        for (attempt in attempts) {
-            val result = execute(attempt) ?: continue
+        val paths = listOf("/api/protocols", "/api/protocols/", "/api/v2/protocols")
+        val errors = mutableListOf<String>()
+        for (path in paths) {
+            val result = request("GET", path)
+            if (!result.ok) {
+                errors += "$path → ${result.code} ${result.errorText}"
+                AppLog.w("protocols: $path → ${result.code} | ${result.errorText}")
+                continue
+            }
             val json = parseObject(result.body) ?: continue
             val servers = ServerParser.parseList(json)
             if (servers.isEmpty()) {
-                AppLog.w("پاسخ protocols شامل سروری نبود: ${result.body.take(200)}")
+                errors += "$path → پاسخ بدون سرور"
                 continue
             }
-            prefs.protocolsCache = result.body
-            AppLog.i("${servers.size} سرور از ${result.url} دریافت شد")
+            prefs.protocolsCache = json.toString()
+            prefs.protocolsSource = path
+            AppLog.i("${servers.size} سرور از $path دریافت شد")
             return servers
         }
-        AppLog.e("دریافت فهرست سرورها شکست خورد")
+        lastError = errors.joinToString("\n")
+        AppLog.e("دریافت فهرست سرورها شکست خورد:\n$lastError")
         return emptyList()
+    }
+
+    var lastError: String = ""
+        private set
+
+    /**
+     * On-device contract test: runs every endpoint with the real headers and returns a readable
+     * report. Shown from the overflow menu so a failing build can be diagnosed without a PC.
+     */
+    fun selfTest(): String {
+        val sb = StringBuilder()
+        val sign = signing
+        sb.appendLine("BASE: $baseUrl")
+        sb.appendLine("app_name: ${context.packageName}   version_code: ${BuildConfig.HEADER_VERSION_CODE}")
+        if (sign == null) {
+            sb.appendLine("!! گواهی امضا خوانده نشد → هدرهای sign/sha ارسال نمی‌شوند")
+        } else {
+            sb.appendLine("sign = ${sign.signBase64}")
+            sb.appendLine("sha_hexadecimal = ${sign.shaHex}")
+        }
+        sb.appendLine("deviceId: ${prefs.deviceId}")
+        sb.appendLine("token (ذخیره‌شده): ${prefs.token.ifBlank { "—" }}")
+        sb.appendLine("firebase_token: ${prefs.firebaseToken.ifBlank { "—" }}")
+        sb.appendLine()
+        for (path in listOf(
+            "/api/token?deviceId=${prefs.deviceId}",
+            "/api/setting",
+            "/api/protocols",
+            "/api/v2/protocols",
+            "/api/configs?deviceId=${prefs.deviceId}",
+        )) {
+            val r = request("GET", path)
+            val items = runCatching { (parseObject(r.body)?.opt("data") as? org.json.JSONArray)?.length() }.getOrNull()
+            sb.appendLine("$path")
+            sb.appendLine("  HTTP ${r.code} · ${r.body.length()}B · ok=${r.ok}${items?.let { " · items=$it" } ?: ""}")
+            sb.appendLine("  ${r.body.take(220).replace("\n", " ")}")
+        }
+        return sb.toString()
     }
 
     // ---------------------------------------------------------------- HTTP layer
 
-    private data class Attempt(val method: String, val path: String, val body: String?, val hexUpper: Boolean)
-
-    private fun execute(attempt: Attempt): Result? {
-        val url = baseUrl + attempt.path
-        val requestHeaders = headers(attempt.hexUpper)
+    private fun request(method: String, path: String, body: String? = null): Result {
+        val url = baseUrl + path
         var connection: HttpURLConnection? = null
         return try {
             connection = (URL(url).openConnection() as HttpURLConnection).apply {
-                requestMethod = attempt.method
+                requestMethod = method
                 connectTimeout = 20_000
                 readTimeout = 25_000
                 instanceFollowRedirects = true
                 doInput = true
-                requestHeaders.forEach { (k, v) -> setRequestProperty(k, v) }
-                if (attempt.body != null) {
+                headers().forEach { (k, v) -> setRequestProperty(k, v) }
+                if (body != null) {
                     doOutput = true
-                    setRequestProperty("Content-Type", "application/json")
+                    outputStream.use { it.write(body.toByteArray(Charsets.UTF_8)) }
                 }
-            }
-            if (attempt.body != null) {
-                connection.outputStream.use { it.write(attempt.body.toByteArray(Charsets.UTF_8)) }
             }
             val code = connection.responseCode
             val stream = if (code in 200..299) connection.inputStream else connection.errorStream
             val text = stream?.bufferedReader()?.use(BufferedReader::readText).orEmpty()
-            AppLog.d("${attempt.method} $url → $code (${text.length} بایت)")
-            if (code !in 200..299) {
-                AppLog.w("پاسخ غیرموفق $code: ${text.take(300)}")
-            }
+            AppLog.d("$method $url → $code (${text.length} بایت)")
             Result(code, text, url)
         } catch (t: Throwable) {
-            AppLog.e("${attempt.method} $url ناموفق", t)
-            null
+            AppLog.e("$method $url ناموفق", t)
+            Result(-1, "", url)
         } finally {
-            connection?.disconnect()
+            runCatching { connection?.disconnect() }
         }
     }
 
-    private fun headers(hexUpper: Boolean = false): Map<String, String> {
+    /** The exact `VolleyHelper.initHeaders()` set. */
+    private fun headers(): Map<String, String> {
         val map = linkedMapOf(
+            "Content-Type" to "application/json",
             "Accept" to "application/json",
-            "User-Agent" to "okhttp/3.12.13",
-            "app_name" to BuildConfig.HEADER_APP_NAME,
+            "User-Agent" to userAgent(),
+            "app_name" to context.packageName,
             "version_code" to BuildConfig.HEADER_VERSION_CODE.toString(),
-            "admobSeen" to "false",
+            "seen" to prefs.admobSeen.toString(),
         )
-        val token = prefs.token
-        if (token.isNotBlank()) {
-            map["token"] = token
-            map["Authorization"] = "bearer $token"
+        val token = prefs.token.trim()
+        if (token.isNotEmpty()) map["token"] = token
+        signing?.let { info ->
+            map["sign"] = info.signBase64
+            map["sha_hexadecimal"] = info.shaHex
         }
-        signing?.let {
-            map["sha_hexadecimal"] = "${BuildConfig.HEADER_APP_NAME},${it.sha256Hex(hexUpper)}"
-            map["sign"] = it.signBase64
-        }
+        // `Authorization: bearer …` is only added when the backend actually issued a token
+        // (`Lo4/c.c` is empty otherwise — sending a placeholder breaks the request).
+        if (token.isNotEmpty()) map["Authorization"] = "bearer $token"
         return map
     }
+
+    private fun userAgent(): String =
+        "Dalvik/2.1.0 (Linux; U; Android ${Build.VERSION.RELEASE}; ${Build.MODEL} Build/${Build.ID})"
 
     private fun normalise(url: String): String = url.trim().trimEnd('/').ifBlank { BuildConfig.API_BASE }
 
     companion object {
 
-        fun parseObject(text: String): JSONObject? = runCatching { JSONObject(text.trim()) }.getOrNull()
+        /** `statusCode`/`status` of an envelope, tolerant to strings and missing fields. */
+        fun envelopeOk(json: JSONObject): Boolean {
+            val statusCode = coerceInt(json.opt("statusCode")) ?: 200
+            val status = coerceBool(json.opt("status")) ?: true
+            return statusCode == 200 && status
+        }
 
-        /**
-         * Backend responses are wrapped (`{status, message, data}`); unwrap `data` when present.
-         */
+        fun coerceInt(value: Any?): Int? = when (value) {
+            null, JSONObject.NULL -> null
+            is Number -> value.toInt()
+            is String -> value.trim().toIntOrNull()
+            is Boolean -> if (value) 1 else 0
+            else -> null
+        }
+
+        fun coerceBool(value: Any?): Boolean? = when (value) {
+            null, JSONObject.NULL -> null
+            is Boolean -> value
+            is Number -> value.toInt() != 0
+            is String -> when (value.trim().lowercase(Locale.US)) {
+                "true", "1", "yes" -> true
+                "false", "0", "no" -> false
+                else -> null
+            }
+            else -> null
+        }
+
+        fun parseObject(text: String): JSONObject? =
+            runCatching { JSONObject(text.trim()) }.getOrNull()?.takeIf { it.length() > 0 }
+
+        /** Unwraps the `data`/`result` field; returns the whole object when there is none. */
         fun unwrap(json: JSONObject): Any? {
             val lower = json.keys().asSequence().associateBy { it.lowercase() }
             val dataKey = lower["data"] ?: lower["result"] ?: return json
             return json.opt(dataKey)
         }
 
-        /** Digs a token out of any of the possible response shapes. */
+        /**
+         * Extracts a token from a success envelope only. Anything that looks like an error message
+         * (`Internal server error.`, `… disabled`, JSON punctuation) is rejected — storing such a
+         * body as the token was the reason every following request failed on build 25.
+         */
         fun extractToken(body: String): String? {
             val trimmed = body.trim()
-            if (trimmed.startsWith("\"") && trimmed.endsWith("\"")) {
-                return trimmed.trim('"').takeIf { it.isNotBlank() }
+            if (trimmed.isEmpty()) return null
+            if (!trimmed.startsWith("{") && !trimmed.startsWith("[")) {
+                return trimmed.takeIf { it.length in 8..512 && !it.contains(' ') }
             }
             val json = parseObject(trimmed) ?: return null
-            // {token: "..."}
-            json.optString("token").takeIf { it.isNotBlank() && it != "null" }?.let { return it }
-            // {data: "..."} / {result: "..."}
-            when (val data = unwrap(json)) {
-                is String -> if (data.isNotBlank() && data != "null") return data
-                is JSONObject -> data.optString("token").takeIf { it.isNotBlank() && it != "null" }
-                    ?.let { return it }
-                else -> {}
-            }
-            fun find(node: Any?): String? = when (node) {
-                is JSONObject -> {
-                    node.keys().asSequence()
-                        .map { it to node.opt(it) }
-                        .firstOrNull { it.first.equals("token", true) && it.second is String }
-                        ?.second as? String
-                        ?: node.keys().asSequence().map { find(node.opt(it)) }.firstOrNull { it != null }
-                }
-                is org.json.JSONArray -> (0 until node.length()).map { find(node.opt(it)) }.firstOrNull { it != null }
+            if (!envelopeOk(json)) return null
+            val data = json.opt("data") ?: json.opt("token") ?: return null
+            val candidate = when (data) {
+                is String -> data
+                is JSONObject -> data.optString("token", data.optString("access_token"))
                 else -> null
-            }
-            return find(json)?.takeIf { it.isNotBlank() }
+            }?.trim().orEmpty()
+            if (candidate.isEmpty() || candidate.length < 8) return null
+            if (candidate.contains(' ') || candidate.endsWith(".")) return null
+            return candidate
         }
     }
 }
 
-/**
- * Reproduces the original `sign` / `sha_hexadecimal` headers: SHA-256 over the APK signing
- * certificate, hex for one header and Base64 for the other.
- * (`PackageManager` `GET_SIGNING_CERTIFICATES` on Android 9+, `GET_SIGNATURES` below.)
- */
+/** Signing-certificate fingerprints used by the `sign` / `sha_hexadecimal` headers. */
 object Signing {
 
-    data class Info(val sha256: ByteArray) {
-        fun sha256Hex(upper: Boolean = false): String {
-            val hex = sha256.joinToString("") { String.format(Locale.US, "%02x", it.toInt() and 0xFF) }
-            return if (upper) hex.uppercase(Locale.US) else hex
-        }
-
+    data class Info(val der: ByteArray) {
+        /** `Base64(MD5(DER))` — `VolleyHelper.getSign("MD5")`. */
         val signBase64: String
-            get() = Base64.encodeToString(sha256, Base64.NO_WRAP)
+            get() = Base64.encodeToString(MessageDigest.getInstance("MD5").digest(der), Base64.NO_WRAP)
+
+        /** `hex(SHA-256(SHA-256(DER)))` — `Ld0/h.w(Signature)`. */
+        val shaHex: String
+            get() {
+                val doubled = MessageDigest.getInstance("SHA-256")
+                    .digest(MessageDigest.getInstance("SHA-256").digest(der))
+                return doubled.joinToString("") { String.format(Locale.US, "%02x", it.toInt() and 0xFF) }
+            }
     }
 
     fun info(packageName: String, context: Context): Info? = runCatching {
@@ -267,7 +345,6 @@ object Signing {
             @Suppress("DEPRECATION")
             pm.getPackageInfo(packageName, PackageManager.GET_SIGNATURES).signatures?.firstOrNull()
         } ?: return null
-        val digest = MessageDigest.getInstance("SHA-256").digest(signature.toByteArray())
-        Info(digest)
+        Info(signature.toByteArray())
     }.onFailure { AppLog.e("محاسبهٔ هدر امضا ناموفق", it) }.getOrNull()
 }

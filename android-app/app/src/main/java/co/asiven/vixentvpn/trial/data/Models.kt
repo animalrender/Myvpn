@@ -34,6 +34,26 @@ data class Server(
     val isFree: Boolean get() = (price ?: 0) <= 0
     val hasConfig: Boolean get() = rawConfig.isNotBlank()
     val displayFlag: String get() = flag.ifBlank { "🌐" }
+
+    /**
+     * True when the backend handed out an opaque blob instead of a share link / JSON config.
+     * The current backend encrypts `value` (base64, high entropy, not a URI), and the matching
+     * key lives inside the vendor's protected native code, so such a row can be listed and
+     * labelled but not dialled — the UI says so explicitly instead of pretending.
+     */
+    val isOpaquePayload: Boolean
+        get() {
+            val raw = rawConfig.trim()
+            if (raw.isEmpty()) return true
+            if (raw.startsWith("{") || raw.startsWith("[")) return false
+            if (Regex("^[a-zA-Z][a-zA-Z0-9+.-]*://").containsMatchIn(raw)) return false
+            if (raw.startsWith("ScKit-")) return true
+            if (raw.length < 24) return false
+            val alphabet = raw.filterNot { it == '=' || it == '\n' || it == '\r' }
+            if (alphabet.isEmpty()) return false
+            val base64ish = alphabet.all { it.isLetterOrDigit() || it == '+' || it == '/' || it == '-' || it == '_' }
+            return base64ish
+        }
 }
 
 /** `co.dev.models.ProtocolUsage` — per-device accounting that the real app shows per row. */
@@ -286,6 +306,10 @@ object ServerParser {
         if (trimmed.startsWith("{")) {
             runCatching { JSONObject(trimmed).optString("protocol") }
                 .getOrNull()?.takeIf { it.isNotBlank() }?.let { return it.lowercase() }
+        }
+        if (rawConfig.startsWith("ScKit-")) return "enc"
+        if (trimmed.length >= 24 && trimmed.all { it.isLetterOrDigit() || it == '+' || it == '/' || it == '=' }) {
+            return "enc"
         }
         return declared?.lowercase().orEmpty().ifBlank { "?" }
     }
