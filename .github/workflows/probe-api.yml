@@ -16,6 +16,7 @@ on:
       - "android-app/tools/probe-v2b.py"
       - "android-app/tools/probe-version-sweep.py"
       - "android-app/tools/probe-decode.py"
+      - "android-app/tools/probe-resolve.py"
       - ".github/workflows/probe-api.yml"
 
 permissions:
@@ -50,6 +51,11 @@ jobs:
         env:
           PROBE_CERT: /tmp/keys/testkey.x509.pem
         run: python3 android-app/tools/probe-decode.py 2>&1 | tee /tmp/probe-decode.log || true
+
+      - name: Follow the 405 signals (method matrix, resolve routes)
+        env:
+          PROBE_CERT: /tmp/keys/testkey.x509.pem
+        run: python3 android-app/tools/probe-resolve.py 2>&1 | tee /tmp/probe-resolve.log || true
 
       - name: Probe configs endpoint
         env:
