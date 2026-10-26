@@ -293,13 +293,31 @@ def bring_into_view(name, ping=None):
     return row_bounds(name, ping)
 
 
-def connect_row(row, index):
+def logcat_errors(limit=6):
+    """The app's own error lines — the quickest way to know *why* a row failed."""
+    out = adb("logcat", "-d", "-s", "MvpnTrial:E", timeout=120).stdout or ""
+    lines = [line.strip() for line in out.splitlines() if "MvpnTrial" in line]
+    return "\n".join(lines[-limit:])
+
+
+def close_dialogs():
+    for label in ("بستن", "باشه", "OK"):
+        node = find(text=label, exact=True)
+        point = center(node.get("bounds")) if node else None
+        if point:
+            tap(point)
+            time.sleep(1)
+            return True
+    return False
+
+
+def connect_row(row, index, wait_seconds=90):
+    """Selects the row, presses the hero button and waits for the «متصل» state."""
     landed = bring_into_view(row["name"], row.get("ping"))
     if not landed:
         log(f"**ردیف «{row['name']}» در فهرست پیدا نشد**")
         return False
-    row = dict(row, bounds=landed)
-    tap(center(row["bounds"]))
+    tap(center(landed))
     time.sleep(2)
     shot(f"{index}-selected")
     if not (tap_rid("connectButton") or tap_text("اتصال", exact=True)):
@@ -308,36 +326,19 @@ def connect_row(row, index):
     time.sleep(4)
     if accept_vpn_dialog():
         log("دیالوگ مجوز VPN تأیید شد")
-    label = f"متصل — {row['name']}"
-    for _ in range(60):
+    deadline = time.time() + wait_seconds
+    while time.time() < deadline:
         node = find(text="متصل", exact=False)
         if node:
-            status = (node.get("text") or "").strip()
-            log(f"وضعیت تونل: `{status}`")
+            log(f"وضعیت تونل: `{(node.get('text') or '').strip()}`")
             shot(f"{index}-connected")
             return True
-        time.sleep(2)
+        time.sleep(3)
     shot(f"{index}-connect-failed")
-    log(f"**وضعیت «{label}» دیده نشد**")
+    errors = logcat_errors()
+    if errors:
+        log("خطاهای برنامه:\n```\n" + errors + "\n```")
     return False
-
-
-def connect_button_text():
-    """Label of the hero button: «اتصال» / «اتصال به سرور انتخابی» / «قطع اتصال»."""
-    node = find(rid="connectButton")
-    return (node.get("text") or "").strip() if node else None
-
-
-def hero_name():
-    """The server the activity currently has selected (it auto-picks the fastest after a ping)."""
-    node = find(rid="selectedNameText")
-    text = unescape((node or {}).get("text") or "")
-    return text.replace("\u200f", "").strip()
-
-
-def bulk_ping_finished():
-    out = adb("logcat", "-d", "-s", "MvpnTrial:V", timeout=120).stdout or ""
-    return "پینگ همهٔ" in out
 
 
 def main(argv):
@@ -440,18 +441,11 @@ def main(argv):
                     time.sleep(2)
         if not started:
             failures.append(f"not-connected-{index}")
+            close_dialogs()
             continue
-        authed = False
-        for wait in range(20):
-            if find(text="متصل", exact=False):
-                authed = True
-                break
-            if not authed and wait == 2:
-                accept_vpn_dialog()
-            time.sleep(2)
-        log(f"وضعیت تونل: `{(find(text='متصل', exact=False) or {}).get('text', '—')}`")
-        if not authed:
+        if not find(text="متصل", exact=False):
             failures.append(f"no-tunnel-{index}")
+            close_dialogs()
             continue
         time.sleep(4)
         up = tun_up()
