@@ -65,6 +65,25 @@ jobs:
           test -x "$NDK/ndk-build"
           ls /dev/kvm && echo "KVM present" || echo "::warning title=ui-snapshot::/dev/kvm missing — the emulator may be very slow or fail to boot"
 
+      - name: Environment check
+        run: |
+          set -uo pipefail
+          OUT=android-app/docs/screenshots
+          mkdir -p "$OUT"
+          {
+            echo "# ui-snapshot — run ${{ github.run_number }}"
+            echo ""
+            echo "- branch: ${{ github.ref_name }}"
+            echo "- sha: ${{ github.sha }}"
+            echo "- started: $(date -u +%FT%TZ)"
+            echo "- kvm: $(ls -l /dev/kvm 2>&1 | tr -d '\n')"
+            echo "- user: $(id -un) / groups: $(id -Gn)"
+            echo "- python: $(python3 --version 2>&1)"
+            echo "- adb: $(adb version 2>&1 | head -1)"
+            echo "- runner: $(uname -a)"
+          } > "$OUT/STATUS.md"
+          cat "$OUT/STATUS.md"
+
       - name: Make helper scripts executable
         run: chmod +x android-app/tools/*.sh
 
@@ -97,20 +116,39 @@ jobs:
           arch: x86_64
           profile: pixel_6
           disable-animations: true
-          emulator-options: -no-snapshot -no-boot-anim -no-audio -gpu swiftshader_indirect
+          emulator-boot-timeout: 900
+          emulator-options: -no-snapshot -no-snapshot-save -no-boot-anim -no-audio -gpu swiftshader_indirect
           script: |
             set -uo pipefail
+            OUT=android-app/docs/screenshots
+            STATUS="$OUT/STATUS.md"
+            mkdir -p "$OUT"
+            echo "" >> "$STATUS"
+            echo "## Device" >> "$STATUS"
+            adb wait-for-device
+            {
+              echo "- model: $(adb shell getprop ro.product.model 2>&1 | tr -d '\r')"
+              echo "- api: $(adb shell getprop ro.build.version.sdk 2>&1 | tr -d '\r')"
+              echo "- abi: $(adb shell getprop ro.product.cpu.abi 2>&1 | tr -d '\r')"
+              echo "- devices: $(adb devices | tr -d '\n')"
+            } >> "$STATUS"
             APK="$(find android-app/app/build/outputs/apk/release -name '*.apk' | head -1)"
-            echo "APK: $APK"
-            adb install -r -t "$APK" || adb install -r "$APK"
-            adb shell pm grant co.asiven.vixentvpn android.permission.POST_NOTIFICATIONS || true
-            adb shell am start -W -n co.asiven.vixentvpn/co.asiven.vixentvpn.trial.ui.MainActivity
-            python3 android-app/tools/ui-drive.py android-app/docs/screenshots \
-              wait-text "MVPN" 40 \
-              sleep 3 \
+            echo "- apk: $APK ($(du -h "$APK" | cut -f1))" >> "$STATUS"
+            echo "## Steps" >> "$STATUS"
+            INSTALL="$(timeout 180 adb install -r -t "$APK" 2>&1 | tail -2)"
+            echo "- install: $INSTALL" >> "$STATUS"
+            timeout 30 adb shell pm grant co.asiven.vixentvpn android.permission.POST_NOTIFICATIONS >/dev/null 2>&1 || true
+            START="$(timeout 120 adb shell am start -W -n co.asiven.vixentvpn/co.asiven.vixentvpn.trial.ui.MainActivity 2>&1 | tr -d '\r' | tr '\n' ' ')"
+            echo "- start: $START" >> "$STATUS"
+            EXIT=0
+            timeout 900 python3 android-app/tools/ui-drive.py "$OUT" \
+              sleep 6 \
+              shot 00-start \
+              dump 00-start \
+              wait-text "MVPN" 60 \
               shot 01-home \
               dump 01-home \
-              wait-text "رایگان" 120 \
+              wait-text "رایگان" 150 \
               shot 02-list-loaded \
               tap-text "پینگ" \
               sleep 6 \
@@ -137,14 +175,17 @@ jobs:
               sleep 2 \
               shot 08-menu \
               back \
-              crash-check
+              crash-check || EXIT=$?
+            echo "- ui-drive exit: $EXIT" >> "$STATUS"
+            echo "- pid: $(timeout 30 adb shell pidof co.asiven.vixentvpn 2>&1 | tr -d '\r' || true)" >> "$STATUS"
+            exit $EXIT
 
       - name: Collect logs
         if: always()
         run: |
           mkdir -p android-app/docs/screenshots
-          adb logcat -d -s MvpnTrial:V AndroidRuntime:E > android-app/docs/screenshots/logcat.txt 2>/dev/null || true
-          adb shell dumpsys window | head -40 > android-app/docs/screenshots/window.txt 2>/dev/null || true
+          timeout 60 adb logcat -d -s MvpnTrial:V AndroidRuntime:E > android-app/docs/screenshots/logcat.txt 2>/dev/null || true
+          timeout 60 adb shell dumpsys window > android-app/docs/screenshots/window.txt 2>/dev/null || true
           ls -l android-app/docs/screenshots || true
 
       - name: Commit the screenshots
@@ -167,9 +208,13 @@ jobs:
         run: |
           python3 - <<'PY'
           import pathlib, urllib.parse
-          report = pathlib.Path("android-app/docs/screenshots/STEPS.txt")
-          body = report.read_text(errors="replace") if report.exists() else "no STEPS.txt (the emulator step did not run)"
-          print("::notice title=ui-snapshot::%s" % urllib.parse.quote(body[-4000:], safe=""))
+          status = pathlib.Path("android-app/docs/screenshots/STATUS.md")
+          steps = pathlib.Path("android-app/docs/screenshots/STEPS.txt")
+          body = status.read_text(errors="replace") if status.exists() else "no STATUS.md"
+          if steps.exists():
+              body += "\n" + steps.read_text(errors="replace")
+          level = "error" if "${{ job.status }}" != "success" else "notice"
+          print("::%s title=ui-snapshot::%s" % (level, urllib.parse.quote(body[-4000:], safe="")))
           log = pathlib.Path("/tmp/gradle.log")
           if log.exists():
               print("::warning title=gradle-tail::%s" % urllib.parse.quote(log.read_text(errors="replace")[-3000:], safe=""))
