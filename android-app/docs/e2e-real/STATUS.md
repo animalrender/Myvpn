@@ -1,9 +1,9 @@
-# e2e-real — run 6
+# e2e-real — run 7
 
 - branch: arena/b9372ae1-myvpn
-- sha: 8211a3d8eafecc15ed771cd84912ab0baf7f6cc9
-- started: 2026-10-26T11:46:14Z
-- kvm: crw-rw-rw- 1 root kvm 10, 232 Oct 26 11:41 /dev/kvm
+- sha: 3861406244947863b54d5a08e1109ea1c9eb22b3
+- started: 2026-10-26T12:10:31Z
+- kvm: crw-rw-rw- 1 root kvm 10, 232 Oct 26 12:06 /dev/kvm
 - booted: 1
 - apk: android-app/app/build/outputs/apk/release/app-release.apk
 Performing Streamed Install
