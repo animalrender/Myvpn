@@ -1,36 +1,32 @@
 # آزمون اتصال واقعی به بک‌اند اصلی (بدون هیچ ورودی کاربر)
 
-- زمان: 2026-10-26T14:22:20Z
-- آدرس آزمون: `http://connectivitycheck.gstatic.com/generate_204`
+- زمان: 2026-10-26T14:49:02Z
+- آدرس آزمون: `http://1.1.1.1/cdn-cgi/trace`
 
 ## گام‌ها
 
 - پاک‌کردن دادهٔ برنامه (بدون کش، بدون کانفیگ ذخیره‌شده)
 - ابزار HTTP روی شبیه‌ساز: `nc`
 - IP خروج پیش از اتصال: `None` (success/United States)
-- درخواست بدون تونل: HTTP 204
+- درخواست بدون تونل: HTTP 200
 - فهرست بارگذاری شد: 3 ردیف روی صفحه — خلاصه: `نمایش 105 از 105 سرور (رایگان: 105 / پولی: 0)`
-- نمونهٔ برچسب ردیف‌ها: `🇺🇸 United States`، `🇸🇪 Sweden`، `🇩🇪 Germany`
+- نمونهٔ برچسب ردیف‌ها: `🇫🇮 Finland`، `🇺🇸 United States`، `🇸🇪 Sweden`
 - پایان پینگ همه: بله
-- سروری که برنامه خودش انتخاب کرد: `🌐  🇺🇸 United States`
-- اتصال به سرور انتخاب‌شده: `🌐  🇺🇸 United States`
+- سروری که برنامه خودش انتخاب کرد: `🌐  🇫🇮 Finland`
+- اتصال به سرور انتخاب‌شده: `🌐  🇫🇮 Finland`
 - دیالوگ مجوز VPN تأیید شد
-- خطاهای برنامه:
-```
-10-26 14:19:27.701  3400  3675 E MvpnTrial: 	at kotlinx.coroutines.internal.LimitedDispatcher$Worker.run(LimitedDispatcher.kt:111)
-10-26 14:19:27.701  3400  3675 E MvpnTrial: 	at kotlinx.coroutines.scheduling.TaskImpl.run(Tasks.kt:99)
-10-26 14:19:27.701  3400  3675 E MvpnTrial: 	at kotlinx.coroutines.scheduling.CoroutineScheduler.runSafely(CoroutineScheduler.kt:584)
-10-26 14:19:27.701  3400  3675 E MvpnTrial: 	at kotlinx.coroutines.scheduling.CoroutineScheduler$Worker.executeTask(CoroutineScheduler.kt:811)
-10-26 14:19:27.701  3400  3675 E MvpnTrial: 	at kotlinx.coroutines.scheduling.CoroutineScheduler$Worker.runWorker(CoroutineScheduler.kt:715)
-10-26 14:19:27.701  3400  3675 E MvpnTrial: 	at kotlinx.coroutines.scheduling.CoroutineScheduler$Worker.run(CoroutineScheduler.kt:702)
-```
-- تلاش 2: اتصال به `🇸🇪 Sweden`
-- دیالوگ مجوز VPN تأیید شد
-- وضعیت تونل: `متصل — &#127480;&#127466; Sweden (VPN)`
+- وضعیت تونل: `متصل — &#127467;&#127470; Finland (VPN)`
 - رابط tun0: موجود
-- درخواست از داخل تونل: HTTP no-response
-- درخواست از داخل تونل: HTTP no-response
-- درخواست از داخل تونل: HTTP no-response
+- درخواست از داخل تونل: HTTP 301
+- درخواست از داخل تونل: HTTP 301
+- درخواست از داخل تونل: HTTP 301
+- ترافیک از این ردیف عبور نکرد؛ سرور بعدی آزموده می‌شود
+- تلاش 2: اتصال به `🇫🇮 Finland`
+- وضعیت تونل: `متصل — &#127467;&#127470; Finland (VPN)`
+- رابط tun0: موجود
+- درخواست از داخل تونل: HTTP 301
+- درخواست از داخل تونل: HTTP 301
+- درخواست از داخل تونل: HTTP 301
 - ترافیک از این ردیف عبور نکرد؛ سرور بعدی آزموده می‌شود
 
 ## تصاویر
@@ -41,7 +37,7 @@
 
 ![03-selected](03-selected.png)
 
-![03-connect-failed](03-connect-failed.png)
+![03-connected](03-connected.png)
 
 ![04-selected](04-selected.png)
 
@@ -49,4 +45,4 @@
 
 ## نتیجه
 
-**ناموفق**: not-connected-1, no-traffic-2, no-server-passed-traffic
+**ناموفق**: no-traffic-1, no-traffic-2, no-server-passed-traffic
