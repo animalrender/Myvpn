@@ -214,8 +214,8 @@ jobs:
           echo "" >> "$STATUS"
           echo "## Steps" >> "$STATUS"
           echo "- install: $(timeout 240 adb install -r -t "$APK" 2>&1 | tail -2)" >> "$STATUS"
-          timeout 30 adb shell pm grant co.asiven.vixentvpn android.permission.POST_NOTIFICATIONS >/dev/null 2>&1 || true
-          echo "- start: $(timeout 120 adb shell am start -W -n co.asiven.vixentvpn/co.asiven.vixentvpn.trial.ui.MainActivity 2>&1 | tr -d '\r' | tr '\n' ' ')" >> "$STATUS"
+          timeout 30 adb shell pm grant co.asiven.vixentvpn.trial android.permission.POST_NOTIFICATIONS >/dev/null 2>&1 || true
+          echo "- start: $(timeout 120 adb shell am start -W -n co.asiven.vixentvpn.trial/co.asiven.vixentvpn.trial.ui.MainActivity 2>&1 | tr -d '\r' | tr '\n' ' ')" >> "$STATUS"
           EXIT=0
           timeout 1200 python3 android-app/tools/ui-drive.py "$OUT" \
             sleep 6 \
@@ -266,7 +266,7 @@ jobs:
             shot 10-scrolled-more \
             crash-check || EXIT=$?
           echo "- ui-drive exit: $EXIT" >> "$STATUS"
-          echo "- pid: $(timeout 30 adb shell pidof co.asiven.vixentvpn 2>&1 | tr -d '\r' || true)" >> "$STATUS"
+          echo "- pid: $(timeout 30 adb shell pidof co.asiven.vixentvpn.trial 2>&1 | tr -d '\r' || true)" >> "$STATUS"
           exit $EXIT
 
       - name: Collect logs

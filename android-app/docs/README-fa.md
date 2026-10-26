@@ -14,7 +14,7 @@
 | --- | --- |
 | همان دامنه و اندپوینت‌ها | `https://managev1.xyz` + `/api/token`، `/api/setting`، `/api/protocols`، `/api/protocols/<operator>`، `/api/v2/protocols`، `/api/configs` |
 | همان هدرها و امضا | `app_name`، `version_code`، `seen`، `token`، `sign`، `sha_hexadecimal`، `Authorization` |
-| همان شناسهٔ اپ | `applicationId = co.asiven.vixentvpn`، `versionCode = 1004220`، `versionName = 3.2.0-trial` |
+| شناسه | `applicationId = co.asiven.vixentvpn.trial` (نصب کنار اپ اصلی)، `versionCode = 1004221`، `versionName = 3.2.0-trial` |
 | همان هستهٔ تونل | `libv2ray.aar` (gomobile build از `xtls/xray-core`) + `hev-socks5-tunnel` (tun2socks) |
 | همان حالت‌های اتصال | `VPN` (کل دستگاه، TUN) و `PROXY` (SOCKS/HTTP محلی) |
 
@@ -24,6 +24,17 @@
 > [«وضعیت Firebase»](#۷-وضعیت-firebase)).
 
 ---
+
+## ۰) نصب کنار اپ اصلی
+
+شناسهٔ این نسخه `co.asiven.vixentvpn.trial` است، پس **کنار نسخهٔ اصلی نصب می‌شود** و لازم نیست اپ
+اصلی را حذف کنید (هدر `app_name` که بک‌اند می‌شناسد همان `co.asiven.vixentvpn` می‌ماند، اما
+`applicationId` جدا است). امضا هم همان AOSP testkey است، بنابراین هدرهای `sign`/`sha_hexadecimal`
+بایت‌به‌بایت معتبر می‌مانند.
+
+```bash
+adb install -r mvpn-trial-arm64-<build>.apk      # اپ اصلی نصب‌شده باقی می‌ماند
+```
 
 ## ۱) نصب و اجرای سریع
 
@@ -78,6 +89,12 @@ apksigner verify --print-certs mvpn-trial-arm64-XX.apk    # گواهی: AOSP tes
   - **قیمت اصلی** (`price`) با تفکیک «رایگان» و «پولی · n الماس»
   - **مصرف/سهمیه** (`usage`) و `id`/`serverId`
   - همهٔ کلیدهای ناشناختهٔ پاسخ هم در «جزئیات» و «JSON خام» قابل مشاهده‌اند
+- **کپی همهٔ لینک‌های v2ray با یک لمس** (منوی سه‌نقطه → «کپی همهٔ لینک‌های v2ray») در سه گروه:
+  **همهٔ سرورها**، **فقط سرورهایی که پینگ دادند** و **فقط سرورهایی که پینگ ندادند**. هر خط یک لینک
+  مستقل است، پس در v2rayNG کافی است «Import config from clipboard» را بزنید تا همه با هم اضافه شوند.
+- **مرتب‌سازی فهرست** با دکمهٔ مرتب‌سازی بالای لیست: بر اساس **الفبا**، **پینگ**، **قیمت** یا
+  **شناسه (id)**، هر کدام **صعودی/نزولی**. ردیف‌های بدون پینگ همیشه آخر فهرست می‌مانند و انتخاب
+  شما ذخیره می‌شود.
 - **پینگ تک‌تک سرورها** (دکمهٔ `پینگ` روی هر ردیف) و **پینگ همه** (۴ درخواست هم‌زمان). بعد از
   «پینگ همه»، سریع‌ترین سروری که واقعاً پاسخ داده **خودکار انتخاب** می‌شود تا یک لمس برای اتصال
   کافی باشد.

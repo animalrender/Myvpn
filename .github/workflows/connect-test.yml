@@ -196,8 +196,8 @@ jobs:
           APK="$(find android-app/app/build/outputs/apk/release -name '*.apk' | head -1)"
           echo "- apk: $APK" >> "$OUT/STATUS.md"
           timeout 240 adb install -r -t "$APK" >> "$OUT/STATUS.md" 2>&1 || true
-          timeout 30 adb shell pm grant co.asiven.vixentvpn android.permission.POST_NOTIFICATIONS >/dev/null 2>&1 || true
-          timeout 120 adb shell am start -W -n co.asiven.vixentvpn/co.asiven.vixentvpn.trial.ui.MainActivity >> "$OUT/STATUS.md" 2>&1 || true
+          timeout 30 adb shell pm grant co.asiven.vixentvpn.trial android.permission.POST_NOTIFICATIONS >/dev/null 2>&1 || true
+          timeout 120 adb shell am start -W -n co.asiven.vixentvpn.trial/co.asiven.vixentvpn.trial.ui.MainActivity >> "$OUT/STATUS.md" 2>&1 || true
           sleep 10
           URI_A="vless://${CI_UUID}@10.0.2.2:10086?encryption=none&security=none&type=tcp&headerType=none#CI-Local-A"
           VMESS_JSON="{\"v\":\"2\",\"ps\":\"CI-Local-B\",\"add\":\"10.0.2.2\",\"port\":\"10087\",\"id\":\"${CI_UUID}\",\"aid\":\"0\",\"scy\":\"auto\",\"net\":\"ws\",\"type\":\"none\",\"host\":\"\",\"path\":\"/ci\",\"tls\":\"\"}"

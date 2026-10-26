@@ -107,4 +107,21 @@
     <string name="dlg_unsupported_title">قابل اتصال نیست</string>
     <string name="dlg_unsupported_body">سرور «%1$s» از پروتکل %2$s استفاده می‌کند که هستهٔ Xray (libv2ray) آن را اجرا نمی‌کند. این ردیف مثل اپ اصلی در فهرست هست و برچسبش دیده می‌شود، اما با این هسته وصل نمی‌شود.</string>
     <string name="sheet_unsupported">پروتکل %1$s توسط این هسته اجرا نمی‌شود</string>
+    <string name="btn_copy_all">کپی همهٔ لینک‌های v2ray</string>
+    <string name="copy_all_title">کپی لینک v2ray — کدام سرورها؟</string>
+    <string name="copy_all_everything">همهٔ سرورها (%1$d)</string>
+    <string name="copy_all_pinged">فقط سرورهایی که پینگ دادند (%1$d)</string>
+    <string name="copy_all_unpinged">فقط سرورهایی که پینگ ندادند (%1$d)</string>
+    <string name="copy_all_done">%1$d لینک v2ray کپی شد — در v2rayNG «Import config from clipboard» را بزنید</string>
+    <string name="copy_all_empty">هیچ لینکی در این گروه نبود</string>
+    <string name="sort_title">مرتب‌سازی فهرست</string>
+    <string name="sort_button">مرتب‌سازی (%1$s)</string>
+    <string name="sort_applied">مرتب شد: %1$s</string>
+    <string name="sort_asc">صعودی</string>
+    <string name="sort_desc">نزولی</string>
+    <string name="sort_field_original">ترتیب اصلی سرور</string>
+    <string name="sort_field_name">الفبا</string>
+    <string name="sort_field_ping">پینگ</string>
+    <string name="sort_field_price">قیمت</string>
+    <string name="sort_field_id">شناسه (id)</string>
 </resources>

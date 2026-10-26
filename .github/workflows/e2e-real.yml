@@ -163,7 +163,7 @@ jobs:
           APK="$(find android-app/app/build/outputs/apk/release -name '*.apk' | head -1)"
           echo "- apk: $APK" >> "$OUT/STATUS.md"
           timeout 240 adb install -r -t "$APK" >> "$OUT/STATUS.md" 2>&1 || true
-          timeout 30 adb shell pm grant co.asiven.vixentvpn android.permission.POST_NOTIFICATIONS >/dev/null 2>&1 || true
+          timeout 30 adb shell pm grant co.asiven.vixentvpn.trial android.permission.POST_NOTIFICATIONS >/dev/null 2>&1 || true
           EXIT=0
           timeout 5400 python3 android-app/tools/connect-real.py "$OUT" \
             "http://1.1.1.1/cdn-cgi/trace" || EXIT=$?

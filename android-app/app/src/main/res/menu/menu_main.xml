@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <menu xmlns:android="http://schemas.android.com/apk/res/android">
+    <item android:id="@+id/action_copy_all" android:title="@string/btn_copy_all" />
     <item android:id="@+id/action_raw_json" android:title="@string/btn_raw_json" />
     <item android:id="@+id/action_logs" android:title="@string/btn_logs" />
     <item android:id="@+id/action_import_clipboard" android:title="@string/btn_import" />

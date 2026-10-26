@@ -24,7 +24,8 @@ import java.util.Locale
  *
  * Headers, exactly as `VolleyHelper.initHeaders()` builds them:
  *   Content-Type      application/json
- *   app_name          <package name>
+ *   app_name          co.asiven.vixentvpn (the id the backend knows; this build ships as
+ *                     co.asiven.vixentvpn.trial so it can live next to the original app)
  *   version_code      <versionCode>            (1004220)
  *   seen              <admobSeen int>          (0)
  *   token             only when a real token exists
@@ -168,7 +169,7 @@ class ApiClient(private val context: Context, private val prefs: Prefs) {
         val sb = StringBuilder()
         val sign = signing
         sb.appendLine("BASE: $baseUrl")
-        sb.appendLine("app_name: ${context.packageName}   version_code: ${BuildConfig.HEADER_VERSION_CODE}")
+        sb.appendLine("app_name: ${BuildConfig.HEADER_APP_NAME}   version_code: ${BuildConfig.HEADER_VERSION_CODE}")
         if (sign == null) {
             sb.appendLine("!! گواهی امضا خوانده نشد → هدرهای sign/sha ارسال نمی‌شوند")
         } else {
@@ -232,7 +233,7 @@ class ApiClient(private val context: Context, private val prefs: Prefs) {
             "Content-Type" to "application/json",
             "Accept" to "application/json",
             "User-Agent" to userAgent(),
-            "app_name" to context.packageName,
+            "app_name" to BuildConfig.HEADER_APP_NAME,
             "version_code" to BuildConfig.HEADER_VERSION_CODE.toString(),
             "seen" to prefs.admobSeen.toString(),
         )

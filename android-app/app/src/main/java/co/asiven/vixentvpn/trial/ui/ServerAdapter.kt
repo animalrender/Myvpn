@@ -14,6 +14,12 @@ import co.asiven.vixentvpn.trial.databinding.ItemServerBinding
 enum class FilterMode { ALL, FREE, PAID, READY }
 
 /**
+ * Sort keys offered by the sort button. `ORIGINAL` keeps the order the backend sent, the others
+ * are shared with the activity through [Prefs] so the choice survives a restart.
+ */
+enum class SortField { ORIGINAL, NAME, PING, PRICE, ID }
+
+/**
  * Flat, scrollable list of every server the backend returned — free **and** paid — with the
  * original attributes (type, price, usage, location) rendered as labels, exactly what the
  * trial build is supposed to expose instead of hiding paid rows behind a purchase gate.
@@ -37,11 +43,20 @@ class ServerAdapter(
     private var runningKey: String? = null
     private var query: String = ""
     private var mode: FilterMode = FilterMode.ALL
+    private var sortField: SortField = SortField.ORIGINAL
+    private var sortAscending: Boolean = true
 
     fun submit(servers: List<Server>, selected: String?) {
         all.clear()
         all.addAll(servers)
         selectedKey = selected
+        recompute()
+    }
+
+    /** Applies the sort key picked in the sort dialog. */
+    fun setSort(field: SortField, ascending: Boolean) {
+        sortField = field
+        sortAscending = ascending
         recompute()
     }
 
@@ -75,7 +90,30 @@ class ServerAdapter(
                 matchesText && matchesMode
             },
         )
+        items.sortWith(comparatorFor(sortField, sortAscending))
         notifyDataSetChanged()
+    }
+
+    /**
+     * One comparator per sort key. Rows that never answered a ping always sink to the bottom
+     * (in both directions), which is what makes the «بدون پینگ» bucket usable.
+     */
+    private fun comparatorFor(field: SortField, ascending: Boolean): Comparator<Server> {
+        val base: Comparator<Server> = when (field) {
+            SortField.ORIGINAL -> Comparator { a, b -> all.indexOf(a) - all.indexOf(b) }
+            SortField.NAME -> compareBy { it.sortableName.lowercase() }
+            SortField.PING -> Comparator { a, b ->
+                val pa = if (a.pingState == PingState.OK && a.pingMs > 0) a.pingMs else Long.MAX_VALUE
+                val pb = if (b.pingState == PingState.OK && b.pingMs > 0) b.pingMs else Long.MAX_VALUE
+                pa.compareTo(pb)
+            }
+            SortField.PRICE -> compareBy { it.price ?: Int.MAX_VALUE }
+            SortField.ID -> compareBy { it.protocolId ?: Int.MAX_VALUE }
+        }
+        val directed = if (ascending) base else base.reversed()
+        if (field == SortField.ORIGINAL) return directed
+        // Stable tie-break, so equal keys do not shuffle on every refresh.
+        return directed.thenBy { it.sortableName.lowercase() }
     }
 
     fun setSelected(key: String?) {

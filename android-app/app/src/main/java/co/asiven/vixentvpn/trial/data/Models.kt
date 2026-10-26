@@ -35,6 +35,9 @@ data class Server(
     val isFree: Boolean get() = (price ?: 0) <= 0
     val hasConfig: Boolean get() = rawConfig.isNotBlank()
 
+    /** Name without the leading flag emoji, used for alphabetical sorting. */
+    val sortableName: String get() = name.replace(Regex("^[^\\p{L}\\p{N}]+"), "").trim().ifBlank { name }
+
     /** The bundled core can dial this row (protocol is supported and the payload decrypted). */
     val isDialable: Boolean get() = !isOpaquePayload && PayloadCipher.isDialable(typeHint)
     val displayFlag: String get() = flag.ifBlank { "🌐" }

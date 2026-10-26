@@ -35,7 +35,7 @@ OUT = "."
 PROBE_URL = "http://1.1.1.1/cdn-cgi/trace"
 DNS_PROBE_URL = "http://connectivitycheck.gstatic.com/generate_204"
 TRACE_URL = "https://www.cloudflare.com/cdn-cgi/trace"
-COMPONENT = "co.asiven.vixentvpn/co.asiven.vixentvpn.trial.ui.MainActivity"
+COMPONENT = "co.asiven.vixentvpn.trial/co.asiven.vixentvpn.trial.ui.MainActivity"
 REPORT = []
 SHOTS = []
 
@@ -333,6 +333,74 @@ def close_dialogs():
     return False
 
 
+def logcat_tail(pattern, limit=6):
+    out = adb("logcat", "-d", "-s", "MvpnTrial:V", timeout=120).stdout or ""
+    return [line for line in out.splitlines() if pattern in line][-limit:]
+
+
+def open_overflow():
+    if not tap_rid("menuButton"):
+        return False
+    time.sleep(2)
+    return True
+
+
+def visible_names(limit=3):
+    names = []
+    for row in rows():
+        names.append(row["name"])
+        if len(names) == limit:
+            break
+    return names
+
+
+def check_sort():
+    """Sorts by name ascending and checks the first painted rows really are in that order."""
+    if not tap_rid("sortButton"):
+        return "ناموفق — دکمهٔ مرتب‌سازی پیدا نشد"
+    time.sleep(2)
+    if not tap_text("الفبا · صعودی", exact=True):
+        close_dialogs()
+        return "ناموفق — گزینهٔ «الفبا · صعودی» در دیالوگ نبود"
+    time.sleep(3)
+    shot("03-sorted")
+    names = visible_names(3)
+    if len(names) < 2:
+        return "ناموفق — فهرست پس از مرتب‌سازی خالی شد"
+    def key(name):
+        # same rule as the app: drop the leading flag emoji before comparing
+        return re.sub(r"^[^\w]+", "", name.replace("🌐", "")).strip().lower() or name.lower()
+
+    ordered = names == sorted(names, key=key)
+    return f"{'درست' if ordered else 'ناموفق'} — سه ردیف اول: " + "، ".join(f"`{n}`" for n in names)
+
+
+def check_copy_all():
+    """Opens «کپی همهٔ لینک‌های v2ray» → «همهٔ سرورها» and checks the app logged the copy."""
+    if not open_overflow():
+        return "ناموفق — منو باز نشد"
+    if not tap_text("کپی همهٔ لینک‌های v2ray", exact=True):
+        close_dialogs()
+        return "ناموفق — آیتم «کپی همهٔ لینک‌های v2ray» در منو نبود"
+    time.sleep(2)
+    if not find(text="کپی لینک v2ray", exact=False):
+        close_dialogs()
+        return "ناموفق — دیالوگ انتخاب گروه باز نشد"
+    shot("04-copy-all-dialog")
+    titles = [n.get("text") or "" for n in nodes(dump_xml())]
+    option = next((t for t in titles if t.startswith("همهٔ سرورها")), None)
+    if not option:
+        close_dialogs()
+        return "ناموفق — گزینهٔ «همهٔ سرورها» نبود"
+    tap_text(option, exact=True)
+    time.sleep(3)
+    lines = logcat_tail("لینک v2ray کپی شد")
+    if not lines:
+        return "ناموفق — برنامه چیزی کپی نکرد (لاگ خالی)"
+    count = lines[-1].split("MvpnTrial: ")[-1].split(" ")[0]
+    return f"درست — {count} لینک v2ray در کلیپ‌بورد قرار گرفت"
+
+
 def connect_row(row, index, wait_seconds=90):
     """Selects the row, presses the hero button and waits for the «متصل» state."""
     landed = bring_into_view(row["name"], row.get("ping"))
@@ -400,9 +468,9 @@ def main(argv):
 
     # ------------------------------------------------------------ 1. fresh start
     log("پاک‌کردن دادهٔ برنامه (بدون کش، بدون کانفیگ ذخیره‌شده)")
-    adb("shell", "pm clear co.asiven.vixentvpn", timeout=120)
+    adb("shell", "pm clear co.asiven.vixentvpn.trial", timeout=120)
     # `pm clear` also drops runtime grants, and the notification prompt would cover the list.
-    shell("pm grant co.asiven.vixentvpn android.permission.POST_NOTIFICATIONS")
+    shell("pm grant co.asiven.vixentvpn.trial android.permission.POST_NOTIFICATIONS")
     adb("shell", "am start -W -n " + COMPONENT, timeout=180)
     time.sleep(6)
     dismiss_system_dialogs()
@@ -432,6 +500,17 @@ def main(argv):
     summary_text = (find(rid="summaryText") or {}).get("text") or ""
     log(f"فهرست بارگذاری شد: {len(loaded)} ردیف روی صفحه — خلاصه: `{summary_text}`")
     log("نمونهٔ برچسب ردیف‌ها: " + "، ".join(f"`{r['name']}`" for r in loaded[:3]))
+
+    # ------------------------------------------------------------ 2b. sort + copy all
+    # These two are user-facing features of this build, so the run drives them for real.
+    sort_report = check_sort()
+    log("مرتب‌سازی: " + sort_report)
+    if not sort_report.startswith("درست"):
+        failures.append("sort-not-applied")
+    copy_report = check_copy_all()
+    log("کپی همهٔ لینک‌ها: " + copy_report)
+    if not copy_report.startswith("درست"):
+        failures.append("copy-all-failed")
 
     # ------------------------------------------------------------ 3. ping all
     # Zero-input flow: the activity starts the bulk ping by itself once the list is loaded and

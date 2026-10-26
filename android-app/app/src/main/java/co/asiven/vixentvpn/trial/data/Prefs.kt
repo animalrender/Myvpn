@@ -69,6 +69,16 @@ class Prefs(context: Context) {
         get() = sp.getString(KEY_SELECTED, "").orEmpty()
         set(value) = sp.edit().putString(KEY_SELECTED, value).apply()
 
+    /** Sort key of the server list (`ORIGINAL`, `NAME`, `PING`, `PRICE`, `ID`). */
+    var sortField: String
+        get() = sp.getString(KEY_SORT_FIELD, "ORIGINAL").orEmpty()
+        set(value) = sp.edit().putString(KEY_SORT_FIELD, value).apply()
+
+    /** Sort direction of the server list: `true` = ascending. */
+    var sortAscending: Boolean
+        get() = sp.getBoolean(KEY_SORT_ASC, true)
+        set(value) = sp.edit().putBoolean(KEY_SORT_ASC, value).apply()
+
     /**
      * Live tunnel state. The VPN service owns the truth and mirrors it here; a freshly created
      * activity (for instance one opened by a `vless://` link while a tunnel is up) reads it on
@@ -101,5 +111,7 @@ class Prefs(context: Context) {
         private const val KEY_SELECTED = "selectedServer"
         private const val KEY_TUNNEL_RUNNING = "tunnelRunning"
         private const val KEY_CONNECTED_KEY = "connectedServer"
+        private const val KEY_SORT_FIELD = "sortField"
+        private const val KEY_SORT_ASC = "sortAscending"
     }
 }

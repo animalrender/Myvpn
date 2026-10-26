@@ -134,6 +134,8 @@ class MainActivity : AppCompatActivity() {
 
         binding.fetchButton.setOnClickListener { refreshAll() }
         binding.pingAllButton.setOnClickListener { pingAll() }
+        binding.sortButton.setOnClickListener { showSortDialog() }
+        applySort(prefs.sortField, prefs.sortAscending, persist = false)
         binding.connectButton.setOnClickListener { toggleConnection() }
         binding.menuButton.setOnClickListener { showOverflow(it) }
         binding.searchInput.doAfterTextChanged { applyFilter() }
@@ -227,6 +229,10 @@ class MainActivity : AppCompatActivity() {
         }
         R.id.action_logs -> {
             showText(getString(R.string.dlg_log_title), AppLog.dump().ifBlank { "—" })
+            true
+        }
+        R.id.action_copy_all -> {
+            showCopyAllDialog()
             true
         }
         R.id.action_import_clipboard -> {
@@ -403,6 +409,10 @@ class MainActivity : AppCompatActivity() {
             if (fastest != null && !tunnelRunning && selectedServer()?.pingState != PingState.OK) {
                 selectServer(fastest)
                 toast(getString(R.string.toast_fastest_selected, fastest.name, fastest.pingMs))
+            }
+            // A ping-based sort must follow the fresh numbers.
+            if (prefs.sortField == SortField.PING.name) {
+                applySort(prefs.sortField, prefs.sortAscending, persist = false)
             }
             updateHero()
             updateSummary()
@@ -830,6 +840,102 @@ class MainActivity : AppCompatActivity() {
         copy(link)
         toast(getString(R.string.link_copied, server.name))
         AppLog.i("لینک v2ray برای ${server.name} کپی شد (${link.length} کاراکتر)")
+    }
+
+    // ---------------------------------------------------------------- sort
+
+    private fun applySort(fieldName: String, ascending: Boolean, persist: Boolean = true) {
+        val field = runCatching { SortField.valueOf(fieldName) }.getOrDefault(SortField.ORIGINAL)
+        if (persist) {
+            prefs.sortField = field.name
+            prefs.sortAscending = ascending
+        }
+        adapter.setSort(field, ascending)
+        binding.sortButton.contentDescription = getString(R.string.sort_button, sortLabel(field, ascending))
+        updateSummary()
+    }
+
+    private fun sortLabel(field: SortField, ascending: Boolean): String {
+        val direction = getString(if (ascending) R.string.sort_asc else R.string.sort_desc)
+        val name = when (field) {
+            SortField.ORIGINAL -> getString(R.string.sort_field_original)
+            SortField.NAME -> getString(R.string.sort_field_name)
+            SortField.PING -> getString(R.string.sort_field_ping)
+            SortField.PRICE -> getString(R.string.sort_field_price)
+            SortField.ID -> getString(R.string.sort_field_id)
+        }
+        return "$name · $direction"
+    }
+
+    /** «مرتب‌سازی» — field and direction in one tap each, on the same list. */
+    private fun showSortDialog() {
+        val current = runCatching { SortField.valueOf(prefs.sortField) }.getOrDefault(SortField.ORIGINAL)
+        val options = listOf(
+            SortField.ORIGINAL to true,
+            SortField.NAME to true, SortField.NAME to false,
+            SortField.PING to true, SortField.PING to false,
+            SortField.PRICE to true, SortField.PRICE to false,
+            SortField.ID to true, SortField.ID to false,
+        )
+        val labels = options.map { (field, ascending) ->
+            val mark = if (field == current && ascending == prefs.sortAscending) "✓  " else ""
+            mark + sortLabel(field, ascending)
+        }.toTypedArray()
+        AlertDialog.Builder(this)
+            .setTitle(getString(R.string.sort_title))
+            .setItems(labels) { _, which ->
+                val (field, ascending) = options[which]
+                applySort(field.name, ascending)
+                toast(getString(R.string.sort_applied, sortLabel(field, ascending)))
+            }
+            .setNegativeButton(R.string.btn_close, null)
+            .show()
+    }
+
+    // ---------------------------------------------------------------- copy all
+
+    /**
+     * Copies **every** row as v2ray share links, one per line, so the whole set can be pasted into
+     * v2rayNG/nekobox at once. Three buckets: all dialable rows, the ones that answered the last
+     * ping, and the ones that did not.
+     */
+    private fun showCopyAllDialog() {
+        if (servers.isEmpty()) {
+            toast(getString(R.string.status_empty))
+            return
+        }
+        val pinged = servers.count { it.pingState == PingState.OK }
+        val failed = servers.count { it.pingState != PingState.OK && it.isDialable }
+        val labels = arrayOf(
+            getString(R.string.copy_all_everything, servers.size),
+            getString(R.string.copy_all_pinged, pinged),
+            getString(R.string.copy_all_unpinged, failed),
+        )
+        AlertDialog.Builder(this)
+            .setTitle(R.string.copy_all_title)
+            .setItems(labels) { _, which ->
+                val selected = when (which) {
+                    1 -> servers.filter { it.pingState == PingState.OK }
+                    2 -> servers.filter { it.pingState != PingState.OK && it.isDialable }
+                    else -> servers
+                }
+                copyAll(selected)
+            }
+            .setNegativeButton(R.string.btn_close, null)
+            .show()
+    }
+
+    private fun copyAll(rows: List<Server>) {
+        val links = rows.mapNotNull { runCatching { ConfigBuilder.shareLink(it) }.getOrNull() }
+            .filter { it.isNotBlank() }
+            .distinct()
+        if (links.isEmpty()) {
+            toast(getString(R.string.copy_all_empty))
+            return
+        }
+        copy(links.joinToString("\n"))
+        toast(getString(R.string.copy_all_done, links.size))
+        AppLog.i("${links.size} لینک v2ray کپی شد")
     }
 
     private fun showText(title: String, text: String) {

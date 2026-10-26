@@ -206,7 +206,7 @@ def probe_from_shell(label, url=PROBE_URL):
 
 
 def import_config(uri, name):
-    component = "co.asiven.vixentvpn/co.asiven.vixentvpn.trial.ui.MainActivity"
+    component = "co.asiven.vixentvpn.trial/co.asiven.vixentvpn.trial.ui.MainActivity"
     adb("shell", f"am start -a android.intent.action.VIEW -d '{uri}' -n {component}", timeout=120)
     return wait_for(text=name, seconds=90)
 

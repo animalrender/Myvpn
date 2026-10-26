@@ -264,6 +264,16 @@
             android:textColor="@color/text_dim"
             android:textSize="11sp" />
 
+        <ImageButton
+            android:id="@+id/sortButton"
+            android:layout_width="34dp"
+            android:layout_height="34dp"
+            android:layout_marginEnd="2dp"
+            android:background="?attr/selectableItemBackgroundBorderless"
+            android:contentDescription="@string/sort_title"
+            android:padding="6dp"
+            android:src="@drawable/ic_sort" />
+
         <ProgressBar
             android:id="@+id/progress"
             style="?android:attr/progressBarStyleSmall"

@@ -20,8 +20,8 @@ import xml.etree.ElementTree as ET
 OUT = "."
 STEPS = []
 FAILURES = []
-ACTIVITY = "co.asiven.vixentvpn/co.asiven.vixentvpn.trial.ui.MainActivity"
-PACKAGE = "co.asiven.vixentvpn"
+ACTIVITY = "co.asiven.vixentvpn.trial/co.asiven.vixentvpn.trial.ui.MainActivity"
+PACKAGE = "co.asiven.vixentvpn.trial"
 
 
 def adb(*args, timeout=120):
@@ -194,13 +194,13 @@ def type_from_list():
 
 
 def crash_check():
-    pid = shell("pidof co.asiven.vixentvpn").stdout.strip()
+    pid = shell("pidof co.asiven.vixentvpn.trial").stdout.strip()
     crash = adb("logcat", "-d", "-b", "crash").stdout or ""
     # Only a fatal exception raised by our own package counts; AndroidRuntime lines from other
     # processes (and "VM exiting" noise) are not a crash of this app.
     fata = [
         line for line in adb("logcat", "-d").stdout.splitlines()
-        if "FATAL EXCEPTION" in line or ("co.asiven.vixentvpn" in line and "Process:" in line and "died" in line)
+        if "FATAL EXCEPTION" in line or ("co.asiven.vixentvpn.trial" in line and "Process:" in line and "died" in line)
     ]
     ok = bool(pid) and not crash.strip() and not fata
     print(f"crash-check: pid={'yes' if pid else 'no'} crash_buffer={len(crash)} fatal_lines={len(fata)} foreground={in_foreground()}")

@@ -34,7 +34,7 @@
 | هدر | مقدار | شرط ارسال |
 | --- | --- | --- |
 | `Content-Type` | `application/json` | همیشه |
-| `app_name` | `context.getPackageName()` → `co.asiven.vixentvpn` | همیشه |
+| `app_name` | `co.asiven.vixentvpn` — **ثابت** (از `BuildConfig.HEADER_APP_NAME`)، حتی با اینکه این نسخه با شناسهٔ `co.asiven.vixentvpn.trial` نصب می‌شود | همیشه |
 | `version_code` | `String.valueOf(Lo4/b.b)` → `1004220` | همیشه |
 | `seen` | `String.valueOf(Lz/d.y("admobSeen", 0))` → `0` | همیشه |
 | `token` | `Lo4/b.f` | اگر مقدار داشته باشد |

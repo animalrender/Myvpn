@@ -19,11 +19,13 @@ android {
     compileSdk = 35
 
     defaultConfig {
-        // Same identity as the analysed APK: the backend fingerprints app_name + APK signature.
-        applicationId = "co.asiven.vixentvpn"
+        // Own application id so the trial build installs **next to** the original app
+        // (`co.asiven.vixentvpn`). The backend fingerprints `app_name` + the APK signature, so the
+        // header keeps the original value (BuildConfig.HEADER_APP_NAME) while the package differs.
+        applicationId = "co.asiven.vixentvpn.trial"
         minSdk = 24
         targetSdk = 35
-        versionCode = 1004220
+        versionCode = 1004221
         versionName = "3.2.0-trial"
 
         ndk {

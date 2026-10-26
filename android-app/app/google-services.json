@@ -42,6 +42,44 @@
           "other_platform_oauth_client": []
         }
       }
+    },
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:834191356570:android:9bb2699ab2eaac1c166523",
+        "android_client_info": {
+          "package_name": "co.asiven.vixentvpn.trial"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyD9oHHJLnmn9uSU0ri5qyX7v9w71LZIQyY"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    },
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:834191356570:android:9bb2699ab2eaac1c166523",
+        "android_client_info": {
+          "package_name": "co.asiven.vixentvpn.trial.debug"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyD9oHHJLnmn9uSU0ri5qyX7v9w71LZIQyY"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
     }
   ],
   "configuration_version": "1"
