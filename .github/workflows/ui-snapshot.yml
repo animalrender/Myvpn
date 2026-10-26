@@ -5,9 +5,12 @@ name: ui-snapshot
 # The sandbox that writes this code has no JVM, no Android SDK and no emulator, so a screen
 # cannot be verified locally. This workflow builds the release APK for x86_64 (signed with the
 # same AOSP test key, so the vendor API answers instead of rejecting the signature), boots an
-# emulator, drives the UI with tools/ui-drive.py, screenshots every step and commits the PNGs to
-# android-app/docs/screenshots on this branch — which is how the agent and the user can look at
-# the result.
+# emulator, drives the UI with tools/ui-drive.py, screenshots every step and commits the PNGs and
+# a STATUS.md report to android-app/docs/screenshots on this branch — which is how the agent and
+# the user can look at the result.
+#
+# The emulator is started directly (not through a packaged action) so that every failure — image
+# download, boot, install — ends up in the committed STATUS.md instead of an unreadable log.
 #
 # Trigger: workflow_dispatch, or a push whose tip commit message contains [ui].
 
@@ -49,6 +52,9 @@ jobs:
             done
           fi
           echo "ANDROID_HOME=$ANDROID_HOME" | tee -a "$GITHUB_ENV"
+          echo "ANDROID_SDK_ROOT=$ANDROID_HOME" | tee -a "$GITHUB_ENV"
+          echo "$ANDROID_HOME/platform-tools" | tee -a "$GITHUB_PATH"
+          echo "$ANDROID_HOME/emulator" | tee -a "$GITHUB_PATH"
           NDK="${ANDROID_NDK_LATEST_HOME:-}"
           if [ -z "$NDK" ] || [ ! -d "$NDK" ]; then
             NDK="$(ls -d "$ANDROID_HOME"/ndk/* 2>/dev/null | sort -V | tail -1 || true)"
@@ -63,9 +69,6 @@ jobs:
           echo "NDK_HOME=$NDK" | tee -a "$GITHUB_ENV"
           echo "ANDROID_NDK_LATEST_HOME=$NDK" | tee -a "$GITHUB_ENV"
           test -x "$NDK/ndk-build"
-          echo "$ANDROID_HOME/platform-tools" >> "$GITHUB_PATH"
-          "$ANDROID_HOME/platform-tools/adb" version | head -1
-          ls /dev/kvm && echo "KVM present" || echo "::warning title=ui-snapshot::/dev/kvm missing — the emulator may be very slow or fail to boot"
 
       - name: Environment check
         run: |
@@ -82,8 +85,6 @@ jobs:
             echo "- user: $(id -un) / groups: $(id -Gn)"
             echo "- python: $(python3 --version 2>&1)"
             echo "- adb: $(adb version 2>&1 | head -1)"
-            echo "- avd images: $(ls "$ANDROID_HOME/system-images" 2>&1 | tr '\n' ' ')"
-            echo "- runner: $(uname -a)"
           } > "$OUT/STATUS.md"
           cat "$OUT/STATUS.md"
 
@@ -99,14 +100,6 @@ jobs:
       - name: Prepare release signing key
         run: bash android-app/tools/fetch-testkey.sh 2>&1 | tee /tmp/testkey.log
 
-      - name: Allow the runner user to use KVM
-        run: |
-          # /dev/kvm is root:kvm 660 and the runner user is not in the kvm group, so the emulator
-          # would silently fall back to (unusable) software emulation and never finish booting.
-          sudo chmod 666 /dev/kvm || true
-          ls -l /dev/kvm
-          test -r /dev/kvm && test -w /dev/kvm && echo "KVM is readable and writable"
-
       - name: Set up Gradle
         uses: gradle/actions/setup-gradle@v4
         with:
@@ -119,87 +112,130 @@ jobs:
           gradle assembleRelease --no-daemon -PtargetAbi=x86_64 2>&1 | tee /tmp/gradle.log
           ls -l app/build/outputs/apk/release/
 
-      - name: Run the emulator and capture screenshots
-        uses: reactivecircus/android-emulator-runner@v2
-        with:
-          api-level: 34
-          target: google_apis
-          arch: x86_64
-          profile: pixel_6
-          disable-animations: true
-          emulator-boot-timeout: 900
-          # -no-window is mandatory on a headless runner; overriding emulator-options replaces the
-          # action defaults, so every option it relies on is listed here explicitly.
-          emulator-options: -no-window -no-snapshot -no-snapshot-save -no-boot-anim -no-audio -gpu swiftshader_indirect
-          script: |
-            set -uo pipefail
-            OUT=android-app/docs/screenshots
-            STATUS="$OUT/STATUS.md"
-            mkdir -p "$OUT"
-            echo "" >> "$STATUS"
-            echo "## Device" >> "$STATUS"
-            adb wait-for-device
+      - name: Install emulator and the system image
+        run: |
+          set -uo pipefail
+          OUT=android-app/docs/screenshots
+          SDKMANAGER="$ANDROID_HOME/cmdline-tools/latest/bin/sdkmanager"
+          [ -x "$SDKMANAGER" ] || SDKMANAGER="$(ls "$ANDROID_HOME"/cmdline-tools/*/bin/sdkmanager 2>/dev/null | head -1)"
+          AVDMANAGER="$(dirname "$SDKMANAGER")/avdmanager"
+          yes | "$SDKMANAGER" --licenses > /dev/null 2>&1 || true
+          "$SDKMANAGER" --install "platform-tools" "emulator" "system-images;android-34;google_apis;x86_64" 2>&1 | tail -8
+          echo no | "$AVDMANAGER" create avd -n mvpn -k "system-images;android-34;google_apis;x86_64" -d pixel_6 --force 2>&1 | tail -5
+          # /dev/kvm is root:kvm 660 and the runner user is not in the kvm group; without access the
+          # emulator falls back to software emulation and never finishes booting.
+          sudo chmod 666 /dev/kvm || true
+          {
+            echo ""
+            echo "## Emulator setup"
+            echo "- kvm: $(ls -l /dev/kvm 2>&1 | tr -d '\n')"
+            echo "- emulator: $("$ANDROID_HOME/emulator/emulator" -version 2>&1 | head -1)"
+            echo "- avds: $("$ANDROID_HOME/emulator/emulator" -list-avds 2>&1 | tr '\n' ' ')"
+            echo "- images: $(ls "$ANDROID_HOME/system-images/android-34/google_apis" 2>&1 | tr '\n' ' ')"
+          } >> "$OUT/STATUS.md"
+          cat "$OUT/STATUS.md"
+
+      - name: Boot the emulator, install the app and drive it
+        run: |
+          set -uo pipefail
+          OUT=android-app/docs/screenshots
+          STATUS="$OUT/STATUS.md"
+          export ANDROID_SDK_ROOT="$ANDROID_HOME"
+          nohup "$ANDROID_HOME/emulator/emulator" -avd mvpn \
+            -no-window -no-audio -no-boot-anim -no-snapshot -no-snapshot-save \
+            -gpu swiftshader_indirect -accel on -port 5554 > /tmp/emulator.log 2>&1 &
+          adb start-server >/dev/null 2>&1 || true
+          BOOTED=0
+          SECONDS_WAITED=0
+          for _ in $(seq 1 200); do
+            if [ "$(adb shell getprop sys.boot_completed 2>/dev/null | tr -d '\r')" = "1" ]; then
+              BOOTED=1
+              break
+            fi
+            SECONDS_WAITED=$((SECONDS_WAITED + 5))
+            sleep 5
+          done
+          {
+            echo ""
+            echo "## Device"
+            echo "- booted: $BOOTED (waited ${SECONDS_WAITED}s)"
+            echo "- model: $(adb shell getprop ro.product.model 2>&1 | tr -d '\r')"
+            echo "- api: $(adb shell getprop ro.build.version.sdk 2>&1 | tr -d '\r')"
+            echo "- abi: $(adb shell getprop ro.product.cpu.abi 2>&1 | tr -d '\r')"
+            echo "- devices: $(adb devices | tr -d '\n')"
+          } >> "$STATUS"
+          if [ "$BOOTED" != "1" ]; then
             {
-              echo "- model: $(adb shell getprop ro.product.model 2>&1 | tr -d '\r')"
-              echo "- api: $(adb shell getprop ro.build.version.sdk 2>&1 | tr -d '\r')"
-              echo "- abi: $(adb shell getprop ro.product.cpu.abi 2>&1 | tr -d '\r')"
-              echo "- devices: $(adb devices | tr -d '\n')"
+              echo ""
+              echo "emulator did not boot; tail of /tmp/emulator.log:"
+              echo '```'
+              tail -40 /tmp/emulator.log
+              echo '```'
             } >> "$STATUS"
-            APK="$(find android-app/app/build/outputs/apk/release -name '*.apk' | head -1)"
-            echo "- apk: $APK ($(du -h "$APK" | cut -f1))" >> "$STATUS"
-            echo "## Steps" >> "$STATUS"
-            INSTALL="$(timeout 180 adb install -r -t "$APK" 2>&1 | tail -2)"
-            echo "- install: $INSTALL" >> "$STATUS"
-            timeout 30 adb shell pm grant co.asiven.vixentvpn android.permission.POST_NOTIFICATIONS >/dev/null 2>&1 || true
-            START="$(timeout 120 adb shell am start -W -n co.asiven.vixentvpn/co.asiven.vixentvpn.trial.ui.MainActivity 2>&1 | tr -d '\r' | tr '\n' ' ')"
-            echo "- start: $START" >> "$STATUS"
-            EXIT=0
-            timeout 900 python3 android-app/tools/ui-drive.py "$OUT" \
-              sleep 6 \
-              shot 00-start \
-              dump 00-start \
-              wait-text "MVPN" 60 \
-              shot 01-home \
-              dump 01-home \
-              wait-text "رایگان" 150 \
-              shot 02-list-loaded \
-              tap-text "پینگ" \
-              sleep 6 \
-              shot 03-single-ping \
-              tap-text "پینگ همه" \
-              sleep 25 \
-              shot 04-ping-all \
-              tap-desc "جزئیات" \
-              sleep 3 \
-              shot 05-server-sheet \
-              back \
-              sleep 2 \
-              tap-text "پولی" \
-              sleep 3 \
-              shot 06-filter-paid \
-              tap-text "همه" \
-              sleep 2 \
-              type-from-list \
-              sleep 3 \
-              shot 07-search \
-              back \
-              sleep 1 \
-              tap-desc "منوی بیشتر" \
-              sleep 2 \
-              shot 08-menu \
-              back \
-              crash-check || EXIT=$?
-            echo "- ui-drive exit: $EXIT" >> "$STATUS"
-            echo "- pid: $(timeout 30 adb shell pidof co.asiven.vixentvpn 2>&1 | tr -d '\r' || true)" >> "$STATUS"
-            exit $EXIT
+            echo "::error title=ui-snapshot::the emulator did not boot (see STATUS.md)"
+            exit 1
+          fi
+          timeout 60 adb shell settings put global window_animation_scale 0 || true
+          timeout 60 adb shell settings put global transition_animation_scale 0 || true
+          timeout 60 adb shell settings put global animator_duration_scale 0 || true
+          APK="$(find android-app/app/build/outputs/apk/release -name '*.apk' | head -1)"
+          echo "- apk: $APK ($(du -h "$APK" | cut -f1))" >> "$STATUS"
+          echo "" >> "$STATUS"
+          echo "## Steps" >> "$STATUS"
+          echo "- install: $(timeout 240 adb install -r -t "$APK" 2>&1 | tail -2)" >> "$STATUS"
+          timeout 30 adb shell pm grant co.asiven.vixentvpn android.permission.POST_NOTIFICATIONS >/dev/null 2>&1 || true
+          echo "- start: $(timeout 120 adb shell am start -W -n co.asiven.vixentvpn/co.asiven.vixentvpn.trial.ui.MainActivity 2>&1 | tr -d '\r' | tr '\n' ' ')" >> "$STATUS"
+          EXIT=0
+          timeout 1200 python3 android-app/tools/ui-drive.py "$OUT" \
+            sleep 6 \
+            shot 00-start \
+            dump 00-start \
+            wait-text "MVPN" 60 \
+            shot 01-home \
+            dump 01-home \
+            wait-text "رایگان" 150 \
+            shot 02-list-loaded \
+            tap-text "پینگ" \
+            sleep 6 \
+            shot 03-single-ping \
+            tap-text "پینگ همه" \
+            sleep 25 \
+            shot 04-ping-all \
+            tap-desc "جزئیات" \
+            sleep 3 \
+            shot 05-server-sheet \
+            back \
+            sleep 2 \
+            tap-text "پولی" \
+            sleep 3 \
+            shot 06-filter-paid \
+            tap-text "همه" \
+            sleep 2 \
+            type-from-list \
+            sleep 3 \
+            shot 07-search \
+            back \
+            sleep 1 \
+            tap-desc "منوی بیشتر" \
+            sleep 2 \
+            shot 08-menu \
+            back \
+            crash-check || EXIT=$?
+          echo "- ui-drive exit: $EXIT" >> "$STATUS"
+          echo "- pid: $(timeout 30 adb shell pidof co.asiven.vixentvpn 2>&1 | tr -d '\r' || true)" >> "$STATUS"
+          exit $EXIT
 
       - name: Collect logs
         if: always()
         run: |
-          mkdir -p android-app/docs/screenshots
-          timeout 60 adb logcat -d -s MvpnTrial:V AndroidRuntime:E > android-app/docs/screenshots/logcat.txt 2>/dev/null || true
-          timeout 60 adb shell dumpsys window > android-app/docs/screenshots/window.txt 2>/dev/null || true
-          ls -l android-app/docs/screenshots || true
+          OUT=android-app/docs/screenshots
+          mkdir -p "$OUT"
+          timeout 60 adb logcat -d -s MvpnTrial:V AndroidRuntime:E > "$OUT/logcat.txt" 2>/dev/null || true
+          timeout 60 adb shell dumpsys window > "$OUT/window.txt" 2>/dev/null || true
+          if [ -f /tmp/emulator.log ]; then
+            cp /tmp/emulator.log "$OUT/emulator.txt" || true
+          fi
+          ls -l "$OUT" || true
 
       - name: Commit the screenshots
         if: always()
@@ -228,7 +264,4 @@ jobs:
               body += "\n" + steps.read_text(errors="replace")
           level = "error" if "${{ job.status }}" != "success" else "notice"
           print("::%s title=ui-snapshot::%s" % (level, urllib.parse.quote(body[-4000:], safe="")))
-          log = pathlib.Path("/tmp/gradle.log")
-          if log.exists():
-              print("::warning title=gradle-tail::%s" % urllib.parse.quote(log.read_text(errors="replace")[-3000:], safe=""))
           PY
