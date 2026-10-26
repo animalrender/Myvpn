@@ -71,6 +71,7 @@
     <string name="vpn_permission_needed">برای حالت VPN باید اجازهٔ اتصال بدهید.</string>
 
     <!-- Redesigned UI strings -->
+    <string name="empty_filter">با این فیلتر یا جست‌وجو سروری پیدا نشد. «همه» را انتخاب کنید یا عبارت جست‌وجو را پاک کنید.</string>
     <string name="type_opaque">مقدار رمزی</string>
     <string name="type_unknown">نامشخص</string>
     <string name="banner_all_opaque">همهٔ سرورهای این فهرست مقدار اتصال رمزنگاری‌شده دارند، پس با یک ضربه قابل اتصال نیستند. برچسب‌ها، کپی لینک و کپی JSON کامل کار می‌کند؛ برای اتصال، یک کانفیگ یا لینک اشتراک اضافه کنید.</string>

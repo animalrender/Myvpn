@@ -304,6 +304,19 @@
             android:visibility="gone" />
     </LinearLayout>
 
+    <TextView
+        android:id="@+id/emptyText"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginHorizontal="24dp"
+        android:layout_marginTop="36dp"
+        android:gravity="center"
+        android:lineSpacingExtra="4dp"
+        android:text="@string/empty_filter"
+        android:textColor="@color/text_dim"
+        android:textSize="12sp"
+        android:visibility="gone" />
+
     <androidx.recyclerview.widget.RecyclerView
         android:id="@+id/serverList"
         android:layout_width="match_parent"

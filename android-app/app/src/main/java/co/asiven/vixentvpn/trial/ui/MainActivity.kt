@@ -489,12 +489,17 @@ class MainActivity : AppCompatActivity() {
         updateOpaqueBanner()
         val total = servers.size
         val visible = adapter.visibleCount()
+        binding.emptyText.setText(R.string.empty_filter)
         if (total == 0) {
             binding.summaryText.setText(R.string.status_empty)
+            binding.emptyText.setText(R.string.status_empty)
+            binding.emptyText.visibility = View.VISIBLE
             return
         }
         val free = servers.count { it.isFree }
         val paid = total - free
+        // Empty state of the list: the filter/search hid everything (or the backend sent nothing).
+        binding.emptyText.visibility = if (visible == 0) View.VISIBLE else View.GONE
         binding.summaryText.text = getString(R.string.status_filtered, visible, total, free, paid)
     }
 

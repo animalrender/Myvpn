@@ -86,9 +86,22 @@ apksigner verify --print-certs mvpn-trial-arm64-XX.apk    # گواهی: AOSP tes
 
 ### تصاویر واقعی از اجرای اپ
 
-اسکرین‌شات‌ها با شبیه‌ساز اندروید در GitHub Actions گرفته می‌شوند (ورک‌فلوی `ui-snapshot`) و در
-پوشهٔ [`screenshots/`](screenshots/) کامیت می‌شوند: صفحهٔ اصلی، بارگذاری فهرست، پینگ تک و همه،
-bottom sheet سرور، فیلتر «پولی»، جست‌وجو و منو.
+اسکرین‌شات‌ها با شبیه‌ساز اندروید (API 34، ۱۰۸۰×۲۲۸۰) در GitHub Actions گرفته می‌شوند
+(ورک‌فلوی `ui-snapshot`) و در پوشهٔ [`screenshots/`](screenshots/) کامیت می‌شوند:
+
+| فایل | چه چیزی را نشان می‌دهد |
+| --- | --- |
+| [`01-home`](screenshots/01-home.png) | صفحهٔ اصلی، کارت اتصال، دکمهٔ دریافت سرورها، جست‌وجو و فیلترها |
+| [`02-list-loaded`](screenshots/02-list-loaded.png) | فهرست ۱۰۵ سرور با برچسب نوع/قیمت/مصرف و بنر توضیح مقدار رمزی |
+| [`03-single-ping`](screenshots/03-single-ping.png) | پینگ تک‌سرور |
+| [`04-ping-all`](screenshots/04-ping-all.png) | پینگ گروهی و شمارندهٔ پیشرفت |
+| [`05-server-sheet`](screenshots/05-server-sheet.png) | Bottom sheet سرور: اتصال، پینگ، کپی لینک v2ray، کپی JSON، جزئیات |
+| [`06-filter-paid`](screenshots/06-filter-paid.png) | فیلتر «پولی» |
+| [`07-search`](screenshots/07-search.png) | جست‌وجوی «Finland» در فهرست |
+| [`08-menu`](screenshots/08-menu.png) | منوی «بیشتر»: JSON خام، لاگ‌ها، افزودن کانفیگ/اشتراک، تست API |
+| [`09-scrolled`](screenshots/09-scrolled.png) | اسکرول فهرست |
+
+گزارش هر اجرا (`STEPS.txt`، لاگ اپ و لاگ شبیه‌ساز) هم در همان پوشه است.
 
 ---
 
@@ -209,6 +222,13 @@ mode == PROXY → HevTunnel(fd = 0) → locale SOCKS/HTTP → XrayCore.start(con
 - `/api/configs` (هم GET و هم POST، با هر ترکیب `deviceId`/`serverId`/`protocolId`) در بک‌اند فعلی
   **۴۰۴** است؛ `POST /api/protocols` با هر بدنه‌ای پاسخ `the protocol id is incorrect!` می‌دهد.
 - `/api/token` می‌گوید `The app token is disabled` (پس توکن لازم نیست).
+- پروب‌های بعدی (`tools/probe-decode.py` و `tools/probe-resolve.py`) همهٔ مسیرهای «این سرور را
+  باز کن» را امتحان کردند: `POST/GET /api/v2/protocols`، `/api/protocols/resolve`،
+  `/api/config(s)`، `/api/connect`، `/api/decode`، `/api/endpoint/<endpointKey>`،
+  `/api/route/<routeKey>`، `/api/config-key/<configKey>`، `?plain/decoded/raw` و شکل‌های مختلف بدنه.
+  نتیجه: `POST /api/v2/protocols` فقط `405` (Allow: GET)، `POST /api/protocols` مقدار `data:0`
+  بدون محتوا، بقیه `404` — یعنی **هیچ اندپوینتی نسخهٔ رمزگشایی‌شده را برنمی‌گرداند** و رمزگشایی
+  فقط داخل خود اپ اصلی (کد native) انجام می‌شود.
 - رمزگشایی `value` با همهٔ کلیدهای قابل استخراج از خود APK (رشته‌های dex، `libstub.so`، گواهی امضا،
   `app_name`/`version_code`/`deviceId`، `configKey`/`routeKey`/`endpointKey`) و همهٔ حالت‌های متعارف
   AES (ECB/CBC/CTR/CFB/OFB/GCM) و ChaCha20/Salsa20 آزمایش شد و نتیجه نداد؛ یعنی کلید/الگوریتم
@@ -248,7 +268,8 @@ Firebase **طبق اپ اصلی** اضافه شده است:
 | نشانه | معنا و راه‌حل |
 | --- | --- |
 | «فهرست سرورها دریافت نشد» | منوی «لاگ‌ها» را ببینید؛ اگر `statusCode:400` با متن sign missing بود یعنی امضای APK با امضای اپ اصلی یکی نیست (باید با `fetch-testkey.sh` ساخته شود). |
-| «سرور هیچ مقدار اتصالی ندارد» | مقدار `value` خالی یا رمزشده است (بخش ۶). |
+| «سرور هیچ مقدار اتصالی ندارد» یا برچسب «مقدار رمزی» | مقدار `value` رمزشده است (بخش ۶)؛ بنر بالای فهرست دقیقاً همین را توضیح می‌دهد و دکمهٔ «افزودن کانفیگ / اشتراک» را نشان می‌دهد. |
+| «همهٔ سرورها مقدار رمزی دارند و چیزی وصل نمی‌شود» | محدودیت سمت بک‌اند است، نه اپ: کانفیگ فقط داخل کد native اپ اصلی رمزگشایی می‌شود. با «افزودن اشتراک» یا «افزودن کانفیگ از کلیپ‌بورد» همان هسته، پینگ، اتصال و کپی لینک کامل کار می‌کند. |
 | پینگ همه `—` می‌ماند | سرورها مقدار اتصال معتبر ندارند، یا شبکه بسته است؛ تک‌تک پینگ بزنید و لاگ هسته را ببینید. |
 | اتصال برقرار می‌شود ولی اینترنت نیست | حالت را روی `PROXY` بگذارید و با `socks5://127.0.0.1:10808` تست کنید (برای بررسی این‌که مشکل از TUN/hev است یا از سرور). |
 | «hev-socks5-tunnel شروع نشد» | یعنی `.so` در APK نیست یا نام پکیج/کلاس JNI نمی‌خواند؛ ورک‌فلو این را با `unzip -l` بررسی می‌کند. |
