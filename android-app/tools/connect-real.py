@@ -409,21 +409,67 @@ def main(argv):
         failures.append("no-selection")
 
     # ------------------------------------------------------------ 4. connect
-    connected = None
+    # The app already connected-ready state is: ping done + fastest row selected. Traffic is
+    # verified from the shell uid (its packets are routed into the TUN). A single unlucky row is
+    # retried with the next measured rows, exactly like a user would tap the next server.
+    attempts = []
     if chosen:
-        log(f"اتصال به سرور انتخاب‌شده: `{chosen}`")
-        if not connect_row({"name": chosen, "ping": None}, "03"):
-            failures.append("not-connected")
+        attempts.append(chosen)
+    for row in rows():
+        if ping_ms(row["ping"]) and row["name"] not in attempts:
+            attempts.append(row["name"])
+        if len(attempts) == 4:
+            break
+
+    connected = None
+    for index, name in enumerate(attempts, start=1):
+        if index == 1:
+            log(f"اتصال به سرور انتخاب‌شده: `{name}`")
+            started = connect_row({"name": name, "ping": None}, "03")
         else:
-            time.sleep(5)
-            up = tun_up()
-            log(f"رابط tun0: {'موجود' if up else 'موجود نیست'}")
-            code = probe()
+            log(f"تلاش {index}: اتصال به `{name}`")
+            started = connect_row({"name": name, "ping": None}, f"0{2 + index}")
+            label = connect_button_text()
+            if label and label != "قطع اتصال":
+                tap_rid("connectButton")
+                time.sleep(10)
+                accept_vpn_dialog()
+                for _ in range(20):
+                    if find(text="متصل", exact=False):
+                        break
+                    time.sleep(2)
+        if not started:
+            failures.append(f"not-connected-{index}")
+            continue
+        authed = False
+        for wait in range(20):
+            if find(text="متصل", exact=False):
+                authed = True
+                break
+            if not authed and wait == 2:
+                accept_vpn_dialog()
+            time.sleep(2)
+        log(f"وضعیت تونل: `{(find(text='متصل', exact=False) or {}).get('text', '—')}`")
+        if not authed:
+            failures.append(f"no-tunnel-{index}")
+            continue
+        time.sleep(4)
+        up = tun_up()
+        log(f"رابط tun0: {'موجود' if up else 'موجود نیست'}")
+        code = "no-response"
+        for _ in range(3):
+            code, _body = http_get(PROBE_URL, timeout=45)
             log(f"درخواست از داخل تونل: HTTP {code or 'بدون پاسخ'}")
-            if up and code in ("204", "200"):
-                connected = chosen
-            else:
-                failures.append("no-traffic")
+            if code in ("204", "200"):
+                break
+            time.sleep(5)
+        if up and code in ("204", "200"):
+            connected = name
+            break
+        log("ترافیک از این ردیف عبور نکرد؛ سرور بعدی آزموده می‌شود")
+        failures.append(f"no-traffic-{index}")
+    if not connected:
+        failures.append("no-server-passed-traffic")
 
     if connected:
         ip, country, isp = exit_ip()
@@ -438,7 +484,7 @@ def main(argv):
         if others:
             second = others[0]
             log(f"تغییر سرور به: `{second['name']}` ({second['ping']})")
-            if connect_row(second, "04"):
+            if connect_row(second, "07"):
                 label = connect_button_text()
                 log(f"برچسب دکمه پس از انتخاب سرور دوم: `{label}`")
                 if label and label != "قطع اتصال":
@@ -468,7 +514,7 @@ def main(argv):
             current = hero_name()
             log(f"دکمه در وضعیت «{label}» است؛ ابتدا ردیف متصل انتخاب می‌شود: `{current}`")
             if current:
-                connect_row({"name": current, "ping": None}, "05")
+                connect_row({"name": current, "ping": None}, "07")
                 label = connect_button_text()
         log(f"برچسب دکمه پیش از قطع: `{label}`")
         if label == "قطع اتصال" and tap_rid("connectButton"):
@@ -476,7 +522,7 @@ def main(argv):
                 if not tun_up():
                     break
                 time.sleep(2)
-            shot("06-disconnected")
+            shot("08-disconnected")
             log(f"پس از قطع اتصال: tun0 {'هنوز موجود است' if tun_up() else 'حذف شد'}")
             if tun_up():
                 failures.append("tun-not-removed")
