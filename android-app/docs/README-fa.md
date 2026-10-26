@@ -249,6 +249,7 @@ gradle assembleRelease   # خروجی: app/build/outputs/apk/release/
 | `.../trial/data/ApiClient.kt` | ساخت هدرها، `sign`/`sha_hexadecimal`، فراخوانی اندپوینت‌ها، تشخیص خطای منطقی |
 | `.../trial/data/Models.kt` | مدل سرور/مصرف/تنظیمات + پارسر انعطاف‌پذیر پاسخ بک‌اند |
 | `.../trial/data/Prefs.kt` | حافظهٔ محلی (توکن، `apiUrl`، `testUrl`، حالت، کش سرورها، انتخاب) |
+| `.../trial/core/PayloadCipher.kt` | باز کردن `value` (AES-128-CBC، کلید `key_<id>`، IV = کلید) + تشخیص خوانا بودن |
 | `.../trial/core/ConfigBuilder.kt` | تبدیل `value` به outbound اکستری + ساخت کانفیگ اجرا/پینگ + بازسازی لینک اشتراک |
 | `.../trial/core/XrayCore.kt` | پوستهٔ `libv2ray.aar`: `initCoreEnv`، `startLoop/stopLoop`، `measureOutboundDelay` |
 | `.../service/VpnTunnelService.kt` | سرویس Foreground + ساخت TUN + اتصال به hev + اعلان وضعیت |
@@ -262,6 +263,7 @@ gradle assembleRelease   # خروجی: app/build/outputs/apk/release/
 جریان اتصال (خلاصه):
 
 ```
+دریافت سرورها → ServerParser → PayloadCipher.unwrap(value) → لینک/JSON واقعی
 انتخاب سرور → ConfigBuilder.parse(value) → outbound Xray
             → ConfigBuilder.runtimeConfig(outbound)   (SOCKS/HTTP 10808/10809 + direct/block)
 mode == VPN   → VpnService(TUN 10.10.10.2/24, MTU 1500) → HevTunnel(tunFd)

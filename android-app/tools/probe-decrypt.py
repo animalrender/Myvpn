@@ -87,6 +87,7 @@ def main():
     kinds = collections.Counter()
     protos = collections.Counter()
     fails = []
+    detail = []
     for row in rows:
         rid = row.get("id")
         plain = decrypt(row.get("value") or "", rid)
@@ -95,6 +96,7 @@ def main():
             continue
         kind, meta = describe(plain)
         kinds[kind] += 1
+        detail.append((rid, row.get("price"), kind, meta))
         if kind == "json":
             protos["%s/%s/%s" % (meta["protocol"], meta["network"], meta["security"])] += 1
         else:
@@ -110,6 +112,21 @@ def main():
     printable_ratio = sum(1 for k in kinds if not k.startswith("json")) / max(1, len(rows))
     print("decrypt-coverage: %.2f%%" % (100 * (len(rows) - len(fails)) / max(1, len(rows))))
     print("share-link share: %.2f%%" % (100 * printable_ratio))
+
+    # Per-row composition (no hosts, no uuids, no keys — only the shape of each payload), so the
+    # client can tell in advance which rows its core can dial.
+    with open(os.environ.get("DECRYPT_DETAIL", "/tmp/decrypt-detail.txt"), "w",
+              encoding="utf-8") as handle:
+        handle.write("# id, price, scheme, transport/security (یا طول لینک)\n")
+        for rid, price, kind, meta in detail:
+            if kind == "json":
+                handle.write("%s,%s,json,%s/%s/%s,outbounds=%s,inbounds=%s\n" % (
+                    rid, price, meta.get("protocol"), meta.get("network"),
+                    meta.get("security"), meta.get("outbounds"), meta.get("inbounds")))
+            else:
+                handle.write("%s,%s,%s,len=%s,remark=%s\n" % (
+                    rid, price, kind, meta.get("length"), meta.get("has_remark")))
+    print("detail written for %d rows" % len(detail))
     return 0 if not fails else 1
 
 

@@ -53,7 +53,8 @@ jobs:
         run: |
           set -uo pipefail
           python3 -m pip install --quiet cryptography
-          python3 android-app/tools/probe-decrypt.py 2>&1 | tee /tmp/dec.log || true
+          DECRYPT_DETAIL=android-app/docs/probe-rows/decrypt-detail.txt \
+            python3 android-app/tools/probe-decrypt.py 2>&1 | tee /tmp/dec.log || true
           cp /tmp/dec.log android-app/docs/probe-rows/decrypt-coverage.txt
 
       - name: Commit the log

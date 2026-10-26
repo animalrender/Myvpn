@@ -397,7 +397,7 @@ class MainActivity : AppCompatActivity() {
             val fastest = targets
                 .filter { it.pingState == PingState.OK && it.pingMs > 0 }
                 .minByOrNull { it.pingMs }
-            if (fastest != null && selectedServer()?.pingState != PingState.OK) {
+            if (fastest != null && !tunnelRunning && selectedServer()?.pingState != PingState.OK) {
                 selectServer(fastest)
                 toast(getString(R.string.toast_fastest_selected, fastest.name, fastest.pingMs))
             }

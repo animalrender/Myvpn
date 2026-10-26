@@ -14,6 +14,7 @@
 │   └── دکمهٔ اتصال/قطع + انتخاب حالت (VPN / PROXY)                          │
 │                                                                          │
 │ ApiClient  ── headers(sign، sha_hexadecimal، token، …) ──► managev1.xyz  │
+│ PayloadCipher: value رمزشده → لینک/JSON (AES-CBC، کلید key_<id>)          │
 │ ConfigBuilder: value → outbound Xray → کانفیگ اجرا/پینگ/لینک اشتراک       │
 │                                                                          │
 │ VpnTunnelService (Foreground)                                            │

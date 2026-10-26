@@ -377,54 +377,63 @@ def main(argv):
         failures.append("no-ping-response")
 
     # ------------------------------------------------------------ 4. connect
-    if fastest:
-        log(f"اتصال به سریع‌ترین سرور: `{fastest['name']}`")
-        if not connect_row(fastest, "03"):
-            failures.append("not-connected")
+    # Real lists always contain a few dead rows, so the fastest three are tried in order until
+    # traffic really flows — exactly what a user would do by tapping the next server.
+    candidates = answered[:3]
+    connected = None
+    for attempt, candidate in enumerate(candidates, start=1):
+        log(f"تلاش {attempt}/{len(candidates)}: اتصال به `{candidate['name']}` ({candidate['ping']})")
+        if not connect_row(candidate, f"0{2 + attempt}"):
+            failures.append(f"not-connected-{attempt}")
+            continue
+        time.sleep(5)
+        up = tun_up()
+        log(f"رابط tun0: {'موجود' if up else 'موجود نیست'}")
+        code = probe()
+        log(f"درخواست از داخل تونل: HTTP {code or 'بدون پاسخ'}")
+        if up and code in ("204", "200"):
+            connected = candidate
+            break
+        log("ترافیک از این ردیف عبور نکرد؛ قطع و آزمون ردیف بعدی")
+        tap_rid("connectButton")
+        time.sleep(8)
+    if not connected:
+        failures.append("no-server-passed-traffic")
+
+    if connected:
+        ip, country, isp = exit_ip()
+        log(f"IP خروج داخل تونل: `{ip}` ({country} — {isp})")
+        if ip and baseline_ip and ip == baseline_ip:
+            log("**IP خروج تغییر نکرد** — ترافیک واقعاً از تونل نرفته است")
+            failures.append("exit-ip-unchanged")
+
+        # ---------------------------------------------------------- 5. second row
+        others = [r for r in answered
+                  if r["name"] != connected["name"]]
+        if others:
+            second = others[0]
+            log(f"تغییر سرور به: `{second['name']}` ({second['ping']})")
+            if connect_row(second, "05"):
+                code2 = probe()
+                log(f"درخواست پس از تغییر سرور: HTTP {code2 or 'بدون پاسخ'}")
+                if code2 not in ("204", "200"):
+                    failures.append(f"probe-after-switch-{code2 or 'none'}")
+            else:
+                failures.append("switch-failed")
         else:
-            time.sleep(5)
-            up = tun_up()
-            log(f"رابط tun0: {'موجود' if up else 'موجود نیست'}")
-            if not up:
-                failures.append("no-tun")
-            code = probe()
-            log(f"درخواست از داخل تونل: HTTP {code or 'بدون پاسخ'}")
-            if code not in ("204", "200"):
-                failures.append(f"probe-{code or 'none'}")
-            ip, country, colo = exit_ip()
-            log(f"IP خروج داخل تونل: `{ip}` ({country}/{colo})")
-            if ip and baseline_ip and ip == baseline_ip:
-                log("توجه: IP خروج تغییر نکرد — ممکن است سرور و شبکهٔ رانر هم‌مکان باشند")
-                failures.append("exit-ip-unchanged")
+            log("ردیف دومی برای آزمون تغییر سرور در فهرست دیده نشد")
 
-            # -------------------------------------------------------- 5. second row
-            painted = rows()
-            others = [r for r in painted
-                      if r["name"] != fastest["name"] and ping_ms(r["ping"])]
-            if len(others) >= 1:
-                second = min(others, key=lambda r: ping_ms(r["ping"]))
-                log(f"تغییر سرور به: `{second['name']}`")
-                if connect_row(second, "04"):
-                    code2 = probe()
-                    log(f"درخواست پس از تغییر سرور: HTTP {code2 or 'بدون پاسخ'}")
-                    if code2 not in ("204", "200"):
-                        failures.append(f"probe-after-switch-{code2 or 'none'}")
-                else:
-                    failures.append("switch-failed")
-            else:
-                log("سرور دوم قابل‌اتصال دیگری برای آزمون تغییر سرور پیدا نشد")
+        # ---------------------------------------------------------- 6. teardown
+        if tap_rid("connectButton"):
+            time.sleep(10)
+            shot("06-disconnected")
+            log(f"پس از قطع اتصال: tun0 {'هنوز موجود است' if tun_up() else 'حذف شد'}")
+            if tun_up():
+                failures.append("tun-not-removed")
+        else:
+            failures.append("no-disconnect")
 
-            # -------------------------------------------------------- 6. teardown
-            if tap_rid("connectButton"):
-                time.sleep(8)
-                shot("05-disconnected")
-                log(f"پس از قطع اتصال: tun0 {'هنوز موجود است' if tun_up() else 'حذف شد'}")
-                if tun_up():
-                    failures.append("tun-not-removed")
-            else:
-                failures.append("no-disconnect")
-
-    write_report(failures, baseline_ip, fastest)
+    write_report(failures, baseline_ip, connected or fastest)
     print("FAILURES:" + ",".join(failures) if failures else "ALL OK", flush=True)
     return 1 if failures else 0
 
