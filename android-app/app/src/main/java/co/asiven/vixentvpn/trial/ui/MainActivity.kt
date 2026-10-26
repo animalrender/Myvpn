@@ -187,6 +187,12 @@ class MainActivity : AppCompatActivity() {
 
     override fun onStart() {
         super.onStart()
+        // The tunnel state can change while this screen is stopped (notification, another
+        // activity instance, service restart), so the header is re-synced on every start.
+        tunnelRunning = prefs.tunnelRunning
+        connectedKey = prefs.connectedKey.ifBlank { null }
+        paintStatusDot()
+        updateHero()
         ContextCompat.registerReceiver(
             this,
             stateReceiver,

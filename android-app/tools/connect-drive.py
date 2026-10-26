@@ -211,6 +211,18 @@ def import_config(uri, name):
     return wait_for(text=name, seconds=90)
 
 
+def tap_connect_button():
+    """The button label depends on the tunnel state, so it is located by view id."""
+    for node in nodes(dump_xml()):
+        if node.get("resource-id", "").endswith("connectButton"):
+            point = center(node.get("bounds"))
+            if point:
+                tap(point)
+                return (node.get("text") or "").strip() or "?"
+    label = connect_button_text()
+    return label if label and tap_text(label, exact=True) else None
+
+
 def connect_button_text():
     """The button carries one of three labels depending on the tunnel state."""
     for label in ("اتصال به سرور انتخابی", "اتصال", "قطع اتصال"):
@@ -312,9 +324,9 @@ def main(argv):
                 failures.append("import-second")
             else:
                 shot("06-second-imported")
-                label = connect_button_text()
+                label = tap_connect_button()
                 log(f"برچسب دکمهٔ اتصال در این حالت: `{label}`")
-                if label and tap_text(label, exact=True):
+                if label:
                     log("درخواست تغییر سرور زده شد")
                 else:
                     failures.append("switch-button")
