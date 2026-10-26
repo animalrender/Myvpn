@@ -34,12 +34,14 @@ jobs:
         uses: actions/checkout@v4
 
       - name: Set up JDK 17
+        id: jdk
         uses: actions/setup-java@v4
         with:
           distribution: temurin
           java-version: "17"
 
       - name: Locate Android SDK and NDK
+        id: sdk
         run: |
           set -euo pipefail
           if [ -z "${ANDROID_HOME:-}" ]; then
@@ -67,23 +69,29 @@ jobs:
           test -x "$NDK/ndk-build"
 
       - name: Make helper scripts executable
+        id: chmod
         run: chmod +x android-app/tools/*.sh
 
       - name: Fetch libv2ray.aar (Xray core, all ABIs)
+        id: aar
         run: bash android-app/tools/fetch-libv2ray.sh 2>&1 | tee /tmp/fetch-aar.log
 
       - name: Build hev-socks5-tunnel JNI library (x86_64, for the emulator)
+        id: hev
         run: HEV_ABI=x86_64 bash android-app/tools/build-hevtun.sh 2>&1 | tee /tmp/build-hev.log
 
       - name: Prepare release signing key
+        id: key
         run: bash android-app/tools/fetch-testkey.sh 2>&1 | tee /tmp/testkey.log
 
       - name: Set up Gradle
+        id: gradlesetup
         uses: gradle/actions/setup-gradle@v4
         with:
           gradle-version: "8.9"
 
       - name: Assemble release APK for x86_64
+        id: apk
         working-directory: android-app
         run: |
           set -o pipefail
@@ -91,6 +99,7 @@ jobs:
           ls -l app/build/outputs/apk/release/
 
       - name: Install emulator, system image and its runtime libraries
+        id: emusetup
         run: |
           set -uo pipefail
           sudo apt-get update -qq || true
@@ -115,6 +124,7 @@ jobs:
           sudo chmod 666 /dev/kvm || true
 
       - name: Boot the emulator, let the app fetch and dial on its own
+        id: drive
         run: |
           set -uo pipefail
           OUT=android-app/docs/e2e-real
@@ -166,6 +176,16 @@ jobs:
         run: |
           OUT=android-app/docs/e2e-real
           mkdir -p "$OUT"
+          echo "- outcome jdk: ${{ steps.jdk.outcome }}" >> "$OUT/STATUS.md"
+          echo "- outcome sdk: ${{ steps.sdk.outcome }}" >> "$OUT/STATUS.md"
+          echo "- outcome chmod: ${{ steps.chmod.outcome }}" >> "$OUT/STATUS.md"
+          echo "- outcome aar: ${{ steps.aar.outcome }}" >> "$OUT/STATUS.md"
+          echo "- outcome hev: ${{ steps.hev.outcome }}" >> "$OUT/STATUS.md"
+          echo "- outcome key: ${{ steps.key.outcome }}" >> "$OUT/STATUS.md"
+          echo "- outcome gradlesetup: ${{ steps.gradlesetup.outcome }}" >> "$OUT/STATUS.md"
+          echo "- outcome apk: ${{ steps.apk.outcome }}" >> "$OUT/STATUS.md"
+          echo "- outcome emusetup: ${{ steps.emusetup.outcome }}" >> "$OUT/STATUS.md"
+          echo "- outcome drive: ${{ steps.drive.outcome }}" >> "$OUT/STATUS.md"
           timeout 60 adb logcat -d -s MvpnTrial:V AndroidRuntime:E > "$OUT/logcat-app.txt" 2>/dev/null || true
           timeout 90 adb logcat -b all -d > /tmp/logcat-all.txt 2>/dev/null || true
           tail -c 200000 /tmp/logcat-all.txt > "$OUT/logcat-all.txt" 2>/dev/null || true
@@ -180,7 +200,15 @@ jobs:
           git add android-app/docs/e2e-real
           if git diff --cached --quiet; then echo "no changes"; else
             git commit -m "test(real): zero-input backend verification from run ${{ github.run_number }}"
-            git push
+          for attempt in 1 2 3 4 5; do
+            if git pull --rebase --autostash --quiet origin "${{ github.ref_name }}" && git push --quiet; then
+              echo "pushed on attempt $attempt"
+              break
+            fi
+            echo "push attempt $attempt failed; retrying"
+            git rebase --abort 2>/dev/null || true
+            sleep 5
+          done
           fi
 
       - name: Report the result
