@@ -255,20 +255,25 @@ def http_get(url, timeout=25):
     return "no-http-tool", ""
 
 
+def traffic_ok(code):
+    """Any 2xx/3xx answer means the packet really left through the tunnel (301/302 included)."""
+    return bool(code) and code.isdigit() and 200 <= int(code) < 400
+
+
 def probe(url=None):
-    """Returns the first healthy HTTP status through the tunnel, trying both probe URLs."""
+    """Returns the first HTTP status that proves traffic flows, trying both probe URLs."""
     codes = []
     for target in (url or PROBE_URL, DNS_PROBE_URL):
         code, body = http_get(target, timeout=45)
         codes.append(code)
-        if code in ("200", "204") or "ip=" in (body or ""):
-            return "200"
+        if traffic_ok(code) or "ip=" in (body or ""):
+            return code
     return codes[0] if codes else "no-response"
 
 
 def exit_ip():
     """Public IP / country as seen from inside the tunnel, via an IP literal (no DNS needed)."""
-    _, trace = http_get("http://1.1.1.1/cdn-cgi/trace", timeout=25)
+    _, trace = http_get("http://cloudflare.com/cdn-cgi/trace", timeout=25)
     ip_match = re.search(r"^ip=(\S+)$", trace or "", re.M)
     loc_match = re.search(r"^loc=(\S+)$", trace or "", re.M)
     colo_match = re.search(r"^colo=(\S+)$", trace or "", re.M)
@@ -487,12 +492,12 @@ def main(argv):
         log(f"رابط tun0: {'موجود' if up else 'موجود نیست'}")
         code = "no-response"
         for _ in range(3):
-            code, _body = http_get(PROBE_URL, timeout=45)
+            code = probe()
             log(f"درخواست از داخل تونل: HTTP {code or 'بدون پاسخ'}")
-            if code in ("204", "200"):
+            if traffic_ok(code):
                 break
             time.sleep(5)
-        if up and code in ("204", "200"):
+        if up and traffic_ok(code):
             connected = name
             break
         log("ترافیک از این ردیف عبور نکرد؛ سرور بعدی آزموده می‌شود")
@@ -526,7 +531,7 @@ def main(argv):
                     time.sleep(2)
                 code2 = probe()
                 log(f"درخواست پس از تغییر سرور: HTTP {code2 or 'بدون پاسخ'}")
-                if code2 not in ("204", "200"):
+                if not traffic_ok(code2):
                     failures.append(f"probe-after-switch-{code2 or 'none'}")
             else:
                 failures.append("switch-failed")
