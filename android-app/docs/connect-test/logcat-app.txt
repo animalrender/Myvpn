@@ -1,0 +1,18 @@
+--------- beginning of main
+10-26 03:51:02.924  3166  3166 I MvpnTrial: MVPN Trial 3.2.0-trial (co.asiven.vixentvpn) راه‌اندازی شد
+10-26 03:51:03.112  3166  3166 I MvpnTrial: هستهٔ Xray آماده شد: Lib v40, Xray-core v26.10.21
+10-26 03:51:04.576  3166  3307 D MvpnTrial: GET https://managev1.xyz/api/token?deviceId=1a7bcfbf0a618356 → 200 (66 بایت)
+10-26 03:51:04.583  3166  3307 I MvpnTrial: توکن سمت سرور غیرفعال است؛ بدون هدر token ادامه می‌دهیم
+10-26 03:51:04.717  3166  3307 D MvpnTrial: GET https://managev1.xyz/api/setting → 200 (44 بایت)
+10-26 03:51:04.718  3166  3307 I MvpnTrial: setting خالی است (data=null) — پیش‌فرض‌های برنامه استفاده می‌شوند
+10-26 03:51:05.139  3166  3307 D MvpnTrial: GET https://managev1.xyz/api/protocols → 200 (88106 بایت)
+10-26 03:51:05.340  3166  3307 I MvpnTrial: 105 سرور از /api/protocols دریافت شد
+10-26 03:51:06.810  3166  3166 I MvpnTrial: 105 سرور از کش بارگذاری شد
+10-26 03:51:08.241  3166  3166 W MvpnTrial: دریافت توکن Firebase ناموفق: java.util.concurrent.ExecutionException: java.io.IOException: AUTHENTICATION_FAILED
+10-26 03:51:15.244  3166  3166 I MvpnTrial: 105 سرور از کش بارگذاری شد
+10-26 03:51:15.417  3166  3166 I MvpnTrial: کانفیگ دستی اضافه شد: vless (123 کاراکتر)
+10-26 03:51:26.402  3166  3166 I MvpnTrial: سرور انتخاب شد: CI-Local (price=null, type=vless)
+10-26 03:51:33.447  3166  3166 I MvpnTrial: VpnTunnelService ایجاد شد
+10-26 03:51:33.472  3166  3166 E MvpnTrial: سروری برای اتصال ارسال نشده است
+10-26 03:53:24.341  3166  3307 D MvpnTrial: پینگ CI-Local: 3 ms
+10-26 03:53:24.349  3166  3166 I MvpnTrial: پینگ همهٔ 1 سرور انجام شد
