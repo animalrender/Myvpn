@@ -258,6 +258,9 @@ jobs:
           OUT=android-app/docs/screenshots
           mkdir -p "$OUT"
           timeout 60 adb logcat -d -s MvpnTrial:V AndroidRuntime:E > "$OUT/logcat.txt" 2>/dev/null || true
+          timeout 90 adb logcat -b all -d > /tmp/logcat-all.txt 2>/dev/null || true
+          tail -c 200000 /tmp/logcat-all.txt > "$OUT/logcat-all.txt" 2>/dev/null || true
+          timeout 60 adb shell dumpsys activity activities > "$OUT/activities.txt" 2>/dev/null || true
           timeout 60 adb shell dumpsys window > "$OUT/window.txt" 2>/dev/null || true
           if [ -f /tmp/emulator.log ]; then
             cp /tmp/emulator.log "$OUT/emulator.txt" || true

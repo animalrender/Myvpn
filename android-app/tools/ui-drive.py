@@ -20,6 +20,8 @@ import xml.etree.ElementTree as ET
 OUT = "."
 STEPS = []
 FAILURES = []
+ACTIVITY = "co.asiven.vixentvpn/co.asiven.vixentvpn.trial.ui.MainActivity"
+PACKAGE = "co.asiven.vixentvpn"
 
 
 def adb(*args, timeout=120):
@@ -32,7 +34,8 @@ def shell(cmd, timeout=120):
 
 def dump_xml(retries=6):
     for _ in range(retries):
-        out = shell("uiautomator dump /sdcard/window.xml", timeout=60)
+        shell("rm -f /sdcard/window.xml", timeout=30)
+        out = shell("uiautomator dump --compressed /sdcard/window.xml", timeout=60)
         if "dumped to" in (out.stdout or "") + (out.stderr or ""):
             raw = adb("exec-out", "cat /sdcard/window.xml", timeout=60)
             text = raw.stdout or ""
@@ -58,6 +61,34 @@ def center(bounds):
         return None
     x1, y1, x2, y2 = (int(v) for v in match.groups())
     return (x1 + x2) // 2, (y1 + y2) // 2
+
+
+def in_foreground():
+    """True when our activity owns the focused window."""
+    out = shell("dumpsys window", timeout=60).stdout or ""
+    for line in out.splitlines():
+        if "mCurrentFocus" in line or "mFocusedApp" in line:
+            if PACKAGE in line:
+                return True
+    return False
+
+
+def ensure_foreground(reason=""):
+    """Brings the app back if the emulator dropped it (screen off, stray HOME, relaunch).
+
+    A screenshot run is worthless if the app is not on screen, so every step starts with this
+    check instead of assuming the previous step left the app in front.
+    """
+    shell("input keyevent KEYCODE_WAKEUP", timeout=30)
+    shell("wm dismiss-keyguard", timeout=30)
+    if in_foreground():
+        return True
+    shell(f"am start -W -n {ACTIVITY}", timeout=90)
+    time.sleep(3)
+    ok = in_foreground()
+    print(f"ensure-foreground{' (' + reason + ')' if reason else ''}: {'ok' if ok else 'RELAUNCHED'}")
+    STEPS.append(f"ensure-foreground{' (' + reason + ')' if reason else ''}: {'ok' if ok else 'RELAUNCHED'}")
+    return ok
 
 
 def tap_text(target, exact=False):
@@ -152,7 +183,7 @@ def crash_check():
         if "FATAL EXCEPTION" in line or ("co.asiven.vixentvpn" in line and "Process:" in line and "died" in line)
     ]
     ok = bool(pid) and not crash.strip() and not fata
-    print(f"crash-check: pid={'yes' if pid else 'no'} crash_buffer={len(crash)} fatal_lines={len(fata)}")
+    print(f"crash-check: pid={'yes' if pid else 'no'} crash_buffer={len(crash)} fatal_lines={len(fata)} foreground={in_foreground()}")
     STEPS.append(f"crash-check: pid={'yes' if pid else 'no'}, fatal lines={len(fata)}")
     if not pid:
         FAILURES.append("app process is not running")
@@ -184,6 +215,7 @@ def main(argv):
     index = 0
     while index < len(rest):
         cmd = rest[index]
+        ensure_foreground(cmd)
         if cmd == "shot":
             shot(rest[index + 1]); index += 2
         elif cmd == "tap-text":
