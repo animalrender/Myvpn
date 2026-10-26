@@ -30,7 +30,10 @@ import time
 import urllib.parse
 
 OUT = "."
-PROBE_URL = "http://connectivitycheck.gstatic.com/generate_204"
+# First the IP-literal endpoint (no DNS involved, so a DNS hiccup inside the tunnel cannot be
+# mistaken for a broken server), then the classic generate_204 URL.
+PROBE_URL = "http://1.1.1.1/cdn-cgi/trace"
+DNS_PROBE_URL = "http://connectivitycheck.gstatic.com/generate_204"
 TRACE_URL = "https://www.cloudflare.com/cdn-cgi/trace"
 COMPONENT = "co.asiven.vixentvpn/co.asiven.vixentvpn.trial.ui.MainActivity"
 REPORT = []
@@ -252,13 +255,27 @@ def http_get(url, timeout=25):
     return "no-http-tool", ""
 
 
-def probe(url=PROBE_URL):
-    code, _ = http_get(url)
-    return code
+def probe(url=None):
+    """Returns the first healthy HTTP status through the tunnel, trying both probe URLs."""
+    codes = []
+    for target in (url or PROBE_URL, DNS_PROBE_URL):
+        code, body = http_get(target, timeout=45)
+        codes.append(code)
+        if code in ("200", "204") or "ip=" in (body or ""):
+            return "200"
+    return codes[0] if codes else "no-response"
 
 
 def exit_ip():
-    """Public IP / country as seen from inside the tunnel (plain HTTP, so every tool can do it)."""
+    """Public IP / country as seen from inside the tunnel, via an IP literal (no DNS needed)."""
+    _, trace = http_get("http://1.1.1.1/cdn-cgi/trace", timeout=25)
+    ip_match = re.search(r"^ip=(\S+)$", trace or "", re.M)
+    loc_match = re.search(r"^loc=(\S+)$", trace or "", re.M)
+    colo_match = re.search(r"^colo=(\S+)$", trace or "", re.M)
+    if ip_match:
+        return (ip_match.group(1),
+                loc_match.group(1) if loc_match else "?",
+                colo_match.group(1) if colo_match else "?")
     _, body = http_get("http://api.ipify.org", timeout=20)
     token = re.search(r"\b\d{1,3}(?:\.\d{1,3}){3}\b", body or "")
     ip = token.group(0) if token else ""
