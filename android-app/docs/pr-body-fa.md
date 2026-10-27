@@ -10,19 +10,19 @@
 
 ### 📦 خروجی آمادهٔ تست
 
-* ریلیز: **[trial-34](https://github.com/animalrender/Myvpn/releases/tag/trial-34)** — **دو APK**:
-  * `mvpn-trial-arm64-34.apk` — گوشی/تبلت (`arm64-v8a`)
-  * `mvpn-trial-x86_64-34.apk` — شبیه‌ساز/کروم‌بوک (`x86_64`)
+* ریلیز: **[trial-49](https://github.com/animalrender/Myvpn/releases/tag/trial-49)** — **دو APK**:
+  * `mvpn-trial-arm64-49.apk` — گوشی/تبلت (`arm64-v8a`)
+  * `mvpn-trial-x86_64-49.apk` — شبیه‌ساز/کروم‌بوک (`x86_64`)
   * هر دو با فایل `.sha256`
 * امضا: AOSP testkey با `SHA-256 = a40da80a59d170caa950cf15c18c454d47a39b26989d8b640ecd745ba71bf5dc`
   — **همان گواهی نسخهٔ اصلی**، تا هدرهای `sign` و `sha_hexadecimal` بایت‌به‌بایت درست باشند.
-* نصب: `adb install -r mvpn-trial-arm64-34.apk`
+* نصب: `adb install -r mvpn-trial-arm64-49.apk`
   **کنار نسخهٔ اصلی** نصب می‌شود — `applicationId` این نسخه `co.asiven.vixentvpn.trial` است،
   پس لازم نیست اپ اصلی را حذف کنید (هدر `app_name` برای بک‌اند همان `co.asiven.vixentvpn` می‌ماند).
 
 ```bash
-gh release download trial-34
-sha256sum -c mvpn-trial-arm64-9.apk.sha256
+gh release download trial-49
+sha256sum -c mvpn-trial-arm64-49.apk.sha256
 ```
 
 ### ✅ چه چیزی در این نسخه کار می‌کند
@@ -64,6 +64,24 @@ sha256sum -c mvpn-trial-arm64-9.apk.sha256
   اکنون خطا تلقی می‌شوند (علت اصلی «Internal server error» قبلی، نبودِ `sign` بود).
 
 قرارداد کامل در `android-app/docs/api-contract-fa.md` مستند شده است.
+
+### 🆕 آخرین تغییرها (نسخهٔ `trial-49`)
+
+| تغییر | جزئیات | شاهد |
+| --- | --- | --- |
+| **کپی همهٔ لینک‌ها در سه گروه** | همهٔ سرورها / فقط پینگ‌داده‌ها / فقط بی‌پینگ‌ها، هر خط یک لینک آمادهٔ Import در v2rayNG | `ui/MainActivity.kt` + اجرای E2E: «۱۰۵ لینک کپی شد» و دیالوگ با شمارش ۱۰۵/۲۴/۸۱ |
+| **مرتب‌سازی با صعودی و نزولی** | الفبا، پینگ، قیمت، شناسه؛ ردیف‌های بدون مقدار همیشه آخر | دکمهٔ مرتب‌سازی + اجرای E2E: «درست — سه ردیف اول: Australia…» |
+| **نصب کنار اپ اصلی** | `applicationId = co.asiven.vixentvpn.trial`، همان امضا، هدر `app_name` ثابت روی `co.asiven.vixentvpn` | `app/build.gradle.kts` + `BuildConfig.HEADER_APP_NAME` |
+| **«متصل» فقط با ترافیک واقعی** | بعد از بالا آمدن هسته، یک درخواست واقعی از SOCKS محلی رد می‌شود؛ اگر جواب نیاید تونل بسته و پیام صریح داده می‌شود | `service/VpnTunnelService.kt` (`verifyThroughTunnel`) |
+| **هسته روی آخرین نسخهٔ سازگار پین شد** | `libv2ray` = **v26.6.27**؛ از xray-core v26.7.11 به بعد اتصال VLESS/Trojan بدون TLS به IP عمومی رد می‌شود و ۹۸ ردیف از ۱۰۵ ردیف این بک‌اند همین نوع است. قبل از این اصلاح، ردیف‌های پینگ‌داده از ۲۵ به ۲ افتاده بود؛ بعدش به ۲۵–۳۱ برگشت و اتصال واقعی برقرار شد | `tools/fetch-libv2ray.sh` + لاگ E2E |
+| **تلاش دوم خودکار در دریافت فهرست** | اگر بک‌اند یک بار پاسخ خالی بدهد، اپ بی‌سر‌و‌صدا دوباره درخواست می‌زند | `ui/MainActivity.kt` (`refreshAll`) |
+| **پاسخ به «چرا سرور پولی صفر است»** | پروب زنده نشان داد بک‌اند برای هر ۱۰۵ ردیف `price = 0` می‌دهد؛ با ۸ هویت/پارامتر مختلف هم همین است ⇒ ایراد اپ نیست | `tools/probe-price.py` + `docs/probe-rows/price-report.txt` |
+
+**گزارش E2E آخرین اجرای کامل (کامیت `ba76bb5`، اجرای `40454356502`) — «موفق»:** فهرست ۱۰۵ سرور بدون
+هیچ ورودی، مرتب‌سازی ✅، کپی همهٔ لینک‌ها ✅، ۳۱ ردیف پینگ موفق، اتصال واقعی به `🇨🇦 Canada`
+(IP خروج `2600:1f11:82d:800:9946:5381:6917:2ff9` — YUL)، تغییر سرور به `🇫🇷 France` با ترافیک
+`HTTP 301`، و قطع تمیز (`tun0` حذف شد). گزارش و تصاویر:
+[`e2e-real/CONNECT-REAL.md`](e2e-real/CONNECT-REAL.md).
 
 ### 🔬 یافته‌های پروب واقعی بک‌اند (داخل GitHub Actions)
 
@@ -154,7 +172,7 @@ TUN به بیرون می‌فرستد و ردِ آن را در لاگ access س�
 * وجود `lib/<abi>/libgojni.so` (هستهٔ Xray) و `lib/<abi>/libhev-socks5-tunnel.so` (tun2socks) برای
   **هر دو معماری** و رد شدن هر ABI اضافی در APK
 * `apksigner verify --print-certs` ⇒ گواهی AOSP testkey مطابق نسخهٔ اصلی
-* `aapt2 dump badging` ⇒ `package=co.asiven.vixentvpn`، `versionCode=1004220`،
+* `aapt2 dump badging` ⇒ `package=co.asiven.vixentvpn.trial`، `versionCode=1004221`،
   `native-code=arm64-v8a` یا `x86_64`
 * اجرای پروب‌های واقعی API (ورک‌فلوی `probe-api`) و انتشار همهٔ نتایج به‌صورت annotation
 
@@ -222,7 +240,7 @@ APK اصلی دوباره از گوگل‌درایو دانلود و با REA/an
 
 ### 🧪 پیشنهاد تست برای شما
 
-1. نصب APK از ریلیز `trial-9` (روی شبیه‌ساز: فایل `x86_64`).
+1. نصب APK از ریلیز `trial-49` (روی شبیه‌ساز: فایل `x86_64`).
 2. زدن «دریافت و بازآوری همهٔ سرورها» ← باید ۱۰۵ سرور با برچسب‌ها بیاید.
 3. «پینگ همه» و «لینک v2ray» یک ردیف را امتحان کنید.
 4. «پینگ همه» ← سریع‌ترین سرور خودکار انتخاب می‌شود؛ «اتصال» را بزنید و مجوز VPN را تأیید کنید.
