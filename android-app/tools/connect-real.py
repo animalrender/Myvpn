@@ -300,18 +300,56 @@ def row_bounds(name, ping=None):
     return row["bounds"] if row else None
 
 
-def bring_into_view(name, ping=None):
-    """Scrolls the list until the wanted row is comfortably inside the viewport."""
-    for _ in range(16):
+def scan_pinged_rows(pages=14, target=None):
+    """
+    Scrolls the whole list from the top and returns every painted row that has a ping badge,
+    as `{name, ping}` dicts (deduplicated). When [target] is given the scan stops as soon as a
+    row matching it is painted.
+    """
+    found, seen = [], set()
+    scroll_to_top()
+    for _ in range(pages):
+        for row in rows():
+            if not ping_ms(row["ping"]):
+                continue
+            key = (row["name"], row["ping"])
+            if key in seen:
+                continue
+            seen.add(key)
+            found.append({"name": row["name"], "ping": row["ping"]})
+            if target and row["name"] == target:
+                return found
+        shell("input swipe 540 1750 540 700 300")
+        time.sleep(1.2)
+    return found
+
+
+def bring_into_view(name, ping=None, pages=16):
+    """Scrolls from the top until the wanted row is comfortably inside the viewport."""
+    def locate():
         bounds = row_bounds(name, ping)
         point = center(bounds) if bounds else None
-        if point and 300 <= point[1] <= 1850:
-            return bounds
-        if point and point[1] < 300:
-            shell("input swipe 540 600 540 1500 300")   # pull the list down
-        else:
-            shell("input swipe 540 1750 540 700 300")   # push the list up
-        time.sleep(1.5)
+        return bounds, point
+
+    bounds, point = locate()
+    if point and 300 <= point[1] <= 1850:
+        return bounds
+
+    scroll_to_top()
+    for _ in range(pages):
+        bounds, point = locate()
+        if point:
+            if 300 <= point[1] <= 1850:
+                return bounds
+            # painted but under the header / behind the bottom edge: nudge and retry
+            if point[1] < 300:
+                shell("input swipe 540 700 540 1000 250")
+            else:
+                shell("input swipe 540 1500 540 1200 250")
+            time.sleep(1)
+            continue
+        shell("input swipe 540 1750 540 700 300")
+        time.sleep(1.2)
     return row_bounds(name, ping)
 
 
@@ -550,15 +588,23 @@ def main(argv):
     # The app already connected-ready state is: ping done + fastest row selected. Traffic is
     # verified from the shell uid (its packets are routed into the TUN). A single unlucky row is
     # retried with the next measured rows, exactly like a user would tap the next server.
+    pinged = scan_pinged_rows()
+    log(f"ردیف‌های دارای پینگ در فهرست: {len(pinged)}")
     attempts = []
-    if chosen:
-        attempts.append({"name": chosen, "ping": chosen_ping})
-    for row in rows():
-        if ping_ms(row["ping"]) and all(row["name"] != a["name"] or row["ping"] != a["ping"]
-                                       for a in attempts):
-            attempts.append({"name": row["name"], "ping": row["ping"]})
-        if len(attempts) == 4:
+    target_name = chosen.replace("🌐", "").strip() if chosen else ""
+    if chosen_ping:
+        match = next((r for r in pinged if r["name"] == target_name and r["ping"] == chosen_ping), None)
+        if match:
+            attempts.append(match)
+    if not attempts:
+        for row in pinged:
+            attempts.append(row)
             break
+    for row in pinged:
+        if len(attempts) == 3:
+            break
+        if all(row["name"] != a["name"] or row["ping"] != a["ping"] for a in attempts):
+            attempts.append(row)
 
     connected = None
     for index, candidate in enumerate(attempts, start=1):
