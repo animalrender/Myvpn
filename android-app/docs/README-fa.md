@@ -119,7 +119,23 @@ apksigner verify --print-certs mvpn-trial-arm64-XX.apk    # گواهی: AOSP tes
   عیب‌یابی همان خطای «Internal server error».
 - **دو حالت اتصال**: `VPN` (TUN + hev) و `PROXY` (فقط SOCKS 10808 / HTTP 10809 روی localhost).
 - **گزارش داخلی**: «JSON خام» آخرین پاسخ بک‌اند و «لاگ‌ها» (درخواست‌ها + هسته) برای عیب‌یابی.
+- **«متصل» فقط وقتی واقعاً متصل است**: بعد از بالا آمدن هسته، اپ خودش یک درخواست واقعی
+  (`http://1.1.1.1/cdn-cgi/trace`) را از پورت SOCKS محلی رد می‌کند؛ فقط اگر جواب برگردد وضعیت
+  «متصل» می‌شود، وگرنه پیام صریح «ترافیک از تونل عبور نکرد؛ این سرور پاسخ نداد» می‌آید و تونل بسته
+  می‌شود (رفتار «سبز شدن الکی» اپ اصلی اینجا وجود ندارد).
+- **تلاش دوم خودکار در دریافت فهرست**: اگر یک بار پاسخ بک‌اند خالی برگردد، اپ خودش بی‌سر‌و‌صدا دوباره
+  درخواست می‌زند تا کاربر پیام خطای بی‌ربط نبیند.
 - **بدون تبلیغ، بدون حساب، بدون دروازهٔ قیمت.**
+
+### چرا این نسخهٔ هسته
+
+xray-core ≥ v25.9.11 اتصال **VLESS/Trojan بدون TLS به یک IP عمومی** را هنگام ساخت outbound رد
+می‌کند («vless without TLS or other encryption is prohibited unless the server address is a
+private IP or domain»). ۹۸ ردیف از ۱۰۵ ردیف این بک‌اند دقیقاً همین نوع لینک است، بنابراین نسخهٔ
+آزمایشی — مثل خود APK اصلی که هستهٔ قدیمی‌تر دارد — روی `libv2ray` نسخهٔ **v25.8.3**
+(Xray-core 1.250803.0) پین شده است؛ همان API جاوا (`initCoreEnv` / `newCoreController` /
+`measureOutboundDelay`) و همان امکانات (VLESS، VMess، Trojan، Shadowsocks، Reality، TCP/WS/gRPC).
+با هسته‌های جدید فقط ۷ ردیف قابل استفاده می‌ماند؛ با این نسخه همهٔ ردیف‌های عادی بک‌اند کار می‌کنند.
 
 ### تصاویر واقعی از اجرای اپ
 
@@ -181,7 +197,7 @@ gh release list                     # تگ: trial-<شمارهٔ اجرا>
 ورک‌فلو در همان runner:
 
 1. `tools/fetch-libv2ray.sh` — دانلود `libv2ray.aar` از [AndroidLibXrayLite](https://github.com/2dust/AndroidLibXrayLite)
-   (آخرین ریلیز `v26.10.21`) و قرار دادن آن در `app/libs/`.
+   (نسخهٔ `v25.8.3`، عمداً پین‌شده — دلیلش در بخش «چرا این نسخهٔ هسته» آمده) و قرار دادن آن در `app/libs/`.
 2. `tools/build-hevtun.sh` — clone کردن [hev-socks5-tunnel](https://github.com/heiher/hev-socks5-tunnel)
    تگ `2.19.3` و ساخت کتابخانهٔ JNI با نام پکیج `co/.asiven/.vixentvpn/.service` و کلاس
    `TProxyService` (پسوند `.so` در `app/src/main/jniLibs/arm64-v8a/`).

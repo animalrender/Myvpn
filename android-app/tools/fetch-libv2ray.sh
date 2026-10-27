@@ -4,7 +4,12 @@
 # are reachable.
 set -euo pipefail
 
-VERSION="${LIBV2RAY_VERSION:-v26.10.21}"
+# xray-core ≥ v25.9.11 refuses a *plaintext* VLESS/Trojan outbound to a public IP literal
+# ("vless without TLS or other encryption is prohibited unless the server address is a private
+# IP or domain"), and 98 of this backend's 105 rows are exactly that kind of share link. The
+# original APK ships an older core and dials them fine, so the trial app pins the last release
+# before that check (libv2ray Java API is identical: initCoreEnv/newCoreController/measureOutboundDelay).
+VERSION="${LIBV2RAY_VERSION:-v25.8.3}"
 DEST_DIR="$(cd "$(dirname "${BASH_SOURCE[0]}")/.." && pwd)/app/libs"
 DEST="$DEST_DIR/libv2ray.aar"
 

@@ -229,7 +229,7 @@ jobs:
             | `mvpn-trial-arm64-*.apk` | `arm64-v8a` | گوشی و تبلت اندرویدی (نسخهٔ اصلی) |
             | `mvpn-trial-x86_64-*.apk` | `x86_64` | شبیه‌ساز اندروید و کروم‌بوک |
 
-            * هستهٔ Xray: `libgojni.so` از `libv2ray.aar` (AndroidLibXrayLite v26.10.21)
+            * هستهٔ Xray: `libgojni.so` از `libv2ray.aar` (AndroidLibXrayLite **v25.8.3** — پین‌شده برای لینک‌های VLESS بدون TLS روی IP عمومی)
             * تونل TUN→SOCKS: `libhev-socks5-tunnel.so` (hev-socks5-tunnel 2.19.3، JNI)
             * امضا: AOSP testkey — همان امضای APK اصلی، تا هدرهای امضا در بک‌اند پذیرفته شوند
             * نصب: `adb install -r <file>.apk` — **کنار نسخهٔ اصلی** نصب می‌شود (`applicationId` این نسخه

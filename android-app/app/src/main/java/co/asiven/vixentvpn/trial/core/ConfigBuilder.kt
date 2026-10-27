@@ -54,42 +54,15 @@ object ConfigBuilder {
         if (parsed.outbound != null && parsed.kind.lowercase() !in SUPPORTED) {
             return Parsed(null, parsed.kind, "هستهٔ Xray پروتکل ${parsed.kind} را اجرا نمی‌کند")
         }
-        parsed.outbound?.let { outbound ->
-            coreRejection(outbound)?.let { reason -> return Parsed(null, parsed.kind, reason) }
-        }
         return parsed
     }
 
-    /**
-     * xray-core (the version inside `libv2ray.aar`) refuses plaintext VLESS/VMess/Trojan to a
-     * **public IP literal** ("vless without TLS or other encryption is prohibited"), which some
-     * rows of this backend use. Such a row cannot be dialled by this core, so it is reported as
-     * unusable instead of failing halfway through «اتصال».
+    /*
+     * Note: this app pins libv2ray `v25.8.3` (xray-core 1.250803.0) on purpose. Newer cores
+     * refuse a plaintext VLESS/Trojan outbound whose address is a public IP literal, and 98 of
+     * the 105 rows of this backend are such links — the core has to stay on the last build
+     * before that check, exactly like the original APK's older core.
      */
-    private fun coreRejection(outbound: JSONObject): String? {
-        val protocol = outbound.optString("protocol").lowercase()
-        if (protocol !in setOf("vless", "vmess", "trojan")) return null
-        val stream = outbound.optJSONObject("streamSettings")
-        val security = stream?.optString("security").orEmpty().lowercase()
-        if (security == "tls" || security == "reality" || security == "xtls") return null
-        val settings = outbound.optJSONObject("settings")
-        val address = settings?.optJSONArray("vnext")?.optJSONObject(0)?.optString("address")
-            ?: settings?.optJSONArray("servers")?.optJSONObject(0)?.optString("address")
-            ?: ""
-        if (!isPublicIpLiteral(address)) return null
-        return "هستهٔ Xray اتصال $protocol بدون TLS به IP عمومی ($address) را رد می‌کند؛ " +
-            "این ردیف با این هسته قابل استفاده نیست"
-    }
-
-    private fun isPublicIpLiteral(host: String): Boolean {
-        if (!Regex("^\\d{1,3}(\\.\\d{1,3}){3}$").matches(host)) return false
-        val parts = host.split(".").map { it.toIntOrNull() ?: return false }
-        val a = parts[0]
-        val b = parts[1]
-        val private = a == 0 || a == 10 || a == 127 ||
-            (a == 192 && b == 168) || (a == 172 && b in 16..31) || (a == 169 && b == 254)
-        return !private
-    }
 
     /** Full runtime config: local SOCKS+HTTP inbounds, the server outbound, direct/block. */
     fun runtimeConfig(
