@@ -439,14 +439,46 @@ def check_copy_all():
     return f"درست — {count} لینک v2ray در کلیپ‌بورد قرار گرفت"
 
 
+def ascii_part(text):
+    """`🇫🇮 Finland` → `Finland` (the search box only takes ASCII through `input text`)."""
+    letters = re.sub(r"[^A-Za-z ]+", " ", text)
+    return " ".join(letters.split())[:24]
+
+
+def set_search(needle):
+    node = find(rid="searchInput")
+    point = center(node.get("bounds")) if node else None
+    if not point:
+        return False
+    tap(point)
+    time.sleep(1)
+    shell("input keyevent KEYCODE_MOVE_END")
+    for _ in range(28):
+        shell("input keyevent 67")          # backspace: clear whatever was there
+    if needle:
+        shell(f"input text '{needle}'")
+    time.sleep(2)
+    return True
+
+
 def connect_row(row, index, wait_seconds=90):
     """Selects the row, presses the hero button and waits for the «متصل» state."""
-    landed = bring_into_view(row["name"], row.get("ping"))
+    # Filtering with the search box makes the target the only matching row, so duplicates with
+    # the same country name can never be confused and no scrolling guesswork is needed.
+    needle = ascii_part(row["name"])
+    set_search(needle)
+    landed = row_bounds(row["name"], row.get("ping")) or row_bounds(row["name"])
     if not landed:
-        log(f"**ردیف «{row['name']}» در فهرست پیدا نشد**")
+        landed = bring_into_view(row["name"], row.get("ping"))
+    if not landed:
+        painted = "، ".join(f"`{r['name']}/{r['ping']}`" for r in rows()[:3]) or "—"
+        log(f"**ردیف «{row['name']}» در فهرست پیدا نشد** (با فیلتر `{needle}`؛ ردیف‌های دیده‌شده: {painted})")
+        set_search("")
         return False
     tap(center(landed))
     time.sleep(2)
+    set_search("")
+    time.sleep(1)
     shot(f"{index}-selected")
     if not (tap_rid("connectButton") or tap_text("اتصال", exact=True)):
         log("**دکمهٔ اتصال پیدا نشد**")
