@@ -17,6 +17,7 @@ on:
       - "android-app/tools/probe-version-sweep.py"
       - "android-app/tools/probe-decode.py"
       - "android-app/tools/probe-resolve.py"
+      - "android-app/tools/probe-price.py"
       - ".github/workflows/probe-api.yml"
 
 permissions:
@@ -41,6 +42,11 @@ jobs:
         env:
           PROBE_CERT: /tmp/keys/testkey.x509.pem
         run: python3 android-app/tools/probe-header-bisect.py 2>&1 | tee /tmp/probe0.log || true
+
+      - name: Probe the paid/free price field
+        env:
+          PROBE_CERT: /tmp/keys/testkey.x509.pem
+        run: python3 android-app/tools/probe-price.py 2>&1 | tee /tmp/probe-price.log || true
 
       - name: Probe backend contract
         env:
