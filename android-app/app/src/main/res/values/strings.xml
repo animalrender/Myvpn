@@ -37,6 +37,8 @@
     <string name="status_idle">آماده — سروری انتخاب نشده</string>
     <string name="status_selected">انتخاب‌شده: %1$s</string>
     <string name="status_connecting">در حال اتصال…</string>
+    <string name="status_verifying">در حال آزمایش عبور ترافیک…</string>
+    <string name="error_no_traffic">ترافیک از تونل عبور نکرد؛ این سرور پاسخ نداد (سرور بعدی را امتحان کنید)</string>
     <string name="status_connected">متصل — %1$s (%2$s)</string>
     <string name="status_disconnected">قطع شد</string>
     <string name="status_error">خطا: %1$s</string>

@@ -494,9 +494,14 @@ def connect_row(row, index, wait_seconds=90):
         log("دیالوگ مجوز VPN تأیید شد")
     deadline = time.time() + wait_seconds
     while time.time() < deadline:
-        node = find(text="متصل", exact=False)
-        if node:
-            log(f"وضعیت تونل: `{(node.get('text') or '').strip()}`")
+        node = find(rid="statusText")
+        status = (node.get("text") or "").strip() if node else ""
+        if status.startswith("خطا"):
+            log(f"**اتصال ناموفق**: `{status}`")
+            shot(f"{index}-connect-failed")
+            return False
+        if status.startswith("متصل"):
+            log(f"وضعیت تونل: `{status}`")
             shot(f"{index}-connected")
             return True
         time.sleep(3)

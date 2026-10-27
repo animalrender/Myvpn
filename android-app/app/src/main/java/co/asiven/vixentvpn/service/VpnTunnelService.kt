@@ -24,6 +24,9 @@ import kotlinx.coroutines.SupervisorJob
 import kotlinx.coroutines.cancel
 import kotlinx.coroutines.launch
 import org.json.JSONObject
+import java.net.InetSocketAddress
+import java.net.Proxy
+import java.net.Socket
 
 /**
  * Owns the whole tunnel, mirroring the analysed APK's `V2RayVpnService`:
@@ -123,6 +126,17 @@ class VpnTunnelService : VpnService() {
                 }
             }
 
+            // The original app announced «متصل» as soon as the core was up, even when the server
+            // was dead — which is exactly the «ping works, nothing loads» behaviour this trial app
+            // must not inherit. A real request has to pass through the local SOCKS port first.
+            publish(false, getString(R.string.status_verifying))
+            if (!verifyThroughTunnel()) {
+                AppLog.e("ترافیک از تونل عبور نکرد؛ اتصال لغو شد (${server.name})")
+                fail(getString(R.string.error_no_traffic))
+                return
+            }
+            AppLog.i("ترافیک از تونل عبور کرد (${server.name})")
+
             val text = if (useTun) {
                 getString(R.string.status_connected, server.name, "VPN")
             } else {
@@ -136,6 +150,39 @@ class VpnTunnelService : VpnService() {
             AppLog.e("خطا در اتصال", t)
             fail(t.message ?: t.javaClass.simpleName)
         }
+    }
+
+    /**
+     * One real HTTP request through `127.0.0.1:SOCKS_PORT` (the core's own SOCKS inbound). The
+     * destination is an IP literal, so no DNS is involved and the answer proves the outbound
+     * really carries traffic. 301/403 from the edge is proof enough; only silence is a failure.
+     */
+    private fun verifyThroughTunnel(attempts: Int = 3): Boolean {
+        repeat(attempts) { index ->
+            val started = System.currentTimeMillis()
+            val code = runCatching {
+                val proxy = Proxy(Proxy.Type.SOCKS, InetSocketAddress("127.0.0.1", ConfigBuilder.SOCKS_PORT))
+                Socket(proxy).use { socket ->
+                    socket.connect(InetSocketAddress("1.1.1.1", 80), 8000)
+                    socket.soTimeout = 8000
+                    socket.getOutputStream().write(
+                        "GET /cdn-cgi/trace HTTP/1.1\r\nHost: 1.1.1.1\r\n" +
+                            "User-Agent: vixentvpn-trial\r\nConnection: close\r\n\r\n".toByteArray()
+                    )
+                    socket.getOutputStream().flush()
+                    val line = socket.getInputStream().bufferedReader().readLine().orEmpty()
+                    line.trim()
+                }
+            }.getOrElse { line -> "بدون پاسخ (${line.javaClass.simpleName})" }
+            val elapsed = System.currentTimeMillis() - started
+            if (code.startsWith("HTTP/")) {
+                AppLog.i("آزمون ترافیک موفق: «$code» در ${elapsed}ms")
+                return true
+            }
+            AppLog.w("آزمون ترافیک تلاش ${index + 1}: $code در ${elapsed}ms")
+            Thread.sleep(2000)
+        }
+        return false
     }
 
     private fun establishTun(): ParcelFileDescriptor? = try {
