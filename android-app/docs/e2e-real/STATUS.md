@@ -1,15 +1,15 @@
-# e2e-real — run 31
+# e2e-real — run 32
 
 - branch: arena/b9372ae1-myvpn
-- sha: 5b72deabddd8ce9d53678723a299600f17f342de
-- started: 2026-10-27T02:36:23Z
-- kvm: crw-rw-rw- 1 root kvm 10, 232 Oct 27 02:31 /dev/kvm
+- sha: 88fb9374bce2786df0509d7560d243c913fb7b69
+- started: 2026-10-27T02:50:57Z
+- kvm: crw-rw-rw- 1 root kvm 10, 232 Oct 27 02:47 /dev/kvm
 - booted: 1
 - apk: android-app/app/build/outputs/apk/release/app-release.apk
 Performing Streamed Install
 Success
 
-- e2e exit: 0
+- e2e exit: 1
 - outcome jdk: success
 - outcome sdk: success
 - outcome chmod: success
@@ -19,19 +19,25 @@ Success
 - outcome gradlesetup: success
 - outcome apk: success
 - outcome emusetup: success
-- outcome drive: success
+- outcome drive: failure
 
 ## gradle
 ```
+e: The daemon has terminated unexpectedly on startup attempt #1 with error code: 0. The daemon process output:
+    1. Kotlin compile daemon is ready
+w: file:///home/runner/work/Myvpn/Myvpn/android-app/app/src/main/java/co/asiven/vixentvpn/trial/ui/MainActivity.kt:142:29 'fun setOnCheckedChangeListener(p0: ChipGroup.OnCheckedChangeListener?): Unit' is deprecated. Deprecated in Java.
+
+> Task :app:compileReleaseJavaWithJavac
+> Task :app:dexBuilderRelease
+> Task :app:mergeReleaseGlobalSynthetics
 ```
 
 ---
 
 # آزمون اتصال واقعی به بک‌اند اصلی (بدون هیچ ورودی کاربر)
 
-- زمان: 2026-10-27T02:46:55Z
+- زمان: 2026-10-27T02:58:00Z
 - آدرس آزمون: `http://1.1.1.1/cdn-cgi/trace`
-- سرور متصل‌شده: `🇫🇷 France`
 
 ## گام‌ها
 
@@ -39,66 +45,12 @@ Success
 - ابزار HTTP روی شبیه‌ساز: `nc`
 - IP خروج پیش از اتصال: `None` (success/United States)
 - درخواست بدون تونل: HTTP 301
-- فهرست بارگذاری شد: 3 ردیف روی صفحه — خلاصه: `نمایش 105 از 105 سرور (رایگان: 105 / پولی: 0)`
-- نمونهٔ برچسب ردیف‌ها: `🇫🇮 Finland`، `🇦🇺 Australia`، `🇨🇦 Canada`
-- مرتب‌سازی: درست — سه ردیف اول: `🇦🇺 Australia`، `🇦🇺 Australia`، `🇦🇺 Australia`
-- کپی همهٔ لینک‌ها: درست — 103 لینک v2ray در کلیپ‌بورد قرار گرفت
-- پایان پینگ همه: بله
-- سروری که برنامه خودش انتخاب کرد: `🌐  🇫🇮 Finland` (پینگ 177 ms)
-- ردیف‌های دارای پینگ در فهرست: 3
-- اتصال به سرور انتخاب‌شده: `🇦🇺 Australia`
-- دیالوگ مجوز VPN تأیید شد
-- خطاهای برنامه:
-```
-سنجش تأخیر ناموفق
-go.Universe$proxyerror: Get "https://www.gstatic.com/generate_204": EOF
-go.Universe$proxyerror: Get "https://www.gstatic.com/generate_204": io: read/write on closed pipe
-```
-- ردیف 1 وصل نشد؛ ردیف بعدی
-- تلاش 2: اتصال به `🇦🇺 Australia` (211 ms)
-- دیالوگ مجوز VPN تأیید شد
-- خطاهای برنامه:
-```
-سنجش تأخیر ناموفق
-go.Universe$proxyerror: Get "https://www.gstatic.com/generate_204": EOF
-go.Universe$proxyerror: Get "https://www.gstatic.com/generate_204": io: read/write on closed pipe
-```
-- ردیف 2 وصل نشد؛ ردیف بعدی
-- تلاش 3: اتصال به `🇫🇷 France` (159 ms)
-- دیالوگ مجوز VPN تأیید شد
-- وضعیت تونل: `متصل — &#127467;&#127479; France (VPN)`
-- رابط tun0: موجود
-- درخواست از داخل تونل: HTTP 301
-- ترافیک از تونل عبور کرد (تلاش 3 از 3)
-- IP خروج داخل تونل: `2001:41d0:404:100::3068` (FR — FRA)
-- ردیف دومی با پینگ موفق در صفحهٔ فعلی دیده نشد
-- برچسب دکمه پیش از قطع: `قطع اتصال`
-- پس از قطع اتصال: tun0 حذف شد
+- **هیچ سروری از بک‌اند بارگذاری نشد**
 
 ## تصاویر
 
 ![01-loaded](01-loaded.png)
 
-![03-sorted](03-sorted.png)
-
-![04-copy-all-dialog](04-copy-all-dialog.png)
-
-![02-ping-all](02-ping-all.png)
-
-![03-selected](03-selected.png)
-
-![03-connect-failed](03-connect-failed.png)
-
-![04-selected](04-selected.png)
-
-![04-connect-failed](04-connect-failed.png)
-
-![05-selected](05-selected.png)
-
-![05-connected](05-connected.png)
-
-![08-disconnected](08-disconnected.png)
-
 ## نتیجه
 
-**موفق** — برنامه بدون هیچ ورودی کاربر، فهرست را از بک‌اند گرفت، مقدار رمزشدهٔ هر ردیف را خودش باز کرد، سریع‌ترین سرور را خودش انتخاب کرد، وصل شد و ترافیک از تونل عبور کرد و اتصال تمیز قطع شد.
+**ناموفق**: no-rows

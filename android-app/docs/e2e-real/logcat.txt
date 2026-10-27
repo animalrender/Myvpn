@@ -1,175 +1,120 @@
 --------- beginning of main
-10-27 02:37:19.152  3497  3497 I MvpnTrial: MVPN Trial 3.2.0-trial (co.asiven.vixentvpn.trial) راه‌اندازی شد
-10-27 02:37:19.207  3497  3497 I MvpnTrial: هستهٔ Xray آماده شد: Lib v40, Xray-core v26.10.21
-10-27 02:37:19.333  3497  3497 D MvpnTrial: hero(no row): running=false connected=- pressed=اتصال
-10-27 02:37:19.340  3497  3497 D MvpnTrial: hero(no row): running=false connected=- pressed=اتصال
-10-27 02:37:20.358  3497  3615 D MvpnTrial: GET https://managev1.xyz/api/token?deviceId=811c24bc3ba9ea73 → 200 (66 بایت)
-10-27 02:37:20.360  3497  3615 I MvpnTrial: توکن سمت سرور غیرفعال است؛ بدون هدر token ادامه می‌دهیم
-10-27 02:37:20.563  3497  3615 D MvpnTrial: GET https://managev1.xyz/api/setting → 200 (44 بایت)
-10-27 02:37:20.564  3497  3615 I MvpnTrial: setting خالی است (data=null) — پیش‌فرض‌های برنامه استفاده می‌شوند
-10-27 02:37:21.294  3497  3615 D MvpnTrial: GET https://managev1.xyz/api/protocols → 200 (103015 بایت)
-10-27 02:37:21.548  3497  3615 I MvpnTrial: 105 سرور از /api/protocols دریافت شد
-10-27 02:37:21.564  3497  3497 D MvpnTrial: hero: running=false connected=- shown=-62612-464-504278487 pressed=اتصال
-10-27 02:37:21.621  3497  3726 W MvpnTrial: پینگ 🇦🇺 Australia ممکن نیست: هستهٔ Xray اتصال vless بدون TLS به IP عمومی (3.36.106.97) را رد می‌کند؛ این ردیف با این هسته قابل استفاده نیست
-10-27 02:37:21.680  3497  3726 W MvpnTrial: پینگ 🇫🇷 France ممکن نیست: هستهٔ Xray اتصال vless بدون TLS به IP عمومی (51.44.163.98) را رد می‌کند؛ این ردیف با این هسته قابل استفاده نیست
-10-27 02:37:21.680  3497  3726 W MvpnTrial: پینگ 🇨🇦 Canada ممکن نیست: هستهٔ Xray اتصال vless بدون TLS به IP عمومی (99.79.72.201) را رد می‌کند؛ این ردیف با این هسته قابل استفاده نیست
-10-27 02:37:21.681  3497  3726 W MvpnTrial: پینگ 🇺🇸 United States ممکن نیست: هستهٔ Xray اتصال vless بدون TLS به IP عمومی (100.54.11.127) را رد می‌کند؛ این ردیف با این هسته قابل استفاده نیست
-10-27 02:37:21.681  3497  3726 W MvpnTrial: پینگ 🇫🇷 France ممکن نیست: هستهٔ Xray اتصال vless بدون TLS به IP عمومی (54.169.219.228) را رد می‌کند؛ این ردیف با این هسته قابل استفاده نیست
-10-27 02:37:21.681  3497  3726 W MvpnTrial: پینگ 🇺🇸 United States ممکن نیست: هستهٔ Xray اتصال vless بدون TLS به IP عمومی (44.214.182.156) را رد می‌کند؛ این ردیف با این هسته قابل استفاده نیست
-10-27 02:37:21.681  3497  3726 W MvpnTrial: پینگ 🇸🇪 Sweden ممکن نیست: هستهٔ Xray اتصال vless بدون TLS به IP عمومی (52.79.192.236) را رد می‌کند؛ این ردیف با این هسته قابل استفاده نیست
-10-27 02:37:21.681  3497  3726 W MvpnTrial: پینگ 🇮🇪 Ireland ممکن نیست: هستهٔ Xray اتصال vless بدون TLS به IP عمومی (34.245.171.10) را رد می‌کند؛ این ردیف با این هسته قابل استفاده نیست
-10-27 02:37:21.682  3497  3726 W MvpnTrial: پینگ 🇺🇸 United States ممکن نیست: هستهٔ Xray اتصال vless بدون TLS به IP عمومی (43.207.210.16) را رد می‌کند؛ این ردیف با این هسته قابل استفاده نیست
-10-27 02:37:21.682  3497  3726 W MvpnTrial: پینگ 🇦🇺 Australia ممکن نیست: هستهٔ Xray اتصال vless بدون TLS به IP عمومی (54.65.143.145) را رد می‌کند؛ این ردیف با این هسته قابل استفاده نیست
-10-27 02:37:21.682  3497  3726 W MvpnTrial: پینگ 🇺🇸 United States ممکن نیست: هستهٔ Xray اتصال vless بدون TLS به IP عمومی (52.221.229.219) را رد می‌کند؛ این ردیف با این هسته قابل استفاده نیست
-10-27 02:37:21.683  3497  3730 W MvpnTrial: پینگ 🇺🇸 United States ممکن نیست: هستهٔ Xray اتصال vless بدون TLS به IP عمومی (3.137.180.121) را رد می‌کند؛ این ردیف با این هسته قابل استفاده نیست
-10-27 02:37:21.849  3497  3711 W MvpnTrial: پینگ 🇺🇸 United States ممکن نیست: هستهٔ Xray اتصال vless بدون TLS به IP عمومی (142.93.248.252) را رد می‌کند؛ این ردیف با این هسته قابل استفاده نیست
-10-27 02:37:21.850  3497  3729 W MvpnTrial: پینگ 🇺🇸 United States ممکن نیست: هستهٔ Xray اتصال vless بدون TLS به IP عمومی (3.145.158.234) را رد می‌کند؛ این ردیف با این هسته قابل استفاده نیست
-10-27 02:37:22.721  3497  3711 D MvpnTrial: پینگ 🇺🇸 United States: 77 ms
-10-27 02:37:22.722  3497  3711 W MvpnTrial: پینگ 🇸🇪 Sweden ممکن نیست: هستهٔ Xray اتصال vless بدون TLS به IP عمومی (57.180.66.105) را رد می‌کند؛ این ردیف با این هسته قابل استفاده نیست
-10-27 02:37:22.739  3497  3729 D MvpnTrial: پینگ 🇺🇸 United States: 78 ms
-10-27 02:37:22.740  3497  3729 W MvpnTrial: پینگ 🇺🇸 United States ممکن نیست: هستهٔ Xray اتصال vless بدون TLS به IP عمومی (157.245.180.145) را رد می‌کند؛ این ردیف با این هسته قابل استفاده نیست
-10-27 02:37:22.744  3497  3725 W MvpnTrial: پینگ 🇨🇦 Canada ممکن نیست: هستهٔ Xray اتصال vless بدون TLS به IP عمومی (15.223.2.123) را رد می‌کند؛ این ردیف با این هسته قابل استفاده نیست
-10-27 02:37:22.744  3497  3746 W MvpnTrial: پینگ 🇺🇸 United States ممکن نیست: هستهٔ Xray اتصال vless بدون TLS به IP عمومی (129.212.226.238) را رد می‌کند؛ این ردیف با این هسته قابل استفاده نیست
-10-27 02:37:22.745  3497  3746 W MvpnTrial: پینگ 🇸🇪 Sweden ممکن نیست: هستهٔ Xray اتصال vless بدون TLS به IP عمومی (167.172.66.243) را رد می‌کند؛ این ردیف با این هسته قابل استفاده نیست
-10-27 02:37:22.745  3497  3746 W MvpnTrial: پینگ 🇺🇸 United States ممکن نیست: هستهٔ Xray اتصال vless بدون TLS به IP عمومی (172.239.146.151) را رد می‌کند؛ این ردیف با این هسته قابل استفاده نیست
-10-27 02:37:22.745  3497  3746 W MvpnTrial: پینگ 🇬🇧 United Kingdom ممکن نیست: هستهٔ Xray اتصال vless بدون TLS به IP عمومی (51.89.117.26) را رد می‌کند؛ این ردیف با این هسته قابل استفاده نیست
-10-27 02:37:22.881  3497  3614 D MvpnTrial: پینگ 🇩🇪 Germany: 146 ms
-10-27 02:37:22.943  3497  3615 D MvpnTrial: پینگ 🇫🇮 Finland: 177 ms
-10-27 02:37:22.959  3497  3730 D MvpnTrial: پینگ 🇬🇧 United Kingdom: 158 ms
-10-27 02:37:22.976  3497  3726 E MvpnTrial: سنجش تأخیر ناموفق
-10-27 02:37:22.976  3497  3726 E MvpnTrial: go.Universe$proxyerror: Get "https://www.gstatic.com/generate_204": EOF
-10-27 02:37:22.976  3497  3726 E MvpnTrial: 	at libv2ray.Libv2ray.measureOutboundDelay(Native Method)
-10-27 02:37:22.976  3497  3726 E MvpnTrial: 	at co.asiven.vixentvpn.trial.core.XrayCore.measureDelay(XrayCore.kt:81)
-10-27 02:37:22.976  3497  3726 E MvpnTrial: 	at co.asiven.vixentvpn.trial.ui.MainActivity.measure(MainActivity.kt:430)
-10-27 02:37:22.976  3497  3726 E MvpnTrial: 	at co.asiven.vixentvpn.trial.ui.MainActivity.access$measure(MainActivity.kt:61)
-10-27 02:37:22.976  3497  3726 E MvpnTrial: 	at co.asiven.vixentvpn.trial.ui.MainActivity$pingAll$2$1$1$1.invokeSuspend(MainActivity.kt:391)
-10-27 02:37:22.976  3497  3726 E MvpnTrial: 	at kotlin.coroutines.jvm.internal.BaseContinuationImpl.resumeWith(ContinuationImpl.kt:33)
-10-27 02:37:22.976  3497  3726 E MvpnTrial: 	at kotlinx.coroutines.DispatchedTask.run(DispatchedTask.kt:104)
-10-27 02:37:22.976  3497  3726 E MvpnTrial: 	at kotlinx.coroutines.internal.LimitedDispatcher$Worker.run(LimitedDispatcher.kt:111)
-10-27 02:37:22.976  3497  3726 E MvpnTrial: 	at kotlinx.coroutines.scheduling.TaskImpl.run(Tasks.kt:99)
-10-27 02:37:22.976  3497  3726 E MvpnTrial: 	at kotlinx.coroutines.scheduling.CoroutineScheduler.runSafely(CoroutineScheduler.kt:584)
-10-27 02:37:22.976  3497  3726 E MvpnTrial: 	at kotlinx.coroutines.scheduling.CoroutineScheduler$Worker.executeTask(CoroutineScheduler.kt:811)
-10-27 02:37:22.976  3497  3726 E MvpnTrial: 	at kotlinx.coroutines.scheduling.CoroutineScheduler$Worker.runWorker(CoroutineScheduler.kt:715)
-10-27 02:37:22.976  3497  3726 E MvpnTrial: 	at kotlinx.coroutines.scheduling.CoroutineScheduler$Worker.run(CoroutineScheduler.kt:702)
-10-27 02:37:23.003  3497  3726 D MvpnTrial: پینگ 🇬🇧 United Kingdom: -1 ms
-10-27 02:37:23.133  3497  3615 D MvpnTrial: پینگ 🇺🇸 United States: 17 ms
-10-27 02:37:23.385  3497  3726 D MvpnTrial: پینگ 🇺🇸 United States: 55 ms
-10-27 02:37:23.386  3497  3726 W MvpnTrial: پینگ 🇺🇸 United States ممکن نیست: هستهٔ Xray اتصال vless بدون TLS به IP عمومی (67.205.139.231) را رد می‌کند؛ این ردیف با این هسته قابل استفاده نیست
-10-27 02:37:23.401  3497  3749 D MvpnTrial: پینگ 🇺🇸 United States: 71 ms
-10-27 02:37:23.402  3497  3749 W MvpnTrial: پینگ 🇮🇪 Ireland ممکن نیست: هستهٔ Xray اتصال vless بدون TLS به IP عمومی (34.254.240.232) را رد می‌کند؛ این ردیف با این هسته قابل استفاده نیست
-10-27 02:37:23.438  3497  3614 D MvpnTrial: پینگ 🇺🇸 United States: 82 ms
-10-27 02:37:23.671  3497  3711 D MvpnTrial: پینگ 🇦🇺 Australia: 211 ms
-10-27 02:37:23.672  3497  3711 W MvpnTrial: پینگ 🇩🇪 Germany ممکن نیست: هستهٔ Xray اتصال vless بدون TLS به IP عمومی (141.95.108.36) را رد می‌کند؛ این ردیف با این هسته قابل استفاده نیست
-10-27 02:37:23.678  3497  3711 W MvpnTrial: پینگ 🇺🇸 United States ممکن نیست: هستهٔ Xray اتصال vless بدون TLS به IP عمومی (165.232.60.222) را رد می‌کند؛ این ردیف با این هسته قابل استفاده نیست
-10-27 02:37:23.706  3497  3746 D MvpnTrial: پینگ 🇺🇸 United States: 176 ms
-10-27 02:37:23.707  3497  3616 D MvpnTrial: پینگ 🇦🇺 Australia: 223 ms
-10-27 02:37:23.707  3497  3616 W MvpnTrial: پینگ 🇦🇺 Australia ممکن نیست: هستهٔ Xray اتصال vless بدون TLS به IP عمومی (43.202.45.58) را رد می‌کند؛ این ردیف با این هسته قابل استفاده نیست
-10-27 02:37:23.712  3497  3753 W MvpnTrial: پینگ 🇺🇸 United States ممکن نیست: هستهٔ Xray اتصال vless بدون TLS به IP عمومی (138.68.51.30) را رد می‌کند؛ این ردیف با این هسته قابل استفاده نیست
-10-27 02:37:23.720  3497  3746 W MvpnTrial: پینگ 🇨🇦 Canada ممکن نیست: هستهٔ Xray اتصال vless بدون TLS به IP عمومی (15.222.45.193) را رد می‌کند؛ این ردیف با این هسته قابل استفاده نیست
-10-27 02:37:23.908  3497  3615 D MvpnTrial: پینگ 🇺🇸 United States: 98 ms
-10-27 02:37:23.911  3497  3730 D MvpnTrial: پینگ 🇺🇸 United States: 95 ms
-10-27 02:37:23.929  3497  3711 W MvpnTrial: پینگ 🇩🇪 Germany ممکن نیست: هستهٔ Xray اتصال vless بدون TLS به IP عمومی (57.129.35.176) را رد می‌کند؛ این ردیف با این هسته قابل استفاده نیست
-10-27 02:37:23.938  3497  3730 W MvpnTrial: پینگ 🇫🇷 France ممکن نیست: هستهٔ Xray اتصال vless بدون TLS به IP عمومی (13.38.15.107) را رد می‌کند؛ این ردیف با این هسته قابل استفاده نیست
-10-27 02:37:23.941  3497  3711 W MvpnTrial: پینگ 🇺🇸 United States ممکن نیست: هستهٔ Xray اتصال vless بدون TLS به IP عمومی (44.200.120.142) را رد می‌کند؛ این ردیف با این هسته قابل استفاده نیست
-10-27 02:37:23.943  3497  3615 W MvpnTrial: پینگ 🇮🇪 Ireland ممکن نیست: هستهٔ Xray اتصال vless بدون TLS به IP عمومی (54.220.174.56) را رد می‌کند؛ این ردیف با این هسته قابل استفاده نیست
-10-27 02:37:23.943  3497  3615 W MvpnTrial: پینگ 🇨🇦 Canada ممکن نیست: هستهٔ Xray اتصال vless بدون TLS به IP عمومی (35.182.172.4) را رد می‌کند؛ این ردیف با این هسته قابل استفاده نیست
-10-27 02:37:23.960  3497  3730 W MvpnTrial: پینگ 🇮🇪 Ireland ممکن نیست: هستهٔ Xray اتصال vless بدون TLS به IP عمومی (63.33.71.144) را رد می‌کند؛ این ردیف با این هسته قابل استفاده نیست
-10-27 02:37:23.962  3497  3711 W MvpnTrial: پینگ 🇫🇷 France ممکن نیست: هستهٔ Xray اتصال vless بدون TLS به IP عمومی (13.38.73.68) را رد می‌کند؛ این ردیف با این هسته قابل استفاده نیست
-10-27 02:37:23.963  3497  3711 W MvpnTrial: پینگ 🇨🇦 Canada ممکن نیست: هستهٔ Xray اتصال vless بدون TLS به IP عمومی (3.36.106.97) را رد می‌کند؛ این ردیف با این هسته قابل استفاده نیست
-10-27 02:37:23.970  3497  3615 W MvpnTrial: پینگ 🇫🇷 France ممکن نیست: هستهٔ Xray اتصال vless بدون TLS به IP عمومی (52.79.34.64) را رد می‌کند؛ این ردیف با این هسته قابل استفاده نیست
-10-27 02:37:23.970  3497  3615 W MvpnTrial: پینگ 🇫🇷 France ممکن نیست: هستهٔ Xray اتصال vless بدون TLS به IP عمومی (15.237.110.96) را رد می‌کند؛ این ردیف با این هسته قابل استفاده نیست
-10-27 02:37:23.971  3497  3615 W MvpnTrial: پینگ 🇫🇷 France ممکن نیست: هستهٔ Xray اتصال vless بدون TLS به IP عمومی (35.180.250.147) را رد می‌کند؛ این ردیف با این هسته قابل استفاده نیست
-10-27 02:37:23.978  3497  3615 W MvpnTrial: پینگ 🇺🇸 United States ممکن نیست: هستهٔ Xray اتصال vless بدون TLS به IP عمومی (100.48.196.19) را رد می‌کند؛ این ردیف با این هسته قابل استفاده نیست
-10-27 02:37:23.981  3497  3711 W MvpnTrial: پینگ 🇺🇸 United States ممکن نیست: هستهٔ Xray اتصال vless بدون TLS به IP عمومی (47.129.160.220) را رد می‌کند؛ این ردیف با این هسته قابل استفاده نیست
-10-27 02:37:23.984  3497  3746 D MvpnTrial: پینگ 🇺🇸 United States: 29 ms
-10-27 02:37:23.984  3497  3746 W MvpnTrial: پینگ 🇫🇷 France ممکن نیست: هستهٔ Xray اتصال vless بدون TLS به IP عمومی (15.237.51.114) را رد می‌کند؛ این ردیف با این هسته قابل استفاده نیست
-10-27 02:37:23.989  3497  3711 W MvpnTrial: پینگ 🇫🇷 France ممکن نیست: هستهٔ Xray اتصال vless بدون TLS به IP عمومی (15.236.122.72) را رد می‌کند؛ این ردیف با این هسته قابل استفاده نیست
-10-27 02:37:23.993  3497  3711 W MvpnTrial: پینگ 🇮🇪 Ireland ممکن نیست: هستهٔ Xray اتصال vless بدون TLS به IP عمومی (54.74.106.78) را رد می‌کند؛ این ردیف با این هسته قابل استفاده نیست
-10-27 02:37:24.027  3497  3711 W MvpnTrial: پینگ 🇺🇸 United States ممکن نیست: هستهٔ Xray اتصال vless بدون TLS به IP عمومی (98.92.232.40) را رد می‌کند؛ این ردیف با این هسته قابل استفاده نیست
-10-27 02:37:24.046  3497  3711 W MvpnTrial: پینگ 🇫🇷 France ممکن نیست: هستهٔ Xray اتصال vless بدون TLS به IP عمومی (51.44.12.243) را رد می‌کند؛ این ردیف با این هسته قابل استفاده نیست
-10-27 02:37:24.274  3497  3753 D MvpnTrial: پینگ 🇺🇸 United States: 107 ms
-10-27 02:37:24.276  3497  3750 D MvpnTrial: پینگ 🇺🇸 United States: 59 ms
-10-27 02:37:24.279  3497  3616 D MvpnTrial: پینگ 🇺🇸 United States: 119 ms
-10-27 02:37:24.280  3497  3730 W MvpnTrial: پینگ 🇫🇷 France ممکن نیست: هستهٔ Xray اتصال vless بدون TLS به IP عمومی (13.36.172.4) را رد می‌کند؛ این ردیف با این هسته قابل استفاده نیست
-10-27 02:37:24.281  3497  3711 W MvpnTrial: پینگ 🇺🇸 United States ممکن نیست: هستهٔ Xray اتصال vless بدون TLS به IP عمومی (44.202.214.233) را رد می‌کند؛ این ردیف با این هسته قابل استفاده نیست
-10-27 02:37:24.296  3497  3730 W MvpnTrial: پینگ 🇨🇦 Canada ممکن نیست: هستهٔ Xray اتصال vless بدون TLS به IP عمومی (3.96.188.54) را رد می‌کند؛ این ردیف با این هسته قابل استفاده نیست
-10-27 02:37:24.297  3497  3730 W MvpnTrial: پینگ 🇫🇷 France ممکن نیست: هستهٔ Xray اتصال vless بدون TLS به IP عمومی (51.44.12.168) را رد می‌کند؛ این ردیف با این هسته قابل استفاده نیست
-10-27 02:37:24.298  3497  3711 W MvpnTrial: پینگ 🇺🇸 United States ممکن نیست: هستهٔ Xray اتصال vless بدون TLS به IP عمومی (44.222.148.122) را رد می‌کند؛ این ردیف با این هسته قابل استفاده نیست
-10-27 02:37:24.311  3497  3711 W MvpnTrial: پینگ 🇫🇷 France ممکن نیست: هستهٔ Xray اتصال vless بدون TLS به IP عمومی (43.203.233.119) را رد می‌کند؛ این ردیف با این هسته قابل استفاده نیست
-10-27 02:37:24.354  3497  3616 W MvpnTrial: پینگ 🇮🇪 Ireland ممکن نیست: هستهٔ Xray اتصال vless بدون TLS به IP عمومی (52.48.188.26) را رد می‌کند؛ این ردیف با این هسته قابل استفاده نیست
-10-27 02:37:24.359  3497  3753 W MvpnTrial: پینگ 🇸🇪 Sweden ممکن نیست: هستهٔ Xray اتصال vless بدون TLS به IP عمومی (52.193.206.241) را رد می‌کند؛ این ردیف با این هسته قابل استفاده نیست
-10-27 02:37:24.370  3497  3726 W MvpnTrial: پینگ 🇫🇷 France ممکن نیست: هستهٔ Xray اتصال vless بدون TLS به IP عمومی (54.168.225.214) را رد می‌کند؛ این ردیف با این هسته قابل استفاده نیست
-10-27 02:37:24.376  3497  3754 W MvpnTrial: پینگ 🇨🇦 Canada ممکن نیست: هستهٔ Xray اتصال vless بدون TLS به IP عمومی (16.52.145.254) را رد می‌کند؛ این ردیف با این هسته قابل استفاده نیست
-10-27 02:37:24.392  3497  3755 W MvpnTrial: پینگ 🇫🇷 France ممکن نیست: هستهٔ Xray اتصال vless بدون TLS به IP عمومی (13.37.223.218) را رد می‌کند؛ این ردیف با این هسته قابل استفاده نیست
-10-27 02:37:24.396  3497  3749 D MvpnTrial: پینگ 🇺🇸 United States: 180 ms
-10-27 02:37:24.422  3497  3754 W MvpnTrial: پینگ 🇮🇪 Ireland ممکن نیست: هستهٔ Xray اتصال vless بدون TLS به IP عمومی (34.242.157.154) را رد می‌کند؛ این ردیف با این هسته قابل استفاده نیست
-10-27 02:37:24.445  3497  3754 W MvpnTrial: پینگ 🇦🇺 Australia ممکن نیست: هستهٔ Xray اتصال vless بدون TLS به IP عمومی (47.129.242.68) را رد می‌کند؛ این ردیف با این هسته قابل استفاده نیست
-10-27 02:37:24.481  3497  3750 W MvpnTrial: پینگ 🇫🇷 France ممکن نیست: هستهٔ Xray اتصال vless بدون TLS به IP عمومی (15.236.218.31) را رد می‌کند؛ این ردیف با این هسته قابل استفاده نیست
-10-27 02:37:24.481  3497  3750 W MvpnTrial: پینگ 🇸🇪 Sweden ممکن نیست: هستهٔ Xray اتصال vless بدون TLS به IP عمومی (54.255.194.214) را رد می‌کند؛ این ردیف با این هسته قابل استفاده نیست
-10-27 02:37:24.482  3497  3750 W MvpnTrial: پینگ 🇫🇷 France ممکن نیست: هستهٔ Xray اتصال vless بدون TLS به IP عمومی (54.254.21.169) را رد می‌کند؛ این ردیف با این هسته قابل استفاده نیست
-10-27 02:37:24.482  3497  3750 W MvpnTrial: پینگ 🇨🇦 Canada ممکن نیست: هستهٔ Xray اتصال vless بدون TLS به IP عمومی (16.52.146.221) را رد می‌کند؛ این ردیف با این هسته قابل استفاده نیست
-10-27 02:37:24.484  3497  3730 W MvpnTrial: پینگ 🇸🇪 Sweden ممکن نیست: هستهٔ Xray اتصال vless بدون TLS به IP عمومی (56.10.146.150) را رد می‌کند؛ این ردیف با این هسته قابل استفاده نیست
-10-27 02:37:24.484  3497  3755 W MvpnTrial: پینگ 🇺🇸 United States ممکن نیست: هستهٔ Xray اتصال vless بدون TLS به IP عمومی (47.129.155.162) را رد می‌کند؛ این ردیف با این هسته قابل استفاده نیست
-10-27 02:37:24.484  3497  3755 W MvpnTrial: پینگ 🇺🇸 United States ممکن نیست: هستهٔ Xray اتصال vless بدون TLS به IP عمومی (34.220.26.73) را رد می‌کند؛ این ردیف با این هسته قابل استفاده نیست
-10-27 02:37:24.485  3497  3755 W MvpnTrial: پینگ 🇨🇦 Canada ممکن نیست: هستهٔ Xray اتصال vless بدون TLS به IP عمومی (3.38.252.194) را رد می‌کند؛ این ردیف با این هسته قابل استفاده نیست
-10-27 02:37:24.486  3497  3755 W MvpnTrial: پینگ 🇫🇷 France ممکن نیست: هستهٔ Xray اتصال vless بدون TLS به IP عمومی (54.180.244.144) را رد می‌کند؛ این ردیف با این هسته قابل استفاده نیست
-10-27 02:37:24.490  3497  3755 W MvpnTrial: پینگ 🇫🇷 France ممکن نیست: هستهٔ Xray اتصال vless بدون TLS به IP عمومی (35.181.169.222) را رد می‌کند؛ این ردیف با این هسته قابل استفاده نیست
-10-27 02:37:24.491  3497  3755 W MvpnTrial: پینگ 🇨🇦 Canada ممکن نیست: هستهٔ Xray اتصال vless بدون TLS به IP عمومی (15.222.44.183) را رد می‌کند؛ این ردیف با این هسته قابل استفاده نیست
-10-27 02:37:24.495  3497  3755 W MvpnTrial: پینگ 🇨🇦 Canada ممکن نیست: هستهٔ Xray اتصال vless بدون TLS به IP عمومی (13.192.185.121) را رد می‌کند؛ این ردیف با این هسته قابل استفاده نیست
-10-27 02:37:24.499  3497  3730 W MvpnTrial: پینگ 🇺🇸 United States ممکن نیست: هستهٔ Xray اتصال vless بدون TLS به IP عمومی (3.128.30.255) را رد می‌کند؛ این ردیف با این هسته قابل استفاده نیست
-10-27 02:37:24.503  3497  3730 W MvpnTrial: پینگ 🇸🇪 Sweden ممکن نیست: هستهٔ Xray اتصال vless بدون TLS به IP عمومی (54.238.23.17) را رد می‌کند؛ این ردیف با این هسته قابل استفاده نیست
-10-27 02:37:24.510  3497  3614 D MvpnTrial: پینگ 🇩🇪 Germany: 158 ms
-10-27 02:37:24.512  3497  3750 W MvpnTrial: پینگ 🇮🇪 Ireland ممکن نیست: هستهٔ Xray اتصال vless بدون TLS به IP عمومی (63.32.102.87) را رد می‌کند؛ این ردیف با این هسته قابل استفاده نیست
-10-27 02:37:24.513  3497  3750 W MvpnTrial: پینگ 🇺🇸 United States ممکن نیست: هستهٔ Xray اتصال vless بدون TLS به IP عمومی (104.248.220.229) را رد می‌کند؛ این ردیف با این هسته قابل استفاده نیست
-10-27 02:37:24.513  3497  3753 W MvpnTrial: پینگ 🇨🇦 Canada ممکن نیست: هستهٔ Xray اتصال vless بدون TLS به IP عمومی (35.183.8.136) را رد می‌کند؛ این ردیف با این هسته قابل استفاده نیست
-10-27 02:37:24.513  3497  3711 W MvpnTrial: پینگ 🇮🇪 Ireland ممکن نیست: هستهٔ Xray اتصال vless بدون TLS به IP عمومی (54.220.35.113) را رد می‌کند؛ این ردیف با این هسته قابل استفاده نیست
-10-27 02:37:24.518  3497  3614 W MvpnTrial: پینگ 🇺🇸 United States ممکن نیست: هستهٔ Xray اتصال vless بدون TLS به IP عمومی (43.207.118.43) را رد می‌کند؛ این ردیف با این هسته قابل استفاده نیست
-10-27 02:37:24.546  3497  3730 W MvpnTrial: پینگ 🇺🇸 United States ممکن نیست: هستهٔ Xray اتصال vless بدون TLS به IP عمومی (100.24.123.9) را رد می‌کند؛ این ردیف با این هسته قابل استفاده نیست
-10-27 02:37:24.546  3497  3754 W MvpnTrial: پینگ 🇺🇸 United States ممکن نیست: هستهٔ Xray اتصال vless بدون TLS به IP عمومی (54.151.242.49) را رد می‌کند؛ این ردیف با این هسته قابل استفاده نیست
-10-27 02:37:24.927  3497  3746 D MvpnTrial: پینگ 🇫🇷 France: 159 ms
-10-27 02:37:24.959  3497  3497 W MvpnTrial: دریافت توکن Firebase ناموفق: java.util.concurrent.ExecutionException: java.io.IOException: AUTHENTICATION_FAILED
-10-27 02:37:26.199  3497  3713 E MvpnTrial: سنجش تأخیر ناموفق
-10-27 02:37:26.199  3497  3713 E MvpnTrial: go.Universe$proxyerror: Get "https://www.gstatic.com/generate_204": io: read/write on closed pipe
-10-27 02:37:26.199  3497  3713 E MvpnTrial: 	at libv2ray.Libv2ray.measureOutboundDelay(Native Method)
-10-27 02:37:26.199  3497  3713 E MvpnTrial: 	at co.asiven.vixentvpn.trial.core.XrayCore.measureDelay(XrayCore.kt:81)
-10-27 02:37:26.199  3497  3713 E MvpnTrial: 	at co.asiven.vixentvpn.trial.ui.MainActivity.measure(MainActivity.kt:430)
-10-27 02:37:26.199  3497  3713 E MvpnTrial: 	at co.asiven.vixentvpn.trial.ui.MainActivity.access$measure(MainActivity.kt:61)
-10-27 02:37:26.199  3497  3713 E MvpnTrial: 	at co.asiven.vixentvpn.trial.ui.MainActivity$pingAll$2$1$1$1.invokeSuspend(MainActivity.kt:391)
-10-27 02:37:26.199  3497  3713 E MvpnTrial: 	at kotlin.coroutines.jvm.internal.BaseContinuationImpl.resumeWith(ContinuationImpl.kt:33)
-10-27 02:37:26.199  3497  3713 E MvpnTrial: 	at kotlinx.coroutines.DispatchedTask.run(DispatchedTask.kt:104)
-10-27 02:37:26.199  3497  3713 E MvpnTrial: 	at kotlinx.coroutines.internal.LimitedDispatcher$Worker.run(LimitedDispatcher.kt:111)
-10-27 02:37:26.199  3497  3713 E MvpnTrial: 	at kotlinx.coroutines.scheduling.TaskImpl.run(Tasks.kt:99)
-10-27 02:37:26.199  3497  3713 E MvpnTrial: 	at kotlinx.coroutines.scheduling.CoroutineScheduler.runSafely(CoroutineScheduler.kt:584)
-10-27 02:37:26.199  3497  3713 E MvpnTrial: 	at kotlinx.coroutines.scheduling.CoroutineScheduler$Worker.executeTask(CoroutineScheduler.kt:811)
-10-27 02:37:26.199  3497  3713 E MvpnTrial: 	at kotlinx.coroutines.scheduling.CoroutineScheduler$Worker.runWorker(CoroutineScheduler.kt:715)
-10-27 02:37:26.199  3497  3713 E MvpnTrial: 	at kotlinx.coroutines.scheduling.CoroutineScheduler$Worker.run(CoroutineScheduler.kt:702)
-10-27 02:37:26.200  3497  3713 D MvpnTrial: پینگ 🇺🇸 United States: -1 ms
-10-27 02:37:26.202  3497  3497 D MvpnTrial: hero: running=false connected=- shown=-62612-464-504278487 pressed=اتصال
-10-27 02:37:26.206  3497  3497 I MvpnTrial: پینگ همهٔ 103 سرور انجام شد؛ سریع‌ترین: 🇺🇸 United States
-10-27 02:38:11.172  3497  3497 I MvpnTrial: 103 لینک v2ray کپی شد
-10-27 02:39:33.966  3497  3497 D MvpnTrial: hero: running=false connected=- shown=-118949-466-931889960 pressed=اتصال
-10-27 02:39:33.969  3497  3497 I MvpnTrial: سرور انتخاب شد: 🇦🇺 Australia (price=0, type=hysteria · tls)
-10-27 02:41:40.201  3497  3497 D MvpnTrial: hero: running=false connected=- shown=-118949-466-931889960 pressed=اتصال
-10-27 02:41:40.202  3497  3497 I MvpnTrial: سرور انتخاب شد: 🇦🇺 Australia (price=0, type=hysteria · tls)
-10-27 02:45:20.517  3497  3497 D MvpnTrial: hero: running=false connected=- shown=-31929-472--1193288079 pressed=اتصال
-10-27 02:45:20.518  3497  3497 I MvpnTrial: سرور انتخاب شد: 🇫🇷 France (price=0, type=vless · reality)
-10-27 02:45:32.301  3497  3497 D MvpnTrial: hero: running=false connected=- shown=-31929-472--1193288079 pressed=اتصال
-10-27 02:45:32.301  3497  3497 I MvpnTrial: سرور انتخاب شد: 🇫🇷 France (price=0, type=vless · reality)
-10-27 02:45:38.591  3497  3497 I MvpnTrial: VpnTunnelService ایجاد شد
-10-27 02:45:38.679  3497  3713 I MvpnTrial: پیکربندی هسته آماده شد (vless) برای 🇫🇷 France
-10-27 02:45:38.819  3497  3497 D MvpnTrial: hero: running=false connected=- shown=-31929-472--1193288079 pressed=اتصال
-10-27 02:45:38.848  3497  3713 I MvpnTrial: رابط TUN ساخته شد: 111
-10-27 02:45:39.159  3497  3713 I MvpnTrial: CoreCallback: startup
-10-27 02:45:39.161  3497  3713 D MvpnTrial: CoreCallback: 0 Started successfully, running
-10-27 02:45:39.161  3497  3713 I MvpnTrial: هستهٔ Xray شروع شد (tunFd=111، running=true)
-10-27 02:45:39.161  3497  3713 I MvpnTrial: hev: شروع (fd=111، socks=10808، mtu=1500)
-10-27 02:45:39.173  3497  3497 D MvpnTrial: hero: running=false connected=- shown=-31929-472--1193288079 pressed=اتصال
-10-27 02:45:39.681  3497  3713 I MvpnTrial: آزمون ترافیک موفق: «HTTP/1.1 301 Moved Permanently» در 509ms
-10-27 02:45:39.681  3497  3713 I MvpnTrial: ترافیک از تونل عبور کرد (🇫🇷 France)
-10-27 02:45:39.682  3497  3713 I MvpnTrial: اتصال برقرار شد: متصل — 🇫🇷 France (VPN)
-10-27 02:45:39.683  3497  3497 D MvpnTrial: hero: running=true connected=-31929-472--1193288079 shown=-31929-472--1193288079 pressed=قطع اتصال
-10-27 02:46:52.462  3497  3497 I MvpnTrial: hev: متوقف شد
-10-27 02:46:52.464  3497  3497 I MvpnTrial: CoreCallback: shutdown
-10-27 02:46:52.464  3497  3497 D MvpnTrial: CoreCallback: 0 Core stopped
-10-27 02:46:52.510  3497  3497 D MvpnTrial: hero: running=false connected=- shown=-31929-472--1193288079 pressed=اتصال
-10-27 02:46:52.517  3497  3497 D MvpnTrial: hero: running=false connected=- shown=-31929-472--1193288079 pressed=اتصال
+10-27 02:51:31.021  2926  2926 I MvpnTrial: MVPN Trial 3.2.0-trial (co.asiven.vixentvpn.trial) راه‌اندازی شد
+10-27 02:51:31.305  2926  2926 I MvpnTrial: هستهٔ Xray آماده شد: Lib v40, Xray-core v26.10.21
+10-27 02:51:31.432  2926  2926 D MvpnTrial: hero(no row): running=false connected=- pressed=اتصال
+10-27 02:51:31.449  2926  2926 D MvpnTrial: hero(no row): running=false connected=- pressed=اتصال
+10-27 02:51:32.345  2926  3180 D MvpnTrial: GET https://managev1.xyz/api/token?deviceId=cb1247a14865c215 → 200 (66 بایت)
+10-27 02:51:32.350  2926  3180 I MvpnTrial: توکن سمت سرور غیرفعال است؛ بدون هدر token ادامه می‌دهیم
+10-27 02:51:32.365  2926  3180 E MvpnTrial: GET https://managev1.xyz/api/setting ناموفق
+10-27 02:51:32.365  2926  3180 E MvpnTrial: java.net.ConnectException: Failed to connect to managev1.xyz/172.67.149.192:443
+10-27 02:51:32.365  2926  3180 E MvpnTrial: 	at com.android.okhttp.internal.io.RealConnection.connectSocket(RealConnection.java:147)
+10-27 02:51:32.365  2926  3180 E MvpnTrial: 	at com.android.okhttp.internal.io.RealConnection.connect(RealConnection.java:116)
+10-27 02:51:32.365  2926  3180 E MvpnTrial: 	at com.android.okhttp.internal.http.StreamAllocation.findConnection(StreamAllocation.java:186)
+10-27 02:51:32.365  2926  3180 E MvpnTrial: 	at com.android.okhttp.internal.http.StreamAllocation.findHealthyConnection(StreamAllocation.java:128)
+10-27 02:51:32.365  2926  3180 E MvpnTrial: 	at com.android.okhttp.internal.http.StreamAllocation.newStream(StreamAllocation.java:97)
+10-27 02:51:32.365  2926  3180 E MvpnTrial: 	at com.android.okhttp.internal.http.HttpEngine.connect(HttpEngine.java:289)
+10-27 02:51:32.365  2926  3180 E MvpnTrial: 	at com.android.okhttp.internal.http.HttpEngine.sendRequest(HttpEngine.java:232)
+10-27 02:51:32.365  2926  3180 E MvpnTrial: 	at com.android.okhttp.internal.huc.HttpURLConnectionImpl.execute(HttpURLConnectionImpl.java:465)
+10-27 02:51:32.365  2926  3180 E MvpnTrial: 	at com.android.okhttp.internal.huc.HttpURLConnectionImpl.getResponse(HttpURLConnectionImpl.java:411)
+10-27 02:51:32.365  2926  3180 E MvpnTrial: 	at com.android.okhttp.internal.huc.HttpURLConnectionImpl.getResponseCode(HttpURLConnectionImpl.java:542)
+10-27 02:51:32.365  2926  3180 E MvpnTrial: 	at com.android.okhttp.internal.huc.DelegatingHttpsURLConnection.getResponseCode(DelegatingHttpsURLConnection.java:106)
+10-27 02:51:32.365  2926  3180 E MvpnTrial: 	at com.android.okhttp.internal.huc.HttpsURLConnectionImpl.getResponseCode(HttpsURLConnectionImpl.java:30)
+10-27 02:51:32.365  2926  3180 E MvpnTrial: 	at co.asiven.vixentvpn.trial.data.ApiClient.request(ApiClient.kt:217)
+10-27 02:51:32.365  2926  3180 E MvpnTrial: 	at co.asiven.vixentvpn.trial.data.ApiClient.request$default(ApiClient.kt:201)
+10-27 02:51:32.365  2926  3180 E MvpnTrial: 	at co.asiven.vixentvpn.trial.data.ApiClient.fetchSetting(ApiClient.kt:113)
+10-27 02:51:32.365  2926  3180 E MvpnTrial: 	at co.asiven.vixentvpn.trial.ui.MainActivity$refreshAll$1$result$1.invokeSuspend(MainActivity.kt:289)
+10-27 02:51:32.365  2926  3180 E MvpnTrial: 	at kotlin.coroutines.jvm.internal.BaseContinuationImpl.resumeWith(ContinuationImpl.kt:33)
+10-27 02:51:32.365  2926  3180 E MvpnTrial: 	at kotlinx.coroutines.DispatchedTask.run(DispatchedTask.kt:104)
+10-27 02:51:32.365  2926  3180 E MvpnTrial: 	at kotlinx.coroutines.internal.LimitedDispatcher$Worker.run(LimitedDispatcher.kt:111)
+10-27 02:51:32.365  2926  3180 E MvpnTrial: 	at kotlinx.coroutines.scheduling.TaskImpl.run(Tasks.kt:99)
+10-27 02:51:32.365  2926  3180 E MvpnTrial: 	at kotlinx.coroutines.scheduling.CoroutineScheduler.runSafely(CoroutineScheduler.kt:584)
+10-27 02:51:32.365  2926  3180 E MvpnTrial: 	at kotlinx.coroutines.scheduling.CoroutineScheduler$Worker.executeTask(CoroutineScheduler.kt:811)
+10-27 02:51:32.365  2926  3180 E MvpnTrial: 	at kotlinx.coroutines.scheduling.CoroutineScheduler$Worker.runWorker(CoroutineScheduler.kt:715)
+10-27 02:51:32.365  2926  3180 E MvpnTrial: 	at kotlinx.coroutines.scheduling.CoroutineScheduler$Worker.run(CoroutineScheduler.kt:702)
+10-27 02:51:32.365  2926  3180 W MvpnTrial: setting: -1 HTTP -1
+10-27 02:51:32.417  2926  3180 E MvpnTrial: GET https://managev1.xyz/api/protocols ناموفق
+10-27 02:51:32.417  2926  3180 E MvpnTrial: java.net.ConnectException: Failed to connect to managev1.xyz/172.67.149.192:443
+10-27 02:51:32.417  2926  3180 E MvpnTrial: 	at com.android.okhttp.internal.io.RealConnection.connectSocket(RealConnection.java:147)
+10-27 02:51:32.417  2926  3180 E MvpnTrial: 	at com.android.okhttp.internal.io.RealConnection.connect(RealConnection.java:116)
+10-27 02:51:32.417  2926  3180 E MvpnTrial: 	at com.android.okhttp.internal.http.StreamAllocation.findConnection(StreamAllocation.java:186)
+10-27 02:51:32.417  2926  3180 E MvpnTrial: 	at com.android.okhttp.internal.http.StreamAllocation.findHealthyConnection(StreamAllocation.java:128)
+10-27 02:51:32.417  2926  3180 E MvpnTrial: 	at com.android.okhttp.internal.http.StreamAllocation.newStream(StreamAllocation.java:97)
+10-27 02:51:32.417  2926  3180 E MvpnTrial: 	at com.android.okhttp.internal.http.HttpEngine.connect(HttpEngine.java:289)
+10-27 02:51:32.417  2926  3180 E MvpnTrial: 	at com.android.okhttp.internal.http.HttpEngine.sendRequest(HttpEngine.java:232)
+10-27 02:51:32.417  2926  3180 E MvpnTrial: 	at com.android.okhttp.internal.huc.HttpURLConnectionImpl.execute(HttpURLConnectionImpl.java:465)
+10-27 02:51:32.417  2926  3180 E MvpnTrial: 	at com.android.okhttp.internal.huc.HttpURLConnectionImpl.getResponse(HttpURLConnectionImpl.java:411)
+10-27 02:51:32.417  2926  3180 E MvpnTrial: 	at com.android.okhttp.internal.huc.HttpURLConnectionImpl.getResponseCode(HttpURLConnectionImpl.java:542)
+10-27 02:51:32.417  2926  3180 E MvpnTrial: 	at com.android.okhttp.internal.huc.DelegatingHttpsURLConnection.getResponseCode(DelegatingHttpsURLConnection.java:106)
+10-27 02:51:32.417  2926  3180 E MvpnTrial: 	at com.android.okhttp.internal.huc.HttpsURLConnectionImpl.getResponseCode(HttpsURLConnectionImpl.java:30)
+10-27 02:51:32.417  2926  3180 E MvpnTrial: 	at co.asiven.vixentvpn.trial.data.ApiClient.request(ApiClient.kt:217)
+10-27 02:51:32.417  2926  3180 E MvpnTrial: 	at co.asiven.vixentvpn.trial.data.ApiClient.request$default(ApiClient.kt:201)
+10-27 02:51:32.417  2926  3180 E MvpnTrial: 	at co.asiven.vixentvpn.trial.data.ApiClient.fetchProtocols(ApiClient.kt:139)
+10-27 02:51:32.417  2926  3180 E MvpnTrial: 	at co.asiven.vixentvpn.trial.ui.MainActivity$refreshAll$1$result$1.invokeSuspend(MainActivity.kt:290)
+10-27 02:51:32.417  2926  3180 E MvpnTrial: 	at kotlin.coroutines.jvm.internal.BaseContinuationImpl.resumeWith(ContinuationImpl.kt:33)
+10-27 02:51:32.417  2926  3180 E MvpnTrial: 	at kotlinx.coroutines.DispatchedTask.run(DispatchedTask.kt:104)
+10-27 02:51:32.417  2926  3180 E MvpnTrial: 	at kotlinx.coroutines.internal.LimitedDispatcher$Worker.run(LimitedDispatcher.kt:111)
+10-27 02:51:32.417  2926  3180 E MvpnTrial: 	at kotlinx.coroutines.scheduling.TaskImpl.run(Tasks.kt:99)
+10-27 02:51:32.417  2926  3180 E MvpnTrial: 	at kotlinx.coroutines.scheduling.CoroutineScheduler.runSafely(CoroutineScheduler.kt:584)
+10-27 02:51:32.417  2926  3180 E MvpnTrial: 	at kotlinx.coroutines.scheduling.CoroutineScheduler$Worker.executeTask(CoroutineScheduler.kt:811)
+10-27 02:51:32.417  2926  3180 E MvpnTrial: 	at kotlinx.coroutines.scheduling.CoroutineScheduler$Worker.runWorker(CoroutineScheduler.kt:715)
+10-27 02:51:32.417  2926  3180 E MvpnTrial: 	at kotlinx.coroutines.scheduling.CoroutineScheduler$Worker.run(CoroutineScheduler.kt:702)
+10-27 02:51:32.417  2926  3180 W MvpnTrial: protocols: /api/protocols → -1 | HTTP -1
+10-27 02:51:32.429  2926  3180 E MvpnTrial: GET https://managev1.xyz/api/protocols/ ناموفق
+10-27 02:51:32.429  2926  3180 E MvpnTrial: java.net.ConnectException: Failed to connect to managev1.xyz/172.67.149.192:443
+10-27 02:51:32.429  2926  3180 E MvpnTrial: 	at com.android.okhttp.internal.io.RealConnection.connectSocket(RealConnection.java:147)
+10-27 02:51:32.429  2926  3180 E MvpnTrial: 	at com.android.okhttp.internal.io.RealConnection.connect(RealConnection.java:116)
+10-27 02:51:32.429  2926  3180 E MvpnTrial: 	at com.android.okhttp.internal.http.StreamAllocation.findConnection(StreamAllocation.java:186)
+10-27 02:51:32.429  2926  3180 E MvpnTrial: 	at com.android.okhttp.internal.http.StreamAllocation.findHealthyConnection(StreamAllocation.java:128)
+10-27 02:51:32.429  2926  3180 E MvpnTrial: 	at com.android.okhttp.internal.http.StreamAllocation.newStream(StreamAllocation.java:97)
+10-27 02:51:32.429  2926  3180 E MvpnTrial: 	at com.android.okhttp.internal.http.HttpEngine.connect(HttpEngine.java:289)
+10-27 02:51:32.429  2926  3180 E MvpnTrial: 	at com.android.okhttp.internal.http.HttpEngine.sendRequest(HttpEngine.java:232)
+10-27 02:51:32.429  2926  3180 E MvpnTrial: 	at com.android.okhttp.internal.huc.HttpURLConnectionImpl.execute(HttpURLConnectionImpl.java:465)
+10-27 02:51:32.429  2926  3180 E MvpnTrial: 	at com.android.okhttp.internal.huc.HttpURLConnectionImpl.getResponse(HttpURLConnectionImpl.java:411)
+10-27 02:51:32.429  2926  3180 E MvpnTrial: 	at com.android.okhttp.internal.huc.HttpURLConnectionImpl.getResponseCode(HttpURLConnectionImpl.java:542)
+10-27 02:51:32.429  2926  3180 E MvpnTrial: 	at com.android.okhttp.internal.huc.DelegatingHttpsURLConnection.getResponseCode(DelegatingHttpsURLConnection.java:106)
+10-27 02:51:32.429  2926  3180 E MvpnTrial: 	at com.android.okhttp.internal.huc.HttpsURLConnectionImpl.getResponseCode(HttpsURLConnectionImpl.java:30)
+10-27 02:51:32.429  2926  3180 E MvpnTrial: 	at co.asiven.vixentvpn.trial.data.ApiClient.request(ApiClient.kt:217)
+10-27 02:51:32.429  2926  3180 E MvpnTrial: 	at co.asiven.vixentvpn.trial.data.ApiClient.request$default(ApiClient.kt:201)
+10-27 02:51:32.429  2926  3180 E MvpnTrial: 	at co.asiven.vixentvpn.trial.data.ApiClient.fetchProtocols(ApiClient.kt:139)
+10-27 02:51:32.429  2926  3180 E MvpnTrial: 	at co.asiven.vixentvpn.trial.ui.MainActivity$refreshAll$1$result$1.invokeSuspend(MainActivity.kt:290)
+10-27 02:51:32.429  2926  3180 E MvpnTrial: 	at kotlin.coroutines.jvm.internal.BaseContinuationImpl.resumeWith(ContinuationImpl.kt:33)
+10-27 02:51:32.429  2926  3180 E MvpnTrial: 	at kotlinx.coroutines.DispatchedTask.run(DispatchedTask.kt:104)
+10-27 02:51:32.429  2926  3180 E MvpnTrial: 	at kotlinx.coroutines.internal.LimitedDispatcher$Worker.run(LimitedDispatcher.kt:111)
+10-27 02:51:32.429  2926  3180 E MvpnTrial: 	at kotlinx.coroutines.scheduling.TaskImpl.run(Tasks.kt:99)
+10-27 02:51:32.429  2926  3180 E MvpnTrial: 	at kotlinx.coroutines.scheduling.CoroutineScheduler.runSafely(CoroutineScheduler.kt:584)
+10-27 02:51:32.429  2926  3180 E MvpnTrial: 	at kotlinx.coroutines.scheduling.CoroutineScheduler$Worker.executeTask(CoroutineScheduler.kt:811)
+10-27 02:51:32.429  2926  3180 E MvpnTrial: 	at kotlinx.coroutines.scheduling.CoroutineScheduler$Worker.runWorker(CoroutineScheduler.kt:715)
+10-27 02:51:32.429  2926  3180 E MvpnTrial: 	at kotlinx.coroutines.scheduling.CoroutineScheduler$Worker.run(CoroutineScheduler.kt:702)
+10-27 02:51:32.429  2926  3180 W MvpnTrial: protocols: /api/protocols/ → -1 | HTTP -1
+10-27 02:51:32.433  2926  3180 E MvpnTrial: GET https://managev1.xyz/api/v2/protocols ناموفق
+10-27 02:51:32.433  2926  3180 E MvpnTrial: java.net.ConnectException: Failed to connect to managev1.xyz/172.67.149.192:443
+10-27 02:51:32.433  2926  3180 E MvpnTrial: 	at com.android.okhttp.internal.io.RealConnection.connectSocket(RealConnection.java:147)
+10-27 02:51:32.433  2926  3180 E MvpnTrial: 	at com.android.okhttp.internal.io.RealConnection.connect(RealConnection.java:116)
+10-27 02:51:32.433  2926  3180 E MvpnTrial: 	at com.android.okhttp.internal.http.StreamAllocation.findConnection(StreamAllocation.java:186)
+10-27 02:51:32.433  2926  3180 E MvpnTrial: 	at com.android.okhttp.internal.http.StreamAllocation.findHealthyConnection(StreamAllocation.java:128)
+10-27 02:51:32.433  2926  3180 E MvpnTrial: 	at com.android.okhttp.internal.http.StreamAllocation.newStream(StreamAllocation.java:97)
+10-27 02:51:32.433  2926  3180 E MvpnTrial: 	at com.android.okhttp.internal.http.HttpEngine.connect(HttpEngine.java:289)
+10-27 02:51:32.433  2926  3180 E MvpnTrial: 	at com.android.okhttp.internal.http.HttpEngine.sendRequest(HttpEngine.java:232)
+10-27 02:51:32.433  2926  3180 E MvpnTrial: 	at com.android.okhttp.internal.huc.HttpURLConnectionImpl.execute(HttpURLConnectionImpl.java:465)
+10-27 02:51:32.433  2926  3180 E MvpnTrial: 	at com.android.okhttp.internal.huc.HttpURLConnectionImpl.getResponse(HttpURLConnectionImpl.java:411)
+10-27 02:51:32.433  2926  3180 E MvpnTrial: 	at com.android.okhttp.internal.huc.HttpURLConnectionImpl.getResponseCode(HttpURLConnectionImpl.java:542)
+10-27 02:51:32.433  2926  3180 E MvpnTrial: 	at com.android.okhttp.internal.huc.DelegatingHttpsURLConnection.getResponseCode(DelegatingHttpsURLConnection.java:106)
+10-27 02:51:32.433  2926  3180 E MvpnTrial: 	at com.android.okhttp.internal.huc.HttpsURLConnectionImpl.getResponseCode(HttpsURLConnectionImpl.java:30)
+10-27 02:51:32.433  2926  3180 E MvpnTrial: 	at co.asiven.vixentvpn.trial.data.ApiClient.request(ApiClient.kt:217)
+10-27 02:51:32.433  2926  3180 E MvpnTrial: 	at co.asiven.vixentvpn.trial.data.ApiClient.request$default(ApiClient.kt:201)
+10-27 02:51:32.433  2926  3180 E MvpnTrial: 	at co.asiven.vixentvpn.trial.data.ApiClient.fetchProtocols(ApiClient.kt:139)
+10-27 02:51:32.433  2926  3180 E MvpnTrial: 	at co.asiven.vixentvpn.trial.ui.MainActivity$refreshAll$1$result$1.invokeSuspend(MainActivity.kt:290)
+10-27 02:51:32.433  2926  3180 E MvpnTrial: 	at kotlin.coroutines.jvm.internal.BaseContinuationImpl.resumeWith(ContinuationImpl.kt:33)
+10-27 02:51:32.433  2926  3180 E MvpnTrial: 	at kotlinx.coroutines.DispatchedTask.run(DispatchedTask.kt:104)
+10-27 02:51:32.433  2926  3180 E MvpnTrial: 	at kotlinx.coroutines.internal.LimitedDispatcher$Worker.run(LimitedDispatcher.kt:111)
+10-27 02:51:32.433  2926  3180 E MvpnTrial: 	at kotlinx.coroutines.scheduling.TaskImpl.run(Tasks.kt:99)
+10-27 02:51:32.433  2926  3180 E MvpnTrial: 	at kotlinx.coroutines.scheduling.CoroutineScheduler.runSafely(CoroutineScheduler.kt:584)
+10-27 02:51:32.433  2926  3180 E MvpnTrial: 	at kotlinx.coroutines.scheduling.CoroutineScheduler$Worker.executeTask(CoroutineScheduler.kt:811)
+10-27 02:51:32.433  2926  3180 E MvpnTrial: 	at kotlinx.coroutines.scheduling.CoroutineScheduler$Worker.runWorker(CoroutineScheduler.kt:715)
+10-27 02:51:32.433  2926  3180 E MvpnTrial: 	at kotlinx.coroutines.scheduling.CoroutineScheduler$Worker.run(CoroutineScheduler.kt:702)
+10-27 02:51:32.433  2926  3180 W MvpnTrial: protocols: /api/v2/protocols → -1 | HTTP -1
+10-27 02:51:32.433  2926  3180 E MvpnTrial: دریافت فهرست سرورها شکست خورد:
+10-27 02:51:32.433  2926  3180 E MvpnTrial: /api/protocols → -1 HTTP -1
+10-27 02:51:32.433  2926  3180 E MvpnTrial: /api/protocols/ → -1 HTTP -1
+10-27 02:51:32.433  2926  3180 E MvpnTrial: /api/v2/protocols → -1 HTTP -1
+10-27 02:51:35.739  2926  2926 W MvpnTrial: دریافت توکن Firebase ناموفق: java.util.concurrent.ExecutionException: java.io.IOException: AUTHENTICATION_FAILED
