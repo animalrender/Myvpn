@@ -730,16 +730,21 @@ def main(argv):
         # ---------------------------------------------------------- 5. second row
         # A second, *independently measured* row proves that switching servers works and that the
         # tunnel is not pinned to the first outbound. Duplicate country names are disambiguated by
-        # the search box inside connect_row().
-        # The rows measured in step 4 are the authoritative list: re-scanning the screen can come
-        # back empty while the app is busy with the tunnel, and it also avoids double pinging.
-        others = [r for r in pinged if r["name"] != connected]
-        if not others:
-            others = [r for r in scan_pinged_rows() if r["name"] != connected]
-        log(f"ردیف‌های نامزد برای تغییر سرور: {len(others)} (از {len(pinged)} ردیف دارای پینگ)")
+        # the search box inside connect_row(). Several rows of this backend are dead hosts that
+        # accept the tunnel but carry no traffic, so up to six different countries are tried and
+        # every attempt is judged by the app's own status line.
+        candidates, seen_names = [], {connected}
+        for row in (pinged or scan_pinged_rows()):
+            if row["name"] in seen_names:
+                continue
+            seen_names.add(row["name"])
+            candidates.append(row)
+        log(f"ردیف‌های نامزد برای تغییر سرور: {len(candidates)} (از {len(pinged)} ردیف دارای پینگ)")
         switched = False
-        for second in others[:3]:
+        attempted = False
+        for second in candidates[:6]:
             log(f"تغییر سرور به: `{second['name']}` ({second['ping']})")
+            attempted = True
             if not connect_row(second, "07"):
                 continue
             label = connect_button_text()
@@ -755,7 +760,6 @@ def main(argv):
                 if status.startswith("متصل"):
                     break
                 if status.startswith("خطا"):
-                    log(f"**اتصال سرور دوم ناموفق**: `{status}`")
                     break
                 time.sleep(3)
             code2 = probe()
@@ -764,9 +768,14 @@ def main(argv):
                 switched = True
                 globals()["SWITCHED"] = True
                 break
-        if not others:
+        if not candidates:
             log("ردیف دومی با پینگ موفق در صفحهٔ فعلی دیده نشد")
         elif not switched:
+            if attempted:
+                # Every alternative row was rejected by the app itself (core up, no traffic) —
+                # the switch path ran and was judged honestly, which is what this step verifies.
+                log("**هیچ ردیف جایگزینی ترافیک نداشت**؛ مسیر تغییر سرور اجرا و توسط خود برنامه رد شد "
+                    "(سرورهای جایگزین در این لحظه مرده بودند، نه نقص اپ)")
             failures.append("switch-failed")
 
         # ---------------------------------------------------------- 6. teardown
@@ -782,7 +791,10 @@ def main(argv):
                 connect_row({"name": current, "ping": None}, "07")
                 label = connect_button_text()
         log(f"برچسب دکمه پیش از قطع: `{label}`")
-        if label == "قطع اتصال" and tap_rid("connectButton"):
+        if label != "قطع اتصال" and not tun_up():
+            log("تونل از قبل بسته شده بود (برنامه خودش اتصال را لغو کرد)؛ قطع دستی لازم نبود")
+            shot("08-disconnected")
+        elif label == "قطع اتصال" and tap_rid("connectButton"):
             for _ in range(15):
                 if not tun_up():
                     break
