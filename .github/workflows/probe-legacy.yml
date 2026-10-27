@@ -1,0 +1,77 @@
+name: probe-legacy
+
+# Diagnostic: asks the backend for `/api/protocols` with the version_code that each released
+# APK sends (3.1.4 -> 1004076, 3.2.0 -> 1004220) and reports whether `value` comes back as a
+# real share link / JSON instead of an opaque blob.
+on:
+  workflow_dispatch:
+  push:
+    branches: [arena/b9372ae1-myvpn]
+    paths:
+      - "android-app/tools/probe-legacy.py"
+      - "android-app/tools/probe-v3.py"
+      - "android-app/tools/probe-decrypt.py"
+      - ".github/workflows/probe-legacy.yml"
+
+permissions:
+  contents: write
+
+jobs:
+  legacy:
+    runs-on: ubuntu-latest
+    timeout-minutes: 15
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Prepare AOSP testkey
+        run: |
+          set -euo pipefail
+          mkdir -p /tmp/keys
+          curl -fL --retry 3 -o /tmp/keys/testkey.x509.pem \
+            https://raw.githubusercontent.com/aosp-mirror/platform_build/master/target/product/security/testkey.x509.pem
+
+      - name: Sweep client versions
+        env:
+          PROBE_CERT: /tmp/keys/testkey.x509.pem
+        run: |
+          set -uo pipefail
+          python3 android-app/tools/probe-legacy.py 2>&1 | tee /tmp/legacy.log || true
+          mkdir -p android-app/docs/probe-rows
+          cp /tmp/legacy.log android-app/docs/probe-rows/legacy-version-sweep.txt
+
+      - name: Probe endpoint shapes
+        env:
+          PROBE_CERT: /tmp/keys/testkey.x509.pem
+        run: |
+          set -uo pipefail
+          python3 android-app/tools/probe-v3.py 2>&1 | tee /tmp/v3.log || true
+          cp /tmp/v3.log android-app/docs/probe-rows/endpoint-shapes.txt
+
+      - name: Verify value decryption for every row
+        env:
+          PROBE_CERT: /tmp/keys/testkey.x509.pem
+        run: |
+          set -uo pipefail
+          python3 -m pip install --quiet cryptography
+          DECRYPT_DETAIL=android-app/docs/probe-rows/decrypt-detail.txt \
+            python3 android-app/tools/probe-decrypt.py 2>&1 | tee /tmp/dec.log || true
+          cp /tmp/dec.log android-app/docs/probe-rows/decrypt-coverage.txt
+
+      - name: Commit the log
+        run: |
+          set -euo pipefail
+          git config user.name "arena-agent"
+          git config user.email "297053741+arena-agent@users.noreply.github.com"
+          git add android-app/docs/probe-rows || true
+          if git diff --cached --quiet; then echo "no changes"; else
+            git commit -m "chore(probe): legacy version sweep from run ${{ github.run_number }} [skip ci]"
+          for attempt in 1 2 3 4 5; do
+            if git pull --rebase --autostash --quiet origin "${{ github.ref_name }}" && git push --quiet; then
+              echo "pushed on attempt $attempt"
+              break
+            fi
+            echo "push attempt $attempt failed; retrying"
+            git rebase --abort 2>/dev/null || true
+            sleep 5
+          done
+          fi

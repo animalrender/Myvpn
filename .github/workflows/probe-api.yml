@@ -1,0 +1,100 @@
+name: probe-api
+
+# Temporary diagnostic job: runs the exact header/param matrix against the backend from a
+# runner that has internet access, and reports every response as an annotation.
+on:
+  workflow_dispatch:
+  push:
+    branches: [arena/b9372ae1-myvpn]
+    paths:
+      - "android-app/tools/probe-api.py"
+      - "android-app/tools/probe-header-bisect.py"
+      - "android-app/tools/probe-configs.py"
+      - "android-app/tools/probe-protocol-post.py"
+      - "android-app/tools/probe-fuzz.py"
+      - "android-app/tools/probe-v2.py"
+      - "android-app/tools/probe-v2b.py"
+      - "android-app/tools/probe-version-sweep.py"
+      - "android-app/tools/probe-decode.py"
+      - "android-app/tools/probe-resolve.py"
+      - "android-app/tools/probe-price.py"
+      - ".github/workflows/probe-api.yml"
+
+permissions:
+  contents: read
+
+jobs:
+  probe:
+    runs-on: ubuntu-latest
+    timeout-minutes: 25
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Prepare AOSP testkey (same cert the APK is signed with)
+        run: |
+          set -euo pipefail
+          mkdir -p /tmp/keys
+          base="https://raw.githubusercontent.com/aosp-mirror/platform_build/master/target/product/security"
+          curl -fL --retry 3 -o /tmp/keys/testkey.x509.pem "$base/testkey.x509.pem"
+          openssl x509 -in /tmp/keys/testkey.x509.pem -noout -fingerprint -sha256
+
+      - name: Bisect the wrong header (device failure repro)
+        env:
+          PROBE_CERT: /tmp/keys/testkey.x509.pem
+        run: python3 android-app/tools/probe-header-bisect.py 2>&1 | tee /tmp/probe0.log || true
+
+      - name: Probe the paid/free price field
+        env:
+          PROBE_CERT: /tmp/keys/testkey.x509.pem
+        run: python3 android-app/tools/probe-price.py 2>&1 | tee /tmp/probe-price.log || true
+
+      - name: Probe backend contract
+        env:
+          PROBE_CERT: /tmp/keys/testkey.x509.pem
+        run: python3 android-app/tools/probe-api.py 2>&1 | tee /tmp/probe.log || true
+
+      - name: Probe the "resolve this server" endpoints
+        env:
+          PROBE_CERT: /tmp/keys/testkey.x509.pem
+        run: python3 android-app/tools/probe-decode.py 2>&1 | tee /tmp/probe-decode.log || true
+
+      - name: Follow the 405 signals (method matrix, resolve routes)
+        env:
+          PROBE_CERT: /tmp/keys/testkey.x509.pem
+        run: |
+          python3 android-app/tools/probe-resolve.py 2>&1 | tee /tmp/probe-resolve.log || true
+          echo "lines: $(wc -l < /tmp/probe-resolve.log)"
+          head -3 /tmp/probe-resolve.log
+
+      - name: Probe configs endpoint
+        env:
+          PROBE_CERT: /tmp/keys/testkey.x509.pem
+        run: python3 android-app/tools/probe-configs.py 2>&1 | tee /tmp/probe2.log || true
+
+      - name: Probe POST /api/protocols
+        env:
+          PROBE_CERT: /tmp/keys/testkey.x509.pem
+        run: python3 android-app/tools/probe-protocol-post.py 2>&1 | tee /tmp/probe3.log || true
+
+      - name: Install pycryptodome
+        run: python3 -m pip install --quiet pycryptodome
+
+      - name: Probe /api/v2/protocols schema
+        env:
+          PROBE_CERT: /tmp/keys/testkey.x509.pem
+        run: python3 android-app/tools/probe-v2.py 2>&1 | tee /tmp/probe5.log || true
+
+      - name: Probe v1/v2 key pairing
+        env:
+          PROBE_CERT: /tmp/keys/testkey.x509.pem
+        run: python3 android-app/tools/probe-v2b.py 2>&1 | tee /tmp/probe6.log || true
+
+      - name: Sweep client versions for a plaintext compatibility path
+        env:
+          PROBE_CERT: /tmp/keys/testkey.x509.pem
+        run: python3 android-app/tools/probe-version-sweep.py 2>&1 | tee /tmp/probe7.log || true
+
+      - name: Probe endpoints + payload determinism
+        env:
+          PROBE_CERT: /tmp/keys/testkey.x509.pem
+        run: python3 android-app/tools/probe-fuzz.py 2>&1 | tee /tmp/probe4.log || true

@@ -1,0 +1,117 @@
+package co.asiven.vixentvpn.trial.data
+
+import android.content.Context
+import android.provider.Settings
+
+/**
+ * Plain SharedPreferences store — intentional replacement for the original MMKV layer.
+ * Key names follow the original app so the semantics stay recognisable:
+ * token, firebase_token, deviceId, apiUrl, testUrl, pref_mode.
+ */
+class Prefs(context: Context) {
+
+    private val sp = context.getSharedPreferences("mvpn_trial", Context.MODE_PRIVATE)
+    private val androidId: String by lazy {
+        runCatching {
+            Settings.Secure.getString(context.contentResolver, Settings.Secure.ANDROID_ID)
+        }.getOrNull().orEmpty().ifBlank { "unknown-device" }
+    }
+
+    /**
+     * Device token. Sanitised on read: older builds stored the *error body* here
+     * (`Internal server error.`), and sending that as the `token` header poisons every request.
+     */
+    var token: String
+        get() {
+            val stored = sp.getString(KEY_TOKEN, "").orEmpty().trim()
+            val valid = stored.length in 8..512 && stored.none { it.isWhitespace() } && !stored.endsWith(".")
+            return if (valid) stored else ""
+        }
+        set(value) = sp.edit().putString(KEY_TOKEN, value.trim()).apply()
+
+    /** FCM registration token (`firebase_token` in the original MMKV store). */
+    var firebaseToken: String
+        get() = sp.getString(KEY_FIREBASE, "").orEmpty()
+        set(value) = sp.edit().putString(KEY_FIREBASE, value).apply()
+
+    var apiUrl: String
+        get() = sp.getString(KEY_API_URL, "").orEmpty()
+        set(value) = sp.edit().putString(KEY_API_URL, value).apply()
+
+    var testUrl: String
+        get() = sp.getString(KEY_TEST_URL, "").orEmpty()
+        set(value) = sp.edit().putString(KEY_TEST_URL, value).apply()
+
+    /** `pref_mode` in the original APK: VPN (default) or PROXY. */
+    var mode: String
+        get() = sp.getString(KEY_MODE, MODE_VPN).orEmpty()
+        set(value) = sp.edit().putString(KEY_MODE, value).apply()
+
+    /** `admobSeen` in the original store — sent as the `seen` header (the value the baseline uses). */
+    var admobSeen: Int
+        get() = sp.getInt(KEY_ADMOB_SEEN, 0)
+        set(value) = sp.edit().putInt(KEY_ADMOB_SEEN, value).apply()
+
+    /** Endpoint that produced the cached list (`/api/protocols` or `/api/v2/protocols`). */
+    var protocolsSource: String
+        get() = sp.getString(KEY_PROTOCOLS_SOURCE, "").orEmpty()
+        set(value) = sp.edit().putString(KEY_PROTOCOLS_SOURCE, value).apply()
+
+    var protocolsCache: String
+        get() = sp.getString(KEY_PROTOCOLS, "").orEmpty()
+        set(value) = sp.edit().putString(KEY_PROTOCOLS, value).apply()
+
+    var settingsCache: String
+        get() = sp.getString(KEY_SETTINGS, "").orEmpty()
+        set(value) = sp.edit().putString(KEY_SETTINGS, value).apply()
+
+    var selectedKey: String
+        get() = sp.getString(KEY_SELECTED, "").orEmpty()
+        set(value) = sp.edit().putString(KEY_SELECTED, value).apply()
+
+    /** Sort key of the server list (`ORIGINAL`, `NAME`, `PING`, `PRICE`, `ID`). */
+    var sortField: String
+        get() = sp.getString(KEY_SORT_FIELD, "ORIGINAL").orEmpty()
+        set(value) = sp.edit().putString(KEY_SORT_FIELD, value).apply()
+
+    /** Sort direction of the server list: `true` = ascending. */
+    var sortAscending: Boolean
+        get() = sp.getBoolean(KEY_SORT_ASC, true)
+        set(value) = sp.edit().putBoolean(KEY_SORT_ASC, value).apply()
+
+    /**
+     * Live tunnel state. The VPN service owns the truth and mirrors it here; a freshly created
+     * activity (for instance one opened by a `vless://` link while a tunnel is up) reads it on
+     * start, otherwise it would offer «اتصال» for a server that is already connected.
+     */
+    var tunnelRunning: Boolean
+        get() = sp.getBoolean(KEY_TUNNEL_RUNNING, false)
+        set(value) = sp.edit().putBoolean(KEY_TUNNEL_RUNNING, value).apply()
+
+    /** Key of the server the tunnel is running on — empty when disconnected. */
+    var connectedKey: String
+        get() = sp.getString(KEY_CONNECTED_KEY, "").orEmpty()
+        set(value) = sp.edit().putString(KEY_CONNECTED_KEY, value).apply()
+
+    /** Stable device identifier: the original client uses `Settings.Secure.ANDROID_ID`. */
+    val deviceId: String get() = androidId
+
+    companion object {
+        const val MODE_VPN = "VPN"
+        const val MODE_PROXY = "PROXY"
+        private const val KEY_TOKEN = "token"
+        private const val KEY_FIREBASE = "firebase_token"
+        private const val KEY_API_URL = "apiUrl"
+        private const val KEY_TEST_URL = "testUrl"
+        private const val KEY_MODE = "pref_mode"
+        private const val KEY_PROTOCOLS = "protocolsCache"
+        private const val KEY_PROTOCOLS_SOURCE = "protocolsSource"
+        private const val KEY_ADMOB_SEEN = "admobSeen"
+        private const val KEY_SETTINGS = "settingCache"
+        private const val KEY_SELECTED = "selectedServer"
+        private const val KEY_TUNNEL_RUNNING = "tunnelRunning"
+        private const val KEY_CONNECTED_KEY = "connectedServer"
+        private const val KEY_SORT_FIELD = "sortField"
+        private const val KEY_SORT_ASC = "sortAscending"
+    }
+}

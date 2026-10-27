@@ -1,0 +1,25 @@
+examples/output/
+examples/demo.db
+examples/demo.db-wal
+examples/demo.db-shm
+node_modules/
+*.log
+google_drive/
+
+# --- MVPN Trial (android-app) ---
+android-app/.gradle/
+android-app/build/
+android-app/app/build/
+android-app/local.properties
+android-app/app/libs/*.aar
+android-app/app/src/main/jniLibs/
+android-app/signing/
+android-app/.idea/
+*.iml
+*.keystore
+*.jks
+*.p12
+
+# Python bytecode
+__pycache__/
+*.pyc

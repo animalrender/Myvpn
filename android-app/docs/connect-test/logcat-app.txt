@@ -1,0 +1,62 @@
+--------- beginning of main
+10-26 05:47:30.852  3219  3219 I MvpnTrial: MVPN Trial 3.2.0-trial (co.asiven.vixentvpn) راه‌اندازی شد
+10-26 05:47:31.037  3219  3219 I MvpnTrial: هستهٔ Xray آماده شد: Lib v40, Xray-core v26.10.21
+10-26 05:47:31.429  3219  3219 D MvpnTrial: hero(no row): running=false connected=- pressed=اتصال
+10-26 05:47:31.455  3219  3219 D MvpnTrial: hero(no row): running=false connected=- pressed=اتصال
+10-26 05:47:32.549  3219  3366 D MvpnTrial: GET https://managev1.xyz/api/token?deviceId=fdce6b2cbad0c3a1 → 200 (66 بایت)
+10-26 05:47:33.011  3219  3366 I MvpnTrial: توکن سمت سرور غیرفعال است؛ بدون هدر token ادامه می‌دهیم
+10-26 05:47:33.154  3219  3366 D MvpnTrial: GET https://managev1.xyz/api/setting → 200 (44 بایت)
+10-26 05:47:33.154  3219  3366 I MvpnTrial: setting خالی است (data=null) — پیش‌فرض‌های برنامه استفاده می‌شوند
+10-26 05:47:33.525  3219  3366 D MvpnTrial: GET https://managev1.xyz/api/protocols → 200 (60064 بایت)
+10-26 05:47:33.577  3219  3366 I MvpnTrial: 105 سرور از /api/protocols دریافت شد
+10-26 05:47:33.593  3219  3219 D MvpnTrial: hero: running=false connected=- shown=-653-465-504278487 pressed=اتصال
+10-26 05:47:40.470  3219  3219 W MvpnTrial: دریافت توکن Firebase ناموفق: java.util.concurrent.ExecutionException: java.io.IOException: AUTHENTICATION_FAILED
+10-26 05:47:42.965  3219  3219 D MvpnTrial: hero(no row): running=false connected=- pressed=اتصال
+10-26 05:47:43.015  3219  3219 D MvpnTrial: hero: running=false connected=- shown=-653-465-504278487 pressed=اتصال
+10-26 05:47:43.022  3219  3219 I MvpnTrial: 105 سرور از کش بارگذاری شد
+10-26 05:47:43.043  3219  3219 D MvpnTrial: hero: running=false connected=- shown=manual:f5988ee4 pressed=اتصال
+10-26 05:47:43.077  3219  3219 I MvpnTrial: کانفیگ دستی اضافه شد: vless (125 کاراکتر)
+10-26 05:47:43.078  3219  3219 D MvpnTrial: hero: running=false connected=- shown=manual:f5988ee4 pressed=اتصال
+10-26 05:47:53.205  3219  3219 D MvpnTrial: hero: running=false connected=- shown=manual:f5988ee4 pressed=اتصال
+10-26 05:47:53.206  3219  3219 I MvpnTrial: سرور انتخاب شد: CI-Local-A (price=null, type=vless)
+10-26 05:48:00.627  3219  3219 I MvpnTrial: VpnTunnelService ایجاد شد
+10-26 05:48:00.646  3219  3366 I MvpnTrial: پیکربندی هسته آماده شد (vless) برای CI-Local-A
+10-26 05:48:01.059  3219  3219 D MvpnTrial: hero: running=false connected=- shown=manual:f5988ee4 pressed=اتصال
+10-26 05:48:01.534  3219  3366 I MvpnTrial: رابط TUN ساخته شد: 123
+10-26 05:48:01.748  3219  3366 I MvpnTrial: CoreCallback: startup
+10-26 05:48:01.748  3219  3366 D MvpnTrial: CoreCallback: 0 Started successfully, running
+10-26 05:48:01.748  3219  3366 I MvpnTrial: هستهٔ Xray شروع شد (tunFd=123، running=true)
+10-26 05:48:01.749  3219  3366 I MvpnTrial: hev: شروع (fd=123، socks=10808، mtu=1500)
+10-26 05:48:01.760  3219  3366 I MvpnTrial: اتصال برقرار شد: متصل — CI-Local-A (VPN)
+10-26 05:48:01.763  3219  3219 D MvpnTrial: hero: running=true connected=manual:f5988ee4 shown=manual:f5988ee4 pressed=قطع اتصال
+10-26 05:48:22.064  3219  3366 D MvpnTrial: پینگ CI-Local-A: 3 ms
+10-26 05:48:22.079  3219  3219 D MvpnTrial: hero: running=true connected=manual:f5988ee4 shown=manual:f5988ee4 pressed=قطع اتصال
+10-26 05:48:22.083  3219  3219 I MvpnTrial: پینگ همهٔ 1 سرور انجام شد
+10-26 05:48:49.929  3219  3219 D MvpnTrial: hero(no row): running=true connected=manual:f5988ee4 pressed=اتصال به سرور انتخابی
+10-26 05:48:50.020  3219  3219 D MvpnTrial: hero(no row): running=true connected=manual:f5988ee4 pressed=اتصال به سرور انتخابی
+10-26 05:48:50.037  3219  3219 I MvpnTrial: 105 سرور از کش بارگذاری شد
+10-26 05:48:50.075  3219  3219 D MvpnTrial: hero: running=true connected=manual:f5988ee4 shown=manual:3f3d4bc7 pressed=اتصال به سرور انتخابی
+10-26 05:48:50.094  3219  3219 I MvpnTrial: کانفیگ دستی اضافه شد: vmess (252 کاراکتر)
+10-26 05:48:50.096  3219  3219 D MvpnTrial: hero: running=true connected=manual:f5988ee4 shown=manual:3f3d4bc7 pressed=اتصال به سرور انتخابی
+10-26 05:49:05.446  3219  3219 D MvpnTrial: hero: running=true connected=manual:f5988ee4 shown=manual:3f3d4bc7 pressed=اتصال به سرور انتخابی
+10-26 05:49:05.448  3219  3219 I MvpnTrial: سرور انتخاب شد: CI-Local-B (price=null, type=vmess)
+10-26 05:49:05.600  3219  3219 I MvpnTrial: hev: متوقف شد
+10-26 05:49:05.600  3219  3219 I MvpnTrial: CoreCallback: shutdown
+10-26 05:49:05.601  3219  3219 D MvpnTrial: CoreCallback: 0 Core stopped
+10-26 05:49:05.655  3219  3219 D MvpnTrial: hero: running=false connected=- shown=manual:3f3d4bc7 pressed=اتصال
+10-26 05:49:05.675  3219  3219 D MvpnTrial: hero: running=false connected=- shown=manual:3f3d4bc7 pressed=اتصال
+10-26 05:49:06.153  3219  3219 I MvpnTrial: VpnTunnelService ایجاد شد
+10-26 05:49:06.155  3219  3366 I MvpnTrial: پیکربندی هسته آماده شد (vmess) برای CI-Local-B
+10-26 05:49:06.160  3219  3219 D MvpnTrial: hero: running=false connected=- shown=manual:3f3d4bc7 pressed=اتصال
+10-26 05:49:06.227  3219  3366 I MvpnTrial: رابط TUN ساخته شد: 115
+10-26 05:49:06.273  3219  3366 I MvpnTrial: CoreCallback: startup
+10-26 05:49:06.273  3219  3366 D MvpnTrial: CoreCallback: 0 Started successfully, running
+10-26 05:49:06.273  3219  3366 I MvpnTrial: هستهٔ Xray شروع شد (tunFd=115، running=true)
+10-26 05:49:06.276  3219  3366 I MvpnTrial: hev: شروع (fd=115، socks=10808، mtu=1500)
+10-26 05:49:06.281  3219  3366 I MvpnTrial: اتصال برقرار شد: متصل — CI-Local-B (VPN)
+10-26 05:49:06.283  3219  3219 D MvpnTrial: hero: running=true connected=manual:3f3d4bc7 shown=manual:3f3d4bc7 pressed=قطع اتصال
+10-26 05:49:14.507  3219  3219 I MvpnTrial: hev: متوقف شد
+10-26 05:49:14.509  3219  3219 I MvpnTrial: CoreCallback: shutdown
+10-26 05:49:14.509  3219  3219 D MvpnTrial: CoreCallback: 0 Core stopped
+10-26 05:49:14.550  3219  3219 D MvpnTrial: hero: running=false connected=- shown=manual:3f3d4bc7 pressed=اتصال
+10-26 05:49:14.579  3219  3219 D MvpnTrial: hero: running=false connected=- shown=manual:3f3d4bc7 pressed=اتصال

@@ -1,0 +1,27 @@
+shot 00-start (261199 bytes)
+wait-text 'MVPN': found
+shot 01-home (261199 bytes)
+wait-text 'رایگان': found
+shot 02-list-loaded (261265 bytes)
+tap-text 'پینگ': ok
+shot 03-single-ping (233403 bytes)
+tap-text 'پینگ همه': ok
+shot 04-ping-all (233449 bytes)
+tap-desc 'جزئیات': ok
+shot 05-server-sheet (237944 bytes)
+tap-text-exact 'پولی': ok
+shot 06-filter-paid (199383 bytes)
+tap-text-exact 'همه': ok
+tap-class 'EditText': ok
+type 'Sweden'
+shot 07-search (228847 bytes)
+ensure-foreground (sleep): ok
+ensure-foreground (sleep): ok
+tap-desc 'منوی بیشتر': ok
+shot 08-menu (263319 bytes)
+shot 09-scrolled (248824 bytes)
+shot 10-scrolled-more (258167 bytes)
+crash-check: pid=yes, fatal lines=0
+
+FAILURES:
+none

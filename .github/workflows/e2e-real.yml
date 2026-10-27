@@ -1,0 +1,241 @@
+name: e2e-real
+
+# End-to-end verification against the **real** vendor backend, with zero user input.
+#
+# The app is installed on a clean emulator state (`pm clear`), it fetches the server list from
+# `/api/protocols` itself, decrypts every `Protocol.value` (AES-128-CBC with `key_<row id>`) and
+# dials the fastest row that answered «پینگ همه». The run then pushes real HTTPS through the TUN,
+# compares the exit IP with the pre-tunnel one, switches to a second row and disconnects.
+#
+# Results (report, screenshots, logcat) are committed under android-app/docs/e2e-real/.
+# Trigger: workflow_dispatch, or a push whose tip commit message contains [real].
+
+on:
+  workflow_dispatch:
+  push:
+    branches: [arena/b9372ae1-myvpn]
+
+permissions:
+  contents: write
+
+concurrency:
+  group: e2e-real-${{ github.ref }}
+  cancel-in-progress: true
+
+jobs:
+  real:
+    if: >-
+      github.event_name == 'workflow_dispatch' ||
+      contains(github.event.head_commit.message, '[real]')
+    runs-on: ubuntu-latest
+    timeout-minutes: 90
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Set up JDK 17
+        id: jdk
+        uses: actions/setup-java@v4
+        with:
+          distribution: temurin
+          java-version: "17"
+
+      - name: Locate Android SDK and NDK
+        id: sdk
+        run: |
+          set -euo pipefail
+          if [ -z "${ANDROID_HOME:-}" ]; then
+            for candidate in /usr/local/lib/android/sdk "$HOME/Android/Sdk" /opt/android-sdk; do
+              if [ -d "$candidate" ]; then export ANDROID_HOME="$candidate"; break; fi
+            done
+          fi
+          echo "ANDROID_HOME=$ANDROID_HOME" | tee -a "$GITHUB_ENV"
+          echo "ANDROID_SDK_ROOT=$ANDROID_HOME" | tee -a "$GITHUB_ENV"
+          echo "$ANDROID_HOME/platform-tools" | tee -a "$GITHUB_PATH"
+          echo "$ANDROID_HOME/emulator" | tee -a "$GITHUB_PATH"
+          NDK="${ANDROID_NDK_LATEST_HOME:-}"
+          if [ -z "$NDK" ] || [ ! -d "$NDK" ]; then
+            NDK="$(ls -d "$ANDROID_HOME"/ndk/* 2>/dev/null | sort -V | tail -1 || true)"
+          fi
+          if [ -z "$NDK" ] || [ ! -d "$NDK" ]; then
+            SDKMANAGER="$ANDROID_HOME/cmdline-tools/latest/bin/sdkmanager"
+            [ -x "$SDKMANAGER" ] || SDKMANAGER="$(ls "$ANDROID_HOME"/cmdline-tools/*/bin/sdkmanager 2>/dev/null | head -1)"
+            yes | "$SDKMANAGER" --licenses >/dev/null 2>&1 || true
+            "$SDKMANAGER" "ndk;27.2.12479018" >/dev/null
+            NDK="$ANDROID_HOME/ndk/27.2.12479018"
+          fi
+          echo "NDK_HOME=$NDK" | tee -a "$GITHUB_ENV"
+          echo "ANDROID_NDK_LATEST_HOME=$NDK" | tee -a "$GITHUB_ENV"
+          test -x "$NDK/ndk-build"
+
+      - name: Make helper scripts executable
+        id: chmod
+        run: chmod +x android-app/tools/*.sh
+
+      - name: Fetch libv2ray.aar (Xray core, all ABIs)
+        id: aar
+        run: bash android-app/tools/fetch-libv2ray.sh 2>&1 | tee /tmp/fetch-aar.log
+
+      - name: Build hev-socks5-tunnel JNI library (x86_64, for the emulator)
+        id: hev
+        run: HEV_ABI=x86_64 bash android-app/tools/build-hevtun.sh 2>&1 | tee /tmp/build-hev.log
+
+      - name: Prepare release signing key
+        id: key
+        run: bash android-app/tools/fetch-testkey.sh 2>&1 | tee /tmp/testkey.log
+
+      - name: Set up Gradle
+        id: gradlesetup
+        uses: gradle/actions/setup-gradle@v4
+        with:
+          gradle-version: "8.9"
+
+      - name: Assemble release APK for x86_64
+        id: apk
+        working-directory: android-app
+        run: |
+          set -o pipefail
+          gradle assembleRelease --no-daemon -PtargetAbi=x86_64 2>&1 | tee /tmp/gradle.log
+          ls -l app/build/outputs/apk/release/
+
+      - name: Install emulator, system image and its runtime libraries
+        id: emusetup
+        run: |
+          set -uo pipefail
+          sudo apt-get update -qq || true
+          sudo apt-get install -y --no-install-recommends \
+            libpulse0 libnss3 libxcomposite1 libxcursor1 libxi6 libxtst6 libglu1-mesa \
+            libasound2t64 || sudo apt-get install -y --no-install-recommends \
+            libpulse0 libnss3 libxcomposite1 libxcursor1 libxi6 libxtst6 libglu1-mesa libasound2 || true
+          SDKMANAGER="$ANDROID_HOME/cmdline-tools/latest/bin/sdkmanager"
+          [ -x "$SDKMANAGER" ] || SDKMANAGER="$(ls "$ANDROID_HOME"/cmdline-tools/*/bin/sdkmanager 2>/dev/null | head -1)"
+          AVDMANAGER="$(dirname "$SDKMANAGER")/avdmanager"
+          yes | "$SDKMANAGER" --licenses > /dev/null 2>&1 || true
+          "$SDKMANAGER" --install "platform-tools" "emulator" "system-images;android-34;google_apis;x86_64" 2>&1 | tail -8
+          export ANDROID_AVD_HOME="$HOME/.android/avd"
+          mkdir -p "$ANDROID_AVD_HOME"
+          echo "ANDROID_AVD_HOME=$ANDROID_AVD_HOME" >> "$GITHUB_ENV"
+          echo no | "$AVDMANAGER" create avd -n mvpn -k "system-images;android-34;google_apis;x86_64" -d pixel_6 --force 2>&1 | tail -3
+          CFG="$ANDROID_AVD_HOME/mvpn.avd/config.ini"
+          if [ -f "$CFG" ]; then
+            sed -i '/hw.lcd.width/d;/hw.lcd.height/d;/hw.lcd.density/d;/skin.name/d;/skin.path/d' "$CFG"
+            printf 'hw.lcd.width=1080\nhw.lcd.height=2280\nhw.lcd.density=440\n' >> "$CFG"
+          fi
+          sudo chmod 666 /dev/kvm || true
+
+      - name: Boot the emulator, let the app fetch and dial on its own
+        id: drive
+        run: |
+          set -uo pipefail
+          OUT=android-app/docs/e2e-real
+          mkdir -p "$OUT"
+          {
+            echo "# e2e-real — run ${{ github.run_number }}"
+            echo ""
+            echo "- branch: ${{ github.ref_name }}"
+            echo "- sha: ${{ github.sha }}"
+            echo "- started: $(date -u +%FT%TZ)"
+            echo "- kvm: $(ls -l /dev/kvm 2>&1 | tr -d '\n')"
+          } > "$OUT/STATUS.md"
+          export ANDROID_SDK_ROOT="$ANDROID_HOME"
+          export ANDROID_AVD_HOME="${ANDROID_AVD_HOME:-$HOME/.android/avd}"
+          nohup "$ANDROID_HOME/emulator/emulator" -avd mvpn \
+            -no-window -no-audio -no-boot-anim -no-snapshot -no-snapshot-save \
+            -gpu swiftshader_indirect -accel on -port 5554 \
+            -skin 1080x2280 > /tmp/emulator.log 2>&1 &
+          adb start-server >/dev/null 2>&1 || true
+          BOOTED=0
+          for _ in $(seq 1 200); do
+            if [ "$(adb shell getprop sys.boot_completed 2>/dev/null | tr -d '\r')" = "1" ]; then
+              BOOTED=1; break
+            fi
+            sleep 5
+          done
+          echo "- booted: $BOOTED" >> "$OUT/STATUS.md"
+          if [ "$BOOTED" != "1" ]; then
+            echo "::error title=e2e-real::the emulator did not boot"; tail -30 /tmp/emulator.log; exit 1
+          fi
+          adb shell settings put system screen_off_timeout 2147483647 >/dev/null 2>&1 || true
+          for scale in window transition animator; do
+            adb shell settings put global ${scale}_animation_scale 0 >/dev/null 2>&1 || true
+            adb shell settings put global ${scale}_duration_scale 0 >/dev/null 2>&1 || true
+          done
+          APK="$(find android-app/app/build/outputs/apk/release -name '*.apk' | head -1)"
+          echo "- apk: $APK" >> "$OUT/STATUS.md"
+          timeout 240 adb install -r -t "$APK" >> "$OUT/STATUS.md" 2>&1 || true
+          timeout 30 adb shell pm grant co.asiven.vixentvpn.trial android.permission.POST_NOTIFICATIONS >/dev/null 2>&1 || true
+          EXIT=0
+          timeout 5400 python3 android-app/tools/connect-real.py "$OUT" \
+            "http://1.1.1.1/cdn-cgi/trace" || EXIT=$?
+          echo "" >> "$OUT/STATUS.md"
+          echo "- e2e exit: $EXIT" >> "$OUT/STATUS.md"
+          exit $EXIT
+
+      - name: Collect logs
+        if: always()
+        run: |
+          OUT=android-app/docs/e2e-real
+          mkdir -p "$OUT"
+          echo "- outcome jdk: ${{ steps.jdk.outcome }}" >> "$OUT/STATUS.md"
+          echo "- outcome sdk: ${{ steps.sdk.outcome }}" >> "$OUT/STATUS.md"
+          echo "- outcome chmod: ${{ steps.chmod.outcome }}" >> "$OUT/STATUS.md"
+          echo "- outcome aar: ${{ steps.aar.outcome }}" >> "$OUT/STATUS.md"
+          echo "- outcome hev: ${{ steps.hev.outcome }}" >> "$OUT/STATUS.md"
+          echo "- outcome key: ${{ steps.key.outcome }}" >> "$OUT/STATUS.md"
+          echo "- outcome gradlesetup: ${{ steps.gradlesetup.outcome }}" >> "$OUT/STATUS.md"
+          echo "- outcome apk: ${{ steps.apk.outcome }}" >> "$OUT/STATUS.md"
+          echo "- outcome emusetup: ${{ steps.emusetup.outcome }}" >> "$OUT/STATUS.md"
+          echo "- outcome drive: ${{ steps.drive.outcome }}" >> "$OUT/STATUS.md"
+          timeout 60 adb logcat -d -s MvpnTrial:V AndroidRuntime:E > "$OUT/logcat-app.txt" 2>/dev/null || true
+          timeout 90 adb logcat -b all -d > /tmp/logcat-all.txt 2>/dev/null || true
+          tail -c 200000 /tmp/logcat-all.txt > "$OUT/logcat-all.txt" 2>/dev/null || true
+          cp /tmp/emulator.log "$OUT/emulator.txt" 2>/dev/null || true
+          # A compile error must be readable from the annotation, not just from the runner log.
+          if [ -f /tmp/gradle.log ]; then
+            {
+              echo
+              echo "## gradle"
+              echo '```'
+              grep -E '^e: file:' /tmp/gradle.log | head -8
+              grep -E '^(> Task .*FAILED|FAILURE|\* What went wrong|Caused by)' /tmp/gradle.log | head -10
+              echo '```'
+            } >> "$OUT/STATUS.md"
+          fi
+          # The report is also appended to STATUS.md so it survives a concurrent-push race.
+          if [ -f "$OUT/CONNECT-REAL.md" ]; then
+            { echo; echo "---"; echo; cat "$OUT/CONNECT-REAL.md"; } >> "$OUT/STATUS.md"
+          fi
+
+      - name: Commit the result
+        if: always()
+        run: |
+          set -euo pipefail
+          git config user.name "arena-agent"
+          git config user.email "297053741+arena-agent@users.noreply.github.com"
+          git add android-app/docs/e2e-real
+          if git diff --cached --quiet; then echo "no changes"; else
+            git commit -m "test(real): zero-input backend verification from run ${{ github.run_number }} [skip ci]"
+          for attempt in 1 2 3 4 5; do
+            if git pull --rebase --autostash --quiet origin "${{ github.ref_name }}" && git push --quiet; then
+              echo "pushed on attempt $attempt"
+              break
+            fi
+            echo "push attempt $attempt failed; retrying"
+            git rebase --abort 2>/dev/null || true
+            sleep 5
+          done
+          fi
+
+      - name: Report the result
+        if: always()
+        run: |
+          python3 - <<'PY'
+          import pathlib, urllib.parse
+          body = ""
+          for name in ("CONNECT-REAL.md", "STATUS.md"):
+              path = pathlib.Path("android-app/docs/e2e-real") / name
+              if path.exists():
+                  body += path.read_text(errors="replace") + "\n"
+          level = "error" if "${{ job.status }}" != "success" else "notice"
+          print("::%s title=e2e-real::%s" % (level, urllib.parse.quote(body[-4000:], safe="")))
+          PY

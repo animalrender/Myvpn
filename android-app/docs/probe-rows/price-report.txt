@@ -1,0 +1,51 @@
+# گزارش قیمت سرورها (پولی/رایگان) — پاسخ زندهٔ بک‌اند
+
+این فایل خروجی خودکار `android-app/tools/probe-price.py` در ورک‌فلوی `probe-api` است
+(اجرای 40462379415، کامیت `32c5731`). هر ردیف با هدرهای واقعی اپ (`app_name`، `version_code`،
+`sign`، `sha_hexadecimal`) گرفته شده است.
+
+```
+# probe-price — does the backend ever return `price > 0`?
+
+### baseline v1
+`GET /api/protocols` → 200, rows=105, price distribution={'0': 105}, keys=['id', 'name', 'price', 'serverId', 'usage', 'value']
+- top-level keys: ['data', 'status', 'statusCode']
+### baseline v2
+`GET /api/v2/protocols` → 200, rows=105, price distribution={'0': 105}, keys=['configKey', 'endpointKey', 'id', 'name', 'price', 'routeKey', 'serverId', 'telemetryIdentityVersion', 'usage', 'value']
+- top-level keys: ['data', 'status', 'statusCode']
+### panel app_name (co.vpn.plus)
+`GET /api/protocols` → 200, rows=105, price distribution={'0': 105}, keys=['id', 'name', 'price', 'serverId', 'usage', 'value']
+- top-level keys: ['data', 'status', 'statusCode']
+### old version_code 1004210
+`GET /api/protocols` → 200, rows=105, price distribution={'0': 105}, keys=['id', 'name', 'price', 'serverId', 'usage', 'value']
+- top-level keys: ['data', 'status', 'statusCode']
+### new version_code 1009999
+`GET /api/protocols` → 200, rows=105, price distribution={'0': 105}, keys=['id', 'name', 'price', 'serverId', 'usage', 'value']
+- top-level keys: ['data', 'status', 'statusCode']
+### query ?type=paid
+`GET /api/protocols?type=paid` → 200, rows=105, price distribution={'0': 105}, keys=['id', 'name', 'price', 'serverId', 'usage', 'value']
+- top-level keys: ['data', 'status', 'statusCode']
+### query ?paid=1
+`GET /api/protocols?paid=1` → 200, rows=105, price distribution={'0': 105}, keys=['id', 'name', 'price', 'serverId', 'usage', 'value']
+- top-level keys: ['data', 'status', 'statusCode']
+### query ?free=0
+`GET /api/protocols?free=0` → 200, rows=105, price distribution={'0': 105}, keys=['id', 'name', 'price', 'serverId', 'usage', 'value']
+- top-level keys: ['data', 'status', 'statusCode']
+### query ?price=1
+`GET /api/protocols?price=1` → 200, rows=105, price distribution={'0': 105}, keys=['id', 'name', 'price', 'serverId', 'usage', 'value']
+- top-level keys: ['data', 'status', 'statusCode']
+### query ?page=1&limit=1000
+`GET /api/protocols?page=1&limit=1000` → 200, rows=105, price distribution={'0': 105}, keys=['id', 'name', 'price', 'serverId', 'usage', 'value']
+- top-level keys: ['data', 'status', 'statusCode']
+### POST body {"page": 1}
+`POST /api/protocols` → 200, rows=0, body=`{"statusCode":0,"status":false,"data":"the protocol id is incorrect!"}`
+### POST body {"type": "paid"}
+`POST /api/protocols` → 200, rows=0, body=`{"statusCode":0,"status":false,"data":"the protocol id is incorrect!"}`
+### POST body {"price": 1}
+`POST /api/protocols` → 200, rows=0, body=`{"statusCode":0,"status":false,"data":"the protocol id is incorrect!"}`
+### POST body {}
+`POST /api/protocols` → 200, rows=0, body=`{"statusCode":0,"status":false,"data":"the protocol id is incorrect!"}`
+### /api/setting → 200, body=`{"statusCode":200,"status":true,"data":null}`
+
+## نتیجه: 105 ردیف، توزیع قیمت {'0': 105}، پولی: 0
+```

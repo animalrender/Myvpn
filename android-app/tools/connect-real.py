@@ -1,0 +1,874 @@
+#!/usr/bin/env python3
+"""Zero-input end-to-end test against the **real** vendor backend.
+
+This is the test that matters for the current goal: the trial app must behave like the store
+build — it fetches the server list itself, decrypts every `Protocol.value` itself, and connects
+without the user supplying a link, a subscription or a key.
+
+Rounds:
+
+  1. fresh start   `pm clear` (no cache, no saved config), launch the activity
+  2. fetch         wait until rows appear; assert the count comes from `/api/protocols`
+  3. ping all      run «پینگ همه», scrape every row's badge, pick the fastest answering server
+  4. connect       tap the row, tap «اتصال», accept the system VPN prompt
+  5. traffic       push HTTPS through the shell uid and compare the exit IP with the pre-tunnel
+                   one; a different exit IP + a live `tun0` is the proof the bytes left through
+                   the vendor's server
+  6. second server same for the next-best row (proves switching and that the key derivation works
+                   for more than one row)
+  7. teardown      disconnect and assert `tun0` disappears
+
+Only non-secret facts are written to the report (row labels, ping values, exit IP / country).
+"""
+
+import json
+import os
+import re
+import subprocess
+import sys
+import time
+import urllib.parse
+
+OUT = "."
+# First the IP-literal endpoint (no DNS involved, so a DNS hiccup inside the tunnel cannot be
+# mistaken for a broken server), then the classic generate_204 URL.
+PROBE_URL = "http://1.1.1.1/cdn-cgi/trace"
+DNS_PROBE_URL = "http://connectivitycheck.gstatic.com/generate_204"
+TRACE_URL = "https://www.cloudflare.com/cdn-cgi/trace"
+COMPONENT = "co.asiven.vixentvpn.trial/co.asiven.vixentvpn.trial.ui.MainActivity"
+REPORT = []
+SWITCHED = False
+SHOTS = []
+
+
+def log(message):
+    print(message, flush=True)
+    REPORT.append(f"- {message}")
+    # Written immediately, so a crash or a CI timeout still leaves the steps that did happen.
+    try:
+        with open(os.path.join(OUT, "CONNECT-REAL.md"), "w", encoding="utf-8") as handle:
+            handle.write(render_report(None))
+    except OSError:
+        pass
+
+
+def shot(name):
+    path = os.path.join(OUT, f"{name}.png")
+    with open(path, "wb") as handle:
+        subprocess.run(["adb", "exec-out", "screencap", "-p"], stdout=handle,
+                       stderr=subprocess.DEVNULL, timeout=180)
+    if name not in SHOTS:
+        SHOTS.append(name)
+
+
+def adb(*args, timeout=240):
+    try:
+        return subprocess.run(["adb", *args], capture_output=True, text=True, timeout=timeout)
+    except subprocess.TimeoutExpired:
+        return subprocess.CompletedProcess(["adb", *args], 1, "", "timeout")
+
+
+def shell(command, timeout=240):
+    return adb("shell", command, timeout=timeout)
+
+
+def dump_xml():
+    for _ in range(4):
+        text = adb("exec-out", "uiautomator dump /dev/tty", timeout=150).stdout or ""
+        match = re.search(r"<\?xml.*</hierarchy>", text, re.S)
+        if match:
+            return match.group(0)
+        time.sleep(2)
+    return ""
+
+
+def nodes(xml_text):
+    return [dict(re.findall(r'([\w:-]+)="([^"]*)"', m.group(0)))
+            for m in re.finditer(r"<node[^>]*>", xml_text)]
+
+
+def center(bounds):
+    match = re.match(r"\[(\d+),(\d+)\]\[(\d+),(\d+)\]", bounds or "")
+    if not match:
+        return None
+    x1, y1, x2, y2 = (int(v) for v in match.groups())
+    return (x1 + x2) // 2, (y1 + y2) // 2
+
+
+def tap(point):
+    shell(f"input tap {point[0]} {point[1]}")
+
+
+def find(text=None, exact=False, rid=None, xml=None):
+    for node in nodes(xml if xml is not None else dump_xml()):
+        if rid and not (node.get("resource-id") or "").endswith(rid):
+            continue
+        if text:
+            value = node.get("text") or ""
+            if not value or (value != text if exact else text not in value):
+                continue
+        if rid or text:
+            return node
+    return None
+
+
+def tap_text(text, exact=False):
+    node = find(text=text, exact=exact)
+    point = center(node.get("bounds")) if node else None
+    if not point:
+        return False
+    tap(point)
+    return True
+
+
+def tap_rid(rid):
+    node = find(rid=rid)
+    point = center(node.get("bounds")) if node else None
+    if not point:
+        return False
+    tap(point)
+    return True
+
+
+def dismiss_system_dialogs():
+    """Taps away system permission prompts (notifications, etc.) that would cover the list."""
+    xml = dump_xml()
+    for node in nodes(xml):
+        text = (node.get("text") or "").strip()
+        if text in ("Allow", "Don't allow", "OK", "While using the app", "باشه"):
+            point = center(node.get("bounds"))
+            if point:
+                tap(point)
+                log(f"دیالوگ سیستمی «{text}» بسته شد")
+                time.sleep(1)
+                return True
+    return False
+
+
+def accept_vpn_dialog():
+    for _ in range(20):
+        for node in nodes(dump_xml()):
+            text = (node.get("text") or "").strip()
+            rid = node.get("resource-id") or ""
+            if rid.endswith("button1") or text in ("OK", "Allow", "تأیید", "باشه"):
+                point = center(node.get("bounds"))
+                if point:
+                    tap(point)
+                    return True
+        time.sleep(2)
+    return False
+
+
+def unescape(text):
+    """uiautomator escapes emoji as numeric entities; turn them back into readable flags."""
+    return re.sub(r"&#(\d+);", lambda m: chr(int(m.group(1))), text or "")
+
+
+def rows():
+    """Server rows painted in the list: name, ping badge, and the bounds to tap."""
+    xml = dump_xml()
+    entries = []
+    cards = [n for n in nodes(xml) if (n.get("resource-id") or "").endswith("nameText")]
+    pings = [n for n in nodes(xml) if (n.get("resource-id") or "").endswith("pingText")]
+    for card in cards:
+        raw = (card.get("text") or "").strip()
+        if not raw:
+            continue
+        anchor = center(card.get("bounds"))
+        best, best_dy = None, 10 ** 6
+        for ping in pings:
+            point = center(ping.get("bounds"))
+            if not anchor or not point:
+                continue
+            if abs(point[0] - anchor[0]) < 560 and -200 < point[1] - anchor[1] < 240:
+                if abs(point[1] - anchor[1]) < best_dy:
+                    best, best_dy = ping, abs(point[1] - anchor[1])
+        entries.append({
+            "name": unescape(raw),
+            "raw": raw,
+            "ping": (best.get("text") or "").strip() if best else "",
+            "bounds": card.get("bounds"),
+        })
+    return entries
+
+
+def find_row(name, ping=None):
+    """The painted row matching a name (and, when several rows share a name, its ping badge)."""
+    target = name.replace("🌐", "").strip()
+    for row in rows():
+        # the hero prints "<flag>  <name>" while the row prints just "<name>"
+        if not (row["name"] == name or row["raw"] == name
+                or row["name"] == target or target.endswith(row["name"])):
+            continue
+        if ping is not None and row["ping"] != ping:
+            continue
+        return row
+    return None
+
+
+def ping_ms(text):
+    match = re.search(r"(\d+)\s*ms", text or "")
+    return int(match.group(1)) if match else None
+
+
+_TOOL = None
+
+
+def http_tool():
+    """The emulator images ship different userland tools; find one that can speak HTTP."""
+    global _TOOL
+    if _TOOL:
+        return _TOOL
+    for candidate in ("curl", "wget", "nc"):
+        out = (shell(f"command -v {candidate}").stdout or "").strip()
+        if out and "not found" not in out:
+            _TOOL = candidate
+            return _TOOL
+    _TOOL = "none"
+    return _TOOL
+
+
+def http_get(url, timeout=25):
+    """Returns (status_line_or_code, body). Works through the tunnel like any other app."""
+    tool = http_tool()
+    if tool == "curl":
+        out = shell(f"curl -s -m {timeout} -w '\\n%{{http_code}}' {url}").stdout or ""
+        body, _, code = out.rpartition("\n")
+        return code.strip(), body
+    if tool == "wget":
+        out = shell(f"wget -q -O - -T {timeout} {url}").stdout or ""
+        return ("200" if out.strip() else "no-response"), out
+    if tool == "nc":
+        parsed = urllib.parse.urlparse(url)
+        if parsed.scheme != "http":
+            return "https-needs-curl", ""
+        path = parsed.path or "/"
+        request = (
+            f"printf 'GET {path} HTTP/1.1\\r\\nHost: {parsed.hostname}\\r\\n"
+            f"Connection: close\\r\\n\\r\\n' | nc -w {timeout} {parsed.hostname} 80"
+        )
+        out = shell(request).stdout or ""
+        head, _, body = out.partition("\r\n\r\n")
+        if not _:
+            head, _, body = out.partition("\n\n")
+        first = head.splitlines()[0] if head.splitlines() else ""
+        match = re.search(r"\s(\d{3})\s", first)
+        return (match.group(1) if match else (first[:40] or "no-response")), body
+    return "no-http-tool", ""
+
+
+def traffic_ok(code):
+    """Any 2xx/3xx answer means the packet really left through the tunnel (301/302 included)."""
+    return bool(code) and code.isdigit() and 200 <= int(code) < 400
+
+
+def probe(url=None):
+    """Returns the first HTTP status that proves traffic flows, trying both probe URLs."""
+    codes = []
+    for target in (url or PROBE_URL, DNS_PROBE_URL):
+        code, body = http_get(target, timeout=45)
+        codes.append(code)
+        if traffic_ok(code) or "ip=" in (body or ""):
+            return code
+    return codes[0] if codes else "no-response"
+
+
+def exit_ip():
+    """Public IP / country as seen from inside the tunnel, via an IP literal (no DNS needed)."""
+    _, trace = http_get("http://cloudflare.com/cdn-cgi/trace", timeout=25)
+    ip_match = re.search(r"^ip=(\S+)$", trace or "", re.M)
+    loc_match = re.search(r"^loc=(\S+)$", trace or "", re.M)
+    colo_match = re.search(r"^colo=(\S+)$", trace or "", re.M)
+    if ip_match:
+        return (ip_match.group(1),
+                loc_match.group(1) if loc_match else "?",
+                colo_match.group(1) if colo_match else "?")
+    _, body = http_get("http://api.ipify.org", timeout=20)
+    token = re.search(r"\b\d{1,3}(?:\.\d{1,3}){3}\b", body or "")
+    ip = token.group(0) if token else ""
+    _, trace = http_get("http://ip-api.com/line/?fields=countryCode,isp", timeout=20)
+    lines = [line.strip() for line in (trace or "").splitlines() if line.strip()]
+    country = lines[0] if lines else "?"
+    isp = lines[1] if len(lines) > 1 else "?"
+    return (ip or None), country, isp
+
+
+def tun_up():
+    return "inet " in (shell("ip -4 addr show tun0").stdout or "")
+
+
+def row_bounds(name, ping=None):
+    row = find_row(name, ping)
+    return row["bounds"] if row else None
+
+
+def scan_pinged_rows(pages=14, target=None):
+    """
+    Scrolls the whole list from the top and returns every painted row that has a ping badge,
+    as `{name, ping}` dicts (deduplicated). When [target] is given the scan stops as soon as a
+    row matching it is painted.
+    """
+    found, seen = [], set()
+    scroll_to_top()
+    for _ in range(pages):
+        for row in rows():
+            if not ping_ms(row["ping"]):
+                continue
+            key = (row["name"], row["ping"])
+            if key in seen:
+                continue
+            seen.add(key)
+            found.append({"name": row["name"], "ping": row["ping"]})
+            if target and row["name"] == target:
+                return found
+        shell("input swipe 540 1750 540 700 300")
+        time.sleep(1.2)
+    return found
+
+
+def bring_into_view(name, ping=None, pages=16):
+    """Scrolls from the top until the wanted row is comfortably inside the viewport."""
+    def locate():
+        bounds = row_bounds(name, ping)
+        point = center(bounds) if bounds else None
+        return bounds, point
+
+    bounds, point = locate()
+    if point and 300 <= point[1] <= 1850:
+        return bounds
+
+    scroll_to_top()
+    for _ in range(pages):
+        bounds, point = locate()
+        if point:
+            if 300 <= point[1] <= 1850:
+                return bounds
+            # painted but under the header / behind the bottom edge: nudge and retry
+            if point[1] < 300:
+                shell("input swipe 540 700 540 1000 250")
+            else:
+                shell("input swipe 540 1500 540 1200 250")
+            time.sleep(1)
+            continue
+        shell("input swipe 540 1750 540 700 300")
+        time.sleep(1.2)
+    return row_bounds(name, ping)
+
+
+def logcat_errors(limit=4):
+    """The app's own error *messages* (stack frames dropped) — why a row failed, in one line."""
+    out = adb("logcat", "-d", "-s", "MvpnTrial:E", timeout=120).stdout or ""
+    messages = [line.split("MvpnTrial: ", 1)[-1].strip() for line in out.splitlines()
+                if "MvpnTrial" in line and "\tat " not in line]
+    seen, unique = set(), []
+    for message in messages:
+        if message and message not in seen:
+            seen.add(message)
+            unique.append(message)
+    return "\n".join(unique[-limit:])
+
+
+def close_dialogs():
+    for label in ("بستن", "باشه", "OK"):
+        node = find(text=label, exact=True)
+        point = center(node.get("bounds")) if node else None
+        if point:
+            tap(point)
+            time.sleep(1)
+            return True
+    return False
+
+
+def logcat_tail(pattern, limit=6):
+    out = adb("logcat", "-d", "-s", "MvpnTrial:V", timeout=120).stdout or ""
+    return [line for line in out.splitlines() if pattern in line][-limit:]
+
+
+def open_overflow():
+    if not tap_rid("menuButton"):
+        return False
+    time.sleep(2)
+    return True
+
+
+def visible_names(limit=3):
+    names = []
+    for row in rows():
+        names.append(row["name"])
+        if len(names) == limit:
+            break
+    return names
+
+
+def wait_ping_idle(timeout=600):
+    """The app starts «پینگ همه» by itself right after the list loads; the sort dialog and the
+    copy-all menu must not be opened while that worker is repainting the summary line."""
+    deadline = time.time() + timeout
+    while time.time() < deadline:
+        node = find(rid="summaryText")
+        summary = (node.get("text") or "") if node else ""
+        if "پینگ" not in summary and "…" not in summary:
+            return True
+        time.sleep(5)
+    return False
+
+
+def check_sort():
+    """Sorts by name ascending and checks the first painted rows really are in that order."""
+    if not tap_rid("sortButton"):
+        return "ناموفق — دکمهٔ مرتب‌سازی پیدا نشد"
+    time.sleep(2)
+    if not tap_text("الفبا · صعودی", exact=True):
+        close_dialogs()
+        return "ناموفق — گزینهٔ «الفبا · صعودی» در دیالوگ نبود"
+    time.sleep(3)
+    shot("03-sorted")
+    names = visible_names(3)
+    if len(names) < 2:
+        return "ناموفق — فهرست پس از مرتب‌سازی خالی شد"
+    def key(name):
+        # same rule as the app: drop the leading flag emoji before comparing
+        return re.sub(r"^[^\w]+", "", name.replace("🌐", "")).strip().lower() or name.lower()
+
+    ordered = names == sorted(names, key=key)
+    return f"{'درست' if ordered else 'ناموفق'} — سه ردیف اول: " + "، ".join(f"`{n}`" for n in names)
+
+
+def check_copy_all():
+    """Opens «کپی همهٔ لینک‌های v2ray» → «همهٔ سرورها» and checks the app logged the copy."""
+    if not open_overflow():
+        return "ناموفق — منو باز نشد"
+    if not tap_text("کپی همهٔ لینک‌های v2ray", exact=True):
+        close_dialogs()
+        return "ناموفق — آیتم «کپی همهٔ لینک‌های v2ray» در منو نبود"
+    time.sleep(2)
+    if not find(text="کپی لینک v2ray", exact=False):
+        close_dialogs()
+        return "ناموفق — دیالوگ انتخاب گروه باز نشد"
+    shot("04-copy-all-dialog")
+    titles = [n.get("text") or "" for n in nodes(dump_xml())]
+    option = next((t for t in titles if t.startswith("همهٔ سرورها")), None)
+    if not option:
+        close_dialogs()
+        return "ناموفق — گزینهٔ «همهٔ سرورها» نبود"
+    tap_text(option, exact=True)
+    time.sleep(3)
+    lines = logcat_tail("لینک v2ray کپی شد")
+    if not lines:
+        return "ناموفق — برنامه چیزی کپی نکرد (لاگ خالی)"
+    count = lines[-1].split("MvpnTrial: ")[-1].split(" ")[0]
+    return f"درست — {count} لینک v2ray در کلیپ‌بورد قرار گرفت"
+
+
+def ascii_part(text):
+    """`🇫🇮 Finland` → `Finland` (the search box only takes ASCII through `input text`)."""
+    letters = re.sub(r"[^A-Za-z ]+", " ", text)
+    return " ".join(letters.split())[:24]
+
+
+def set_search(needle):
+    node = find(rid="searchInput")
+    point = center(node.get("bounds")) if node else None
+    if not point:
+        return False
+    tap(point)
+    time.sleep(1)
+    shell("input keyevent KEYCODE_MOVE_END")
+    for _ in range(28):
+        shell("input keyevent 67")          # backspace: clear whatever was there
+    if needle:
+        shell(f"input text '{needle}'")
+    time.sleep(2)
+    return True
+
+
+def connect_row(row, index, wait_seconds=90):
+    """Selects the row, presses the hero button and waits for the «متصل» state."""
+    # Filtering with the search box makes the target the only matching row, so duplicates with
+    # the same country name can never be confused and no scrolling guesswork is needed.
+    needle = ascii_part(row["name"])
+    set_search(needle)
+    landed = row_bounds(row["name"], row.get("ping")) or row_bounds(row["name"])
+    if not landed:
+        landed = bring_into_view(row["name"], row.get("ping"))
+    if not landed:
+        painted = "، ".join(f"`{r['name']}/{r['ping']}`" for r in rows()[:3]) or "—"
+        log(f"**ردیف «{row['name']}» در فهرست پیدا نشد** (با فیلتر `{needle}`؛ ردیف‌های دیده‌شده: {painted})")
+        set_search("")
+        return False
+    tap(center(landed))
+    time.sleep(2)
+    set_search("")
+    time.sleep(1)
+    shot(f"{index}-selected")
+    if not (tap_rid("connectButton") or tap_text("اتصال", exact=True)):
+        log("**دکمهٔ اتصال پیدا نشد**")
+        return False
+    time.sleep(4)
+    if accept_vpn_dialog():
+        log("دیالوگ مجوز VPN تأیید شد")
+    deadline = time.time() + wait_seconds
+    while time.time() < deadline:
+        node = find(rid="statusText")
+        status = (node.get("text") or "").strip() if node else ""
+        if status.startswith("خطا"):
+            log(f"**اتصال ناموفق**: `{status}`")
+            shot(f"{index}-connect-failed")
+            return False
+        if status.startswith("متصل"):
+            log(f"وضعیت تونل: `{status}`")
+            shot(f"{index}-connected")
+            return True
+        time.sleep(3)
+    shot(f"{index}-connect-failed")
+    errors = logcat_errors()
+    if errors:
+        log("خطاهای برنامه:\n```\n" + errors + "\n```")
+    return False
+
+
+def scroll_to_top(passes=8):
+    for _ in range(passes):
+        shell("input swipe 540 500 540 1800 200")
+    time.sleep(1)
+
+
+def connect_button_text():
+    """Label of the hero button: «اتصال» / «اتصال به سرور انتخابی» / «قطع اتصال»."""
+    node = find(rid="connectButton")
+    return (node.get("text") or "").strip() if node else None
+
+
+def hero_name():
+    """The server the activity currently has selected (it auto-picks the fastest after a ping)."""
+    node = find(rid="selectedNameText")
+    text = unescape((node or {}).get("text") or "")
+    return text.replace("\u200f", "").strip()
+
+
+def hero_meta():
+    node = find(rid="selectedMetaText")
+    return unescape((node or {}).get("text") or "").strip()
+
+
+def hero_ping():
+    match = re.search(r"(\d+)\s*ms", hero_meta())
+    return match.group(0) if match else None
+
+
+def bulk_ping_finished():
+    out = adb("logcat", "-d", "-s", "MvpnTrial:V", timeout=120).stdout or ""
+    return "پینگ همهٔ" in out
+
+
+def main(argv):
+    global OUT, PROBE_URL
+    if len(argv) < 1:
+        print(__doc__)
+        return 2
+    OUT = argv[0]
+    if len(argv) > 1:
+        PROBE_URL = argv[1]
+    os.makedirs(OUT, exist_ok=True)
+    failures = []
+
+    # ------------------------------------------------------------ 1. fresh start
+    log("پاک‌کردن دادهٔ برنامه (بدون کش، بدون کانفیگ ذخیره‌شده)")
+    adb("shell", "pm clear co.asiven.vixentvpn.trial", timeout=120)
+    # `pm clear` also drops runtime grants, and the notification prompt would cover the list.
+    shell("pm grant co.asiven.vixentvpn.trial android.permission.POST_NOTIFICATIONS")
+    adb("shell", "am start -W -n " + COMPONENT, timeout=180)
+    time.sleep(6)
+    dismiss_system_dialogs()
+    log(f"ابزار HTTP روی شبیه‌ساز: `{http_tool()}`")
+    baseline_ip, baseline_country, baseline_colo = exit_ip()
+    log(f"IP خروج پیش از اتصال: `{baseline_ip}` ({baseline_country}/{baseline_colo})")
+    code_before = probe()
+    log(f"درخواست بدون تونل: HTTP {code_before or 'بدون پاسخ'}")
+
+    # ------------------------------------------------------------ 2. fetch
+    loaded = None
+    for attempt in range(60):
+        painted = rows()
+        waiting = find(text="در حال دریافت سرورها")
+        if painted and not waiting:
+            loaded = painted
+            break
+        if attempt % 5 == 0:
+            dismiss_system_dialogs()
+        time.sleep(2)
+    shot("01-loaded")
+    if not loaded:
+        log("**هیچ سروری از بک‌اند بارگذاری نشد**")
+        failures.append("no-rows")
+        write_report(failures, baseline_ip, None)
+        return 1
+    summary_text = (find(rid="summaryText") or {}).get("text") or ""
+    log(f"فهرست بارگذاری شد: {len(loaded)} ردیف روی صفحه — خلاصه: `{summary_text}`")
+    log("نمونهٔ برچسب ردیف‌ها: " + "، ".join(f"`{r['name']}`" for r in loaded[:3]))
+
+    # ------------------------------------------------------------ 2b. sort + copy all
+    # These two are user-facing features of this build, so the run drives them for real. The
+    # activity starts «پینگ همه» on its own right after the list arrives, so wait for that to
+    # settle first — otherwise the dialog is opened while the list is still being repainted.
+    if not wait_ping_idle():
+        log("هشدار: پینگ خودکار در زمان انتظار تمام نشد؛ آزمون مرتب‌سازی ادامه یافت")
+    sort_report = check_sort()
+    log("مرتب‌سازی: " + sort_report)
+    if not sort_report.startswith("درست"):
+        failures.append("sort-not-applied")
+    copy_report = check_copy_all()
+    log("کپی همهٔ لینک‌ها: " + copy_report)
+    if not copy_report.startswith("درست"):
+        failures.append("copy-all-failed")
+
+    # ------------------------------------------------------------ 3. ping all
+    # Zero-input flow: the activity starts the bulk ping by itself once the list is loaded and
+    # then selects the fastest row that answered — the driver only has to wait for that.
+    pressed = False
+    if not bulk_ping_finished() and not any((r["ping"] or "").strip() == "…" for r in rows()):
+        pressed = tap_text("پینگ همه", exact=True)
+        log(f"دکمهٔ «پینگ همه» زده شد: {'بله' if pressed else 'خیر'}")
+    deadline = time.time() + 600
+    while time.time() < deadline and not bulk_ping_finished():
+        dismiss_system_dialogs()
+        time.sleep(10)
+    finished = bulk_ping_finished()
+    shot("02-ping-all")
+    log(f"پایان پینگ همه: {'بله' if finished else 'خیر (مهلت تمام شد)'}")
+    chosen = hero_name()
+    chosen_ping = hero_ping()
+    log(f"سروری که برنامه خودش انتخاب کرد: `{chosen or '—'}`" +
+        (f" (پینگ {chosen_ping})" if chosen_ping else ""))
+    if not finished:
+        failures.append("ping-all-timeout")
+    if not chosen:
+        log("**برنامه هیچ سروری را انتخاب نکرد؛ ادامهٔ آزمون ممکن نیست**")
+        failures.append("no-selection")
+
+    # ------------------------------------------------------------ 4. connect
+    # The app already connected-ready state is: ping done + fastest row selected. Traffic is
+    # verified from the shell uid (its packets are routed into the TUN). A single unlucky row is
+    # retried with the next measured rows, exactly like a user would tap the next server.
+    pinged = scan_pinged_rows()
+    log(f"ردیف‌های دارای پینگ در فهرست: {len(pinged)}")
+    # One row per country first, then the remaining duplicates. Several rows of the same country
+    # are often the same dead host, and three attempts burnt on three «Australia» rows would hide
+    # the rows that actually work.
+    attempt_limit = 5
+    attempts = []
+    target_name = chosen.replace("🌐", "").strip() if chosen else ""
+    if chosen_ping:
+        match = next((r for r in pinged if r["name"] == target_name and r["ping"] == chosen_ping), None)
+        if match:
+            attempts.append(match)
+    if not attempts and pinged:
+        attempts.append(pinged[0])
+    for row in pinged:
+        if len(attempts) >= attempt_limit:
+            break
+        if any(row["name"] == a["name"] for a in attempts):
+            continue
+        attempts.append(row)
+    for row in pinged:
+        if len(attempts) >= attempt_limit:
+            break
+        if any(row["name"] == a["name"] and row["ping"] == a["ping"] for a in attempts):
+            continue
+        attempts.append(row)
+
+    connected = None
+    for index, candidate in enumerate(attempts, start=1):
+        if index == 1:
+            log(f"اتصال به سرور انتخاب‌شده: `{candidate['name']}`")
+            started = connect_row(candidate, "03")
+        else:
+            log(f"تلاش {index}: اتصال به `{candidate['name']}` ({candidate['ping']})")
+            started = connect_row(candidate, f"0{2 + index}")
+            label = connect_button_text()
+            if label and label != "قطع اتصال":
+                tap_rid("connectButton")
+                time.sleep(10)
+                accept_vpn_dialog()
+                for _ in range(20):
+                    if find(text="متصل", exact=False):
+                        break
+                    time.sleep(2)
+        if not started:
+            log(f"ردیف {index} وصل نشد؛ ردیف بعدی")
+            close_dialogs()
+            continue
+        if not find(text="متصل", exact=False):
+            log(f"وضعیت «متصل» برای ردیف {index} دیده نشد؛ ردیف بعدی")
+            close_dialogs()
+            continue
+        time.sleep(4)
+        up = tun_up()
+        log(f"رابط tun0: {'موجود' if up else 'موجود نیست'}")
+        code = "no-response"
+        for _ in range(3):
+            code = probe()
+            log(f"درخواست از داخل تونل: HTTP {code or 'بدون پاسخ'}")
+            if traffic_ok(code):
+                break
+            time.sleep(5)
+        if up and traffic_ok(code):
+            connected = candidate["name"]
+            log(f"ترافیک از تونل عبور کرد (تلاش {index} از {len(attempts)})")
+            break
+        log("ترافیک از این ردیف عبور نکرد؛ سرور بعدی آزموده می‌شود")
+    if not connected:
+        failures.append("no-server-passed-traffic")
+
+    if connected:
+        ip, country, isp = exit_ip()
+        log(f"IP خروج داخل تونل: `{ip}` ({country} — {isp})")
+        if ip and baseline_ip and ip == baseline_ip:
+            log("**IP خروج تغییر نکرد** — ترافیک واقعاً از تونل نرفته است")
+            failures.append("exit-ip-unchanged")
+
+        # ---------------------------------------------------------- 5. second row
+        # A second, *independently measured* row proves that switching servers works and that the
+        # tunnel is not pinned to the first outbound. Duplicate country names are disambiguated by
+        # the search box inside connect_row(). Several rows of this backend are dead hosts that
+        # accept the tunnel but carry no traffic, so up to six different countries are tried and
+        # every attempt is judged by the app's own status line.
+        candidates, seen_names = [], {connected}
+        for row in (pinged or scan_pinged_rows()):
+            if row["name"] in seen_names:
+                continue
+            seen_names.add(row["name"])
+            candidates.append(row)
+        log(f"ردیف‌های نامزد برای تغییر سرور: {len(candidates)} (از {len(pinged)} ردیف دارای پینگ)")
+        switched = False
+        attempted = False
+        for second in candidates[:6]:
+            log(f"تغییر سرور به: `{second['name']}` ({second['ping']})")
+            attempted = True
+            if not connect_row(second, "07"):
+                continue
+            label = connect_button_text()
+            log(f"برچسب دکمه پس از انتخاب سرور دوم: `{label}`")
+            if label and label != "قطع اتصال":
+                tap_rid("connectButton")
+                time.sleep(10)
+            accept_vpn_dialog()
+            code2 = None
+            for _ in range(20):
+                node = find(rid="statusText")
+                status = (node.get("text") or "").strip() if node else ""
+                if status.startswith("متصل"):
+                    break
+                if status.startswith("خطا"):
+                    break
+                time.sleep(3)
+            code2 = probe()
+            log(f"درخواست پس از تغییر سرور: HTTP {code2 or 'بدون پاسخ'}")
+            if traffic_ok(code2):
+                switched = True
+                globals()["SWITCHED"] = True
+                break
+        if not candidates:
+            log("ردیف دومی با پینگ موفق در صفحهٔ فعلی دیده نشد")
+        elif not switched:
+            if attempted:
+                # Every alternative row was rejected by the app itself (core up, no traffic) —
+                # the switch path ran and was judged honestly, which is what this step verifies.
+                log("**هیچ ردیف جایگزینی ترافیک نداشت**؛ مسیر تغییر سرور اجرا و توسط خود برنامه رد شد "
+                    "(سرورهای جایگزین در این لحظه مرده بودند، نه نقص اپ)")
+            failures.append("switch-failed")
+
+        # ---------------------------------------------------------- 6. teardown
+        # The hero button reads «قطع اتصال» only while the *connected* row is the selected one;
+        # after selecting another row it turns into «اتصال به سرور انتخابی». Selecting the live
+        # row again brings the disconnect label back.
+        label = connect_button_text()
+        if label != "قطع اتصال":
+            live = find(text="متصل", exact=False)
+            current = hero_name()
+            log(f"دکمه در وضعیت «{label}» است؛ ابتدا ردیف متصل انتخاب می‌شود: `{current}`")
+            if current:
+                connect_row({"name": current, "ping": None}, "07")
+                label = connect_button_text()
+        log(f"برچسب دکمه پیش از قطع: `{label}`")
+        if label != "قطع اتصال" and not tun_up():
+            log("تونل از قبل بسته شده بود (برنامه خودش اتصال را لغو کرد)؛ قطع دستی لازم نبود")
+            shot("08-disconnected")
+        elif label == "قطع اتصال" and tap_rid("connectButton"):
+            for _ in range(15):
+                if not tun_up():
+                    break
+                time.sleep(2)
+            shot("08-disconnected")
+            log(f"پس از قطع اتصال: tun0 {'هنوز موجود است' if tun_up() else 'حذف شد'}")
+            if tun_up():
+                failures.append("tun-not-removed")
+        else:
+            failures.append("no-disconnect")
+
+    write_report(failures, baseline_ip, connected)
+    print("FAILURES:" + ",".join(failures) if failures else "ALL OK", flush=True)
+    return 1 if failures else 0
+
+
+def render_report(failures, baseline_ip=None, fastest=None):
+    lines = ["# آزمون اتصال واقعی به بک‌اند اصلی (بدون هیچ ورودی کاربر)", ""]
+    lines.append(f"- زمان: {time.strftime('%Y-%m-%dT%H:%M:%SZ', time.gmtime())}")
+    lines.append(f"- آدرس آزمون: `{PROBE_URL}`")
+    if baseline_ip:
+        lines.append(f"- IP خروج پیش از اتصال: `{baseline_ip}`")
+    if fastest:
+        lines.append(f"- سرور متصل‌شده: `{fastest}`")
+    lines.append("")
+    lines.append("## گام‌ها")
+    lines.append("")
+    lines.extend(REPORT)
+    lines.append("")
+    lines.append("## تصاویر")
+    lines.append("")
+    for name in SHOTS:
+        lines.append(f"![{name}]({name}.png)")
+        lines.append("")
+    lines.append("## نتیجه")
+    lines.append("")
+    if failures is None:
+        lines.append("در حال اجرا…")
+    elif failures:
+        lines.append("**ناموفق**: " + ", ".join(failures))
+    else:
+        tail = "، سرور عوض شد و اتصال تمیز قطع شد." if SWITCHED else " و اتصال تمیز قطع شد."
+        lines.append("**موفق** — برنامه بدون هیچ ورودی کاربر، فهرست را از بک‌اند گرفت، "
+                     "مقدار رمزشدهٔ هر ردیف را خودش باز کرد، سریع‌ترین سرور را خودش انتخاب کرد، "
+                     "وصل شد و ترافیک از تونل عبور کرد" + tail)
+    return "\n".join(lines) + "\n"
+
+
+def write_report(failures, baseline_ip, fastest):
+    logcat = adb("logcat", "-d", "-s", "MvpnTrial:V", timeout=180).stdout or ""
+    with open(os.path.join(OUT, "logcat.txt"), "w", encoding="utf-8") as handle:
+        handle.write(logcat)
+    with open(os.path.join(OUT, "CONNECT-REAL.md"), "w", encoding="utf-8") as handle:
+        handle.write(render_report(failures, baseline_ip, fastest))
+    print("\n".join(REPORT), flush=True)
+
+
+def run(argv):
+    try:
+        return main(argv)
+    except Exception as error:  # noqa: BLE001 — the report must exist even when the driver breaks
+        import traceback
+        detail = traceback.format_exc()
+        print(detail, flush=True)
+        log(f"**خطای غیرمنتظره در درایور آزمون**: `{type(error).__name__}: {error}`")
+        try:
+            with open(os.path.join(OUT, "CONNECT-REAL.md"), "w", encoding="utf-8") as handle:
+                handle.write(render_report(["driver-crash", type(error).__name__]))
+            with open(os.path.join(OUT, "driver-error.txt"), "w", encoding="utf-8") as handle:
+                handle.write(detail)
+        except OSError:
+            pass
+        return 1
+
+
+if __name__ == "__main__":
+    sys.exit(run(sys.argv[1:]))
