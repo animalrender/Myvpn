@@ -1,244 +1,238 @@
 --------- beginning of main
-10-27 05:20:53.792  3001  3001 I MvpnTrial: MVPN Trial 3.2.0-trial (co.asiven.vixentvpn.trial) راه‌اندازی شد
-10-27 05:20:54.105  3001  3001 I MvpnTrial: هستهٔ Xray آماده شد: Lib v38, Xray-core v26.6.27
-10-27 05:20:54.416  3001  3001 D MvpnTrial: hero(no row): running=false connected=- pressed=اتصال
-10-27 05:20:54.438  3001  3001 D MvpnTrial: hero(no row): running=false connected=- pressed=اتصال
-10-27 05:20:55.291  3001  3205 D MvpnTrial: GET https://managev1.xyz/api/token?deviceId=0944d96a91b1abd4 → 200 (66 بایت)
-10-27 05:20:55.293  3001  3205 I MvpnTrial: توکن سمت سرور غیرفعال است؛ بدون هدر token ادامه می‌دهیم
-10-27 05:20:55.454  3001  3205 D MvpnTrial: GET https://managev1.xyz/api/setting → 200 (44 بایت)
-10-27 05:20:55.454  3001  3205 I MvpnTrial: setting خالی است (data=null) — پیش‌فرض‌های برنامه استفاده می‌شوند
-10-27 05:20:55.893  3001  3205 D MvpnTrial: GET https://managev1.xyz/api/protocols → 200 (65929 بایت)
-10-27 05:20:56.011  3001  3205 I MvpnTrial: 105 سرور از /api/protocols دریافت شد
-10-27 05:20:56.055  3001  3001 D MvpnTrial: hero: running=false connected=- shown=-134922-469--1094354695 pressed=اتصال
-10-27 05:20:56.739  3001  3361 D MvpnTrial: پینگ 🇨🇦 Canada: 55 ms
-10-27 05:20:56.790  3001  3207 D MvpnTrial: پینگ 🇺🇸 United States: 66 ms
-10-27 05:20:56.814  3001  3358 D MvpnTrial: پینگ 🇺🇸 United States: 74 ms
-10-27 05:20:57.024  3001  3304 D MvpnTrial: پینگ 🇫🇷 France: 201 ms
-10-27 05:20:57.028  3001  3205 D MvpnTrial: پینگ 🇫🇷 France: 238 ms
-10-27 05:20:57.029  3001  3360 D MvpnTrial: پینگ 🇩🇪 Germany: 237 ms
-10-27 05:20:57.041  3001  3359 D MvpnTrial: پینگ 🇫🇷 France: 251 ms
-10-27 05:20:57.097  3001  3361 D MvpnTrial: پینگ 🇨🇦 Canada: 69 ms
-10-27 05:20:57.188  3001  3207 D MvpnTrial: پینگ 🇺🇸 United States: 86 ms
-10-27 05:20:57.194  3001  3358 D MvpnTrial: پینگ 🇺🇸 United States: 91 ms
-10-27 05:20:57.308  3001  3304 D MvpnTrial: پینگ 🇺🇸 United States: 30 ms
-10-27 05:20:57.393  3001  3360 D MvpnTrial: پینگ 🇺🇸 United States: 57 ms
-10-27 05:20:57.472  3001  3207 D MvpnTrial: پینگ 🇺🇸 United States: 57 ms
-10-27 05:20:57.519  3001  3304 D MvpnTrial: پینگ 🇺🇸 United States: 35 ms
-10-27 05:20:57.599  3001  3358 D MvpnTrial: پینگ 🇺🇸 United States: 86 ms
-10-27 05:20:57.823  3001  3207 D MvpnTrial: پینگ 🇺🇸 United States: 72 ms
-10-27 05:20:57.876  3001  3205 D MvpnTrial: پینگ 🇺🇸 United States: 209 ms
-10-27 05:20:57.891  3001  3366 D MvpnTrial: پینگ 🇺🇸 United States: 58 ms
-10-27 05:20:57.939  3001  3304 D MvpnTrial: پینگ 🇺🇸 United States: 85 ms
-10-27 05:20:58.098  3001  3359 D MvpnTrial: پینگ 🇺🇸 United States: 206 ms
-10-27 05:20:58.104  3001  3361 D MvpnTrial: پینگ 🇫🇷 France: 212 ms
-10-27 05:20:58.213  3001  3360 D MvpnTrial: پینگ 🇩🇪 Germany: 157 ms
-10-27 05:20:58.275  3001  3207 D MvpnTrial: پینگ 🇨🇦 Canada: 103 ms
-10-27 05:20:58.332  3001  3366 D MvpnTrial: پینگ 🇺🇸 United States: 160 ms
-10-27 05:20:58.334  3001  3304 D MvpnTrial: پینگ 🇺🇸 United States: 164 ms
-10-27 05:20:58.409  3001  3205 D MvpnTrial: پینگ 🇺🇸 United States: 70 ms
-10-27 05:20:58.515  3001  3361 D MvpnTrial: پینگ 🇨🇦 Canada: 114 ms
-10-27 05:20:58.556  3001  3360 D MvpnTrial: پینگ 🇺🇸 United States: 52 ms
-10-27 05:20:58.667  3001  3359 D MvpnTrial: پینگ 🇺🇸 United States: 62 ms
-10-27 05:20:58.668  3001  3207 D MvpnTrial: پینگ 🇺🇸 United States: 63 ms
-10-27 05:20:58.716  3001  3205 D MvpnTrial: پینگ 🇺🇸 United States: 50 ms
-10-27 05:20:58.735  3001  3304 D MvpnTrial: پینگ 🇺🇸 United States: 67 ms
-10-27 05:20:58.847  3001  3361 D MvpnTrial: پینگ 🇺🇸 United States: 70 ms
-10-27 05:20:58.850  3001  3366 D MvpnTrial: پینگ 🇺🇸 United States: 105 ms
-10-27 05:20:58.919  3001  3302 D MvpnTrial: پینگ 🇺🇸 United States: 46 ms
-10-27 05:20:58.943  3001  3304 D MvpnTrial: پینگ 🇺🇸 United States: 27 ms
-10-27 05:20:58.981  3001  3359 D MvpnTrial: پینگ 🇺🇸 United States: 50 ms
-10-27 05:20:59.063  3001  3205 D MvpnTrial: پینگ 🇺🇸 United States: 69 ms
-10-27 05:20:59.156  3001  3358 D MvpnTrial: پینگ 🇺🇸 United States: 43 ms
-10-27 05:20:59.381  3001  3360 D MvpnTrial: پینگ 🇬🇧 United Kingdom: 189 ms
-10-27 05:20:59.569  3001  3303 D MvpnTrial: پینگ 🇺🇸 United States: 65 ms
-10-27 05:20:59.596  3001  3366 D MvpnTrial: پینگ 🇺🇸 United States: 26 ms
-10-27 05:20:59.683  3001  3304 D MvpnTrial: پینگ 🇺🇸 United States: 50 ms
-10-27 05:20:59.843  3001  3366 D MvpnTrial: پینگ 🇺🇸 United States: 50 ms
-10-27 05:20:59.857  3001  3303 D MvpnTrial: پینگ 🇨🇦 Canada: 65 ms
-10-27 05:21:00.100  3001  3302 D MvpnTrial: پینگ 🇬🇧 United Kingdom: 234 ms
-10-27 05:21:00.212  3001  3351 D MvpnTrial: پینگ 🇩🇪 Germany: 163 ms
-10-27 05:21:00.231  3001  3304 D MvpnTrial: پینگ 🇺🇸 United States: 129 ms
-10-27 05:21:00.468  3001  3358 D MvpnTrial: پینگ 🇨🇦 Canada: 89 ms
-10-27 05:21:00.542  3001  3305 D MvpnTrial: پینگ 🇺🇸 United States: 361 ms
-10-27 05:21:00.543  3001  3366 D MvpnTrial: پینگ 🇫🇷 France: 142 ms
-10-27 05:21:00.543  3001  3302 D MvpnTrial: پینگ 🇺🇸 United States: 59 ms
-10-27 05:21:00.755  3001  3303 D MvpnTrial: پینگ 🇦🇺 Australia: 187 ms
-10-27 05:21:00.805  3001  3304 D MvpnTrial: پینگ 🇮🇪 Ireland: 114 ms
-10-27 05:21:01.087  3001  3302 D MvpnTrial: پینگ 🇮🇪 Ireland: 110 ms
-10-27 05:21:01.097  3001  3204 E MvpnTrial: سنجش تأخیر ناموفق
-10-27 05:21:01.097  3001  3204 E MvpnTrial: go.Universe$proxyerror: Get "https://www.gstatic.com/generate_204": io: read/write on closed pipe
-10-27 05:21:01.097  3001  3204 E MvpnTrial: 	at libv2ray.Libv2ray.measureOutboundDelay(Native Method)
-10-27 05:21:01.097  3001  3204 E MvpnTrial: 	at co.asiven.vixentvpn.trial.core.XrayCore.measureDelay(XrayCore.kt:81)
-10-27 05:21:01.097  3001  3204 E MvpnTrial: 	at co.asiven.vixentvpn.trial.ui.MainActivity.measure(MainActivity.kt:438)
-10-27 05:21:01.097  3001  3204 E MvpnTrial: 	at co.asiven.vixentvpn.trial.ui.MainActivity.access$measure(MainActivity.kt:62)
-10-27 05:21:01.097  3001  3204 E MvpnTrial: 	at co.asiven.vixentvpn.trial.ui.MainActivity$pingAll$2$1$1$1.invokeSuspend(MainActivity.kt:399)
-10-27 05:21:01.097  3001  3204 E MvpnTrial: 	at kotlin.coroutines.jvm.internal.BaseContinuationImpl.resumeWith(ContinuationImpl.kt:33)
-10-27 05:21:01.097  3001  3204 E MvpnTrial: 	at kotlinx.coroutines.DispatchedTask.run(DispatchedTask.kt:104)
-10-27 05:21:01.097  3001  3204 E MvpnTrial: 	at kotlinx.coroutines.internal.LimitedDispatcher$Worker.run(LimitedDispatcher.kt:111)
-10-27 05:21:01.097  3001  3204 E MvpnTrial: 	at kotlinx.coroutines.scheduling.TaskImpl.run(Tasks.kt:99)
-10-27 05:21:01.097  3001  3204 E MvpnTrial: 	at kotlinx.coroutines.scheduling.CoroutineScheduler.runSafely(CoroutineScheduler.kt:584)
-10-27 05:21:01.097  3001  3204 E MvpnTrial: 	at kotlinx.coroutines.scheduling.CoroutineScheduler$Worker.executeTask(CoroutineScheduler.kt:811)
-10-27 05:21:01.097  3001  3204 E MvpnTrial: 	at kotlinx.coroutines.scheduling.CoroutineScheduler$Worker.runWorker(CoroutineScheduler.kt:715)
-10-27 05:21:01.097  3001  3204 E MvpnTrial: 	at kotlinx.coroutines.scheduling.CoroutineScheduler$Worker.run(CoroutineScheduler.kt:702)
-10-27 05:21:01.097  3001  3204 D MvpnTrial: پینگ 🇦🇺 Australia: -1 ms
-10-27 05:21:01.135  3001  3358 D MvpnTrial: پینگ 🇺🇸 United States: 71 ms
-10-27 05:21:01.227  3001  3351 D MvpnTrial: پینگ 🇫🇷 France: 211 ms
-10-27 05:21:01.332  3001  3305 D MvpnTrial: پینگ 🇫🇷 France: 304 ms
-10-27 05:21:01.594  3001  3361 D MvpnTrial: پینگ 🇺🇸 United States: 512 ms
-10-27 05:21:01.795  3001  3358 D MvpnTrial: پینگ 🇨🇦 Canada: 54 ms
-10-27 05:21:01.819  3001  3360 D MvpnTrial: پینگ 🇫🇷 France: 172 ms
-10-27 05:21:01.915  3001  3304 D MvpnTrial: پینگ 🇮🇪 Ireland: 148 ms
-10-27 05:21:02.011  3001  3302 D MvpnTrial: پینگ 🇩🇪 Germany: 177 ms
-10-27 05:21:02.042  3001  3351 D MvpnTrial: پینگ 🇺🇸 United States: 131 ms
-10-27 05:21:02.187  3001  3305 D MvpnTrial: پینگ 🇫🇷 France: 195 ms
-10-27 05:21:02.418  3001  3366 D MvpnTrial: پینگ 🇫🇷 France: 434 ms
-10-27 05:21:02.423  3001  3204 D MvpnTrial: پینگ 🇺🇸 United States: 234 ms
-10-27 05:21:02.425  3001  3358 D MvpnTrial: پینگ 🇮🇪 Ireland: 247 ms
-10-27 05:21:02.536  3001  3304 D MvpnTrial: پینگ 🇮🇪 Ireland: 119 ms
-10-27 05:21:02.611  3001  3360 D MvpnTrial: پینگ 🇩🇪 Germany: 195 ms
-10-27 05:21:02.810  3001  3204 D MvpnTrial: پینگ 🇨🇦 Canada: 63 ms
-10-27 05:21:02.822  3001  3366 D MvpnTrial: پینگ 🇨🇦 Canada: 76 ms
-10-27 05:21:02.831  3001  3302 D MvpnTrial: پینگ 🇨🇦 Canada: 131 ms
-10-27 05:21:02.839  3001  3358 D MvpnTrial: پینگ 🇺🇸 United States: 72 ms
-10-27 05:21:02.912  3001  3305 D MvpnTrial: پینگ 🇸🇪 Sweden: 127 ms
-10-27 05:21:02.953  3001  3361 D MvpnTrial: پینگ 🇫🇷 France: 254 ms
-10-27 05:21:03.005  3001  3304 D MvpnTrial: پینگ 🇺🇸 United States: 159 ms
-10-27 05:21:03.247  3001  3360 D MvpnTrial: پینگ 🇮🇪 Ireland: 122 ms
-10-27 05:21:03.358  3001  3358 D MvpnTrial: پینگ 🇮🇪 Ireland: 131 ms
-10-27 05:21:03.408  3001  3302 D MvpnTrial: پینگ 🇫🇷 France: 152 ms
-10-27 05:21:03.603  3001  3204 D MvpnTrial: پینگ 🇫🇷 France: 173 ms
-10-27 05:21:03.624  3001  3366 D MvpnTrial: پینگ 🇺🇸 United States: 186 ms
-10-27 05:21:03.726  3001  3302 D MvpnTrial: پینگ 🇨🇦 Canada: 85 ms
-10-27 05:21:03.798  3001  3305 D MvpnTrial: پینگ 🇦🇺 Australia: 172 ms
-10-27 05:21:03.863  3001  3303 D MvpnTrial: پینگ 🇫🇷 France: 236 ms
-10-27 05:21:03.863  3001  3361 D MvpnTrial: پینگ 🇨🇦 Canada: 229 ms
-10-27 05:21:03.926  3001  3307 D MvpnTrial: پینگ 🇸🇪 Sweden: 131 ms
-10-27 05:21:04.060  3001  3360 D MvpnTrial: پینگ 🇨🇦 Canada: 197 ms
-10-27 05:21:04.150  3001  3204 D MvpnTrial: پینگ 🇮🇪 Ireland: 119 ms
-10-27 05:21:04.193  3001  3366 D MvpnTrial: پینگ 🇫🇷 France: 132 ms
-10-27 05:21:04.299  3001  3302 D MvpnTrial: پینگ 🇮🇪 Ireland: 141 ms
-10-27 05:21:04.508  3001  3351 D MvpnTrial: پینگ 🇺🇸 United States: 52 ms
-10-27 05:21:04.568  3001  3358 D MvpnTrial: پینگ 🇺🇸 United States: 59 ms
-10-27 05:21:04.572  3001  3366 D MvpnTrial: پینگ 🇨🇦 Canada: 69 ms
-10-27 05:21:04.585  3001  3306 D MvpnTrial: پینگ 🇨🇦 Canada: 70 ms
-10-27 05:21:04.594  3001  3204 D MvpnTrial: پینگ 🇨🇦 Canada: 79 ms
-10-27 05:21:04.601  3001  3359 D MvpnTrial: پینگ 🇨🇦 Canada: 86 ms
-10-27 05:21:04.639  3001  3304 D MvpnTrial: پینگ 🇮🇪 Ireland: 124 ms
-10-27 05:21:04.856  3001  3360 D MvpnTrial: پینگ 🇨🇦 Canada: 61 ms
-10-27 05:21:04.940  3001  3306 D MvpnTrial: پینگ 🇺🇸 United States: 84 ms
-10-27 05:21:04.996  3001  3366 D MvpnTrial: پینگ 🇺🇸 United States: 56 ms
-10-27 05:21:05.154  3001  3204 D MvpnTrial: پینگ 🇦🇺 Australia: 138 ms
-10-27 05:21:05.228  3001  3302 D MvpnTrial: پینگ 🇨🇦 Canada: 190 ms
-10-27 05:21:06.219  3001  3001 W MvpnTrial: دریافت توکن Firebase ناموفق: java.util.concurrent.ExecutionException: java.io.IOException: AUTHENTICATION_FAILED
-10-27 05:21:09.826  3001  3305 D MvpnTrial: پینگ 🇺🇸 United States: 26 ms
-10-27 05:21:09.829  3001  3001 D MvpnTrial: hero: running=false connected=- shown=-134922-469--1094354695 pressed=اتصال
-10-27 05:21:09.831  3001  3001 I MvpnTrial: پینگ همهٔ 105 سرور انجام شد؛ سریع‌ترین: 🇺🇸 United States
-10-27 05:21:51.043  3001  3001 I MvpnTrial: 105 لینک v2ray کپی شد
-10-27 05:23:14.977  3001  3001 D MvpnTrial: hero: running=false connected=- shown=-39250-471-931889960 pressed=اتصال
-10-27 05:23:14.986  3001  3001 I MvpnTrial: سرور انتخاب شد: 🇦🇺 Australia (price=0, type=vless · ws)
-10-27 05:23:27.654  3001  3001 D MvpnTrial: hero: running=false connected=- shown=-39250-471-931889960 pressed=اتصال
-10-27 05:23:27.655  3001  3001 I MvpnTrial: سرور انتخاب شد: 🇦🇺 Australia (price=0, type=vless · ws)
-10-27 05:23:34.359  3001  3001 I MvpnTrial: VpnTunnelService ایجاد شد
-10-27 05:23:34.447  3001  3305 I MvpnTrial: پیکربندی هسته آماده شد (vless) برای 🇦🇺 Australia
-10-27 05:23:34.499  3001  3001 D MvpnTrial: hero: running=false connected=- shown=-39250-471-931889960 pressed=اتصال
-10-27 05:23:34.564  3001  3305 I MvpnTrial: رابط TUN ساخته شد: 139
-10-27 05:23:34.808  3001  3305 I MvpnTrial: CoreCallback: startup
-10-27 05:23:34.808  3001  3305 D MvpnTrial: CoreCallback: 0 Started successfully, running
-10-27 05:23:34.809  3001  3305 I MvpnTrial: هستهٔ Xray شروع شد (tunFd=139، running=true)
-10-27 05:23:34.809  3001  3305 I MvpnTrial: hev: شروع (fd=139، socks=10808، mtu=1500)
-10-27 05:23:34.821  3001  3001 D MvpnTrial: hero: running=false connected=- shown=-39250-471-931889960 pressed=اتصال
-10-27 05:23:37.259  3001  3305 W MvpnTrial: آزمون ترافیک تلاش 1:  در 2446ms
-10-27 05:23:43.192  3001  3305 W MvpnTrial: آزمون ترافیک تلاش 2:  در 3933ms
-10-27 05:23:48.432  3001  3305 W MvpnTrial: آزمون ترافیک تلاش 3:  در 3237ms
-10-27 05:23:50.433  3001  3305 E MvpnTrial: ترافیک از تونل عبور نکرد؛ اتصال لغو شد (🇦🇺 Australia)
-10-27 05:23:50.435  3001  3001 D MvpnTrial: hero: running=false connected=- shown=-39250-471-931889960 pressed=اتصال
-10-27 05:23:50.440  3001  3305 I MvpnTrial: hev: متوقف شد
-10-27 05:23:50.441  3001  3305 D MvpnTrial: CoreCallback: 0 Core stopped
-10-27 05:23:50.475  3001  3001 D MvpnTrial: hero: running=false connected=- shown=-39250-471-931889960 pressed=اتصال
-10-27 05:23:50.495  3001  3001 D MvpnTrial: hero: running=false connected=- shown=-39250-471-931889960 pressed=اتصال
-10-27 05:25:22.938  3001  3001 D MvpnTrial: hero: running=false connected=- shown=-63320-490--267964680 pressed=اتصال
-10-27 05:25:22.938  3001  3001 I MvpnTrial: سرور انتخاب شد: 🇨🇦 Canada (price=0, type=vless)
-10-27 05:25:34.904  3001  3001 D MvpnTrial: hero: running=false connected=- shown=-63320-490--267964680 pressed=اتصال
-10-27 05:25:34.907  3001  3001 I MvpnTrial: سرور انتخاب شد: 🇨🇦 Canada (price=0, type=vless)
-10-27 05:25:34.948  3001  3001 I MvpnTrial: VpnTunnelService ایجاد شد
-10-27 05:25:34.969  3001  3305 I MvpnTrial: پیکربندی هسته آماده شد (vless) برای 🇨🇦 Canada
-10-27 05:25:34.989  3001  3001 D MvpnTrial: hero: running=false connected=- shown=-63320-490--267964680 pressed=اتصال
-10-27 05:25:35.055  3001  3305 I MvpnTrial: رابط TUN ساخته شد: 119
-10-27 05:25:35.101  3001  3305 I MvpnTrial: CoreCallback: startup
-10-27 05:25:35.101  3001  3305 D MvpnTrial: CoreCallback: 0 Started successfully, running
-10-27 05:25:35.102  3001  3305 I MvpnTrial: هستهٔ Xray شروع شد (tunFd=119، running=true)
-10-27 05:25:35.102  3001  3305 I MvpnTrial: hev: شروع (fd=119، socks=10808، mtu=1500)
-10-27 05:25:35.105  3001  3001 D MvpnTrial: hero: running=false connected=- shown=-63320-490--267964680 pressed=اتصال
-10-27 05:25:35.333  3001  3305 I MvpnTrial: آزمون ترافیک موفق: «HTTP/1.1 301 Moved Permanently» در 230ms
-10-27 05:25:35.333  3001  3305 I MvpnTrial: ترافیک از تونل عبور کرد (🇨🇦 Canada)
-10-27 05:25:35.349  3001  3305 I MvpnTrial: اتصال برقرار شد: متصل — 🇨🇦 Canada (VPN)
-10-27 05:25:35.373  3001  3001 D MvpnTrial: hero: running=true connected=-63320-490--267964680 shown=-63320-490--267964680 pressed=قطع اتصال
-10-27 05:27:23.137  3001  3001 D MvpnTrial: hero: running=true connected=-63320-490--267964680 shown=-39250-471-931889960 pressed=اتصال به سرور انتخابی
-10-27 05:27:23.139  3001  3001 I MvpnTrial: سرور انتخاب شد: 🇦🇺 Australia (price=0, type=vless · ws)
-10-27 05:27:35.404  3001  3001 D MvpnTrial: hero: running=true connected=-63320-490--267964680 shown=-39250-471-931889960 pressed=اتصال به سرور انتخابی
-10-27 05:27:35.404  3001  3001 I MvpnTrial: سرور انتخاب شد: 🇦🇺 Australia (price=0, type=vless · ws)
-10-27 05:27:35.430  3001  3001 I MvpnTrial: hev: متوقف شد
-10-27 05:27:35.431  3001  3001 D MvpnTrial: CoreCallback: 0 Core stopped
-10-27 05:27:35.497  3001  3001 D MvpnTrial: hero: running=false connected=- shown=-39250-471-931889960 pressed=اتصال
-10-27 05:27:35.520  3001  3001 D MvpnTrial: hero: running=false connected=- shown=-39250-471-931889960 pressed=اتصال
-10-27 05:27:36.112  3001  3001 I MvpnTrial: VpnTunnelService ایجاد شد
-10-27 05:27:36.123  3001  3305 I MvpnTrial: پیکربندی هسته آماده شد (vless) برای 🇦🇺 Australia
-10-27 05:27:36.128  3001  3001 D MvpnTrial: hero: running=false connected=- shown=-39250-471-931889960 pressed=اتصال
-10-27 05:27:36.152  3001  3305 I MvpnTrial: رابط TUN ساخته شد: 117
-10-27 05:27:36.172  3001  3305 I MvpnTrial: CoreCallback: startup
-10-27 05:27:36.172  3001  3305 D MvpnTrial: CoreCallback: 0 Started successfully, running
-10-27 05:27:36.172  3001  3305 I MvpnTrial: هستهٔ Xray شروع شد (tunFd=117، running=true)
-10-27 05:27:36.192  3001  3305 I MvpnTrial: hev: شروع (fd=117، socks=10808، mtu=1500)
-10-27 05:27:36.194  3001  3001 D MvpnTrial: hero: running=false connected=- shown=-39250-471-931889960 pressed=اتصال
-10-27 05:27:38.738  3001  3305 W MvpnTrial: آزمون ترافیک تلاش 1:  در 2545ms
-10-27 05:27:44.177  3001  3305 W MvpnTrial: آزمون ترافیک تلاش 2:  در 3438ms
-10-27 05:27:49.729  3001  3305 W MvpnTrial: آزمون ترافیک تلاش 3:  در 3552ms
-10-27 05:27:51.730  3001  3305 E MvpnTrial: ترافیک از تونل عبور نکرد؛ اتصال لغو شد (🇦🇺 Australia)
-10-27 05:27:51.732  3001  3001 D MvpnTrial: hero: running=false connected=- shown=-39250-471-931889960 pressed=اتصال
-10-27 05:27:51.736  3001  3305 I MvpnTrial: hev: متوقف شد
-10-27 05:27:51.737  3001  3305 D MvpnTrial: CoreCallback: 0 Core stopped
-10-27 05:27:51.796  3001  3001 D MvpnTrial: hero: running=false connected=- shown=-39250-471-931889960 pressed=اتصال
-10-27 05:27:51.839  3001  3001 D MvpnTrial: hero: running=false connected=- shown=-39250-471-931889960 pressed=اتصال
-10-27 05:30:41.704  3001  3001 D MvpnTrial: hero: running=false connected=- shown=-39250-471-931889960 pressed=اتصال
-10-27 05:30:41.705  3001  3001 I MvpnTrial: سرور انتخاب شد: 🇦🇺 Australia (price=0, type=vless · ws)
-10-27 05:30:53.904  3001  3001 D MvpnTrial: hero: running=false connected=- shown=-39250-471-931889960 pressed=اتصال
-10-27 05:30:53.904  3001  3001 I MvpnTrial: سرور انتخاب شد: 🇦🇺 Australia (price=0, type=vless · ws)
-10-27 05:30:53.930  3001  3001 I MvpnTrial: VpnTunnelService ایجاد شد
-10-27 05:30:53.946  3001  3305 I MvpnTrial: پیکربندی هسته آماده شد (vless) برای 🇦🇺 Australia
-10-27 05:30:53.970  3001  3305 I MvpnTrial: رابط TUN ساخته شد: 121
-10-27 05:30:53.993  3001  3001 D MvpnTrial: hero: running=false connected=- shown=-39250-471-931889960 pressed=اتصال
-10-27 05:30:54.046  3001  3305 I MvpnTrial: CoreCallback: startup
-10-27 05:30:54.046  3001  3305 D MvpnTrial: CoreCallback: 0 Started successfully, running
-10-27 05:30:54.050  3001  3305 I MvpnTrial: هستهٔ Xray شروع شد (tunFd=121، running=true)
-10-27 05:30:54.050  3001  3305 I MvpnTrial: hev: شروع (fd=121، socks=10808، mtu=1500)
-10-27 05:30:54.076  3001  3001 D MvpnTrial: hero: running=false connected=- shown=-39250-471-931889960 pressed=اتصال
-10-27 05:30:56.579  3001  3305 W MvpnTrial: آزمون ترافیک تلاش 1:  در 2513ms
-10-27 05:31:01.969  3001  3305 W MvpnTrial: آزمون ترافیک تلاش 2:  در 3390ms
-10-27 05:31:06.637  3001  3305 W MvpnTrial: آزمون ترافیک تلاش 3:  در 2667ms
-10-27 05:31:08.638  3001  3305 E MvpnTrial: ترافیک از تونل عبور نکرد؛ اتصال لغو شد (🇦🇺 Australia)
-10-27 05:31:08.639  3001  3001 D MvpnTrial: hero: running=false connected=- shown=-39250-471-931889960 pressed=اتصال
-10-27 05:31:08.643  3001  3305 I MvpnTrial: hev: متوقف شد
-10-27 05:31:08.644  3001  3305 D MvpnTrial: CoreCallback: 0 Core stopped
-10-27 05:31:08.666  3001  3001 D MvpnTrial: hero: running=false connected=- shown=-39250-471-931889960 pressed=اتصال
-10-27 05:31:08.676  3001  3001 D MvpnTrial: hero: running=false connected=- shown=-39250-471-931889960 pressed=اتصال
-10-27 05:33:57.420  3001  3001 D MvpnTrial: hero: running=false connected=- shown=-70164-487--1193288079 pressed=اتصال
-10-27 05:33:57.421  3001  3001 I MvpnTrial: سرور انتخاب شد: 🇫🇷 France (price=0, type=vless · reality)
-10-27 05:34:09.171  3001  3001 D MvpnTrial: hero: running=false connected=- shown=-70164-487--1193288079 pressed=اتصال
-10-27 05:34:09.171  3001  3001 I MvpnTrial: سرور انتخاب شد: 🇫🇷 France (price=0, type=vless · reality)
-10-27 05:34:09.189  3001  3001 I MvpnTrial: VpnTunnelService ایجاد شد
-10-27 05:34:09.196  3001  3305 I MvpnTrial: پیکربندی هسته آماده شد (vless) برای 🇫🇷 France
-10-27 05:34:09.207  3001  3001 D MvpnTrial: hero: running=false connected=- shown=-70164-487--1193288079 pressed=اتصال
-10-27 05:34:09.267  3001  3305 I MvpnTrial: رابط TUN ساخته شد: 108
-10-27 05:34:09.348  3001  3305 I MvpnTrial: CoreCallback: startup
-10-27 05:34:09.349  3001  3305 D MvpnTrial: CoreCallback: 0 Started successfully, running
-10-27 05:34:09.349  3001  3305 I MvpnTrial: هستهٔ Xray شروع شد (tunFd=108، running=true)
-10-27 05:34:09.349  3001  3305 I MvpnTrial: hev: شروع (fd=108، socks=10808، mtu=1500)
-10-27 05:34:09.359  3001  3001 D MvpnTrial: hero: running=false connected=- shown=-70164-487--1193288079 pressed=اتصال
-10-27 05:34:09.863  3001  3305 I MvpnTrial: آزمون ترافیک موفق: «HTTP/1.1 301 Moved Permanently» در 506ms
-10-27 05:34:09.863  3001  3305 I MvpnTrial: ترافیک از تونل عبور کرد (🇫🇷 France)
-10-27 05:34:09.865  3001  3305 I MvpnTrial: اتصال برقرار شد: متصل — 🇫🇷 France (VPN)
-10-27 05:34:09.866  3001  3001 D MvpnTrial: hero: running=true connected=-70164-487--1193288079 shown=-70164-487--1193288079 pressed=قطع اتصال
-10-27 05:37:05.413  3001  3001 I MvpnTrial: hev: متوقف شد
-10-27 05:37:05.414  3001  3001 D MvpnTrial: CoreCallback: 0 Core stopped
-10-27 05:37:05.449  3001  3001 D MvpnTrial: hero: running=false connected=- shown=-70164-487--1193288079 pressed=اتصال
-10-27 05:37:05.459  3001  3001 D MvpnTrial: hero: running=false connected=- shown=-70164-487--1193288079 pressed=اتصال
+10-27 06:49:00.919  3199  3199 I MvpnTrial: MVPN Trial 3.2.0-trial (co.asiven.vixentvpn.trial) راه‌اندازی شد
+10-27 06:49:01.332  3199  3199 I MvpnTrial: هستهٔ Xray آماده شد: Lib v38, Xray-core v26.6.27
+10-27 06:49:01.706  3199  3199 D MvpnTrial: hero(no row): running=false connected=- pressed=اتصال
+10-27 06:49:01.901  3199  3199 D MvpnTrial: hero(no row): running=false connected=- pressed=اتصال
+10-27 06:49:03.132  3199  3408 D MvpnTrial: GET https://managev1.xyz/api/token?deviceId=dcdfc263052f48c8 → 200 (66 بایت)
+10-27 06:49:03.134  3199  3408 I MvpnTrial: توکن سمت سرور غیرفعال است؛ بدون هدر token ادامه می‌دهیم
+10-27 06:49:03.336  3199  3408 D MvpnTrial: GET https://managev1.xyz/api/setting → 200 (44 بایت)
+10-27 06:49:03.336  3199  3408 I MvpnTrial: setting خالی است (data=null) — پیش‌فرض‌های برنامه استفاده می‌شوند
+10-27 06:49:04.072  3199  3408 D MvpnTrial: GET https://managev1.xyz/api/protocols → 200 (103203 بایت)
+10-27 06:49:04.308  3199  3408 I MvpnTrial: 105 سرور از /api/protocols دریافت شد
+10-27 06:49:04.325  3199  3199 D MvpnTrial: hero: running=false connected=- shown=-105426-465-504278487 pressed=اتصال
+10-27 06:49:04.796  3199  3408 D MvpnTrial: پینگ 🇺🇸 United States: 81 ms
+10-27 06:49:05.107  3199  3595 D MvpnTrial: پینگ 🇩🇪 Germany: 166 ms
+10-27 06:49:05.124  3199  3539 D MvpnTrial: پینگ 🇩🇪 Germany: 171 ms
+10-27 06:49:05.188  3199  3408 D MvpnTrial: پینگ 🇺🇸 United States: 80 ms
+10-27 06:49:05.208  3199  3540 D MvpnTrial: پینگ 🇩🇪 Germany: 148 ms
+10-27 06:49:05.300  3199  3409 D MvpnTrial: پینگ 🇩🇪 Germany: 166 ms
+10-27 06:49:05.313  3199  3540 D MvpnTrial: پینگ 🇺🇸 United States: 3 ms
+10-27 06:49:05.366  3199  3588 D MvpnTrial: پینگ 🇫🇷 France: 172 ms
+10-27 06:49:05.397  3199  3410 D MvpnTrial: پینگ 🇫🇮 Finland: 179 ms
+10-27 06:49:05.416  3199  3408 D MvpnTrial: پینگ 🇺🇸 United States: 38 ms
+10-27 06:49:05.568  3199  3409 D MvpnTrial: پینگ 🇺🇸 United States: 48 ms
+10-27 06:49:05.734  3199  3408 D MvpnTrial: پینگ 🇺🇸 United States: 52 ms
+10-27 06:49:05.742  3199  3546 D MvpnTrial: پینگ 🇺🇸 United States: 119 ms
+10-27 06:49:05.770  3199  3588 D MvpnTrial: پینگ 🇺🇸 United States: 59 ms
+10-27 06:49:05.773  3199  3410 D MvpnTrial: پینگ 🇺🇸 United States: 62 ms
+10-27 06:49:05.784  3199  3595 D MvpnTrial: پینگ 🇩🇪 Germany: 159 ms
+10-27 06:49:05.792  3199  3539 D MvpnTrial: پینگ 🇩🇪 Germany: 159 ms
+10-27 06:49:05.876  3199  3552 D MvpnTrial: پینگ 🇺🇸 United States: 12 ms
+10-27 06:49:05.880  3199  3410 D MvpnTrial: پینگ 🇺🇸 United States: 12 ms
+10-27 06:49:05.886  3199  3588 D MvpnTrial: پینگ 🇺🇸 United States: 19 ms
+10-27 06:49:05.933  3199  3409 D MvpnTrial: پینگ 🇺🇸 United States: 68 ms
+10-27 06:49:05.973  3199  3539 D MvpnTrial: پینگ 🇺🇸 United States: 20 ms
+10-27 06:49:06.018  3199  3595 D MvpnTrial: پینگ 🇺🇸 United States: 45 ms
+10-27 06:49:06.034  3199  3410 D MvpnTrial: پینگ 🇺🇸 United States: 12 ms
+10-27 06:49:06.099  3199  3595 D MvpnTrial: پینگ 🇺🇸 United States: 7 ms
+10-27 06:49:06.300  3199  3588 D MvpnTrial: پینگ 🇺🇸 United States: 137 ms
+10-27 06:49:06.369  3199  3552 D MvpnTrial: پینگ 🇺🇸 United States: 56 ms
+10-27 06:49:06.372  3199  3408 D MvpnTrial: پینگ 🇨🇦 Canada: 76 ms
+10-27 06:49:06.377  3199  3539 D MvpnTrial: پینگ 🇨🇦 Canada: 75 ms
+10-27 06:49:06.426  3199  3588 D MvpnTrial: پینگ 🇺🇸 United States: 52 ms
+10-27 06:49:06.577  3199  3546 D MvpnTrial: پینگ 🇩🇪 Germany: 206 ms
+10-27 06:49:06.583  3199  3410 D MvpnTrial: پینگ 🇺🇸 United States: 75 ms
+10-27 06:49:06.761  3199  3410 D MvpnTrial: پینگ 🇺🇸 United States: 40 ms
+10-27 06:49:06.774  3199  3409 D MvpnTrial: پینگ 🇩🇪 Germany: 172 ms
+10-27 06:49:06.859  3199  3588 D MvpnTrial: پینگ 🇺🇸 United States: 104 ms
+10-27 06:49:06.885  3199  3552 D MvpnTrial: پینگ 🇺🇸 United States: 70 ms
+10-27 06:49:06.937  3199  3539 D MvpnTrial: پینگ 🇺🇸 United States: 78 ms
+10-27 06:49:07.123  3199  3546 D MvpnTrial: پینگ 🇺🇸 United States: 155 ms
+10-27 06:49:07.148  3199  3410 D MvpnTrial: پینگ 🇺🇸 United States: 81 ms
+10-27 06:49:07.296  3199  3595 D MvpnTrial: پینگ 🇸🇪 Sweden: 189 ms
+10-27 06:49:07.402  3199  3552 D MvpnTrial: پینگ 🇺🇸 United States: 105 ms
+10-27 06:49:07.405  3199  3409 D MvpnTrial: پینگ 🇺🇸 United States: 108 ms
+10-27 06:49:07.406  3199  3410 D MvpnTrial: پینگ 🇺🇸 United States: 45 ms
+10-27 06:49:07.478  3199  3588 D MvpnTrial: پینگ 🇺🇸 United States: 76 ms
+10-27 06:49:07.678  3199  3540 D MvpnTrial: پینگ 🇺🇸 United States: 22 ms
+10-27 06:49:07.689  3199  3588 D MvpnTrial: پینگ 🇺🇸 United States: 34 ms
+10-27 06:49:07.767  3199  3592 D MvpnTrial: پینگ 🇺🇸 United States: 69 ms
+10-27 06:49:07.898  3199  3546 D MvpnTrial: پینگ 🇬🇧 United Kingdom: 164 ms
+10-27 06:49:07.939  3199  3199 W MvpnTrial: دریافت توکن Firebase ناموفق: java.util.concurrent.ExecutionException: java.io.IOException: AUTHENTICATION_FAILED
+10-27 06:49:07.963  3199  3539 D MvpnTrial: پینگ 🇨🇦 Canada: 173 ms
+10-27 06:49:08.040  3199  3588 D MvpnTrial: پینگ 🇨🇦 Canada: 83 ms
+10-27 06:49:08.112  3199  3595 D MvpnTrial: پینگ 🇩🇪 Germany: 155 ms
+10-27 06:49:08.161  3199  3592 D MvpnTrial: پینگ 🇺🇸 United States: 97 ms
+10-27 06:49:08.487  3199  3540 D MvpnTrial: پینگ 🇺🇸 United States: 207 ms
+10-27 06:49:08.589  3199  3410 D MvpnTrial: پینگ 🇫🇷 France: 148 ms
+10-27 06:49:08.612  3199  3576 D MvpnTrial: پینگ 🇩🇪 Germany: 159 ms
+10-27 06:49:08.636  3199  3592 D MvpnTrial: پینگ 🇨🇦 Canada: 94 ms
+10-27 06:49:08.714  3199  3588 D MvpnTrial: پینگ 🇮🇪 Ireland: 133 ms
+10-27 06:49:08.764  3199  3539 D MvpnTrial: پینگ 🇸🇪 Sweden: 162 ms
+10-27 06:49:09.015  3199  3576 D MvpnTrial: پینگ 🇨🇦 Canada: 83 ms
+10-27 06:49:09.042  3199  3540 D MvpnTrial: پینگ 🇺🇸 United States: 111 ms
+10-27 06:49:09.679  3199  3599 E MvpnTrial: سنجش تأخیر ناموفق
+10-27 06:49:09.679  3199  3599 E MvpnTrial: go.Universe$proxyerror: Get "https://www.gstatic.com/generate_204": io: read/write on closed pipe
+10-27 06:49:09.679  3199  3599 E MvpnTrial: 	at libv2ray.Libv2ray.measureOutboundDelay(Native Method)
+10-27 06:49:09.679  3199  3599 E MvpnTrial: 	at co.asiven.vixentvpn.trial.core.XrayCore.measureDelay(XrayCore.kt:81)
+10-27 06:49:09.679  3199  3599 E MvpnTrial: 	at co.asiven.vixentvpn.trial.ui.MainActivity.measure(MainActivity.kt:438)
+10-27 06:49:09.679  3199  3599 E MvpnTrial: 	at co.asiven.vixentvpn.trial.ui.MainActivity.access$measure(MainActivity.kt:62)
+10-27 06:49:09.679  3199  3599 E MvpnTrial: 	at co.asiven.vixentvpn.trial.ui.MainActivity$pingAll$2$1$1$1.invokeSuspend(MainActivity.kt:399)
+10-27 06:49:09.679  3199  3599 E MvpnTrial: 	at kotlin.coroutines.jvm.internal.BaseContinuationImpl.resumeWith(ContinuationImpl.kt:33)
+10-27 06:49:09.679  3199  3599 E MvpnTrial: 	at kotlinx.coroutines.DispatchedTask.run(DispatchedTask.kt:104)
+10-27 06:49:09.679  3199  3599 E MvpnTrial: 	at kotlinx.coroutines.internal.LimitedDispatcher$Worker.run(LimitedDispatcher.kt:111)
+10-27 06:49:09.679  3199  3599 E MvpnTrial: 	at kotlinx.coroutines.scheduling.TaskImpl.run(Tasks.kt:99)
+10-27 06:49:09.679  3199  3599 E MvpnTrial: 	at kotlinx.coroutines.scheduling.CoroutineScheduler.runSafely(CoroutineScheduler.kt:584)
+10-27 06:49:09.679  3199  3599 E MvpnTrial: 	at kotlinx.coroutines.scheduling.CoroutineScheduler$Worker.executeTask(CoroutineScheduler.kt:811)
+10-27 06:49:09.679  3199  3599 E MvpnTrial: 	at kotlinx.coroutines.scheduling.CoroutineScheduler$Worker.runWorker(CoroutineScheduler.kt:715)
+10-27 06:49:09.679  3199  3599 E MvpnTrial: 	at kotlinx.coroutines.scheduling.CoroutineScheduler$Worker.run(CoroutineScheduler.kt:702)
+10-27 06:49:09.715  3199  3599 D MvpnTrial: پینگ 🇨🇦 Canada: -1 ms
+10-27 06:49:10.347  3199  3576 D MvpnTrial: پینگ 🇩🇪 Germany: 161 ms
+10-27 06:49:10.383  3199  3592 D MvpnTrial: پینگ 🇺🇸 United States: 420 ms
+10-27 06:49:10.682  3199  3540 D MvpnTrial: پینگ 🇺🇸 United States: 69 ms
+10-27 06:49:10.693  3199  3595 D MvpnTrial: پینگ 🇮🇪 Ireland: 451 ms
+10-27 06:49:10.700  3199  3588 D MvpnTrial: پینگ 🇺🇸 United States: 347 ms
+10-27 06:49:10.849  3199  3599 D MvpnTrial: پینگ 🇺🇸 United States: 99 ms
+10-27 06:49:10.857  3199  3539 D MvpnTrial: پینگ 🇺🇸 United States: 153 ms
+10-27 06:49:10.966  3199  3592 D MvpnTrial: پینگ 🇺🇸 United States: 66 ms
+10-27 06:49:11.046  3199  3599 D MvpnTrial: پینگ 🇺🇸 United States: 27 ms
+10-27 06:49:11.055  3199  3539 D MvpnTrial: پینگ 🇺🇸 United States: 36 ms
+10-27 06:49:11.147  3199  3552 D MvpnTrial: پینگ 🇨🇦 Canada: 76 ms
+10-27 06:49:11.300  3199  3576 D MvpnTrial: پینگ 🇮🇪 Ireland: 136 ms
+10-27 06:49:11.315  3199  3540 D MvpnTrial: پینگ 🇺🇸 United States: 41 ms
+10-27 06:49:11.715  3199  3409 D MvpnTrial: پینگ 🇮🇪 Ireland: 149 ms
+10-27 06:49:11.838  3199  3595 D MvpnTrial: پینگ 🇩🇪 Germany: 216 ms
+10-27 06:49:11.839  3199  3552 D MvpnTrial: پینگ 🇫🇷 France: 190 ms
+10-27 06:49:11.891  3199  3599 D MvpnTrial: پینگ 🇮🇪 Ireland: 133 ms
+10-27 06:49:12.002  3199  3592 D MvpnTrial: پینگ 🇸🇪 Sweden: 163 ms
+10-27 06:49:12.097  3199  3576 D MvpnTrial: پینگ 🇨🇦 Canada: 79 ms
+10-27 06:49:12.446  3199  3595 D MvpnTrial: پینگ 🇨🇦 Canada: 120 ms
+10-27 06:49:12.453  3199  3540 D MvpnTrial: پینگ 🇨🇦 Canada: 127 ms
+10-27 06:49:12.576  3199  3552 D MvpnTrial: پینگ 🇩🇪 Germany: 152 ms
+10-27 06:49:12.579  3199  3539 D MvpnTrial: پینگ 🇸🇪 Sweden: 119 ms
+10-27 06:49:12.682  3199  3576 D MvpnTrial: پینگ 🇮🇪 Ireland: 133 ms
+10-27 06:49:12.874  3199  3595 D MvpnTrial: پینگ 🇨🇦 Canada: 77 ms
+10-27 06:49:12.927  3199  3540 D MvpnTrial: پینگ 🇨🇦 Canada: 91 ms
+10-27 06:49:13.034  3199  3409 D MvpnTrial: پینگ 🇨🇦 Canada: 92 ms
+10-27 06:49:13.132  3199  3576 D MvpnTrial: پینگ 🇺🇸 United States: 93 ms
+10-27 06:49:13.261  3199  3539 D MvpnTrial: پینگ 🇦🇺 Australia: 164 ms
+10-27 06:49:13.340  3199  3540 D MvpnTrial: پینگ 🇨🇦 Canada: 85 ms
+10-27 06:49:13.538  3199  3588 D MvpnTrial: پینگ 🇩🇪 Germany: 164 ms
+10-27 06:49:13.692  3199  3409 D MvpnTrial: پینگ 🇩🇪 Germany: 153 ms
+10-27 06:49:13.794  3199  3595 D MvpnTrial: پینگ 🇫🇷 France: 148 ms
+10-27 06:49:13.916  3199  3539 D MvpnTrial: پینگ 🇫🇷 France: 162 ms
+10-27 06:49:13.963  3199  3408 D MvpnTrial: پینگ 🇫🇷 France: 146 ms
+10-27 06:49:14.003  3199  3409 D MvpnTrial: پینگ 🇺🇸 United States: 35 ms
+10-27 06:49:14.087  3199  3539 D MvpnTrial: پینگ 🇺🇸 United States: 35 ms
+10-27 06:49:14.103  3199  3588 D MvpnTrial: پینگ 🇨🇦 Canada: 88 ms
+10-27 06:49:14.141  3199  3540 D MvpnTrial: پینگ 🇫🇷 France: 144 ms
+10-27 06:49:15.457  3199  3546 D MvpnTrial: پینگ 🇮🇪 Ireland: 403 ms
+10-27 06:49:15.504  3199  3410 D MvpnTrial: پینگ 🇫🇷 France: 456 ms
+10-27 06:49:19.458  3199  3586 E MvpnTrial: سنجش تأخیر ناموفق
+10-27 06:49:19.458  3199  3586 E MvpnTrial: go.Universe$proxyerror: Get "https://www.gstatic.com/generate_204": net/http: TLS handshake timeout
+10-27 06:49:19.458  3199  3586 E MvpnTrial: 	at libv2ray.Libv2ray.measureOutboundDelay(Native Method)
+10-27 06:49:19.458  3199  3586 E MvpnTrial: 	at co.asiven.vixentvpn.trial.core.XrayCore.measureDelay(XrayCore.kt:81)
+10-27 06:49:19.458  3199  3586 E MvpnTrial: 	at co.asiven.vixentvpn.trial.ui.MainActivity.measure(MainActivity.kt:438)
+10-27 06:49:19.458  3199  3586 E MvpnTrial: 	at co.asiven.vixentvpn.trial.ui.MainActivity.access$measure(MainActivity.kt:62)
+10-27 06:49:19.458  3199  3586 E MvpnTrial: 	at co.asiven.vixentvpn.trial.ui.MainActivity$pingAll$2$1$1$1.invokeSuspend(MainActivity.kt:399)
+10-27 06:49:19.458  3199  3586 E MvpnTrial: 	at kotlin.coroutines.jvm.internal.BaseContinuationImpl.resumeWith(ContinuationImpl.kt:33)
+10-27 06:49:19.458  3199  3586 E MvpnTrial: 	at kotlinx.coroutines.DispatchedTask.run(DispatchedTask.kt:104)
+10-27 06:49:19.458  3199  3586 E MvpnTrial: 	at kotlinx.coroutines.internal.LimitedDispatcher$Worker.run(LimitedDispatcher.kt:111)
+10-27 06:49:19.458  3199  3586 E MvpnTrial: 	at kotlinx.coroutines.scheduling.TaskImpl.run(Tasks.kt:99)
+10-27 06:49:19.458  3199  3586 E MvpnTrial: 	at kotlinx.coroutines.scheduling.CoroutineScheduler.runSafely(CoroutineScheduler.kt:584)
+10-27 06:49:19.458  3199  3586 E MvpnTrial: 	at kotlinx.coroutines.scheduling.CoroutineScheduler$Worker.executeTask(CoroutineScheduler.kt:811)
+10-27 06:49:19.458  3199  3586 E MvpnTrial: 	at kotlinx.coroutines.scheduling.CoroutineScheduler$Worker.runWorker(CoroutineScheduler.kt:715)
+10-27 06:49:19.458  3199  3586 E MvpnTrial: 	at kotlinx.coroutines.scheduling.CoroutineScheduler$Worker.run(CoroutineScheduler.kt:702)
+10-27 06:49:19.458  3199  3586 D MvpnTrial: پینگ 🇸🇪 Sweden: -1 ms
+10-27 06:49:19.463  3199  3199 D MvpnTrial: hero: running=false connected=- shown=-105426-465-504278487 pressed=اتصال
+10-27 06:49:19.465  3199  3199 I MvpnTrial: پینگ همهٔ 103 سرور انجام شد؛ سریع‌ترین: 🇺🇸 United States
+10-27 06:49:57.440  3199  3199 I MvpnTrial: 102 لینک v2ray کپی شد
+10-27 06:51:17.820  3199  3199 D MvpnTrial: hero: running=false connected=- shown=-105426-465-504278487 pressed=اتصال
+10-27 06:51:17.823  3199  3199 I MvpnTrial: سرور انتخاب شد: 🇫🇮 Finland (price=0, type=vless · xhttp · reality)
+10-27 06:51:30.935  3199  3199 D MvpnTrial: hero: running=false connected=- shown=-105426-465-504278487 pressed=اتصال
+10-27 06:51:30.936  3199  3199 I MvpnTrial: سرور انتخاب شد: 🇫🇮 Finland (price=0, type=vless · xhttp · reality)
+10-27 06:51:37.335  3199  3199 I MvpnTrial: VpnTunnelService ایجاد شد
+10-27 06:51:37.368  3199  3586 I MvpnTrial: پیکربندی هسته آماده شد (vless) برای 🇫🇮 Finland
+10-27 06:51:37.463  3199  3199 D MvpnTrial: hero: running=false connected=- shown=-105426-465-504278487 pressed=اتصال
+10-27 06:51:37.818  3199  3586 I MvpnTrial: رابط TUN ساخته شد: 231
+10-27 06:51:37.947  3199  3586 I MvpnTrial: CoreCallback: startup
+10-27 06:51:37.948  3199  3586 D MvpnTrial: CoreCallback: 0 Started successfully, running
+10-27 06:51:37.948  3199  3586 I MvpnTrial: هستهٔ Xray شروع شد (tunFd=231، running=true)
+10-27 06:51:37.948  3199  3586 I MvpnTrial: hev: شروع (fd=231، socks=10808، mtu=1500)
+10-27 06:51:37.955  3199  3199 D MvpnTrial: hero: running=false connected=- shown=-105426-465-504278487 pressed=اتصال
+10-27 06:51:38.546  3199  3586 I MvpnTrial: آزمون ترافیک موفق: «HTTP/1.1 301 Moved Permanently» در 591ms
+10-27 06:51:38.546  3199  3586 I MvpnTrial: ترافیک از تونل عبور کرد (🇫🇮 Finland)
+10-27 06:51:38.547  3199  3586 I MvpnTrial: اتصال برقرار شد: متصل — 🇫🇮 Finland (VPN)
+10-27 06:51:38.548  3199  3199 D MvpnTrial: hero: running=true connected=-105426-465-504278487 shown=-105426-465-504278487 pressed=قطع اتصال
+10-27 06:52:00.835  3199  3199 D MvpnTrial: hero: running=true connected=-105426-465-504278487 shown=-7108-467-931889960 pressed=اتصال به سرور انتخابی
+10-27 06:52:00.841  3199  3199 I MvpnTrial: سرور انتخاب شد: 🇦🇺 Australia (price=0, type=hysteria · tls)
+10-27 06:54:00.785  3199  3199 D MvpnTrial: hero: running=true connected=-105426-465-504278487 shown=-128557-475--267964680 pressed=اتصال به سرور انتخابی
+10-27 06:54:00.785  3199  3199 I MvpnTrial: سرور انتخاب شد: 🇨🇦 Canada (price=0, type=vless · ws · tls)
+10-27 06:54:12.734  3199  3199 D MvpnTrial: hero: running=true connected=-105426-465-504278487 shown=-128557-475--267964680 pressed=اتصال به سرور انتخابی
+10-27 06:54:12.735  3199  3199 I MvpnTrial: سرور انتخاب شد: 🇨🇦 Canada (price=0, type=vless · ws · tls)
+10-27 06:54:12.755  3199  3199 I MvpnTrial: hev: متوقف شد
+10-27 06:54:12.760  3199  3199 D MvpnTrial: CoreCallback: 0 Core stopped
+10-27 06:54:12.821  3199  3199 D MvpnTrial: hero: running=false connected=- shown=-128557-475--267964680 pressed=اتصال
+10-27 06:54:12.845  3199  3199 D MvpnTrial: hero: running=false connected=- shown=-128557-475--267964680 pressed=اتصال
+10-27 06:54:13.439  3199  3199 I MvpnTrial: VpnTunnelService ایجاد شد
+10-27 06:54:13.441  3199  3586 I MvpnTrial: پیکربندی هسته آماده شد (vless) برای 🇨🇦 Canada
+10-27 06:54:13.446  3199  3199 D MvpnTrial: hero: running=false connected=- shown=-128557-475--267964680 pressed=اتصال
+10-27 06:54:13.463  3199  3586 I MvpnTrial: رابط TUN ساخته شد: 126
+10-27 06:54:13.503  3199  3586 I MvpnTrial: CoreCallback: startup
+10-27 06:54:13.506  3199  3586 D MvpnTrial: CoreCallback: 0 Started successfully, running
+10-27 06:54:13.508  3199  3586 I MvpnTrial: هستهٔ Xray شروع شد (tunFd=126، running=true)
+10-27 06:54:13.523  3199  3586 I MvpnTrial: hev: شروع (fd=126، socks=10808، mtu=1500)
+10-27 06:54:13.525  3199  3199 D MvpnTrial: hero: running=false connected=- shown=-128557-475--267964680 pressed=اتصال
+10-27 06:54:21.532  3199  3586 W MvpnTrial: آزمون ترافیک تلاش 1: بدون پاسخ (SocketTimeoutException) در 8006ms
+10-27 06:54:31.542  3199  3586 W MvpnTrial: آزمون ترافیک تلاش 2: بدون پاسخ (SocketTimeoutException) در 8009ms
+10-27 06:54:41.545  3199  3586 W MvpnTrial: آزمون ترافیک تلاش 3: بدون پاسخ (SocketTimeoutException) در 8002ms
+10-27 06:54:43.545  3199  3586 E MvpnTrial: ترافیک از تونل عبور نکرد؛ اتصال لغو شد (🇨🇦 Canada)
+10-27 06:54:43.547  3199  3199 D MvpnTrial: hero: running=false connected=- shown=-128557-475--267964680 pressed=اتصال
+10-27 06:54:43.549  3199  3586 I MvpnTrial: hev: متوقف شد
+10-27 06:54:43.549  3199  3586 D MvpnTrial: CoreCallback: 0 Core stopped
+10-27 06:54:43.566  3199  3199 D MvpnTrial: hero: running=false connected=- shown=-128557-475--267964680 pressed=اتصال
+10-27 06:54:43.628  3199  3199 D MvpnTrial: hero: running=false connected=- shown=-128557-475--267964680 pressed=اتصال
+10-27 06:57:18.518  3199  3199 D MvpnTrial: hero: running=false connected=- shown=-128557-475--267964680 pressed=اتصال
+10-27 06:57:18.518  3199  3199 I MvpnTrial: سرور انتخاب شد: 🇨🇦 Canada (price=0, type=vless · ws · tls)
+10-27 06:57:30.435  3199  3199 D MvpnTrial: hero: running=false connected=- shown=-128557-475--267964680 pressed=اتصال
+10-27 06:57:30.435  3199  3199 I MvpnTrial: سرور انتخاب شد: 🇨🇦 Canada (price=0, type=vless · ws · tls)
+10-27 06:57:30.454  3199  3199 I MvpnTrial: VpnTunnelService ایجاد شد
+10-27 06:57:30.486  3199  3586 I MvpnTrial: پیکربندی هسته آماده شد (vless) برای 🇨🇦 Canada
+10-27 06:57:30.511  3199  3199 D MvpnTrial: hero: running=false connected=- shown=-128557-475--267964680 pressed=اتصال
+10-27 06:57:30.520  3199  3586 I MvpnTrial: رابط TUN ساخته شد: 106
+10-27 06:57:30.610  3199  3586 I MvpnTrial: CoreCallback: startup
+10-27 06:57:30.611  3199  3586 D MvpnTrial: CoreCallback: 0 Started successfully, running
+10-27 06:57:30.614  3199  3586 I MvpnTrial: هستهٔ Xray شروع شد (tunFd=106، running=true)
+10-27 06:57:30.616  3199  3586 I MvpnTrial: hev: شروع (fd=106، socks=10808، mtu=1500)
+10-27 06:57:30.626  3199  3199 D MvpnTrial: hero: running=false connected=- shown=-128557-475--267964680 pressed=اتصال
+10-27 06:57:38.633  3199  3586 W MvpnTrial: آزمون ترافیک تلاش 1: بدون پاسخ (SocketTimeoutException) در 8012ms
+10-27 06:57:48.635  3199  3586 W MvpnTrial: آزمون ترافیک تلاش 2: بدون پاسخ (SocketTimeoutException) در 8002ms
+10-27 06:57:58.645  3199  3586 W MvpnTrial: آزمون ترافیک تلاش 3: بدون پاسخ (SocketTimeoutException) در 8009ms
+10-27 06:58:00.646  3199  3586 E MvpnTrial: ترافیک از تونل عبور نکرد؛ اتصال لغو شد (🇨🇦 Canada)
+10-27 06:58:00.647  3199  3199 D MvpnTrial: hero: running=false connected=- shown=-128557-475--267964680 pressed=اتصال
+10-27 06:58:00.658  3199  3586 I MvpnTrial: hev: متوقف شد
+10-27 06:58:00.662  3199  3586 D MvpnTrial: CoreCallback: 0 Core stopped
+10-27 06:58:00.706  3199  3199 D MvpnTrial: hero: running=false connected=- shown=-128557-475--267964680 pressed=اتصال
+10-27 06:58:00.717  3199  3199 D MvpnTrial: hero: running=false connected=- shown=-128557-475--267964680 pressed=اتصال
+10-27 07:00:40.135  3199  3199 D MvpnTrial: hero: running=false connected=- shown=-128557-475--267964680 pressed=اتصال
+10-27 07:00:40.135  3199  3199 I MvpnTrial: سرور انتخاب شد: 🇨🇦 Canada (price=0, type=vless · ws · tls)
+10-27 07:00:51.935  3199  3199 D MvpnTrial: hero: running=false connected=- shown=-128557-475--267964680 pressed=اتصال
+10-27 07:00:51.937  3199  3199 I MvpnTrial: سرور انتخاب شد: 🇨🇦 Canada (price=0, type=vless · ws · tls)
+10-27 07:00:51.957  3199  3199 I MvpnTrial: VpnTunnelService ایجاد شد
+10-27 07:00:51.984  3199  3586 I MvpnTrial: پیکربندی هسته آماده شد (vless) برای 🇨🇦 Canada
+10-27 07:00:52.004  3199  3199 D MvpnTrial: hero: running=false connected=- shown=-128557-475--267964680 pressed=اتصال
+10-27 07:00:52.015  3199  3586 I MvpnTrial: رابط TUN ساخته شد: 108
+10-27 07:00:52.078  3199  3586 I MvpnTrial: CoreCallback: startup
+10-27 07:00:52.079  3199  3586 D MvpnTrial: CoreCallback: 0 Started successfully, running
+10-27 07:00:52.101  3199  3586 I MvpnTrial: هستهٔ Xray شروع شد (tunFd=108، running=true)
+10-27 07:00:52.102  3199  3586 I MvpnTrial: hev: شروع (fd=108، socks=10808، mtu=1500)
+10-27 07:00:52.108  3199  3199 D MvpnTrial: hero: running=false connected=- shown=-128557-475--267964680 pressed=اتصال
+10-27 07:01:00.114  3199  3586 W MvpnTrial: آزمون ترافیک تلاش 1: بدون پاسخ (SocketTimeoutException) در 8008ms
+10-27 07:01:10.121  3199  3586 W MvpnTrial: آزمون ترافیک تلاش 2: بدون پاسخ (SocketTimeoutException) در 8006ms
+10-27 07:01:20.134  3199  3586 W MvpnTrial: آزمون ترافیک تلاش 3: بدون پاسخ (SocketTimeoutException) در 8012ms
+10-27 07:01:22.134  3199  3586 E MvpnTrial: ترافیک از تونل عبور نکرد؛ اتصال لغو شد (🇨🇦 Canada)
+10-27 07:01:22.142  3199  3199 D MvpnTrial: hero: running=false connected=- shown=-128557-475--267964680 pressed=اتصال
+10-27 07:01:22.147  3199  3586 I MvpnTrial: hev: متوقف شد
+10-27 07:01:22.150  3199  3586 D MvpnTrial: CoreCallback: 0 Core stopped
+10-27 07:01:22.182  3199  3199 D MvpnTrial: hero: running=false connected=- shown=-128557-475--267964680 pressed=اتصال
+10-27 07:01:22.258  3199  3199 D MvpnTrial: hero: running=false connected=- shown=-128557-475--267964680 pressed=اتصال

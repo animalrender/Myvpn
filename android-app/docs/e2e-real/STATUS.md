@@ -1,15 +1,15 @@
-# e2e-real — run 38
+# e2e-real — run 41
 
 - branch: arena/b9372ae1-myvpn
-- sha: ba76bb5be4c8deb156134ab5a4699afc89ab0059
-- started: 2026-10-27T05:20:03Z
-- kvm: crw-rw-rw- 1 root kvm 10, 232 Oct 27 05:15 /dev/kvm
+- sha: d3f684dbc70ca11ab5ee09d548518b80aab77420
+- started: 2026-10-27T06:48:06Z
+- kvm: crw-rw-rw- 1 root kvm 10, 232 Oct 27 06:40 /dev/kvm
 - booted: 1
 - apk: android-app/app/build/outputs/apk/release/app-release.apk
 Performing Streamed Install
 Success
 
-- e2e exit: 0
+- e2e exit: 1
 - outcome jdk: success
 - outcome sdk: success
 - outcome chmod: success
@@ -19,7 +19,7 @@ Success
 - outcome gradlesetup: success
 - outcome apk: success
 - outcome emusetup: success
-- outcome drive: success
+- outcome drive: failure
 
 ## gradle
 ```
@@ -29,9 +29,9 @@ Success
 
 # آزمون اتصال واقعی به بک‌اند اصلی (بدون هیچ ورودی کاربر)
 
-- زمان: 2026-10-27T05:37:08Z
+- زمان: 2026-10-27T07:03:49Z
 - آدرس آزمون: `http://1.1.1.1/cdn-cgi/trace`
-- سرور متصل‌شده: `🇨🇦 Canada`
+- سرور متصل‌شده: `🇫🇮 Finland`
 
 ## گام‌ها
 
@@ -40,48 +40,53 @@ Success
 - IP خروج پیش از اتصال: `None` (success/United States)
 - درخواست بدون تونل: HTTP 301
 - فهرست بارگذاری شد: 3 ردیف روی صفحه — خلاصه: `نمایش 105 از 105 سرور (رایگان: 105 / پولی: 0)`
-- نمونهٔ برچسب ردیف‌ها: `🇺🇸 United States`، `🇦🇺 Australia`، `🇫🇷 France`
-- مرتب‌سازی: درست — سه ردیف اول: `🇦🇺 Australia`، `🇦🇺 Australia`، `🇦🇺 Australia`
-- کپی همهٔ لینک‌ها: درست — 105 لینک v2ray در کلیپ‌بورد قرار گرفت
+- نمونهٔ برچسب ردیف‌ها: `🇫🇮 Finland`، `🇺🇸 United States`، `🇦🇺 Australia`
+- مرتب‌سازی: درست — سه ردیف اول: `🇦🇺 Australia`، `🇦🇺 Australia`، `🇨🇦 Canada`
+- کپی همهٔ لینک‌ها: درست — 102 لینک v2ray در کلیپ‌بورد قرار گرفت
 - پایان پینگ همه: بله
-- سروری که برنامه خودش انتخاب کرد: `🌐  🇺🇸 United States` (پینگ 66 ms)
-- ردیف‌های دارای پینگ در فهرست: 31
-- اتصال به سرور انتخاب‌شده: `🇦🇺 Australia`
+- سروری که برنامه خودش انتخاب کرد: `🌐  🇫🇮 Finland` (پینگ 179 ms)
+- ردیف‌های دارای پینگ در فهرست: 26
+- اتصال به سرور انتخاب‌شده: `🇫🇮 Finland`
+- دیالوگ مجوز VPN تأیید شد
+- وضعیت تونل: `متصل — &#127467;&#127470; Finland (VPN)`
+- رابط tun0: موجود
+- درخواست از داخل تونل: HTTP 301
+- ترافیک از تونل عبور کرد (تلاش 1 از 5)
+- IP خروج داخل تونل: `2a01:4f9:c010:7583::1` (FI — HEL)
+- ردیف‌های نامزد برای تغییر سرور: 25 (از 26 ردیف دارای پینگ)
+- تغییر سرور به: `🇦🇺 Australia` (164 ms)
 - دیالوگ مجوز VPN تأیید شد
 - خطاهای برنامه:
 ```
 سنجش تأخیر ناموفق
 go.Universe$proxyerror: Get "https://www.gstatic.com/generate_204": io: read/write on closed pipe
-ترافیک از تونل عبور نکرد؛ اتصال لغو شد (🇦🇺 Australia)
+go.Universe$proxyerror: Get "https://www.gstatic.com/generate_204": net/http: TLS handshake timeout
 ```
-- ردیف 1 وصل نشد؛ ردیف بعدی
-- تلاش 2: اتصال به `🇨🇦 Canada` (69 ms)
-- وضعیت تونل: `متصل — &#127464;&#127462; Canada (VPN)`
-- رابط tun0: موجود
-- درخواست از داخل تونل: HTTP 301
-- ترافیک از تونل عبور کرد (تلاش 2 از 5)
-- IP خروج داخل تونل: `2600:1f11:82d:800:9946:5381:6917:2ff9` (CA — YUL)
-- ردیف‌های نامزد برای تغییر سرور: 16 (از 31 ردیف دارای پینگ)
-- تغییر سرور به: `🇦🇺 Australia` (187 ms)
+- تغییر سرور به: `🇨🇦 Canada` (76 ms)
 - خطاهای برنامه:
 ```
 سنجش تأخیر ناموفق
 go.Universe$proxyerror: Get "https://www.gstatic.com/generate_204": io: read/write on closed pipe
-ترافیک از تونل عبور نکرد؛ اتصال لغو شد (🇦🇺 Australia)
+go.Universe$proxyerror: Get "https://www.gstatic.com/generate_204": net/http: TLS handshake timeout
+ترافیک از تونل عبور نکرد؛ اتصال لغو شد (🇨🇦 Canada)
 ```
-- تغییر سرور به: `🇦🇺 Australia` (138 ms)
+- تغییر سرور به: `🇨🇦 Canada` (83 ms)
 - خطاهای برنامه:
 ```
 سنجش تأخیر ناموفق
 go.Universe$proxyerror: Get "https://www.gstatic.com/generate_204": io: read/write on closed pipe
-ترافیک از تونل عبور نکرد؛ اتصال لغو شد (🇦🇺 Australia)
+go.Universe$proxyerror: Get "https://www.gstatic.com/generate_204": net/http: TLS handshake timeout
+ترافیک از تونل عبور نکرد؛ اتصال لغو شد (🇨🇦 Canada)
 ```
-- تغییر سرور به: `🇫🇷 France` (238 ms)
-- وضعیت تونل: `متصل — &#127467;&#127479; France (VPN)`
-- برچسب دکمه پس از انتخاب سرور دوم: `قطع اتصال`
-- درخواست پس از تغییر سرور: HTTP 301
-- برچسب دکمه پیش از قطع: `قطع اتصال`
-- پس از قطع اتصال: tun0 حذف شد
+- دکمه در وضعیت «اتصال» است؛ ابتدا ردیف متصل انتخاب می‌شود: `🌐  🇨🇦 Canada`
+- خطاهای برنامه:
+```
+سنجش تأخیر ناموفق
+go.Universe$proxyerror: Get "https://www.gstatic.com/generate_204": io: read/write on closed pipe
+go.Universe$proxyerror: Get "https://www.gstatic.com/generate_204": net/http: TLS handshake timeout
+ترافیک از تونل عبور نکرد؛ اتصال لغو شد (🇨🇦 Canada)
+```
+- برچسب دکمه پیش از قطع: `اتصال`
 
 ## تصاویر
 
@@ -95,20 +100,12 @@ go.Universe$proxyerror: Get "https://www.gstatic.com/generate_204": io: read/wri
 
 ![03-selected](03-selected.png)
 
-![03-connect-failed](03-connect-failed.png)
-
-![04-selected](04-selected.png)
-
-![04-connected](04-connected.png)
+![03-connected](03-connected.png)
 
 ![07-selected](07-selected.png)
 
 ![07-connect-failed](07-connect-failed.png)
 
-![07-connected](07-connected.png)
-
-![08-disconnected](08-disconnected.png)
-
 ## نتیجه
 
-**موفق** — برنامه بدون هیچ ورودی کاربر، فهرست را از بک‌اند گرفت، مقدار رمزشدهٔ هر ردیف را خودش باز کرد، سریع‌ترین سرور را خودش انتخاب کرد، وصل شد و ترافیک از تونل عبور کرد، سرور عوض شد و اتصال تمیز قطع شد.
+**ناموفق**: switch-failed, no-disconnect
