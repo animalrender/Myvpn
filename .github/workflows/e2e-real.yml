@@ -190,6 +190,16 @@ jobs:
           timeout 90 adb logcat -b all -d > /tmp/logcat-all.txt 2>/dev/null || true
           tail -c 200000 /tmp/logcat-all.txt > "$OUT/logcat-all.txt" 2>/dev/null || true
           cp /tmp/emulator.log "$OUT/emulator.txt" 2>/dev/null || true
+          # A compile error must be readable from the annotation, not just from the runner log.
+          if [ -f /tmp/gradle.log ]; then
+            {
+              echo
+              echo "## gradle"
+              echo '```'
+              grep -E '^(e: |> Task .*FAILED|FAILURE|\* What went wrong|Caused by)' /tmp/gradle.log | head -25
+              echo '```'
+            } >> "$OUT/STATUS.md"
+          fi
           # The report is also appended to STATUS.md so it survives a concurrent-push race.
           if [ -f "$OUT/CONNECT-REAL.md" ]; then
             { echo; echo "---"; echo; cat "$OUT/CONNECT-REAL.md"; } >> "$OUT/STATUS.md"
