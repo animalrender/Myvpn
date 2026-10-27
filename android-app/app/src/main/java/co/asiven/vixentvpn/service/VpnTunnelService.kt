@@ -160,20 +160,8 @@ class VpnTunnelService : VpnService() {
     private fun verifyThroughTunnel(attempts: Int = 3): Boolean {
         repeat(attempts) { index ->
             val started = System.currentTimeMillis()
-            val code = runCatching {
-                val proxy = Proxy(Proxy.Type.SOCKS, InetSocketAddress("127.0.0.1", ConfigBuilder.SOCKS_PORT))
-                Socket(proxy).use { socket ->
-                    socket.connect(InetSocketAddress("1.1.1.1", 80), 8000)
-                    socket.soTimeout = 8000
-                    socket.getOutputStream().write(
-                        "GET /cdn-cgi/trace HTTP/1.1\r\nHost: 1.1.1.1\r\n" +
-                            "User-Agent: vixentvpn-trial\r\nConnection: close\r\n\r\n".toByteArray()
-                    )
-                    socket.getOutputStream().flush()
-                    val line = socket.getInputStream().bufferedReader().readLine().orEmpty()
-                    line.trim()
-                }
-            }.getOrElse { line -> "بدون پاسخ (${line.javaClass.simpleName})" }
+            val code = runCatching { requestThroughSocks() }
+                .getOrElse { line -> "بدون پاسخ (${line.javaClass.simpleName})" }
             val elapsed = System.currentTimeMillis() - started
             if (code.startsWith("HTTP/")) {
                 AppLog.i("آزمون ترافیک موفق: «$code» در ${elapsed}ms")
@@ -183,6 +171,26 @@ class VpnTunnelService : VpnService() {
             Thread.sleep(2000)
         }
         return false
+    }
+
+    /** First status line of one plain-HTTP GET sent through the core's SOCKS inbound. */
+    private fun requestThroughSocks(): String {
+        val proxy = Proxy(Proxy.Type.SOCKS, InetSocketAddress("127.0.0.1", ConfigBuilder.SOCKS_PORT))
+        val socket = Socket(proxy)
+        try {
+            socket.connect(InetSocketAddress("1.1.1.1", 80), 8000)
+            socket.soTimeout = 8000
+            val request = "GET /cdn-cgi/trace HTTP/1.1\r\n" +
+                "Host: 1.1.1.1\r\n" +
+                "User-Agent: vixentvpn-trial\r\n" +
+                "Connection: close\r\n\r\n"
+            val bytes = request.toByteArray(Charsets.UTF_8)
+            socket.getOutputStream().write(bytes, 0, bytes.size)
+            socket.getOutputStream().flush()
+            return socket.getInputStream().bufferedReader().readLine().orEmpty().trim()
+        } finally {
+            runCatching { socket.close() }
+        }
     }
 
     private fun establishTun(): ParcelFileDescriptor? = try {

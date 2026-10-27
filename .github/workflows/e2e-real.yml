@@ -196,7 +196,8 @@ jobs:
               echo
               echo "## gradle"
               echo '```'
-              grep -E '^(e: |> Task .*FAILED|FAILURE|\* What went wrong|Caused by)' /tmp/gradle.log | head -25
+              grep -A6 -E '^e: ' /tmp/gradle.log | head -40
+              grep -E '^(> Task .*FAILED|FAILURE|\* What went wrong|Caused by)' /tmp/gradle.log | head -10
               echo '```'
             } >> "$OUT/STATUS.md"
           fi
