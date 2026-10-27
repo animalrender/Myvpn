@@ -57,7 +57,8 @@ def shot(name):
     with open(path, "wb") as handle:
         subprocess.run(["adb", "exec-out", "screencap", "-p"], stdout=handle,
                        stderr=subprocess.DEVNULL, timeout=180)
-    SHOTS.append(name)
+    if name not in SHOTS:
+        SHOTS.append(name)
 
 
 def adb(*args, timeout=240):
@@ -399,6 +400,19 @@ def visible_names(limit=3):
     return names
 
 
+def wait_ping_idle(timeout=600):
+    """The app starts «پینگ همه» by itself right after the list loads; the sort dialog and the
+    copy-all menu must not be opened while that worker is repainting the summary line."""
+    deadline = time.time() + timeout
+    while time.time() < deadline:
+        node = find(rid="summaryText")
+        summary = (node.get("text") or "") if node else ""
+        if "پینگ" not in summary and "…" not in summary:
+            return True
+        time.sleep(5)
+    return False
+
+
 def check_sort():
     """Sorts by name ascending and checks the first painted rows really are in that order."""
     if not tap_rid("sortButton"):
@@ -594,7 +608,11 @@ def main(argv):
     log("نمونهٔ برچسب ردیف‌ها: " + "، ".join(f"`{r['name']}`" for r in loaded[:3]))
 
     # ------------------------------------------------------------ 2b. sort + copy all
-    # These two are user-facing features of this build, so the run drives them for real.
+    # These two are user-facing features of this build, so the run drives them for real. The
+    # activity starts «پینگ همه» on its own right after the list arrives, so wait for that to
+    # settle first — otherwise the dialog is opened while the list is still being repainted.
+    if not wait_ping_idle():
+        log("هشدار: پینگ خودکار در زمان انتظار تمام نشد؛ آزمون مرتب‌سازی ادامه یافت")
     sort_report = check_sort()
     log("مرتب‌سازی: " + sort_report)
     if not sort_report.startswith("درست"):
@@ -737,9 +755,10 @@ def main(argv):
                 switched = True
                 globals()["SWITCHED"] = True
                 break
-            failures.append(f"probe-after-switch-{code2 or 'none'}")
         if not others:
             log("ردیف دومی با پینگ موفق در صفحهٔ فعلی دیده نشد")
+        elif not switched:
+            failures.append("switch-failed")
 
         # ---------------------------------------------------------- 6. teardown
         # The hero button reads «قطع اتصال» only while the *connected* row is the selected one;
