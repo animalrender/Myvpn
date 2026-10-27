@@ -58,10 +58,10 @@ object ConfigBuilder {
     }
 
     /*
-     * Note: this app pins libv2ray `v25.8.3` (xray-core 1.250803.0) on purpose. Newer cores
-     * refuse a plaintext VLESS/Trojan outbound whose address is a public IP literal, and 98 of
-     * the 105 rows of this backend are such links — the core has to stay on the last build
-     * before that check, exactly like the original APK's older core.
+     * Note: this app pins libv2ray `v26.6.27` on purpose: xray-core v26.7.11 added a check that
+     * refuses a plaintext VLESS/Trojan outbound whose address is a public IP literal, and 98 of
+     * the 105 rows of this backend are such links — the core stays on the last build before it,
+     * exactly like the original APK's older core.
      */
 
     /** Full runtime config: local SOCKS+HTTP inbounds, the server outbound, direct/block. */

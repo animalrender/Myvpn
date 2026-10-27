@@ -71,7 +71,7 @@ REA و androguard است و تفاوت‌های آن را با نسخهٔ آزم
 
 | مورد | `base.apk` | نسخهٔ آزمایشی |
 | --- | --- | --- |
-| هستهٔ Xray | `libgojni.so` (gomobile، همان خانوادهٔ Xray) | `libv2ray.aar` از AndroidLibXrayLite **v25.8.3** (پین‌شده: هسته‌های ≥ v25.9.11 لینک VLESS بدون TLS روی IP عمومی را رد می‌کنند و ۹۸ ردیف این بک‌اند از همین نوع است) |
+| هستهٔ Xray | `libgojni.so` (gomobile، همان خانوادهٔ Xray) | `libv2ray.aar` از AndroidLibXrayLite **v26.6.27** (پین‌شده: هسته‌های ≥ v26.7.11 لینک VLESS بدون TLS روی IP عمومی را رد می‌کنند و ۹۸ ردیف این بک‌اند از همین نوع است) |
 | تونل TUN→SOCKS | `libtun2socks.so` + `hev` | `libhev-socks5-tunnel.so` 2.19.3 (ndk-build) |
 | پورت‌های محلی | SOCKS 10808 / HTTP 10809 | همان |
 | TUN | `10.10.10.2/24`, MTU 1500, DNS `1.1.1.1`/`8.8.8.8` | همان |
@@ -109,7 +109,7 @@ REA و androguard است و تفاوت‌های آن را با نسخهٔ آزم
   `app_name`, `version_code`, `seen`)
 - آدرس پایهٔ API (`https://managev1.xyz`)، مسیرهای `/api/protocols` و `/api/v2/protocols`
 - فهرست ۱۰۵ سرور، نام‌ها، پرچم‌ها، `price`/`usage` و همهٔ فیلدهای ناشناختهٔ دیگر
-- پشتهٔ هسته: Xray-core (AndroidLibXrayLite v25.8.3) + hev tun2socks + همان پورت‌ها و پارامترهای TUN
+- پشتهٔ هسته: Xray-core (AndroidLibXrayLite v26.6.27) + hev tun2socks + همان پورت‌ها و پارامترهای TUN
 - Firebase (`firebase_token` و همان پروژه)
 - قالب لینک اشتراک v2ray برای هر سرور (سازگار با v2rayNG/Streisand)
 

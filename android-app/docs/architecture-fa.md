@@ -32,7 +32,7 @@
 `libtun2socks.so` (BadVPN tun2socks)، `libmmkv.so`، `libstub.so` (Dex2C). مسیر بازتولیدپذیر:
 
 - **`libv2ray.aar`** از [AndroidLibXrayLite](https://github.com/2dust/AndroidLibXrayLite) (تگ
-  `v25.8.3`) — همان build گوموبایل `xtls/xray-core`. API استفاده‌شده:
+  `v26.6.27`) — همان build گوموبایل `xtls/xray-core`. API استفاده‌شده:
   `Libv2ray.initCoreEnv(assetPath, xudpKey)`، `Libv2ray.newCoreController(handler)`،
   `controller.startLoop(config, tunFd)`، `controller.stopLoop()`،
   `Libv2ray.measureOutboundDelay(config, testUrl)`، `Libv2ray.checkVersionX()`.

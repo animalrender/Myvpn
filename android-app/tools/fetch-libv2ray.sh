@@ -4,12 +4,13 @@
 # are reachable.
 set -euo pipefail
 
-# xray-core ≥ v25.9.11 refuses a *plaintext* VLESS/Trojan outbound to a public IP literal
-# ("vless without TLS or other encryption is prohibited unless the server address is a private
-# IP or domain"), and 98 of this backend's 105 rows are exactly that kind of share link. The
-# original APK ships an older core and dials them fine, so the trial app pins the last release
-# before that check (libv2ray Java API is identical: initCoreEnv/newCoreController/measureOutboundDelay).
-VERSION="${LIBV2RAY_VERSION:-v25.8.3}"
+# xray-core v26.7.11 added `validateOutboundTransportSecurity`, which refuses a *plaintext*
+# VLESS/Trojan outbound whose address is a public IP literal ("vless without TLS or other
+# encryption is prohibited unless the server address is a private IP or domain"). 98 of this
+# backend's 105 rows are exactly such links, and the original APK's older core dials them fine,
+# so the trial app pins the last release before that check. Its libv2ray Java API is identical
+# to the newest one (initCoreEnv / newCoreController / startLoop(config, tunFd) / measureOutboundDelay).
+VERSION="${LIBV2RAY_VERSION:-v26.6.27}"
 DEST_DIR="$(cd "$(dirname "${BASH_SOURCE[0]}")/.." && pwd)/app/libs"
 DEST="$DEST_DIR/libv2ray.aar"
 
