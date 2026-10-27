@@ -13,8 +13,8 @@ REA و androguard است و تفاوت‌های آن را با نسخهٔ آزم
 
 | ویژگی | `base.apk` | نسخهٔ آزمایشی |
 | --- | --- | --- |
-| `applicationId` | `co.asiven.vixentvpn` | `co.asiven.vixentvpn` (یکسان) |
-| نسخه | `3.2.0` / `versionCode 1004220` | `3.2.0-trial` / `versionCode 1004220` (یکسان) |
+| `applicationId` | `co.asiven.vixentvpn` | `co.asiven.vixentvpn.trial` (عمداً جدا: نصب کنار اپ اصلی؛ هدر `app_name` برای بک‌اند همان مقدار اصلی است) |
+| نسخه | `3.2.0` / `versionCode 1004220` | `3.2.0-trial` / `versionCode 1004221` (هدر `version_code` برای بک‌اند همان `1004220` می‌ماند) |
 | Activity شروع | `co.dev.ui.WelcomeActivity` | `…trial.ui.MainActivity` (یک صفحه، بدون معرفی) |
 | `minSdk` / `targetSdk` | ۲۱ / ۳۴ | ۲۴ / ۳۵ |
 | معماری‌های داخل APK | `arm64-v8a`, `armeabi-v7a` | `arm64-v8a` و `x86_64` (دو APK جدا) |
@@ -24,8 +24,9 @@ REA و androguard است و تفاوت‌های آن را با نسخهٔ آزم
 اختلاف `minSdk` عمدی است: `minSdk 24` حداقل نسخهٔ پشتیبانی‌شدهٔ `libv2ray` و
 `hev-socks5-tunnel` است و پایین‌تر بردن آن بدون تست روی اندروید ۵ تا ۶ ریسک شکست هستهٔ Xray را
 دارد. `targetSdk 35` هم لازمهٔ نصب و اجرا در اندروید ۱۵ است؛ در غیر این صورت سرویس VPN
-محدود می‌شود. هیچ‌کدام روی هدرهای API اثر ندارند (هدرها از `applicationId`، `versionCode` و
-امضا ساخته می‌شوند).
+محدود می‌شود. هیچ‌کدام روی هدرهای API اثر ندارند: `app_name` و `version_code` مقدار **ثابت**
+(`BuildConfig.HEADER_APP_NAME` / `HEADER_VERSION_CODE`) دارند و فقط `sign`/`sha_hexadecimal`
+از امضای APK ساخته می‌شوند (امضا هم همان AOSP testkey است).
 
 ## ۲) محافظت کد (سه لایه)
 
@@ -105,8 +106,9 @@ REA و androguard است و تفاوت‌های آن را با نسخهٔ آزم
 
 ## ۷) آنچه با نسخهٔ اصلی یکسان است
 
-- `applicationId`، `versionCode`، امضا و در نتیجه **همهٔ هدرهای API** (`sign`, `sha_hexadecimal`,
-  `app_name`, `version_code`, `seen`)
+- **هدرهای API** (`sign`, `sha_hexadecimal`, `app_name`, `version_code`, `seen`) — امضا همان است و
+  `app_name`/`version_code` ثابت‌اند، بنابراین تغییر `applicationId`/`versionCode` اپ به آن‌ها
+  کاری ندارد
 - آدرس پایهٔ API (`https://managev1.xyz`)، مسیرهای `/api/protocols` و `/api/v2/protocols`
 - فهرست ۱۰۵ سرور، نام‌ها، پرچم‌ها، `price`/`usage` و همهٔ فیلدهای ناشناختهٔ دیگر
 - پشتهٔ هسته: Xray-core (AndroidLibXrayLite v26.6.27) + hev tun2socks + همان پورت‌ها و پارامترهای TUN

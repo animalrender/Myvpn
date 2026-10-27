@@ -106,7 +106,8 @@ sha256sum -c mvpn-trial-arm64-51.apk.sha256
 
 * پیاده‌سازی: `app/src/main/java/co/asiven/vixentvpn/trial/core/PayloadCipher.kt`
 * اجرای واقعی در CI روی پاسخ زنده: **۱۰۵ از ۱۰۵ ردیف** باز شد
-  (۹۸ `vless`، ۱ `trojan`، ۶ JSON) — شاهد: `android-app/docs/probe-rows/decrypt-coverage.txt`
+  (۹۸ `vless`، ۱ `vmess`، ۱ `trojan`، ۵ کانفیگ JSON) — شاهد:
+  `android-app/docs/probe-rows/decrypt-coverage.txt` و `decrypt-detail.txt`
 * کشف از کد عمومی پنل مدیریت همین خانوادهٔ سرویس (`vefghmhassan/vpn-pannel` →
   `internal/utils/tools.go` → `DecryptValue`) و سپس آزمون روی دادهٔ واقعی؛ مسیرهایی که به
   بن‌بست رسیدند (کلید در APK نیست، هیچ اندپوینتی متن‌باز برنمی‌گرداند، `version_code` بی‌اثر است)
@@ -180,7 +181,7 @@ TUN به بیرون می‌فرستد و ردِ آن را در لاگ access س�
 
 ورک‌فلوی `ui-snapshot` نسخهٔ `x86_64` را با همان کلید امضا می‌سازد، شبیه‌ساز Android 14
 (۱۰۸۰×۲۲۸۰، KVM) را بالا می‌آورد، اپ را نصب و با `tools/ui-drive.py` کنترل می‌کند و از هر مرحله
-اسکرین‌شات می‌گیرد. اجرای آخر (run 12) **بدون هیچ خطا** تمام شد (`FAILURES: none`،
+اسکرین‌شات می‌گیرد. اجرای تأییدشده (run 19) **بدون هیچ خطا** تمام شد (`FAILURES: none`،
 `crash-check: pid=yes, fatal lines=0`) و ۱۱ تصویر در [`android-app/docs/screenshots`](
 screenshots/) کامیت شد:
 
@@ -227,21 +228,31 @@ APK اصلی دوباره از گوگل‌درایو دانلود و با REA/an
 * ابزار بازتولید: `tools/apk-keys.py`، `tools/dcc-native-map.py`، `tools/probe-rows.py`
   (+ ورک‌فلوی `probe-rows.yml`) و شواهد خام در `android-app/docs/probe-rows/`.
 
-### 📚 مستندات فارسی داخل پروژه
+### 📚 مستندات فارسی داخل پروژه (کامل)
 
-* `android-app/docs/README-fa.md` — معرفی، نصب، قابلیت‌ها، وضعیت رمزنگاری `value`، وضعیت Firebase، عیب‌یابی
-* `android-app/docs/value-decrypt-fa.md` — قاعدهٔ باز کردن `value` + شواهد ۱۰۵/۱۰۵
-* `android-app/docs/api-contract-fa.md` — قرارداد کامل API و هدرها
-* `android-app/docs/architecture-fa.md` — معماری، TUN/hev، کانفیگ Xray، بازسازی لینک اشتراک
-* `android-app/docs/re-analysis-fa.md` — بازآزمایی `base.apk` و جدول تفاوت‌ها با نسخهٔ آزمایشی
-* `android-app/docs/connect-test/CONNECT.md` — گزارش آزمون اتصال واقعی (تولیدشده در CI)
-* `android-app/docs/e2e-real/CONNECT-REAL.md` — گزارش آزمون بدون ورودی کاربر روی بک‌اند واقعی
-* `docs/apk-vixentvpn-analysis-fa.md` — تحلیل کامل APK اصلی
+راهنمای هر سند در `android-app/docs/INDEX-fa.md` است؛ خلاصه:
+
+| سند | محتوا |
+| --- | --- |
+| `INDEX-fa.md` | نقشهٔ همهٔ مستندات، شاهدها و قواعد پروژه |
+| `README-fa.md` | معرفی، قابلیت‌ها، قرارداد بک‌اند، ساخت، پرسش‌های متداول |
+| `install-fa.md` | نصب قدم‌به‌قدم، نصب کنار اپ اصلی، مجوزها، به‌روزرسانی، چک‌لیست تست |
+| `troubleshooting-fa.md` | همهٔ خطاهای واقعیِ دیده‌شده + راه‌حل |
+| `security-privacy-fa.md` | داده‌های ارسالی، مجوزها، Firebase، مدل اعتماد، مجوزهای GPL/MPL |
+| `build-fa.md` | ساخت محلی و CI، ورک‌فلوها، نسخه‌گذاری، افزودن قابلیت |
+| `verification-fa.md` | شواهد آزمون‌ها، آخرین اجرای سبز، نحوهٔ بازتولید |
+| `changelog-fa.md` | تاریخچهٔ تغییرات و نسخه‌ها |
+| `architecture-fa.md` | معماری، جریان کانفیگ، نقشهٔ کلاس‌ها |
+| `api-contract-fa.md` | قرارداد کامل API و هدرها |
+| `value-decrypt-fa.md` | قاعدهٔ باز کردن `value` و شواهد ۱۰۵/۱۰۵ |
+| `re-analysis-fa.md` | بازآزمایی `base.apk` و جدول تفاوت‌ها با نسخهٔ آزمایشی |
+| `e2e-real/` · `connect-test/` · `screenshots/` · `probe-rows/` | شاهدهای خام CI (گزارش، تصویر، لاگ، پاسخ بک‌اند) |
+| `../../docs/apk-vixentvpn-analysis-fa.md` | تحلیل کامل APK اصلی |
 
 ### 🧪 پیشنهاد تست برای شما
 
 1. نصب APK از ریلیز `trial-51` (روی شبیه‌ساز: فایل `x86_64`).
-2. زدن «دریافت و بازآوری همهٔ سرورها» ← باید ۱۰۵ سرور با برچسب‌ها بیاید.
+2. صبر کنید فهرست خودکار بیاید (نوار خلاصه: «نمایش ۱۰۵ از ۱۰۵ سرور») — چیزی از شما پرسیده نمی‌شود.
 3. «پینگ همه» و «لینک v2ray» یک ردیف را امتحان کنید.
 4. «پینگ همه» ← سریع‌ترین سرور خودکار انتخاب می‌شود؛ «اتصال» را بزنید و مجوز VPN را تأیید کنید.
    برای عوض کردن سرور در حال اتصال، سرور دیگر را انتخاب کنید؛ دکمه به «اتصال به سرور انتخابی»
