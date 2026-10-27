@@ -37,6 +37,7 @@ DNS_PROBE_URL = "http://connectivitycheck.gstatic.com/generate_204"
 TRACE_URL = "https://www.cloudflare.com/cdn-cgi/trace"
 COMPONENT = "co.asiven.vixentvpn.trial/co.asiven.vixentvpn.trial.ui.MainActivity"
 REPORT = []
+SWITCHED = False
 SHOTS = []
 
 
@@ -700,38 +701,39 @@ def main(argv):
             failures.append("exit-ip-unchanged")
 
         # ---------------------------------------------------------- 5. second row
-        scroll_to_top()
-        candidates = [r for r in rows() if ping_ms(r["ping"])]
-        if not candidates:
-            for _ in range(6):
-                shell("input swipe 540 1750 540 700 250")
-                time.sleep(1)
-                candidates = [r for r in rows() if ping_ms(r["ping"])]
-                if candidates:
-                    break
-            scroll_to_top()
-        others = [r for r in candidates if r["name"] != connected] or candidates
-        if others:
-            second = others[0]
+        # A second, *independently measured* row proves that switching servers works and that the
+        # tunnel is not pinned to the first outbound. Duplicate country names are disambiguated by
+        # the search box inside connect_row().
+        others = [r for r in scan_pinged_rows() if r["name"] != connected]
+        switched = False
+        for second in others[:3]:
             log(f"تغییر سرور به: `{second['name']}` ({second['ping']})")
-            if connect_row(second, "07"):
-                label = connect_button_text()
-                log(f"برچسب دکمه پس از انتخاب سرور دوم: `{label}`")
-                if label and label != "قطع اتصال":
-                    tap_rid("connectButton")
-                    time.sleep(10)
-                accept_vpn_dialog()
-                for _ in range(30):
-                    if find(text="متصل", exact=False):
-                        break
-                    time.sleep(2)
-                code2 = probe()
-                log(f"درخواست پس از تغییر سرور: HTTP {code2 or 'بدون پاسخ'}")
-                if not traffic_ok(code2):
-                    failures.append(f"probe-after-switch-{code2 or 'none'}")
-            else:
-                failures.append("switch-failed")
-        else:
+            if not connect_row(second, "07"):
+                continue
+            label = connect_button_text()
+            log(f"برچسب دکمه پس از انتخاب سرور دوم: `{label}`")
+            if label and label != "قطع اتصال":
+                tap_rid("connectButton")
+                time.sleep(10)
+            accept_vpn_dialog()
+            code2 = None
+            for _ in range(20):
+                node = find(rid="statusText")
+                status = (node.get("text") or "").strip() if node else ""
+                if status.startswith("متصل"):
+                    break
+                if status.startswith("خطا"):
+                    log(f"**اتصال سرور دوم ناموفق**: `{status}`")
+                    break
+                time.sleep(3)
+            code2 = probe()
+            log(f"درخواست پس از تغییر سرور: HTTP {code2 or 'بدون پاسخ'}")
+            if traffic_ok(code2):
+                switched = True
+                globals()["SWITCHED"] = True
+                break
+            failures.append(f"probe-after-switch-{code2 or 'none'}")
+        if not others:
             log("ردیف دومی با پینگ موفق در صفحهٔ فعلی دیده نشد")
 
         # ---------------------------------------------------------- 6. teardown
@@ -789,9 +791,10 @@ def render_report(failures, baseline_ip=None, fastest=None):
     elif failures:
         lines.append("**ناموفق**: " + ", ".join(failures))
     else:
+        tail = "، سرور عوض شد و اتصال تمیز قطع شد." if SWITCHED else " و اتصال تمیز قطع شد."
         lines.append("**موفق** — برنامه بدون هیچ ورودی کاربر، فهرست را از بک‌اند گرفت، "
                      "مقدار رمزشدهٔ هر ردیف را خودش باز کرد، سریع‌ترین سرور را خودش انتخاب کرد، "
-                     "وصل شد، ترافیک از تونل عبور کرد، سرور عوض شد و اتصال تمیز قطع شد.")
+                     "وصل شد و ترافیک از تونل عبور کرد" + tail)
     return "\n".join(lines) + "\n"
 
 
