@@ -207,6 +207,9 @@ jobs:
         uses: softprops/action-gh-release@v2
         with:
           tag_name: trial-${{ github.run_number }}
+          # The tag must point at the exact commit the APKs were built from (the default would tag
+          # the repository's default branch head, which is not this branch).
+          target_commitish: ${{ github.sha }}
           name: MVPN Trial — build ${{ github.run_number }}
           body: |
             نسخهٔ آزمایشی MVPN Trial — بدون تبلیغ، بدون حساب کاربری، بدون قفل قیمت (Firebase طبق اپ اصلی).
@@ -221,6 +224,12 @@ jobs:
               نیست حذف شود (هدر `app_name` برای بک‌اند همان `co.asiven.vixentvpn` می‌ماند).
             * 🔓 سرورها بدون هیچ ورودی از کاربر: فهرست از بک‌اند، باز کردن `value` در دستگاه و اتصال
               با هستهٔ Xray (پوشش ۱۰۵/۱۰۵ ردیف).
+            * ✅ **«متصل» فقط با ترافیک واقعی**: بعد از بالا آمدن هسته یک درخواست واقعی از SOCKS رد
+              می‌شود؛ اگر سروری پاسخ ندهد تونل بسته و پیام صریح داده می‌شود (نه «سبز شدن الکی»).
+            * 🧪 **تأییدشده با آزمون خودکار روی شبیه‌ساز**: دریافت فهرست، پینگ همه، اتصال، عبور ترافیک،
+              تغییر سرور و قطع تمیز — گزارش در `android-app/docs/e2e-real/CONNECT-REAL.md`.
+
+            کامیت ساخت: `${{ github.sha }}`
 
             دو فایل در این انتشار هست:
 
