@@ -43,6 +43,7 @@ import kotlinx.coroutines.Job
 import kotlinx.coroutines.async
 import kotlinx.coroutines.awaitAll
 import kotlinx.coroutines.coroutineScope
+import kotlinx.coroutines.delay
 import kotlinx.coroutines.launch
 import kotlinx.coroutines.sync.Semaphore
 import kotlinx.coroutines.sync.withPermit
@@ -284,10 +285,17 @@ class MainActivity : AppCompatActivity() {
         binding.statusText.text = getString(R.string.status_fetching)
         lifecycleScope.launch {
             pingJob?.cancel()
-            val result = withContext(Dispatchers.IO) {
+            var result = withContext(Dispatchers.IO) {
                 api.fetchToken()
                 api.fetchSetting()
                 api.fetchProtocols()
+            }
+            // The backend occasionally answers with an empty body; one silent retry keeps the
+            // «zero-input» promise instead of showing an error the user cannot act on.
+            if (result.isEmpty()) {
+                AppLog.w("فهرست سرورها خالی برگشت؛ تلاش دوم")
+                delay(1500)
+                result = withContext(Dispatchers.IO) { api.fetchProtocols() }
             }
             busy = false
             setProgress(false)
