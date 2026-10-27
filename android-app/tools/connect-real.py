@@ -652,21 +652,30 @@ def main(argv):
     # retried with the next measured rows, exactly like a user would tap the next server.
     pinged = scan_pinged_rows()
     log(f"ردیف‌های دارای پینگ در فهرست: {len(pinged)}")
+    # One row per country first, then the remaining duplicates. Several rows of the same country
+    # are often the same dead host, and three attempts burnt on three «Australia» rows would hide
+    # the rows that actually work.
+    attempt_limit = 5
     attempts = []
     target_name = chosen.replace("🌐", "").strip() if chosen else ""
     if chosen_ping:
         match = next((r for r in pinged if r["name"] == target_name and r["ping"] == chosen_ping), None)
         if match:
             attempts.append(match)
-    if not attempts:
-        for row in pinged:
-            attempts.append(row)
-            break
+    if not attempts and pinged:
+        attempts.append(pinged[0])
     for row in pinged:
-        if len(attempts) == 3:
+        if len(attempts) >= attempt_limit:
             break
-        if all(row["name"] != a["name"] or row["ping"] != a["ping"] for a in attempts):
-            attempts.append(row)
+        if any(row["name"] == a["name"] for a in attempts):
+            continue
+        attempts.append(row)
+    for row in pinged:
+        if len(attempts) >= attempt_limit:
+            break
+        if any(row["name"] == a["name"] and row["ping"] == a["ping"] for a in attempts):
+            continue
+        attempts.append(row)
 
     connected = None
     for index, candidate in enumerate(attempts, start=1):
