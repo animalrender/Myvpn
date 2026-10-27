@@ -128,7 +128,19 @@ def main():
     log("")
     log(f"## نتیجه: {len(all_rows)} ردیف، توزیع قیمت {dict(prices)}، پولی: {paid}")
     log("")
-    log("### گزارش کامل\n```\n" + "\n".join(REPORT) + "\n```")
+    # The runner log is not readable from the agent (403), so the whole report is also emitted as
+    # workflow annotations, the only channel that can be read back through the check-runs API.
+    chunks, chunk = [], ""
+    for line in ["# probe-price"] + REPORT:
+        if len(chunk) + len(line) + 1 > 5500:
+            chunks.append(chunk)
+            chunk = ""
+        chunk += line + "\n"
+    if chunk:
+        chunks.append(chunk)
+    for index, part in enumerate(chunks):
+        escaped = part.replace("%", "%25").replace("\r", "%0D").replace("\n", "%0A")
+        print(f"::error title=price-report-{index}::{escaped}", flush=True)
 
 
 if __name__ == "__main__":
