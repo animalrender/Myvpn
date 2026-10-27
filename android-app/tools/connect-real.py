@@ -704,7 +704,12 @@ def main(argv):
         # A second, *independently measured* row proves that switching servers works and that the
         # tunnel is not pinned to the first outbound. Duplicate country names are disambiguated by
         # the search box inside connect_row().
-        others = [r for r in scan_pinged_rows() if r["name"] != connected]
+        # The rows measured in step 4 are the authoritative list: re-scanning the screen can come
+        # back empty while the app is busy with the tunnel, and it also avoids double pinging.
+        others = [r for r in pinged if r["name"] != connected]
+        if not others:
+            others = [r for r in scan_pinged_rows() if r["name"] != connected]
+        log(f"ردیف‌های نامزد برای تغییر سرور: {len(others)} (از {len(pinged)} ردیف دارای پینگ)")
         switched = False
         for second in others[:3]:
             log(f"تغییر سرور به: `{second['name']}` ({second['ping']})")
