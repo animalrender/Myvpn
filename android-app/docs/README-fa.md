@@ -456,6 +456,12 @@ python3 android-app/tools/dcc-native-map.py /tmp/apk/lib/arm64-v8a/libstub.so --
 فیلتر «پولی» می‌آید و **بدون قفل و بدون سکه** قابل اتصال است (چون منطق الماس/تبلیغ حذف شده).
 همین رفتار با `price > 0` در کد پیاده شده است: `data/Models.kt` + `ui/ServerAdapter.kt`.
 
+### نسخهٔ فعلی برای تست
+
+آخرین ریلیز تأییدشده: **[trial-51](https://github.com/animalrender/Myvpn/releases/tag/trial-51)**
+— `mvpn-trial-arm64-51.apk` برای گوشی و `mvpn-trial-x86_64-51.apk` برای شبیه‌ساز. برچسب گیت این
+ریلیز روی همان کامیت ساخت (`b2fd017`) است و کد اپ آن با کامیت آزمون سبز E2E (`3b3df66`) یکسان است.
+
 ### بهتر است از خود اپ ترایال استفاده کنم یا لینک‌ها را به v2rayNG/nekobox ببرم؟
 
 تونلِ هر دو یک چیز است: همان سرورها، همان Xray-core (خانوادهٔ `libv2ray`) و همان کانفیگ‌ها.
