@@ -1,363 +1,272 @@
 --------- beginning of main
-10-27 04:21:13.828  3489  3489 I MvpnTrial: MVPN Trial 3.2.0-trial (co.asiven.vixentvpn.trial) راه‌اندازی شد
-10-27 04:21:13.960  3489  3489 I MvpnTrial: هستهٔ Xray آماده شد: Lib v38, Xray-core v26.6.27
-10-27 04:21:14.685  3489  3489 D MvpnTrial: hero(no row): running=false connected=- pressed=اتصال
-10-27 04:21:14.880  3489  3489 D MvpnTrial: hero(no row): running=false connected=- pressed=اتصال
-10-27 04:21:15.993  3489  3591 D MvpnTrial: GET https://managev1.xyz/api/token?deviceId=af7ef50872f70058 → 200 (66 بایت)
-10-27 04:21:15.994  3489  3591 I MvpnTrial: توکن سمت سرور غیرفعال است؛ بدون هدر token ادامه می‌دهیم
-10-27 04:21:16.770  3489  3591 D MvpnTrial: GET https://managev1.xyz/api/setting → 200 (44 بایت)
-10-27 04:21:16.771  3489  3591 I MvpnTrial: setting خالی است (data=null) — پیش‌فرض‌های برنامه استفاده می‌شوند
-10-27 04:21:17.813  3489  3591 D MvpnTrial: GET https://managev1.xyz/api/protocols → 200 (65591 بایت)
-10-27 04:21:17.917  3489  3591 I MvpnTrial: 105 سرور از /api/protocols دریافت شد
-10-27 04:21:17.927  3489  3489 D MvpnTrial: hero: running=false connected=- shown=-103901-465-504278487 pressed=اتصال
-10-27 04:21:18.640  3489  3762 D MvpnTrial: پینگ 🇺🇸 United States: 73 ms
-10-27 04:21:18.709  3489  3763 D MvpnTrial: پینگ 🇦🇺 Australia: 109 ms
-10-27 04:21:18.755  3489  3593 D MvpnTrial: پینگ 🇺🇸 United States: 129 ms
-10-27 04:21:18.799  3489  3753 D MvpnTrial: پینگ 🇺🇸 United States: 28 ms
-10-27 04:21:18.868  3489  3771 D MvpnTrial: پینگ 🇫🇷 France: 146 ms
-10-27 04:21:18.894  3489  3760 D MvpnTrial: پینگ 🇫🇷 France: 152 ms
-10-27 04:21:19.068  3489  3591 D MvpnTrial: پینگ 🇫🇮 Finland: 195 ms
-10-27 04:21:19.072  3489  3763 D MvpnTrial: پینگ 🇺🇸 United States: 80 ms
-10-27 04:21:19.301  3489  3762 D MvpnTrial: پینگ 🇮🇪 Ireland: 161 ms
-10-27 04:21:19.480  3489  3489 W MvpnTrial: دریافت توکن Firebase ناموفق: java.util.concurrent.ExecutionException: java.io.IOException: AUTHENTICATION_FAILED
-10-27 04:21:19.498  3489  3771 D MvpnTrial: پینگ 🇮🇪 Ireland: 131 ms
-10-27 04:21:19.787  3489  3763 D MvpnTrial: پینگ 🇦🇺 Australia: 167 ms
-10-27 04:21:19.835  3489  3769 D MvpnTrial: پینگ 🇨🇦 Canada: 127 ms
-10-27 04:21:19.966  3489  3599 D MvpnTrial: پینگ 🇨🇦 Canada: 175 ms
-10-27 04:21:20.142  3489  3762 D MvpnTrial: پینگ 🇮🇪 Ireland: 160 ms
-10-27 04:21:20.188  3489  3763 D MvpnTrial: پینگ 🇺🇸 United States: 71 ms
-10-27 04:21:20.214  3489  3771 D MvpnTrial: پینگ 🇨🇦 Canada: 97 ms
-10-27 04:21:20.612  3489  3838 D MvpnTrial: پینگ 🇮🇪 Ireland: 152 ms
-10-27 04:21:20.760  3489  3769 D MvpnTrial: پینگ 🇮🇪 Ireland: 136 ms
-10-27 04:21:20.979  3489  3763 D MvpnTrial: پینگ 🇦🇺 Australia: 192 ms
-10-27 04:21:21.049  3489  3771 D MvpnTrial: پینگ 🇨🇦 Canada: 77 ms
-10-27 04:21:21.408  3489  3771 D MvpnTrial: پینگ 🇨🇦 Canada: 82 ms
-10-27 04:21:21.461  3489  3769 D MvpnTrial: پینگ 🇦🇺 Australia: 150 ms
-10-27 04:21:21.953  3489  3763 D MvpnTrial: پینگ 🇮🇪 Ireland: 131 ms
-10-27 04:21:22.443  3489  3599 D MvpnTrial: پینگ 🇸🇪 Sweden: 114 ms
-10-27 04:21:22.999  3489  3763 D MvpnTrial: پینگ 🇮🇪 Ireland: 141 ms
-10-27 04:21:23.395  3489  3599 D MvpnTrial: پینگ 🇺🇸 United States: 94 ms
-10-27 04:21:24.450  3489  3760 D MvpnTrial: پینگ 🇺🇸 United States: 174 ms
-10-27 04:21:25.086  3489  3763 D MvpnTrial: پینگ 🇫🇷 France: 150 ms
-10-27 04:21:25.815  3489  3760 D MvpnTrial: پینگ 🇫🇷 France: 173 ms
-10-27 04:21:26.190  3489  3763 D MvpnTrial: پینگ 🇨🇦 Canada: 85 ms
-10-27 04:21:30.099  3489  3761 E MvpnTrial: سنجش تأخیر ناموفق
-10-27 04:21:30.099  3489  3761 E MvpnTrial: go.Universe$proxyerror: Get "https://www.gstatic.com/generate_204": net/http: TLS handshake timeout
-10-27 04:21:30.099  3489  3761 E MvpnTrial: 	at libv2ray.Libv2ray.measureOutboundDelay(Native Method)
-10-27 04:21:30.099  3489  3761 E MvpnTrial: 	at co.asiven.vixentvpn.trial.core.XrayCore.measureDelay(XrayCore.kt:81)
-10-27 04:21:30.099  3489  3761 E MvpnTrial: 	at co.asiven.vixentvpn.trial.ui.MainActivity.measure(MainActivity.kt:438)
-10-27 04:21:30.099  3489  3761 E MvpnTrial: 	at co.asiven.vixentvpn.trial.ui.MainActivity.access$measure(MainActivity.kt:62)
-10-27 04:21:30.099  3489  3761 E MvpnTrial: 	at co.asiven.vixentvpn.trial.ui.MainActivity$pingAll$2$1$1$1.invokeSuspend(MainActivity.kt:399)
-10-27 04:21:30.099  3489  3761 E MvpnTrial: 	at kotlin.coroutines.jvm.internal.BaseContinuationImpl.resumeWith(ContinuationImpl.kt:33)
-10-27 04:21:30.099  3489  3761 E MvpnTrial: 	at kotlinx.coroutines.DispatchedTask.run(DispatchedTask.kt:104)
-10-27 04:21:30.099  3489  3761 E MvpnTrial: 	at kotlinx.coroutines.internal.LimitedDispatcher$Worker.run(LimitedDispatcher.kt:111)
-10-27 04:21:30.099  3489  3761 E MvpnTrial: 	at kotlinx.coroutines.scheduling.TaskImpl.run(Tasks.kt:99)
-10-27 04:21:30.099  3489  3761 E MvpnTrial: 	at kotlinx.coroutines.scheduling.CoroutineScheduler.runSafely(CoroutineScheduler.kt:584)
-10-27 04:21:30.099  3489  3761 E MvpnTrial: 	at kotlinx.coroutines.scheduling.CoroutineScheduler$Worker.executeTask(CoroutineScheduler.kt:811)
-10-27 04:21:30.099  3489  3761 E MvpnTrial: 	at kotlinx.coroutines.scheduling.CoroutineScheduler$Worker.runWorker(CoroutineScheduler.kt:715)
-10-27 04:21:30.099  3489  3761 E MvpnTrial: 	at kotlinx.coroutines.scheduling.CoroutineScheduler$Worker.run(CoroutineScheduler.kt:702)
-10-27 04:21:30.099  3489  3761 D MvpnTrial: پینگ 🇺🇸 United States: -1 ms
-10-27 04:21:30.805  3489  3753 E MvpnTrial: سنجش تأخیر ناموفق
-10-27 04:21:30.805  3489  3753 E MvpnTrial: go.Universe$proxyerror: Get "https://www.gstatic.com/generate_204": net/http: TLS handshake timeout
-10-27 04:21:30.805  3489  3753 E MvpnTrial: 	at libv2ray.Libv2ray.measureOutboundDelay(Native Method)
-10-27 04:21:30.805  3489  3753 E MvpnTrial: 	at co.asiven.vixentvpn.trial.core.XrayCore.measureDelay(XrayCore.kt:81)
-10-27 04:21:30.805  3489  3753 E MvpnTrial: 	at co.asiven.vixentvpn.trial.ui.MainActivity.measure(MainActivity.kt:438)
-10-27 04:21:30.805  3489  3753 E MvpnTrial: 	at co.asiven.vixentvpn.trial.ui.MainActivity.access$measure(MainActivity.kt:62)
-10-27 04:21:30.805  3489  3753 E MvpnTrial: 	at co.asiven.vixentvpn.trial.ui.MainActivity$pingAll$2$1$1$1.invokeSuspend(MainActivity.kt:399)
-10-27 04:21:30.805  3489  3753 E MvpnTrial: 	at kotlin.coroutines.jvm.internal.BaseContinuationImpl.resumeWith(ContinuationImpl.kt:33)
-10-27 04:21:30.805  3489  3753 E MvpnTrial: 	at kotlinx.coroutines.DispatchedTask.run(DispatchedTask.kt:104)
-10-27 04:21:30.805  3489  3753 E MvpnTrial: 	at kotlinx.coroutines.internal.LimitedDispatcher$Worker.run(LimitedDispatcher.kt:111)
-10-27 04:21:30.805  3489  3753 E MvpnTrial: 	at kotlinx.coroutines.scheduling.TaskImpl.run(Tasks.kt:99)
-10-27 04:21:30.805  3489  3753 E MvpnTrial: 	at kotlinx.coroutines.scheduling.CoroutineScheduler.runSafely(CoroutineScheduler.kt:584)
-10-27 04:21:30.805  3489  3753 E MvpnTrial: 	at kotlinx.coroutines.scheduling.CoroutineScheduler$Worker.executeTask(CoroutineScheduler.kt:811)
-10-27 04:21:30.805  3489  3753 E MvpnTrial: 	at kotlinx.coroutines.scheduling.CoroutineScheduler$Worker.runWorker(CoroutineScheduler.kt:715)
-10-27 04:21:30.805  3489  3753 E MvpnTrial: 	at kotlinx.coroutines.scheduling.CoroutineScheduler$Worker.run(CoroutineScheduler.kt:702)
-10-27 04:21:30.806  3489  3753 D MvpnTrial: پینگ 🇫🇷 France: -1 ms
-10-27 04:21:30.884  3489  3593 E MvpnTrial: سنجش تأخیر ناموفق
-10-27 04:21:30.884  3489  3593 E MvpnTrial: go.Universe$proxyerror: Get "https://www.gstatic.com/generate_204": net/http: TLS handshake timeout
-10-27 04:21:30.884  3489  3593 E MvpnTrial: 	at libv2ray.Libv2ray.measureOutboundDelay(Native Method)
-10-27 04:21:30.884  3489  3593 E MvpnTrial: 	at co.asiven.vixentvpn.trial.core.XrayCore.measureDelay(XrayCore.kt:81)
-10-27 04:21:30.884  3489  3593 E MvpnTrial: 	at co.asiven.vixentvpn.trial.ui.MainActivity.measure(MainActivity.kt:438)
-10-27 04:21:30.884  3489  3593 E MvpnTrial: 	at co.asiven.vixentvpn.trial.ui.MainActivity.access$measure(MainActivity.kt:62)
-10-27 04:21:30.884  3489  3593 E MvpnTrial: 	at co.asiven.vixentvpn.trial.ui.MainActivity$pingAll$2$1$1$1.invokeSuspend(MainActivity.kt:399)
-10-27 04:21:30.884  3489  3593 E MvpnTrial: 	at kotlin.coroutines.jvm.internal.BaseContinuationImpl.resumeWith(ContinuationImpl.kt:33)
-10-27 04:21:30.884  3489  3593 E MvpnTrial: 	at kotlinx.coroutines.DispatchedTask.run(DispatchedTask.kt:104)
-10-27 04:21:30.884  3489  3593 E MvpnTrial: 	at kotlinx.coroutines.internal.LimitedDispatcher$Worker.run(LimitedDispatcher.kt:111)
-10-27 04:21:30.884  3489  3593 E MvpnTrial: 	at kotlinx.coroutines.scheduling.TaskImpl.run(Tasks.kt:99)
-10-27 04:21:30.884  3489  3593 E MvpnTrial: 	at kotlinx.coroutines.scheduling.CoroutineScheduler.runSafely(CoroutineScheduler.kt:584)
-10-27 04:21:30.884  3489  3593 E MvpnTrial: 	at kotlinx.coroutines.scheduling.CoroutineScheduler$Worker.executeTask(CoroutineScheduler.kt:811)
-10-27 04:21:30.884  3489  3593 E MvpnTrial: 	at kotlinx.coroutines.scheduling.CoroutineScheduler$Worker.runWorker(CoroutineScheduler.kt:715)
-10-27 04:21:30.884  3489  3593 E MvpnTrial: 	at kotlinx.coroutines.scheduling.CoroutineScheduler$Worker.run(CoroutineScheduler.kt:702)
-10-27 04:21:30.884  3489  3593 D MvpnTrial: پینگ 🇨🇦 Canada: -1 ms
-10-27 04:21:31.009  3489  3763 D MvpnTrial: پینگ 🇸🇪 Sweden: 238 ms
-10-27 04:21:31.090  3489  3591 E MvpnTrial: سنجش تأخیر ناموفق
-10-27 04:21:31.090  3489  3591 E MvpnTrial: go.Universe$proxyerror: Get "https://www.gstatic.com/generate_204": net/http: TLS handshake timeout
-10-27 04:21:31.090  3489  3591 E MvpnTrial: 	at libv2ray.Libv2ray.measureOutboundDelay(Native Method)
-10-27 04:21:31.090  3489  3591 E MvpnTrial: 	at co.asiven.vixentvpn.trial.core.XrayCore.measureDelay(XrayCore.kt:81)
-10-27 04:21:31.090  3489  3591 E MvpnTrial: 	at co.asiven.vixentvpn.trial.ui.MainActivity.measure(MainActivity.kt:438)
-10-27 04:21:31.090  3489  3591 E MvpnTrial: 	at co.asiven.vixentvpn.trial.ui.MainActivity.access$measure(MainActivity.kt:62)
-10-27 04:21:31.090  3489  3591 E MvpnTrial: 	at co.asiven.vixentvpn.trial.ui.MainActivity$pingAll$2$1$1$1.invokeSuspend(MainActivity.kt:399)
-10-27 04:21:31.090  3489  3591 E MvpnTrial: 	at kotlin.coroutines.jvm.internal.BaseContinuationImpl.resumeWith(ContinuationImpl.kt:33)
-10-27 04:21:31.090  3489  3591 E MvpnTrial: 	at kotlinx.coroutines.DispatchedTask.run(DispatchedTask.kt:104)
-10-27 04:21:31.090  3489  3591 E MvpnTrial: 	at kotlinx.coroutines.internal.LimitedDispatcher$Worker.run(LimitedDispatcher.kt:111)
-10-27 04:21:31.090  3489  3591 E MvpnTrial: 	at kotlinx.coroutines.scheduling.TaskImpl.run(Tasks.kt:99)
-10-27 04:21:31.090  3489  3591 E MvpnTrial: 	at kotlinx.coroutines.scheduling.CoroutineScheduler.runSafely(CoroutineScheduler.kt:584)
-10-27 04:21:31.090  3489  3591 E MvpnTrial: 	at kotlinx.coroutines.scheduling.CoroutineScheduler$Worker.executeTask(CoroutineScheduler.kt:811)
-10-27 04:21:31.090  3489  3591 E MvpnTrial: 	at kotlinx.coroutines.scheduling.CoroutineScheduler$Worker.runWorker(CoroutineScheduler.kt:715)
-10-27 04:21:31.090  3489  3591 E MvpnTrial: 	at kotlinx.coroutines.scheduling.CoroutineScheduler$Worker.run(CoroutineScheduler.kt:702)
-10-27 04:21:31.090  3489  3591 D MvpnTrial: پینگ 🇮🇪 Ireland: -1 ms
-10-27 04:21:31.415  3489  3591 D MvpnTrial: پینگ 🇺🇸 United States: 72 ms
-10-27 04:21:31.558  3489  3593 D MvpnTrial: پینگ 🇦🇺 Australia: 157 ms
-10-27 04:21:31.569  3489  3599 D MvpnTrial: پینگ 🇸🇪 Sweden: 171 ms
-10-27 04:21:31.703  3489  3763 D MvpnTrial: پینگ 🇫🇷 France: 169 ms
-10-27 04:21:31.936  3489  3591 D MvpnTrial: پینگ 🇨🇦 Canada: 77 ms
-10-27 04:21:32.041  3489  3761 D MvpnTrial: پینگ 🇨🇦 Canada: 68 ms
-10-27 04:21:32.078  3489  3753 D MvpnTrial: پینگ 🇺🇸 United States: 159 ms
-10-27 04:21:32.218  3489  3850 E MvpnTrial: سنجش تأخیر ناموفق
-10-27 04:21:32.218  3489  3850 E MvpnTrial: go.Universe$proxyerror: Get "https://www.gstatic.com/generate_204": net/http: TLS handshake timeout
-10-27 04:21:32.218  3489  3850 E MvpnTrial: 	at libv2ray.Libv2ray.measureOutboundDelay(Native Method)
-10-27 04:21:32.218  3489  3850 E MvpnTrial: 	at co.asiven.vixentvpn.trial.core.XrayCore.measureDelay(XrayCore.kt:81)
-10-27 04:21:32.218  3489  3850 E MvpnTrial: 	at co.asiven.vixentvpn.trial.ui.MainActivity.measure(MainActivity.kt:438)
-10-27 04:21:32.218  3489  3850 E MvpnTrial: 	at co.asiven.vixentvpn.trial.ui.MainActivity.access$measure(MainActivity.kt:62)
-10-27 04:21:32.218  3489  3850 E MvpnTrial: 	at co.asiven.vixentvpn.trial.ui.MainActivity$pingAll$2$1$1$1.invokeSuspend(MainActivity.kt:399)
-10-27 04:21:32.218  3489  3850 E MvpnTrial: 	at kotlin.coroutines.jvm.internal.BaseContinuationImpl.resumeWith(ContinuationImpl.kt:33)
-10-27 04:21:32.218  3489  3850 E MvpnTrial: 	at kotlinx.coroutines.DispatchedTask.run(DispatchedTask.kt:104)
-10-27 04:21:32.218  3489  3850 E MvpnTrial: 	at kotlinx.coroutines.internal.LimitedDispatcher$Worker.run(LimitedDispatcher.kt:111)
-10-27 04:21:32.218  3489  3850 E MvpnTrial: 	at kotlinx.coroutines.scheduling.TaskImpl.run(Tasks.kt:99)
-10-27 04:21:32.218  3489  3850 E MvpnTrial: 	at kotlinx.coroutines.scheduling.CoroutineScheduler.runSafely(CoroutineScheduler.kt:584)
-10-27 04:21:32.218  3489  3850 E MvpnTrial: 	at kotlinx.coroutines.scheduling.CoroutineScheduler$Worker.executeTask(CoroutineScheduler.kt:811)
-10-27 04:21:32.218  3489  3850 E MvpnTrial: 	at kotlinx.coroutines.scheduling.CoroutineScheduler$Worker.runWorker(CoroutineScheduler.kt:715)
-10-27 04:21:32.218  3489  3850 E MvpnTrial: 	at kotlinx.coroutines.scheduling.CoroutineScheduler$Worker.run(CoroutineScheduler.kt:702)
-10-27 04:21:32.218  3489  3850 D MvpnTrial: پینگ 🇮🇪 Ireland: -1 ms
-10-27 04:21:32.363  3489  3599 D MvpnTrial: پینگ 🇫🇷 France: 200 ms
-10-27 04:21:32.377  3489  3763 D MvpnTrial: پینگ 🇨🇦 Canada: 94 ms
-10-27 04:21:32.659  3489  3753 D MvpnTrial: پینگ 🇮🇪 Ireland: 129 ms
-10-27 04:21:32.743  3489  3850 D MvpnTrial: پینگ 🇸🇪 Sweden: 145 ms
-10-27 04:21:32.889  3489  3599 D MvpnTrial: پینگ 🇨🇦 Canada: 113 ms
-10-27 04:21:32.891  3489  3763 D MvpnTrial: پینگ 🇸🇪 Sweden: 115 ms
-10-27 04:21:33.037  3489  3761 D MvpnTrial: پینگ 🇨🇦 Canada: 81 ms
-10-27 04:21:33.041  3489  3838 E MvpnTrial: سنجش تأخیر ناموفق
-10-27 04:21:33.041  3489  3838 E MvpnTrial: go.Universe$proxyerror: Get "https://www.gstatic.com/generate_204": net/http: TLS handshake timeout
-10-27 04:21:33.041  3489  3838 E MvpnTrial: 	at libv2ray.Libv2ray.measureOutboundDelay(Native Method)
-10-27 04:21:33.041  3489  3838 E MvpnTrial: 	at co.asiven.vixentvpn.trial.core.XrayCore.measureDelay(XrayCore.kt:81)
-10-27 04:21:33.041  3489  3838 E MvpnTrial: 	at co.asiven.vixentvpn.trial.ui.MainActivity.measure(MainActivity.kt:438)
-10-27 04:21:33.041  3489  3838 E MvpnTrial: 	at co.asiven.vixentvpn.trial.ui.MainActivity.access$measure(MainActivity.kt:62)
-10-27 04:21:33.041  3489  3838 E MvpnTrial: 	at co.asiven.vixentvpn.trial.ui.MainActivity$pingAll$2$1$1$1.invokeSuspend(MainActivity.kt:399)
-10-27 04:21:33.041  3489  3838 E MvpnTrial: 	at kotlin.coroutines.jvm.internal.BaseContinuationImpl.resumeWith(ContinuationImpl.kt:33)
-10-27 04:21:33.041  3489  3838 E MvpnTrial: 	at kotlinx.coroutines.DispatchedTask.run(DispatchedTask.kt:104)
-10-27 04:21:33.041  3489  3838 E MvpnTrial: 	at kotlinx.coroutines.internal.LimitedDispatcher$Worker.run(LimitedDispatcher.kt:111)
-10-27 04:21:33.041  3489  3838 E MvpnTrial: 	at kotlinx.coroutines.scheduling.TaskImpl.run(Tasks.kt:99)
-10-27 04:21:33.041  3489  3838 E MvpnTrial: 	at kotlinx.coroutines.scheduling.CoroutineScheduler.runSafely(CoroutineScheduler.kt:584)
-10-27 04:21:33.041  3489  3838 E MvpnTrial: 	at kotlinx.coroutines.scheduling.CoroutineScheduler$Worker.executeTask(CoroutineScheduler.kt:811)
-10-27 04:21:33.041  3489  3838 E MvpnTrial: 	at kotlinx.coroutines.scheduling.CoroutineScheduler$Worker.runWorker(CoroutineScheduler.kt:715)
-10-27 04:21:33.041  3489  3838 E MvpnTrial: 	at kotlinx.coroutines.scheduling.CoroutineScheduler$Worker.run(CoroutineScheduler.kt:702)
-10-27 04:21:33.041  3489  3838 D MvpnTrial: پینگ 🇫🇷 France: -1 ms
-10-27 04:21:33.136  3489  3850 D MvpnTrial: پینگ 🇨🇦 Canada: 99 ms
-10-27 04:21:33.380  3489  3753 D MvpnTrial: پینگ 🇨🇦 Canada: 117 ms
-10-27 04:21:33.396  3489  3763 D MvpnTrial: پینگ 🇦🇺 Australia: 113 ms
-10-27 04:21:33.400  3489  3771 D MvpnTrial: پینگ 🇺🇸 United States: 78 ms
-10-27 04:21:33.468  3489  3769 E MvpnTrial: سنجش تأخیر ناموفق
-10-27 04:21:33.468  3489  3769 E MvpnTrial: go.Universe$proxyerror: Get "https://www.gstatic.com/generate_204": net/http: TLS handshake timeout
-10-27 04:21:33.468  3489  3769 E MvpnTrial: 	at libv2ray.Libv2ray.measureOutboundDelay(Native Method)
-10-27 04:21:33.468  3489  3769 E MvpnTrial: 	at co.asiven.vixentvpn.trial.core.XrayCore.measureDelay(XrayCore.kt:81)
-10-27 04:21:33.468  3489  3769 E MvpnTrial: 	at co.asiven.vixentvpn.trial.ui.MainActivity.measure(MainActivity.kt:438)
-10-27 04:21:33.468  3489  3769 E MvpnTrial: 	at co.asiven.vixentvpn.trial.ui.MainActivity.access$measure(MainActivity.kt:62)
-10-27 04:21:33.468  3489  3769 E MvpnTrial: 	at co.asiven.vixentvpn.trial.ui.MainActivity$pingAll$2$1$1$1.invokeSuspend(MainActivity.kt:399)
-10-27 04:21:33.468  3489  3769 E MvpnTrial: 	at kotlin.coroutines.jvm.internal.BaseContinuationImpl.resumeWith(ContinuationImpl.kt:33)
-10-27 04:21:33.468  3489  3769 E MvpnTrial: 	at kotlinx.coroutines.DispatchedTask.run(DispatchedTask.kt:104)
-10-27 04:21:33.468  3489  3769 E MvpnTrial: 	at kotlinx.coroutines.internal.LimitedDispatcher$Worker.run(LimitedDispatcher.kt:111)
-10-27 04:21:33.468  3489  3769 E MvpnTrial: 	at kotlinx.coroutines.scheduling.TaskImpl.run(Tasks.kt:99)
-10-27 04:21:33.468  3489  3769 E MvpnTrial: 	at kotlinx.coroutines.scheduling.CoroutineScheduler.runSafely(CoroutineScheduler.kt:584)
-10-27 04:21:33.468  3489  3769 E MvpnTrial: 	at kotlinx.coroutines.scheduling.CoroutineScheduler$Worker.executeTask(CoroutineScheduler.kt:811)
-10-27 04:21:33.468  3489  3769 E MvpnTrial: 	at kotlinx.coroutines.scheduling.CoroutineScheduler$Worker.runWorker(CoroutineScheduler.kt:715)
-10-27 04:21:33.468  3489  3769 E MvpnTrial: 	at kotlinx.coroutines.scheduling.CoroutineScheduler$Worker.run(CoroutineScheduler.kt:702)
-10-27 04:21:33.468  3489  3769 D MvpnTrial: پینگ 🇫🇷 France: -1 ms
-10-27 04:21:33.791  3489  3850 D MvpnTrial: پینگ 🇫🇷 France: 145 ms
-10-27 04:21:33.858  3489  3769 D MvpnTrial: پینگ 🇺🇸 United States: 83 ms
-10-27 04:21:33.871  3489  3762 D MvpnTrial: پینگ 🇺🇸 United States: 95 ms
-10-27 04:21:33.997  3489  3761 D MvpnTrial: پینگ 🇮🇪 Ireland: 180 ms
-10-27 04:21:34.077  3489  3771 D MvpnTrial: پینگ 🇦🇺 Australia: 171 ms
-10-27 04:21:34.243  3489  3850 D MvpnTrial: پینگ 🇺🇸 United States: 114 ms
-10-27 04:21:34.287  3489  3761 D MvpnTrial: پینگ 🇺🇸 United States: 57 ms
-10-27 04:21:34.410  3489  3763 D MvpnTrial: پینگ 🇺🇸 United States: 21 ms
-10-27 04:21:34.483  3489  3769 D MvpnTrial: پینگ 🇮🇪 Ireland: 150 ms
-10-27 04:21:34.584  3489  3763 D MvpnTrial: پینگ 🇺🇸 United States: 9 ms
-10-27 04:21:34.626  3489  3771 D MvpnTrial: پینگ 🇺🇸 United States: 109 ms
-10-27 04:21:34.785  3489  3850 D MvpnTrial: پینگ 🇺🇸 United States: 48 ms
-10-27 04:21:34.930  3489  3762 E MvpnTrial: سنجش تأخیر ناموفق
-10-27 04:21:34.930  3489  3762 E MvpnTrial: go.Universe$proxyerror: Get "https://www.gstatic.com/generate_204": EOF
-10-27 04:21:34.930  3489  3762 E MvpnTrial: 	at libv2ray.Libv2ray.measureOutboundDelay(Native Method)
-10-27 04:21:34.930  3489  3762 E MvpnTrial: 	at co.asiven.vixentvpn.trial.core.XrayCore.measureDelay(XrayCore.kt:81)
-10-27 04:21:34.930  3489  3762 E MvpnTrial: 	at co.asiven.vixentvpn.trial.ui.MainActivity.measure(MainActivity.kt:438)
-10-27 04:21:34.930  3489  3762 E MvpnTrial: 	at co.asiven.vixentvpn.trial.ui.MainActivity.access$measure(MainActivity.kt:62)
-10-27 04:21:34.930  3489  3762 E MvpnTrial: 	at co.asiven.vixentvpn.trial.ui.MainActivity$pingAll$2$1$1$1.invokeSuspend(MainActivity.kt:399)
-10-27 04:21:34.930  3489  3762 E MvpnTrial: 	at kotlin.coroutines.jvm.internal.BaseContinuationImpl.resumeWith(ContinuationImpl.kt:33)
-10-27 04:21:34.930  3489  3762 E MvpnTrial: 	at kotlinx.coroutines.DispatchedTask.run(DispatchedTask.kt:104)
-10-27 04:21:34.930  3489  3762 E MvpnTrial: 	at kotlinx.coroutines.internal.LimitedDispatcher$Worker.run(LimitedDispatcher.kt:111)
-10-27 04:21:34.930  3489  3762 E MvpnTrial: 	at kotlinx.coroutines.scheduling.TaskImpl.run(Tasks.kt:99)
-10-27 04:21:34.930  3489  3762 E MvpnTrial: 	at kotlinx.coroutines.scheduling.CoroutineScheduler.runSafely(CoroutineScheduler.kt:584)
-10-27 04:21:34.930  3489  3762 E MvpnTrial: 	at kotlinx.coroutines.scheduling.CoroutineScheduler$Worker.executeTask(CoroutineScheduler.kt:811)
-10-27 04:21:34.930  3489  3762 E MvpnTrial: 	at kotlinx.coroutines.scheduling.CoroutineScheduler$Worker.runWorker(CoroutineScheduler.kt:715)
-10-27 04:21:34.930  3489  3762 E MvpnTrial: 	at kotlinx.coroutines.scheduling.CoroutineScheduler$Worker.run(CoroutineScheduler.kt:702)
-10-27 04:21:34.931  3489  3762 D MvpnTrial: پینگ 🇫🇷 France: -1 ms
-10-27 04:21:34.941  3489  3761 D MvpnTrial: پینگ 🇺🇸 United States: 156 ms
-10-27 04:21:34.973  3489  3771 D MvpnTrial: پینگ 🇺🇸 United States: 14 ms
-10-27 04:21:35.063  3489  3850 D MvpnTrial: پینگ 🇺🇸 United States: 61 ms
-10-27 04:21:35.199  3489  3771 D MvpnTrial: پینگ 🇺🇸 United States: 10 ms
-10-27 04:21:35.222  3489  3763 D MvpnTrial: پینگ 🇺🇸 United States: 81 ms
-10-27 04:21:35.266  3489  3762 D MvpnTrial: پینگ 🇺🇸 United States: 61 ms
-10-27 04:21:35.429  3489  3762 D MvpnTrial: پینگ 🇺🇸 United States: 4 ms
-10-27 04:21:35.643  3489  3762 D MvpnTrial: پینگ 🇺🇸 United States: 23 ms
-10-27 04:21:35.724  3489  3761 D MvpnTrial: پینگ 🇩🇪 Germany: 170 ms
-10-27 04:21:35.786  3489  3762 D MvpnTrial: پینگ 🇺🇸 United States: 23 ms
-10-27 04:21:35.918  3489  3762 D MvpnTrial: پینگ 🇺🇸 United States: 38 ms
-10-27 04:21:36.014  3489  3761 D MvpnTrial: پینگ 🇺🇸 United States: 53 ms
-10-27 04:21:36.169  3489  3850 D MvpnTrial: پینگ 🇩🇪 Germany: 205 ms
-10-27 04:21:36.173  3489  3753 D MvpnTrial: پینگ 🇸🇪 Sweden: 172 ms
-10-27 04:21:36.218  3489  3763 D MvpnTrial: پینگ 🇺🇸 United States: 217 ms
-10-27 04:21:36.219  3489  3761 D MvpnTrial: پینگ 🇺🇸 United States: 37 ms
-10-27 04:21:36.294  3489  3753 D MvpnTrial: پینگ 🇺🇸 United States: 9 ms
-10-27 04:21:36.488  3489  3771 D MvpnTrial: پینگ 🇺🇸 United States: 35 ms
-10-27 04:21:36.502  3489  3761 D MvpnTrial: پینگ 🇺🇸 United States: 15 ms
-10-27 04:21:36.632  3489  3850 D MvpnTrial: پینگ 🇺🇸 United States: 67 ms
-10-27 04:21:36.747  3489  3753 D MvpnTrial: پینگ 🇺🇸 United States: 105 ms
-10-27 04:21:36.918  3489  3763 D MvpnTrial: پینگ 🇺🇸 United States: 74 ms
-10-27 04:21:37.053  3489  3762 D MvpnTrial: پینگ 🇺🇸 United States: 213 ms
-10-27 04:21:37.085  3489  3850 D MvpnTrial: پینگ 🇺🇸 United States: 100 ms
-10-27 04:21:37.299  3489  3599 D MvpnTrial: پینگ 🇸🇪 Sweden: 117 ms
-10-27 04:21:37.429  3489  3761 D MvpnTrial: پینگ 🇩🇪 Germany: 162 ms
-10-27 04:21:37.585  3489  3763 D MvpnTrial: پینگ 🇺🇸 United States: 56 ms
-10-27 04:21:37.738  3489  3790 D MvpnTrial: پینگ 🇮🇪 Ireland: 152 ms
-10-27 04:21:37.817  3489  3753 D MvpnTrial: پینگ 🇺🇸 United States: 185 ms
-10-27 04:21:37.912  3489  3599 D MvpnTrial: پینگ 🇺🇸 United States: 93 ms
-10-27 04:21:38.071  3489  3763 D MvpnTrial: پینگ 🇨🇦 Canada: 117 ms
-10-27 04:21:38.204  3489  3760 E MvpnTrial: سنجش تأخیر ناموفق
-10-27 04:21:38.204  3489  3760 E MvpnTrial: go.Universe$proxyerror: Get "https://www.gstatic.com/generate_204": net/http: TLS handshake timeout
-10-27 04:21:38.204  3489  3760 E MvpnTrial: 	at libv2ray.Libv2ray.measureOutboundDelay(Native Method)
-10-27 04:21:38.204  3489  3760 E MvpnTrial: 	at co.asiven.vixentvpn.trial.core.XrayCore.measureDelay(XrayCore.kt:81)
-10-27 04:21:38.204  3489  3760 E MvpnTrial: 	at co.asiven.vixentvpn.trial.ui.MainActivity.measure(MainActivity.kt:438)
-10-27 04:21:38.204  3489  3760 E MvpnTrial: 	at co.asiven.vixentvpn.trial.ui.MainActivity.access$measure(MainActivity.kt:62)
-10-27 04:21:38.204  3489  3760 E MvpnTrial: 	at co.asiven.vixentvpn.trial.ui.MainActivity$pingAll$2$1$1$1.invokeSuspend(MainActivity.kt:399)
-10-27 04:21:38.204  3489  3760 E MvpnTrial: 	at kotlin.coroutines.jvm.internal.BaseContinuationImpl.resumeWith(ContinuationImpl.kt:33)
-10-27 04:21:38.204  3489  3760 E MvpnTrial: 	at kotlinx.coroutines.DispatchedTask.run(DispatchedTask.kt:104)
-10-27 04:21:38.204  3489  3760 E MvpnTrial: 	at kotlinx.coroutines.internal.LimitedDispatcher$Worker.run(LimitedDispatcher.kt:111)
-10-27 04:21:38.204  3489  3760 E MvpnTrial: 	at kotlinx.coroutines.scheduling.TaskImpl.run(Tasks.kt:99)
-10-27 04:21:38.204  3489  3760 E MvpnTrial: 	at kotlinx.coroutines.scheduling.CoroutineScheduler.runSafely(CoroutineScheduler.kt:584)
-10-27 04:21:38.204  3489  3760 E MvpnTrial: 	at kotlinx.coroutines.scheduling.CoroutineScheduler$Worker.executeTask(CoroutineScheduler.kt:811)
-10-27 04:21:38.204  3489  3760 E MvpnTrial: 	at kotlinx.coroutines.scheduling.CoroutineScheduler$Worker.runWorker(CoroutineScheduler.kt:715)
-10-27 04:21:38.204  3489  3760 E MvpnTrial: 	at kotlinx.coroutines.scheduling.CoroutineScheduler$Worker.run(CoroutineScheduler.kt:702)
-10-27 04:21:38.204  3489  3760 D MvpnTrial: پینگ 🇮🇪 Ireland: -1 ms
-10-27 04:21:44.053  3489  3591 E MvpnTrial: سنجش تأخیر ناموفق
-10-27 04:21:44.053  3489  3591 E MvpnTrial: go.Universe$proxyerror: Get "https://www.gstatic.com/generate_204": net/http: TLS handshake timeout
-10-27 04:21:44.053  3489  3591 E MvpnTrial: 	at libv2ray.Libv2ray.measureOutboundDelay(Native Method)
-10-27 04:21:44.053  3489  3591 E MvpnTrial: 	at co.asiven.vixentvpn.trial.core.XrayCore.measureDelay(XrayCore.kt:81)
-10-27 04:21:44.053  3489  3591 E MvpnTrial: 	at co.asiven.vixentvpn.trial.ui.MainActivity.measure(MainActivity.kt:438)
-10-27 04:21:44.053  3489  3591 E MvpnTrial: 	at co.asiven.vixentvpn.trial.ui.MainActivity.access$measure(MainActivity.kt:62)
-10-27 04:21:44.053  3489  3591 E MvpnTrial: 	at co.asiven.vixentvpn.trial.ui.MainActivity$pingAll$2$1$1$1.invokeSuspend(MainActivity.kt:399)
-10-27 04:21:44.053  3489  3591 E MvpnTrial: 	at kotlin.coroutines.jvm.internal.BaseContinuationImpl.resumeWith(ContinuationImpl.kt:33)
-10-27 04:21:44.053  3489  3591 E MvpnTrial: 	at kotlinx.coroutines.DispatchedTask.run(DispatchedTask.kt:104)
-10-27 04:21:44.053  3489  3591 E MvpnTrial: 	at kotlinx.coroutines.internal.LimitedDispatcher$Worker.run(LimitedDispatcher.kt:111)
-10-27 04:21:44.053  3489  3591 E MvpnTrial: 	at kotlinx.coroutines.scheduling.TaskImpl.run(Tasks.kt:99)
-10-27 04:21:44.053  3489  3591 E MvpnTrial: 	at kotlinx.coroutines.scheduling.CoroutineScheduler.runSafely(CoroutineScheduler.kt:584)
-10-27 04:21:44.053  3489  3591 E MvpnTrial: 	at kotlinx.coroutines.scheduling.CoroutineScheduler$Worker.executeTask(CoroutineScheduler.kt:811)
-10-27 04:21:44.053  3489  3591 E MvpnTrial: 	at kotlinx.coroutines.scheduling.CoroutineScheduler$Worker.runWorker(CoroutineScheduler.kt:715)
-10-27 04:21:44.053  3489  3591 E MvpnTrial: 	at kotlinx.coroutines.scheduling.CoroutineScheduler$Worker.run(CoroutineScheduler.kt:702)
-10-27 04:21:44.053  3489  3591 D MvpnTrial: پینگ 🇫🇷 France: -1 ms
-10-27 04:21:45.043  3489  3838 E MvpnTrial: سنجش تأخیر ناموفق
-10-27 04:21:45.043  3489  3838 E MvpnTrial: go.Universe$proxyerror: Get "https://www.gstatic.com/generate_204": net/http: TLS handshake timeout
-10-27 04:21:45.043  3489  3838 E MvpnTrial: 	at libv2ray.Libv2ray.measureOutboundDelay(Native Method)
-10-27 04:21:45.043  3489  3838 E MvpnTrial: 	at co.asiven.vixentvpn.trial.core.XrayCore.measureDelay(XrayCore.kt:81)
-10-27 04:21:45.043  3489  3838 E MvpnTrial: 	at co.asiven.vixentvpn.trial.ui.MainActivity.measure(MainActivity.kt:438)
-10-27 04:21:45.043  3489  3838 E MvpnTrial: 	at co.asiven.vixentvpn.trial.ui.MainActivity.access$measure(MainActivity.kt:62)
-10-27 04:21:45.043  3489  3838 E MvpnTrial: 	at co.asiven.vixentvpn.trial.ui.MainActivity$pingAll$2$1$1$1.invokeSuspend(MainActivity.kt:399)
-10-27 04:21:45.043  3489  3838 E MvpnTrial: 	at kotlin.coroutines.jvm.internal.BaseContinuationImpl.resumeWith(ContinuationImpl.kt:33)
-10-27 04:21:45.043  3489  3838 E MvpnTrial: 	at kotlinx.coroutines.DispatchedTask.run(DispatchedTask.kt:104)
-10-27 04:21:45.043  3489  3838 E MvpnTrial: 	at kotlinx.coroutines.internal.LimitedDispatcher$Worker.run(LimitedDispatcher.kt:111)
-10-27 04:21:45.043  3489  3838 E MvpnTrial: 	at kotlinx.coroutines.scheduling.TaskImpl.run(Tasks.kt:99)
-10-27 04:21:45.043  3489  3838 E MvpnTrial: 	at kotlinx.coroutines.scheduling.CoroutineScheduler.runSafely(CoroutineScheduler.kt:584)
-10-27 04:21:45.043  3489  3838 E MvpnTrial: 	at kotlinx.coroutines.scheduling.CoroutineScheduler$Worker.executeTask(CoroutineScheduler.kt:811)
-10-27 04:21:45.043  3489  3838 E MvpnTrial: 	at kotlinx.coroutines.scheduling.CoroutineScheduler$Worker.runWorker(CoroutineScheduler.kt:715)
-10-27 04:21:45.043  3489  3838 E MvpnTrial: 	at kotlinx.coroutines.scheduling.CoroutineScheduler$Worker.run(CoroutineScheduler.kt:702)
-10-27 04:21:45.043  3489  3838 D MvpnTrial: پینگ 🇫🇷 France: -1 ms
-10-27 04:21:48.923  3489  3752 E MvpnTrial: سنجش تأخیر ناموفق
-10-27 04:21:48.923  3489  3752 E MvpnTrial: go.Universe$proxyerror: Get "https://www.gstatic.com/generate_204": net/http: TLS handshake timeout
-10-27 04:21:48.923  3489  3752 E MvpnTrial: 	at libv2ray.Libv2ray.measureOutboundDelay(Native Method)
-10-27 04:21:48.923  3489  3752 E MvpnTrial: 	at co.asiven.vixentvpn.trial.core.XrayCore.measureDelay(XrayCore.kt:81)
-10-27 04:21:48.923  3489  3752 E MvpnTrial: 	at co.asiven.vixentvpn.trial.ui.MainActivity.measure(MainActivity.kt:438)
-10-27 04:21:48.923  3489  3752 E MvpnTrial: 	at co.asiven.vixentvpn.trial.ui.MainActivity.access$measure(MainActivity.kt:62)
-10-27 04:21:48.923  3489  3752 E MvpnTrial: 	at co.asiven.vixentvpn.trial.ui.MainActivity$pingAll$2$1$1$1.invokeSuspend(MainActivity.kt:399)
-10-27 04:21:48.923  3489  3752 E MvpnTrial: 	at kotlin.coroutines.jvm.internal.BaseContinuationImpl.resumeWith(ContinuationImpl.kt:33)
-10-27 04:21:48.923  3489  3752 E MvpnTrial: 	at kotlinx.coroutines.DispatchedTask.run(DispatchedTask.kt:104)
-10-27 04:21:48.923  3489  3752 E MvpnTrial: 	at kotlinx.coroutines.internal.LimitedDispatcher$Worker.run(LimitedDispatcher.kt:111)
-10-27 04:21:48.923  3489  3752 E MvpnTrial: 	at kotlinx.coroutines.scheduling.TaskImpl.run(Tasks.kt:99)
-10-27 04:21:48.923  3489  3752 E MvpnTrial: 	at kotlinx.coroutines.scheduling.CoroutineScheduler.runSafely(CoroutineScheduler.kt:584)
-10-27 04:21:48.923  3489  3752 E MvpnTrial: 	at kotlinx.coroutines.scheduling.CoroutineScheduler$Worker.executeTask(CoroutineScheduler.kt:811)
-10-27 04:21:48.923  3489  3752 E MvpnTrial: 	at kotlinx.coroutines.scheduling.CoroutineScheduler$Worker.runWorker(CoroutineScheduler.kt:715)
-10-27 04:21:48.923  3489  3752 E MvpnTrial: 	at kotlinx.coroutines.scheduling.CoroutineScheduler$Worker.run(CoroutineScheduler.kt:702)
-10-27 04:21:48.924  3489  3752 D MvpnTrial: پینگ 🇨🇦 Canada: -1 ms
-10-27 04:21:48.928  3489  3489 D MvpnTrial: hero: running=false connected=- shown=-103901-465-504278487 pressed=اتصال
-10-27 04:21:48.931  3489  3489 I MvpnTrial: پینگ همهٔ 104 سرور انجام شد؛ سریع‌ترین: 🇺🇸 United States
-10-27 04:22:17.764  3489  3489 I MvpnTrial: 103 لینک v2ray کپی شد
-10-27 04:23:38.006  3489  3489 D MvpnTrial: hero: running=false connected=- shown=-103901-465-504278487 pressed=اتصال
-10-27 04:23:38.009  3489  3489 I MvpnTrial: سرور انتخاب شد: 🇫🇮 Finland (price=0, type=vless · xhttp · reality)
-10-27 04:23:49.871  3489  3489 D MvpnTrial: hero: running=false connected=- shown=-103901-465-504278487 pressed=اتصال
-10-27 04:23:49.871  3489  3489 I MvpnTrial: سرور انتخاب شد: 🇫🇮 Finland (price=0, type=vless · xhttp · reality)
-10-27 04:23:56.366  3489  3489 I MvpnTrial: VpnTunnelService ایجاد شد
-10-27 04:23:56.373  3489  3752 I MvpnTrial: پیکربندی هسته آماده شد (vless) برای 🇫🇮 Finland
-10-27 04:23:56.494  3489  3489 D MvpnTrial: hero: running=false connected=- shown=-103901-465-504278487 pressed=اتصال
-10-27 04:23:56.671  3489  3752 I MvpnTrial: رابط TUN ساخته شد: 143
-10-27 04:23:56.833  3489  3752 I MvpnTrial: CoreCallback: startup
-10-27 04:23:56.833  3489  3752 D MvpnTrial: CoreCallback: 0 Started successfully, running
-10-27 04:23:56.834  3489  3752 I MvpnTrial: هستهٔ Xray شروع شد (tunFd=143، running=true)
-10-27 04:23:56.834  3489  3752 I MvpnTrial: hev: شروع (fd=143، socks=10808، mtu=1500)
-10-27 04:23:56.864  3489  3489 D MvpnTrial: hero: running=false connected=- shown=-103901-465-504278487 pressed=اتصال
-10-27 04:23:57.461  3489  3752 I MvpnTrial: آزمون ترافیک موفق: «HTTP/1.1 301 Moved Permanently» در 593ms
-10-27 04:23:57.462  3489  3752 I MvpnTrial: ترافیک از تونل عبور کرد (🇫🇮 Finland)
-10-27 04:23:57.463  3489  3752 I MvpnTrial: اتصال برقرار شد: متصل — 🇫🇮 Finland (VPN)
-10-27 04:23:57.464  3489  3489 D MvpnTrial: hero: running=true connected=-103901-465-504278487 shown=-103901-465-504278487 pressed=قطع اتصال
-10-27 04:24:17.004  3489  3489 D MvpnTrial: hero: running=true connected=-103901-465-504278487 shown=-55510-467--267964680 pressed=اتصال به سرور انتخابی
-10-27 04:24:17.004  3489  3489 I MvpnTrial: سرور انتخاب شد: 🇨🇦 Canada (price=0, type=vless · ws · tls)
-10-27 04:24:28.603  3489  3489 D MvpnTrial: hero: running=true connected=-103901-465-504278487 shown=-55510-467--267964680 pressed=اتصال به سرور انتخابی
-10-27 04:24:28.604  3489  3489 I MvpnTrial: سرور انتخاب شد: 🇨🇦 Canada (price=0, type=vless · ws · tls)
-10-27 04:24:28.649  3489  3489 I MvpnTrial: hev: متوقف شد
-10-27 04:24:28.658  3489  3489 D MvpnTrial: CoreCallback: 0 Core stopped
-10-27 04:24:28.707  3489  3489 D MvpnTrial: hero: running=false connected=- shown=-55510-467--267964680 pressed=اتصال
-10-27 04:24:28.762  3489  3489 D MvpnTrial: hero: running=false connected=- shown=-55510-467--267964680 pressed=اتصال
-10-27 04:24:29.307  3489  3489 I MvpnTrial: VpnTunnelService ایجاد شد
-10-27 04:24:29.310  3489  3752 I MvpnTrial: پیکربندی هسته آماده شد (vless) برای 🇨🇦 Canada
-10-27 04:24:29.333  3489  3752 I MvpnTrial: رابط TUN ساخته شد: 230
-10-27 04:24:29.341  3489  3489 D MvpnTrial: hero: running=false connected=- shown=-55510-467--267964680 pressed=اتصال
-10-27 04:24:29.383  3489  3752 I MvpnTrial: CoreCallback: startup
-10-27 04:24:29.384  3489  3752 D MvpnTrial: CoreCallback: 0 Started successfully, running
-10-27 04:24:29.384  3489  3752 I MvpnTrial: هستهٔ Xray شروع شد (tunFd=230، running=true)
-10-27 04:24:29.384  3489  3752 I MvpnTrial: hev: شروع (fd=230، socks=10808، mtu=1500)
-10-27 04:24:29.387  3489  3489 D MvpnTrial: hero: running=false connected=- shown=-55510-467--267964680 pressed=اتصال
-10-27 04:24:30.612  3489  3752 I MvpnTrial: آزمون ترافیک موفق: «HTTP/1.1 301 Moved Permanently» در 1221ms
-10-27 04:24:30.612  3489  3752 I MvpnTrial: ترافیک از تونل عبور کرد (🇨🇦 Canada)
-10-27 04:24:30.669  3489  3752 I MvpnTrial: اتصال برقرار شد: متصل — 🇨🇦 Canada (VPN)
-10-27 04:24:30.721  3489  3489 D MvpnTrial: hero: running=true connected=-55510-467--267964680 shown=-55510-467--267964680 pressed=قطع اتصال
-10-27 04:27:30.103  3489  3489 D MvpnTrial: hero: running=true connected=-55510-467--267964680 shown=-5224-468--1094354695 pressed=اتصال به سرور انتخابی
-10-27 04:27:30.104  3489  3489 I MvpnTrial: سرور انتخاب شد: 🇺🇸 United States (price=0, type=vless · reality)
-10-27 04:27:43.331  3489  3489 D MvpnTrial: hero: running=true connected=-55510-467--267964680 shown=-5224-468--1094354695 pressed=اتصال به سرور انتخابی
-10-27 04:27:43.332  3489  3489 I MvpnTrial: سرور انتخاب شد: 🇺🇸 United States (price=0, type=vless · reality)
-10-27 04:27:43.381  3489  3489 I MvpnTrial: hev: متوقف شد
-10-27 04:27:43.382  3489  3489 D MvpnTrial: CoreCallback: 0 Core stopped
-10-27 04:27:43.429  3489  3489 D MvpnTrial: hero: running=false connected=- shown=-5224-468--1094354695 pressed=اتصال
-10-27 04:27:43.474  3489  3489 D MvpnTrial: hero: running=false connected=- shown=-5224-468--1094354695 pressed=اتصال
-10-27 04:27:44.035  3489  3489 I MvpnTrial: VpnTunnelService ایجاد شد
-10-27 04:27:44.038  3489  3752 I MvpnTrial: پیکربندی هسته آماده شد (vless) برای 🇺🇸 United States
-10-27 04:27:44.042  3489  3489 D MvpnTrial: hero: running=false connected=- shown=-5224-468--1094354695 pressed=اتصال
-10-27 04:27:44.050  3489  3752 I MvpnTrial: رابط TUN ساخته شد: 112
-10-27 04:27:44.066  3489  3752 I MvpnTrial: CoreCallback: startup
-10-27 04:27:44.066  3489  3752 D MvpnTrial: CoreCallback: 0 Started successfully, running
-10-27 04:27:44.066  3489  3752 I MvpnTrial: هستهٔ Xray شروع شد (tunFd=112، running=true)
-10-27 04:27:44.067  3489  3752 I MvpnTrial: hev: شروع (fd=112، socks=10808، mtu=1500)
-10-27 04:27:44.070  3489  3489 D MvpnTrial: hero: running=false connected=- shown=-5224-468--1094354695 pressed=اتصال
-10-27 04:27:49.980  3489  3752 I MvpnTrial: آزمون ترافیک موفق: «HTTP/1.1 301 Moved Permanently» در 5904ms
-10-27 04:27:49.980  3489  3752 I MvpnTrial: ترافیک از تونل عبور کرد (🇺🇸 United States)
-10-27 04:27:49.981  3489  3752 I MvpnTrial: اتصال برقرار شد: متصل — 🇺🇸 United States (VPN)
-10-27 04:27:49.982  3489  3489 D MvpnTrial: hero: running=true connected=-5224-468--1094354695 shown=-5224-468--1094354695 pressed=قطع اتصال
-10-27 04:30:40.037  3489  3489 I MvpnTrial: hev: متوقف شد
-10-27 04:30:40.049  3489  3489 D MvpnTrial: CoreCallback: 0 Core stopped
-10-27 04:30:40.101  3489  3489 D MvpnTrial: hero: running=false connected=- shown=-5224-468--1094354695 pressed=اتصال
-10-27 04:30:40.119  3489  3489 D MvpnTrial: hero: running=false connected=- shown=-5224-468--1094354695 pressed=اتصال
+10-27 04:51:47.619  3034  3034 I MvpnTrial: MVPN Trial 3.2.0-trial (co.asiven.vixentvpn.trial) راه‌اندازی شد
+10-27 04:51:48.896  3034  3034 I MvpnTrial: هستهٔ Xray آماده شد: Lib v38, Xray-core v26.6.27
+10-27 04:51:49.571  3034  3034 D MvpnTrial: hero(no row): running=false connected=- pressed=اتصال
+10-27 04:51:49.575  3034  3034 D MvpnTrial: hero(no row): running=false connected=- pressed=اتصال
+10-27 04:51:50.471  3034  3310 D MvpnTrial: GET https://managev1.xyz/api/token?deviceId=ed2f1d3d6e500e9f → 200 (66 بایت)
+10-27 04:51:50.472  3034  3310 I MvpnTrial: توکن سمت سرور غیرفعال است؛ بدون هدر token ادامه می‌دهیم
+10-27 04:51:50.680  3034  3310 D MvpnTrial: GET https://managev1.xyz/api/setting → 200 (44 بایت)
+10-27 04:51:50.680  3034  3310 I MvpnTrial: setting خالی است (data=null) — پیش‌فرض‌های برنامه استفاده می‌شوند
+10-27 04:51:51.197  3034  3310 D MvpnTrial: GET https://managev1.xyz/api/protocols → 200 (98653 بایت)
+10-27 04:51:51.923  3034  3310 I MvpnTrial: 105 سرور از /api/protocols دریافت شد
+10-27 04:51:52.101  3034  3034 D MvpnTrial: hero: running=false connected=- shown=-42791-466--1193288079 pressed=اتصال
+10-27 04:51:52.465  3034  3431 E MvpnTrial: سنجش تأخیر ناموفق
+10-27 04:51:52.465  3034  3431 E MvpnTrial: go.Universe$proxyerror: Get "https://www.gstatic.com/generate_204": io: read/write on closed pipe
+10-27 04:51:52.465  3034  3431 E MvpnTrial: 	at libv2ray.Libv2ray.measureOutboundDelay(Native Method)
+10-27 04:51:52.465  3034  3431 E MvpnTrial: 	at co.asiven.vixentvpn.trial.core.XrayCore.measureDelay(XrayCore.kt:81)
+10-27 04:51:52.465  3034  3431 E MvpnTrial: 	at co.asiven.vixentvpn.trial.ui.MainActivity.measure(MainActivity.kt:438)
+10-27 04:51:52.465  3034  3431 E MvpnTrial: 	at co.asiven.vixentvpn.trial.ui.MainActivity.access$measure(MainActivity.kt:62)
+10-27 04:51:52.465  3034  3431 E MvpnTrial: 	at co.asiven.vixentvpn.trial.ui.MainActivity$pingAll$2$1$1$1.invokeSuspend(MainActivity.kt:399)
+10-27 04:51:52.465  3034  3431 E MvpnTrial: 	at kotlin.coroutines.jvm.internal.BaseContinuationImpl.resumeWith(ContinuationImpl.kt:33)
+10-27 04:51:52.465  3034  3431 E MvpnTrial: 	at kotlinx.coroutines.DispatchedTask.run(DispatchedTask.kt:104)
+10-27 04:51:52.465  3034  3431 E MvpnTrial: 	at kotlinx.coroutines.internal.LimitedDispatcher$Worker.run(LimitedDispatcher.kt:111)
+10-27 04:51:52.465  3034  3431 E MvpnTrial: 	at kotlinx.coroutines.scheduling.TaskImpl.run(Tasks.kt:99)
+10-27 04:51:52.465  3034  3431 E MvpnTrial: 	at kotlinx.coroutines.scheduling.CoroutineScheduler.runSafely(CoroutineScheduler.kt:584)
+10-27 04:51:52.465  3034  3431 E MvpnTrial: 	at kotlinx.coroutines.scheduling.CoroutineScheduler$Worker.executeTask(CoroutineScheduler.kt:811)
+10-27 04:51:52.465  3034  3431 E MvpnTrial: 	at kotlinx.coroutines.scheduling.CoroutineScheduler$Worker.runWorker(CoroutineScheduler.kt:715)
+10-27 04:51:52.465  3034  3431 E MvpnTrial: 	at kotlinx.coroutines.scheduling.CoroutineScheduler$Worker.run(CoroutineScheduler.kt:702)
+10-27 04:51:52.504  3034  3431 D MvpnTrial: پینگ 🇦🇺 Australia: -1 ms
+10-27 04:51:52.724  3034  3309 D MvpnTrial: پینگ 🇺🇸 United States: 66 ms
+10-27 04:51:52.747  3034  3311 D MvpnTrial: پینگ 🇺🇸 United States: 75 ms
+10-27 04:51:52.748  3034  3446 D MvpnTrial: پینگ 🇨🇦 Canada: 75 ms
+10-27 04:51:52.963  3034  3433 D MvpnTrial: پینگ 🇸🇪 Sweden: 177 ms
+10-27 04:51:52.965  3034  3432 D MvpnTrial: پینگ 🇨🇦 Canada: 177 ms
+10-27 04:51:52.993  3034  3431 D MvpnTrial: پینگ 🇺🇸 United States: 113 ms
+10-27 04:51:53.015  3034  3309 D MvpnTrial: پینگ 🇺🇸 United States: 54 ms
+10-27 04:51:53.067  3034  3454 D MvpnTrial: پینگ 🇺🇸 United States: 189 ms
+10-27 04:51:53.280  3034  3473 D MvpnTrial: پینگ 🇮🇪 Ireland: 128 ms
+10-27 04:51:53.436  3034  3446 D MvpnTrial: پینگ 🇨🇦 Canada: 156 ms
+10-27 04:51:53.521  3034  3432 D MvpnTrial: پینگ 🇫🇷 France: 145 ms
+10-27 04:51:53.523  3034  3439 D MvpnTrial: پینگ 🇮🇪 Ireland: 158 ms
+10-27 04:51:53.552  3034  3431 D MvpnTrial: پینگ 🇫🇷 France: 133 ms
+10-27 04:51:53.702  3034  3309 D MvpnTrial: پینگ 🇩🇪 Germany: 179 ms
+10-27 04:51:53.735  3034  3311 D MvpnTrial: پینگ 🇺🇸 United States: 158 ms
+10-27 04:51:53.740  3034  3473 D MvpnTrial: پینگ 🇺🇸 United States: 89 ms
+10-27 04:51:53.929  3034  3431 D MvpnTrial: پینگ 🇨🇦 Canada: 74 ms
+10-27 04:51:53.929  3034  3432 D MvpnTrial: پینگ 🇨🇦 Canada: 75 ms
+10-27 04:51:54.010  3034  3311 D MvpnTrial: پینگ 🇺🇸 United States: 54 ms
+10-27 04:51:54.115  3034  3473 D MvpnTrial: پینگ 🇨🇦 Canada: 77 ms
+10-27 04:51:54.159  3034  3439 D MvpnTrial: پینگ 🇩🇪 Germany: 136 ms
+10-27 04:51:54.198  3034  3446 D MvpnTrial: پینگ 🇦🇺 Australia: 160 ms
+10-27 04:51:54.263  3034  3309 D MvpnTrial: پینگ 🇮🇪 Ireland: 130 ms
+10-27 04:51:54.443  3034  3468 D MvpnTrial: پینگ 🇺🇸 United States: 56 ms
+10-27 04:51:54.516  3034  3431 D MvpnTrial: پینگ 🇺🇸 United States: 73 ms
+10-27 04:51:54.616  3034  3439 D MvpnTrial: پینگ 🇺🇸 United States: 100 ms
+10-27 04:51:54.746  3034  3469 D MvpnTrial: پینگ 🇦🇺 Australia: 168 ms
+10-27 04:51:54.747  3034  3432 D MvpnTrial: پینگ 🇫🇷 France: 180 ms
+10-27 04:51:54.756  3034  3467 D MvpnTrial: پینگ 🇺🇸 United States: 123 ms
+10-27 04:51:54.845  3034  3309 D MvpnTrial: پینگ 🇨🇦 Canada: 88 ms
+10-27 04:51:54.849  3034  3468 D MvpnTrial: پینگ 🇺🇸 United States: 102 ms
+10-27 04:51:55.199  3034  3431 D MvpnTrial: پینگ 🇫🇷 France: 143 ms
+10-27 04:51:55.228  3034  3446 D MvpnTrial: پینگ 🇩🇪 Germany: 143 ms
+10-27 04:51:55.238  3034  3309 D MvpnTrial: پینگ 🇨🇦 Canada: 74 ms
+10-27 04:51:55.352  3034  3467 D MvpnTrial: پینگ 🇸🇪 Sweden: 162 ms
+10-27 04:51:55.361  3034  3469 D MvpnTrial: پینگ 🇫🇷 France: 149 ms
+10-27 04:51:55.414  3034  3432 D MvpnTrial: پینگ 🇦🇺 Australia: 152 ms
+10-27 04:51:55.630  3034  3311 D MvpnTrial: پینگ 🇺🇸 United States: 109 ms
+10-27 04:51:55.642  3034  3468 D MvpnTrial: پینگ 🇺🇸 United States: 178 ms
+10-27 04:51:55.815  3034  3462 D MvpnTrial: پینگ 🇺🇸 United States: 29 ms
+10-27 04:51:55.824  3034  3467 D MvpnTrial: پینگ 🇺🇸 United States: 38 ms
+10-27 04:51:55.826  3034  3432 D MvpnTrial: پینگ 🇺🇸 United States: 41 ms
+10-27 04:51:55.836  3034  3311 D MvpnTrial: پینگ 🇺🇸 United States: 20 ms
+10-27 04:51:55.868  3034  3469 D MvpnTrial: پینگ 🇺🇸 United States: 60 ms
+10-27 04:51:56.029  3034  3309 D MvpnTrial: پینگ 🇨🇦 Canada: 102 ms
+10-27 04:51:56.091  3034  3462 D MvpnTrial: پینگ 🇺🇸 United States: 69 ms
+10-27 04:51:56.095  3034  3468 D MvpnTrial: پینگ 🇺🇸 United States: 64 ms
+10-27 04:51:56.126  3034  3467 D MvpnTrial: پینگ 🇺🇸 United States: 47 ms
+10-27 04:51:56.265  3034  3310 E MvpnTrial: سنجش تأخیر ناموفق
+10-27 04:51:56.265  3034  3310 E MvpnTrial: go.Universe$proxyerror: Get "https://www.gstatic.com/generate_204": io: read/write on closed pipe
+10-27 04:51:56.265  3034  3310 E MvpnTrial: 	at libv2ray.Libv2ray.measureOutboundDelay(Native Method)
+10-27 04:51:56.265  3034  3310 E MvpnTrial: 	at co.asiven.vixentvpn.trial.core.XrayCore.measureDelay(XrayCore.kt:81)
+10-27 04:51:56.265  3034  3310 E MvpnTrial: 	at co.asiven.vixentvpn.trial.ui.MainActivity.measure(MainActivity.kt:438)
+10-27 04:51:56.265  3034  3310 E MvpnTrial: 	at co.asiven.vixentvpn.trial.ui.MainActivity.access$measure(MainActivity.kt:62)
+10-27 04:51:56.265  3034  3310 E MvpnTrial: 	at co.asiven.vixentvpn.trial.ui.MainActivity$pingAll$2$1$1$1.invokeSuspend(MainActivity.kt:399)
+10-27 04:51:56.265  3034  3310 E MvpnTrial: 	at kotlin.coroutines.jvm.internal.BaseContinuationImpl.resumeWith(ContinuationImpl.kt:33)
+10-27 04:51:56.265  3034  3310 E MvpnTrial: 	at kotlinx.coroutines.DispatchedTask.run(DispatchedTask.kt:104)
+10-27 04:51:56.265  3034  3310 E MvpnTrial: 	at kotlinx.coroutines.internal.LimitedDispatcher$Worker.run(LimitedDispatcher.kt:111)
+10-27 04:51:56.265  3034  3310 E MvpnTrial: 	at kotlinx.coroutines.scheduling.TaskImpl.run(Tasks.kt:99)
+10-27 04:51:56.265  3034  3310 E MvpnTrial: 	at kotlinx.coroutines.scheduling.CoroutineScheduler.runSafely(CoroutineScheduler.kt:584)
+10-27 04:51:56.265  3034  3310 E MvpnTrial: 	at kotlinx.coroutines.scheduling.CoroutineScheduler$Worker.executeTask(CoroutineScheduler.kt:811)
+10-27 04:51:56.265  3034  3310 E MvpnTrial: 	at kotlinx.coroutines.scheduling.CoroutineScheduler$Worker.runWorker(CoroutineScheduler.kt:715)
+10-27 04:51:56.265  3034  3310 E MvpnTrial: 	at kotlinx.coroutines.scheduling.CoroutineScheduler$Worker.run(CoroutineScheduler.kt:702)
+10-27 04:51:56.266  3034  3310 D MvpnTrial: پینگ 🇨🇦 Canada: -1 ms
+10-27 04:51:56.367  3034  3311 D MvpnTrial: پینگ 🇺🇸 United States: 93 ms
+10-27 04:51:56.379  3034  3462 D MvpnTrial: پینگ 🇺🇸 United States: 59 ms
+10-27 04:51:56.412  3034  3467 D MvpnTrial: پینگ 🇺🇸 United States: 70 ms
+10-27 04:51:56.457  3034  3468 D MvpnTrial: پینگ 🇺🇸 United States: 67 ms
+10-27 04:51:56.677  3034  3467 D MvpnTrial: پینگ 🇺🇸 United States: 37 ms
+10-27 04:51:56.728  3034  3468 D MvpnTrial: پینگ 🇺🇸 United States: 56 ms
+10-27 04:51:56.733  3034  3310 D MvpnTrial: پینگ 🇺🇸 United States: 186 ms
+10-27 04:51:56.771  3034  3469 D MvpnTrial: پینگ 🇩🇪 Germany: 176 ms
+10-27 04:51:56.802  3034  3472 D MvpnTrial: پینگ 🇨🇦 Canada: 183 ms
+10-27 04:51:57.038  3034  3468 D MvpnTrial: پینگ 🇺🇸 United States: 53 ms
+10-27 04:51:57.082  3034  3310 D MvpnTrial: پینگ 🇺🇸 United States: 95 ms
+10-27 04:51:57.171  3034  3462 D MvpnTrial: پینگ 🇩🇪 Germany: 169 ms
+10-27 04:51:57.245  3034  3472 D MvpnTrial: پینگ 🇺🇸 United States: 74 ms
+10-27 04:51:57.312  3034  3469 D MvpnTrial: پینگ 🇺🇸 United States: 66 ms
+10-27 04:51:57.326  3034  3447 D MvpnTrial: پینگ 🇩🇪 Germany: 161 ms
+10-27 04:51:57.333  3034  3310 D MvpnTrial: پینگ 🇺🇸 United States: 55 ms
+10-27 04:51:57.548  3034  3462 D MvpnTrial: پینگ 🇺🇸 United States: 61 ms
+10-27 04:51:57.713  3034  3311 D MvpnTrial: پینگ 🇺🇸 United States: 271 ms
+10-27 04:51:57.748  3034  3469 D MvpnTrial: پینگ 🇺🇸 United States: 192 ms
+10-27 04:51:57.759  3034  3472 D MvpnTrial: پینگ 🇨🇦 Canada: 156 ms
+10-27 04:51:57.894  3034  3310 D MvpnTrial: پینگ 🇺🇸 United States: 74 ms
+10-27 04:51:58.002  3034  3447 D MvpnTrial: پینگ 🇺🇸 United States: 103 ms
+10-27 04:51:58.090  3034  3311 D MvpnTrial: پینگ 🇺🇸 United States: 26 ms
+10-27 04:51:58.153  3034  3462 D MvpnTrial: پینگ 🇺🇸 United States: 69 ms
+10-27 04:51:58.213  3034  3310 D MvpnTrial: پینگ 🇺🇸 United States: 45 ms
+10-27 04:51:58.245  3034  3439 D MvpnTrial: پینگ 🇬🇧 United Kingdom: 170 ms
+10-27 04:51:58.248  3034  3469 D MvpnTrial: پینگ 🇺🇸 United States: 37 ms
+10-27 04:51:58.412  3034  3311 D MvpnTrial: پینگ 🇺🇸 United States: 48 ms
+10-27 04:51:58.481  3034  3310 D MvpnTrial: پینگ 🇺🇸 United States: 58 ms
+10-27 04:51:58.484  3034  3447 D MvpnTrial: پینگ 🇨🇦 Canada: 75 ms
+10-27 04:51:58.505  3034  3462 D MvpnTrial: پینگ 🇺🇸 United States: 72 ms
+10-27 04:51:58.751  3034  3447 D MvpnTrial: پینگ 🇺🇸 United States: 34 ms
+10-27 04:51:58.882  3034  3472 D MvpnTrial: پینگ 🇬🇧 United Kingdom: 231 ms
+10-27 04:51:58.997  3034  3469 D MvpnTrial: پینگ 🇫🇷 France: 160 ms
+10-27 04:51:59.160  3034  3432 D MvpnTrial: پینگ 🇬🇧 United Kingdom: 188 ms
+10-27 04:51:59.193  3034  3439 D MvpnTrial: پینگ 🇫🇷 France: 193 ms
+10-27 04:51:59.271  3034  3467 D MvpnTrial: پینگ 🇺🇸 United States: 142 ms
+10-27 04:51:59.354  3034  3468 D MvpnTrial: پینگ 🇺🇸 United States: 124 ms
+10-27 04:51:59.420  3034  3311 D MvpnTrial: پینگ 🇺🇸 United States: 66 ms
+10-27 04:51:59.675  3034  3469 D MvpnTrial: پینگ 🇺🇸 United States: 18 ms
+10-27 04:51:59.816  3034  3034 W MvpnTrial: دریافت توکن Firebase ناموفق: java.util.concurrent.ExecutionException: java.io.IOException: AUTHENTICATION_FAILED
+10-27 04:51:59.950  3034  3469 D MvpnTrial: پینگ 🇺🇸 United States: 56 ms
+10-27 04:51:59.973  3034  3468 D MvpnTrial: پینگ 🇺🇸 United States: 79 ms
+10-27 04:52:00.017  3034  3311 D MvpnTrial: پینگ 🇺🇸 United States: 111 ms
+10-27 04:52:00.269  3034  3310 D MvpnTrial: پینگ 🇺🇸 United States: 62 ms
+10-27 04:52:00.317  3034  3468 D MvpnTrial: پینگ 🇺🇸 United States: 54 ms
+10-27 04:52:00.319  3034  3431 E MvpnTrial: سنجش تأخیر ناموفق
+10-27 04:52:00.319  3034  3431 E MvpnTrial: go.Universe$proxyerror: Get "https://www.gstatic.com/generate_204": io: read/write on closed pipe
+10-27 04:52:00.319  3034  3431 E MvpnTrial: 	at libv2ray.Libv2ray.measureOutboundDelay(Native Method)
+10-27 04:52:00.319  3034  3431 E MvpnTrial: 	at co.asiven.vixentvpn.trial.core.XrayCore.measureDelay(XrayCore.kt:81)
+10-27 04:52:00.319  3034  3431 E MvpnTrial: 	at co.asiven.vixentvpn.trial.ui.MainActivity.measure(MainActivity.kt:438)
+10-27 04:52:00.319  3034  3431 E MvpnTrial: 	at co.asiven.vixentvpn.trial.ui.MainActivity.access$measure(MainActivity.kt:62)
+10-27 04:52:00.319  3034  3431 E MvpnTrial: 	at co.asiven.vixentvpn.trial.ui.MainActivity$pingAll$2$1$1$1.invokeSuspend(MainActivity.kt:399)
+10-27 04:52:00.319  3034  3431 E MvpnTrial: 	at kotlin.coroutines.jvm.internal.BaseContinuationImpl.resumeWith(ContinuationImpl.kt:33)
+10-27 04:52:00.319  3034  3431 E MvpnTrial: 	at kotlinx.coroutines.DispatchedTask.run(DispatchedTask.kt:104)
+10-27 04:52:00.319  3034  3431 E MvpnTrial: 	at kotlinx.coroutines.internal.LimitedDispatcher$Worker.run(LimitedDispatcher.kt:111)
+10-27 04:52:00.319  3034  3431 E MvpnTrial: 	at kotlinx.coroutines.scheduling.TaskImpl.run(Tasks.kt:99)
+10-27 04:52:00.319  3034  3431 E MvpnTrial: 	at kotlinx.coroutines.scheduling.CoroutineScheduler.runSafely(CoroutineScheduler.kt:584)
+10-27 04:52:00.319  3034  3431 E MvpnTrial: 	at kotlinx.coroutines.scheduling.CoroutineScheduler$Worker.executeTask(CoroutineScheduler.kt:811)
+10-27 04:52:00.319  3034  3431 E MvpnTrial: 	at kotlinx.coroutines.scheduling.CoroutineScheduler$Worker.runWorker(CoroutineScheduler.kt:715)
+10-27 04:52:00.319  3034  3431 E MvpnTrial: 	at kotlinx.coroutines.scheduling.CoroutineScheduler$Worker.run(CoroutineScheduler.kt:702)
+10-27 04:52:00.319  3034  3431 D MvpnTrial: پینگ 🇩🇪 Germany: -1 ms
+10-27 04:52:00.385  3034  3311 D MvpnTrial: پینگ 🇨🇦 Canada: 77 ms
+10-27 04:52:00.408  3034  3439 D MvpnTrial: پینگ 🇺🇸 United States: 181 ms
+10-27 04:52:00.433  3034  3310 D MvpnTrial: پینگ 🇺🇸 United States: 23 ms
+10-27 04:52:00.480  3034  3467 D MvpnTrial: پینگ 🇺🇸 United States: 182 ms
+10-27 04:52:00.482  3034  3432 D MvpnTrial: پینگ 🇩🇪 Germany: 199 ms
+10-27 04:52:00.745  3034  3472 D MvpnTrial: پینگ 🇬🇧 United Kingdom: 189 ms
+10-27 04:52:01.000  3034  3447 D MvpnTrial: پینگ 🇩🇪 Germany: 175 ms
+10-27 04:52:01.164  3034  3034 D MvpnTrial: hero: running=false connected=- shown=-75948-492--1094354695 pressed=اتصال
+10-27 04:52:01.201  3034  3034 I MvpnTrial: سرور انتخاب شد: 🇺🇸 United States (price=0, type=vless)
+10-27 04:52:01.297  3034  3034 D MvpnTrial: hero: running=false connected=- shown=-75948-492--1094354695 pressed=اتصال
+10-27 04:52:01.297  3034  3034 I MvpnTrial: پینگ همهٔ 103 سرور انجام شد؛ سریع‌ترین: 🇺🇸 United States
+10-27 04:52:48.277  3034  3034 I MvpnTrial: 103 لینک v2ray کپی شد
+10-27 04:54:15.508  3034  3034 D MvpnTrial: hero: running=false connected=- shown=-18551-471-931889960 pressed=اتصال
+10-27 04:54:15.510  3034  3034 I MvpnTrial: سرور انتخاب شد: 🇦🇺 Australia (price=0, type=vless · xhttp)
+10-27 04:54:28.436  3034  3034 D MvpnTrial: hero: running=false connected=- shown=-18551-471-931889960 pressed=اتصال
+10-27 04:54:28.437  3034  3034 I MvpnTrial: سرور انتخاب شد: 🇦🇺 Australia (price=0, type=vless · xhttp)
+10-27 04:54:35.267  3034  3034 I MvpnTrial: VpnTunnelService ایجاد شد
+10-27 04:54:35.277  3034  3311 I MvpnTrial: پیکربندی هسته آماده شد (vless) برای 🇦🇺 Australia
+10-27 04:54:35.320  3034  3034 D MvpnTrial: hero: running=false connected=- shown=-18551-471-931889960 pressed=اتصال
+10-27 04:54:35.461  3034  3311 I MvpnTrial: رابط TUN ساخته شد: 216
+10-27 04:54:35.598  3034  3311 I MvpnTrial: CoreCallback: startup
+10-27 04:54:35.598  3034  3311 D MvpnTrial: CoreCallback: 0 Started successfully, running
+10-27 04:54:35.599  3034  3311 I MvpnTrial: هستهٔ Xray شروع شد (tunFd=216، running=true)
+10-27 04:54:35.599  3034  3311 I MvpnTrial: hev: شروع (fd=216، socks=10808، mtu=1500)
+10-27 04:54:35.608  3034  3034 D MvpnTrial: hero: running=false connected=- shown=-18551-471-931889960 pressed=اتصال
+10-27 04:54:35.752  3034  3311 W MvpnTrial: آزمون ترافیک تلاش 1:  در 145ms
+10-27 04:54:37.819  3034  3311 W MvpnTrial: آزمون ترافیک تلاش 2:  در 67ms
+10-27 04:54:39.880  3034  3311 W MvpnTrial: آزمون ترافیک تلاش 3:  در 60ms
+10-27 04:54:41.882  3034  3311 E MvpnTrial: ترافیک از تونل عبور نکرد؛ اتصال لغو شد (🇦🇺 Australia)
+10-27 04:54:41.884  3034  3034 D MvpnTrial: hero: running=false connected=- shown=-18551-471-931889960 pressed=اتصال
+10-27 04:54:41.912  3034  3311 I MvpnTrial: hev: متوقف شد
+10-27 04:54:41.927  3034  3311 D MvpnTrial: CoreCallback: 0 Core stopped
+10-27 04:54:41.977  3034  3034 D MvpnTrial: hero: running=false connected=- shown=-18551-471-931889960 pressed=اتصال
+10-27 04:54:41.990  3034  3034 D MvpnTrial: hero: running=false connected=- shown=-18551-471-931889960 pressed=اتصال
+10-27 04:56:25.302  3034  3034 D MvpnTrial: hero: running=false connected=- shown=-18551-471-931889960 pressed=اتصال
+10-27 04:56:25.302  3034  3034 I MvpnTrial: سرور انتخاب شد: 🇦🇺 Australia (price=0, type=vless · xhttp)
+10-27 04:56:38.185  3034  3034 D MvpnTrial: hero: running=false connected=- shown=-18551-471-931889960 pressed=اتصال
+10-27 04:56:38.186  3034  3034 I MvpnTrial: سرور انتخاب شد: 🇦🇺 Australia (price=0, type=vless · xhttp)
+10-27 04:56:38.220  3034  3034 I MvpnTrial: VpnTunnelService ایجاد شد
+10-27 04:56:38.225  3034  3311 I MvpnTrial: پیکربندی هسته آماده شد (vless) برای 🇦🇺 Australia
+10-27 04:56:38.278  3034  3311 I MvpnTrial: رابط TUN ساخته شد: 119
+10-27 04:56:38.285  3034  3034 D MvpnTrial: hero: running=false connected=- shown=-18551-471-931889960 pressed=اتصال
+10-27 04:56:38.375  3034  3311 I MvpnTrial: CoreCallback: startup
+10-27 04:56:38.375  3034  3311 D MvpnTrial: CoreCallback: 0 Started successfully, running
+10-27 04:56:38.375  3034  3311 I MvpnTrial: هستهٔ Xray شروع شد (tunFd=119، running=true)
+10-27 04:56:38.375  3034  3311 I MvpnTrial: hev: شروع (fd=119، socks=10808، mtu=1500)
+10-27 04:56:38.390  3034  3034 D MvpnTrial: hero: running=false connected=- shown=-18551-471-931889960 pressed=اتصال
+10-27 04:56:38.474  3034  3311 W MvpnTrial: آزمون ترافیک تلاش 1:  در 94ms
+10-27 04:56:40.570  3034  3311 W MvpnTrial: آزمون ترافیک تلاش 2:  در 95ms
+10-27 04:56:42.687  3034  3311 W MvpnTrial: آزمون ترافیک تلاش 3:  در 116ms
+10-27 04:56:44.688  3034  3311 E MvpnTrial: ترافیک از تونل عبور نکرد؛ اتصال لغو شد (🇦🇺 Australia)
+10-27 04:56:44.690  3034  3034 D MvpnTrial: hero: running=false connected=- shown=-18551-471-931889960 pressed=اتصال
+10-27 04:56:44.693  3034  3311 I MvpnTrial: hev: متوقف شد
+10-27 04:56:44.695  3034  3311 D MvpnTrial: CoreCallback: 0 Core stopped
+10-27 04:56:44.761  3034  3034 D MvpnTrial: hero: running=false connected=- shown=-18551-471-931889960 pressed=اتصال
+10-27 04:56:44.784  3034  3034 D MvpnTrial: hero: running=false connected=- shown=-18551-471-931889960 pressed=اتصال
+10-27 04:59:41.519  3034  3034 D MvpnTrial: hero: running=false connected=- shown=-18551-471-931889960 pressed=اتصال
+10-27 04:59:41.519  3034  3034 I MvpnTrial: سرور انتخاب شد: 🇦🇺 Australia (price=0, type=vless · xhttp)
+10-27 04:59:41.586  3034  3034 I MvpnTrial: VpnTunnelService ایجاد شد
+10-27 04:59:41.606  3034  3311 I MvpnTrial: پیکربندی هسته آماده شد (vless) برای 🇦🇺 Australia
+10-27 04:59:41.637  3034  3034 D MvpnTrial: hero: running=false connected=- shown=-18551-471-931889960 pressed=اتصال
+10-27 04:59:41.652  3034  3311 I MvpnTrial: رابط TUN ساخته شد: 109
+10-27 04:59:41.730  3034  3311 I MvpnTrial: CoreCallback: startup
+10-27 04:59:41.730  3034  3311 D MvpnTrial: CoreCallback: 0 Started successfully, running
+10-27 04:59:41.731  3034  3311 I MvpnTrial: هستهٔ Xray شروع شد (tunFd=109، running=true)
+10-27 04:59:41.736  3034  3311 I MvpnTrial: hev: شروع (fd=109، socks=10808، mtu=1500)
+10-27 04:59:41.748  3034  3034 D MvpnTrial: hero: running=false connected=- shown=-18551-471-931889960 pressed=اتصال
+10-27 04:59:41.846  3034  3311 W MvpnTrial: آزمون ترافیک تلاش 1:  در 99ms
+10-27 04:59:43.916  3034  3311 W MvpnTrial: آزمون ترافیک تلاش 2:  در 70ms
+10-27 04:59:45.985  3034  3311 W MvpnTrial: آزمون ترافیک تلاش 3:  در 68ms
+10-27 04:59:47.986  3034  3311 E MvpnTrial: ترافیک از تونل عبور نکرد؛ اتصال لغو شد (🇦🇺 Australia)
+10-27 04:59:47.988  3034  3034 D MvpnTrial: hero: running=false connected=- shown=-18551-471-931889960 pressed=اتصال
+10-27 04:59:47.989  3034  3311 I MvpnTrial: hev: متوقف شد
+10-27 04:59:47.991  3034  3311 D MvpnTrial: CoreCallback: 0 Core stopped
+10-27 04:59:48.026  3034  3034 D MvpnTrial: hero: running=false connected=- shown=-18551-471-931889960 pressed=اتصال
+10-27 04:59:48.051  3034  3034 D MvpnTrial: hero: running=false connected=- shown=-18551-471-931889960 pressed=اتصال
+10-27 05:02:52.269  3034  3034 D MvpnTrial: hero: running=false connected=- shown=-18551-471-931889960 pressed=اتصال
+10-27 05:02:52.272  3034  3034 I MvpnTrial: سرور انتخاب شد: 🇦🇺 Australia (price=0, type=vless · xhttp)
+10-27 05:03:05.135  3034  3034 D MvpnTrial: hero: running=false connected=- shown=-18551-471-931889960 pressed=اتصال
+10-27 05:03:05.136  3034  3034 I MvpnTrial: سرور انتخاب شد: 🇦🇺 Australia (price=0, type=vless · xhttp)
+10-27 05:03:05.171  3034  3034 I MvpnTrial: VpnTunnelService ایجاد شد
+10-27 05:03:05.182  3034  3311 I MvpnTrial: پیکربندی هسته آماده شد (vless) برای 🇦🇺 Australia
+10-27 05:03:05.221  3034  3311 I MvpnTrial: رابط TUN ساخته شد: 112
+10-27 05:03:05.242  3034  3034 D MvpnTrial: hero: running=false connected=- shown=-18551-471-931889960 pressed=اتصال
+10-27 05:03:05.267  3034  3311 I MvpnTrial: CoreCallback: startup
+10-27 05:03:05.267  3034  3311 D MvpnTrial: CoreCallback: 0 Started successfully, running
+10-27 05:03:05.274  3034  3311 I MvpnTrial: هستهٔ Xray شروع شد (tunFd=112، running=true)
+10-27 05:03:05.275  3034  3311 I MvpnTrial: hev: شروع (fd=112، socks=10808، mtu=1500)
+10-27 05:03:05.354  3034  3034 D MvpnTrial: hero: running=false connected=- shown=-18551-471-931889960 pressed=اتصال
+10-27 05:03:05.441  3034  3311 W MvpnTrial: آزمون ترافیک تلاش 1:  در 122ms
+10-27 05:03:07.497  3034  3311 W MvpnTrial: آزمون ترافیک تلاش 2:  در 56ms
+10-27 05:03:09.577  3034  3311 W MvpnTrial: آزمون ترافیک تلاش 3:  در 80ms
+10-27 05:03:11.578  3034  3311 E MvpnTrial: ترافیک از تونل عبور نکرد؛ اتصال لغو شد (🇦🇺 Australia)
+10-27 05:03:11.581  3034  3034 D MvpnTrial: hero: running=false connected=- shown=-18551-471-931889960 pressed=اتصال
+10-27 05:03:11.583  3034  3311 I MvpnTrial: hev: متوقف شد
+10-27 05:03:11.584  3034  3311 D MvpnTrial: CoreCallback: 0 Core stopped
+10-27 05:03:11.630  3034  3034 D MvpnTrial: hero: running=false connected=- shown=-18551-471-931889960 pressed=اتصال
+10-27 05:03:11.652  3034  3034 D MvpnTrial: hero: running=false connected=- shown=-18551-471-931889960 pressed=اتصال
+10-27 05:06:06.536  3034  3034 D MvpnTrial: hero: running=false connected=- shown=-18551-471-931889960 pressed=اتصال
+10-27 05:06:06.537  3034  3034 I MvpnTrial: سرور انتخاب شد: 🇦🇺 Australia (price=0, type=vless · xhttp)
+10-27 05:06:06.588  3034  3034 I MvpnTrial: VpnTunnelService ایجاد شد
+10-27 05:06:06.606  3034  3311 I MvpnTrial: پیکربندی هسته آماده شد (vless) برای 🇦🇺 Australia
+10-27 05:06:06.645  3034  3311 I MvpnTrial: رابط TUN ساخته شد: 109
+10-27 05:06:06.645  3034  3034 D MvpnTrial: hero: running=false connected=- shown=-18551-471-931889960 pressed=اتصال
+10-27 05:06:06.759  3034  3311 I MvpnTrial: CoreCallback: startup
+10-27 05:06:06.759  3034  3311 D MvpnTrial: CoreCallback: 0 Started successfully, running
+10-27 05:06:06.760  3034  3311 I MvpnTrial: هستهٔ Xray شروع شد (tunFd=109، running=true)
+10-27 05:06:06.760  3034  3311 I MvpnTrial: hev: شروع (fd=109، socks=10808، mtu=1500)
+10-27 05:06:06.766  3034  3034 D MvpnTrial: hero: running=false connected=- shown=-18551-471-931889960 pressed=اتصال
+10-27 05:06:06.843  3034  3311 W MvpnTrial: آزمون ترافیک تلاش 1:  در 82ms
+10-27 05:06:08.912  3034  3311 W MvpnTrial: آزمون ترافیک تلاش 2:  در 54ms
+10-27 05:06:10.994  3034  3311 W MvpnTrial: آزمون ترافیک تلاش 3:  در 81ms
+10-27 05:06:12.995  3034  3311 E MvpnTrial: ترافیک از تونل عبور نکرد؛ اتصال لغو شد (🇦🇺 Australia)
+10-27 05:06:12.999  3034  3034 D MvpnTrial: hero: running=false connected=- shown=-18551-471-931889960 pressed=اتصال
+10-27 05:06:13.006  3034  3311 I MvpnTrial: hev: متوقف شد
+10-27 05:06:13.007  3034  3311 D MvpnTrial: CoreCallback: 0 Core stopped
+10-27 05:06:13.066  3034  3034 D MvpnTrial: hero: running=false connected=- shown=-18551-471-931889960 pressed=اتصال
+10-27 05:06:13.067  3034  3034 D MvpnTrial: hero: running=false connected=- shown=-18551-471-931889960 pressed=اتصال
