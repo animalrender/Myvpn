@@ -353,11 +353,17 @@ def bring_into_view(name, ping=None, pages=16):
     return row_bounds(name, ping)
 
 
-def logcat_errors(limit=6):
-    """The app's own error lines — the quickest way to know *why* a row failed."""
+def logcat_errors(limit=4):
+    """The app's own error *messages* (stack frames dropped) — why a row failed, in one line."""
     out = adb("logcat", "-d", "-s", "MvpnTrial:E", timeout=120).stdout or ""
-    lines = [line.strip() for line in out.splitlines() if "MvpnTrial" in line]
-    return "\n".join(lines[-limit:])
+    messages = [line.split("MvpnTrial: ", 1)[-1].strip() for line in out.splitlines()
+                if "MvpnTrial" in line and "\tat " not in line]
+    seen, unique = set(), []
+    for message in messages:
+        if message and message not in seen:
+            seen.add(message)
+            unique.append(message)
+    return "\n".join(unique[-limit:])
 
 
 def close_dialogs():

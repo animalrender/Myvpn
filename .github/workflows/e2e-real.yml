@@ -190,6 +190,10 @@ jobs:
           timeout 90 adb logcat -b all -d > /tmp/logcat-all.txt 2>/dev/null || true
           tail -c 200000 /tmp/logcat-all.txt > "$OUT/logcat-all.txt" 2>/dev/null || true
           cp /tmp/emulator.log "$OUT/emulator.txt" 2>/dev/null || true
+          # The report is also appended to STATUS.md so it survives a concurrent-push race.
+          if [ -f "$OUT/CONNECT-REAL.md" ]; then
+            { echo; echo "---"; echo; cat "$OUT/CONNECT-REAL.md"; } >> "$OUT/STATUS.md"
+          fi
 
       - name: Commit the result
         if: always()
